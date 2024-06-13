@@ -1,13 +1,16 @@
-import React, {Component} from 'react';
+import React from 'react';
 import RootStack from '../stacks/RootStack';
-import {ErrorBoundary} from './Errorboundary';
+import {ErrorBoundary} from '../common/ErrorBoundary';
+import AppFallback from '../common/AppFallback';
 
-export default class Main extends Component {
-  render() {
-    return (
-      <ErrorBoundary>
-        <RootStack />
-      </ErrorBoundary>
-    );
-  }
-}
+const Main = () => {
+  const fallback = (data: any) => <AppFallback {...data} />;
+
+  return (
+    <ErrorBoundary fallback={fallback}>
+      <RootStack />
+    </ErrorBoundary>
+  );
+};
+
+export default Main;
