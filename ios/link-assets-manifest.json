@@ -1,0 +1,29 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/Anton-Regular.ttf",
+      "sha1": "49243712633711db3b673d0b03536e0180cd7ddb"
+    },
+    {
+      "path": "src/assets/fonts/BebasNeue-Regular.ttf",
+      "sha1": "85f76f690f6f8fd6786519c254983e232104a057"
+    },
+    {
+      "path": "src/assets/fonts/Inter-Bold.otf",
+      "sha1": "9a8f4c33e0d0c1d40803471cd22d1f3567a5012b"
+    },
+    {
+      "path": "src/assets/fonts/Inter-Medium.otf",
+      "sha1": "32ab2a6e5572684b51b9daadda26598481a2a01f"
+    },
+    {
+      "path": "src/assets/fonts/Inter-Regular.otf",
+      "sha1": "09656d6e99ab197db567c423125f533aaf3772a3"
+    },
+    {
+      "path": "src/assets/fonts/Inter-SemiBold.otf",
+      "sha1": "ce2ccd0b91ffb1f8c894b6d60f21443e0769217c"
+    }
+  ]
+}
