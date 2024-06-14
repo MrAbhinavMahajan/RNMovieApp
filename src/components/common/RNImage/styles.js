@@ -1,10 +1,11 @@
 import {StyleSheet} from 'react-native';
+import {COLORS} from '../../../constants/Colors';
 
 export const styles = StyleSheet.create({
   imageView: {
     height: '100%',
     width: '100%',
-    backgroundColor: '#dbeafe',
+    backgroundColor: COLORS.azureishWhite,
     justifyContent: 'center',
   },
   image: {

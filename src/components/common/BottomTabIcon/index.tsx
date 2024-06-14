@@ -1,18 +1,16 @@
 import React from 'react';
 import {View} from 'react-native';
 import {TabInfo} from '../../../utilities/TabUtils';
-import {IconSize, IoniIcon} from '../RNIcon';
+import {IconSize, MaterialIcon} from '../RNIcon';
+import {styles} from './styles';
 
 const BottomTabIcon = (props: TabInfo) => {
-  const {focused, color, size, iconName} = props;
+  const {focused, color, iconName} = props;
 
   return (
-    <View>
-      <IoniIcon
-        name={iconName}
-        size={IconSize.large}
-        color={'rgba(66, 9, 95, 1)'}
-      />
+    <View style={styles.tabIconView}>
+      <MaterialIcon name={iconName} size={IconSize.extraLarge} color={color} />
+      {focused && <View style={[styles.indicator, {backgroundColor: color}]} />}
     </View>
   );
 };

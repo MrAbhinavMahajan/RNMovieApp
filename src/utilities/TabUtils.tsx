@@ -15,11 +15,15 @@ export const TABS = {
     name: kTABS.HOME_TAB,
     options: {
       tabBarIcon: (data: TabInfo) => (
-        <BottomTabIcon
-          {...data}
-          iconName={data?.focused ? 'home' : 'home-outline'}
-          label={'Home'}
-        />
+        <BottomTabIcon {...data} iconName={'home'} label={'Home'} />
+      ),
+    },
+  },
+  [kTABS.FAVORITE_TAB]: {
+    name: kTABS.FAVORITE_TAB,
+    options: {
+      tabBarIcon: (data: TabInfo) => (
+        <BottomTabIcon {...data} iconName={'favorite'} label={'Watchlist'} />
       ),
     },
   },
@@ -27,11 +31,7 @@ export const TABS = {
     name: kTABS.WATCHLIST_TAB,
     options: {
       tabBarIcon: (data: TabInfo) => (
-        <BottomTabIcon
-          {...data}
-          iconName={data?.focused ? 'home' : 'home-outline'}
-          label={'Watchlist'}
-        />
+        <BottomTabIcon {...data} iconName={'list'} label={'Watchlist'} />
       ),
     },
   },

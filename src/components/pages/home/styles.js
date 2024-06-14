@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     borderColor: COLORS.fullWhite,
   },
   headerLeftCTAShadow: {
-    shadowColor: '#000',
+    shadowColor: COLORS.fullBlack,
     shadowOffset: {
       width: 0,
       height: 1,
