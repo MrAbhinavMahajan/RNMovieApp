@@ -31,7 +31,7 @@ export const TABS = {
     name: kTABS.WATCHLIST_TAB,
     options: {
       tabBarIcon: (data: TabInfo) => (
-        <BottomTabIcon {...data} iconName={'list'} label={'Watchlist'} />
+        <BottomTabIcon {...data} iconName={'bookmark'} label={'Watchlist'} />
       ),
     },
   },
