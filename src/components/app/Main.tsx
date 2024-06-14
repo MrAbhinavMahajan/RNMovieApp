@@ -1,5 +1,5 @@
 import React from 'react';
-import RootStack from '../stacks/RootStack';
+import MainStack from '../stacks/Main';
 import {ErrorBoundary} from '../common/ErrorBoundary';
 import AppFallback from '../common/AppFallback';
 
@@ -8,7 +8,7 @@ const Main = () => {
 
   return (
     <ErrorBoundary fallback={fallback}>
-      <RootStack />
+      <MainStack />
     </ErrorBoundary>
   );
 };

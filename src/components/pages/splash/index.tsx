@@ -13,7 +13,7 @@ const SplashScreen = () => {
 
   function componentDidMount() {
     initialLaunchTimer.current = setTimeout(() => {
-      NavigationService.navigateReplace(kSTACKS.MAIN_STACK);
+      NavigationService.navigateReplace(kSTACKS.MAIN_TAB);
     }, 3000);
   }
 

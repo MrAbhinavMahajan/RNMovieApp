@@ -1,19 +1,19 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {kROUTES} from '../../constants/Navigation';
-import HomeScreen from '../pages/home';
+import WatchlistScreen from '../pages/watchlist';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 
-const MainStack = () => (
+const WatchlistStack = () => (
   <Navigator
-    initialRouteName={kROUTES.HOME_SCREEN}
+    initialRouteName={kROUTES.WATCHLIST_SCREEN}
     screenOptions={{
       gestureEnabled: false,
       headerShown: false,
     }}>
-    <Screen name={kROUTES.HOME_SCREEN} component={HomeScreen} />
+    <Screen name={kROUTES.WATCHLIST_SCREEN} component={WatchlistScreen} />
   </Navigator>
 );
 
-export default MainStack;
+export default WatchlistStack;
