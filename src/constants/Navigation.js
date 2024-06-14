@@ -1,6 +1,13 @@
+export const kTABS = {
+  MAIN_TAB: 'MAIN_TAB', // * Root Tab
+  HOME_TAB: 'HOME_TAB',
+  WATCHLIST_TAB: 'WATCHLIST_TAB',
+};
+
 export const kSTACKS = {
+  MAIN_STACK: 'MAIN_STACK', // * Root Stack
   LAUNCH_STACK: 'LAUNCH_STACK',
-  MAIN_TAB: 'MAIN_TAB', // * // * Root Tab
+  MAIN_TAB: 'MAIN_TAB', // * Root Tab
   HOME_STACK: 'HOME_STACK',
   WATCHLIST_STACK: 'WATCHLIST_STACK',
 };

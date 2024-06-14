@@ -62,4 +62,7 @@ export const COLORS = {
   basic900: '#192038',
   basic1000: '#151a30',
   basic1100: '#101426',
+
+  fullBlack: '#000000',
+  fullWhite: '#FFFFFF',
 };

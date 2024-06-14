@@ -1,16 +1,17 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {styles} from './styles';
-import {kSTACKS} from '../../../constants/Navigation';
+import {kTABS} from '../../../constants/Navigation';
 import HomeStack from '../../stacks/Home';
 import WatchlistStack from '../../stacks/Watchlist';
+import {tabOptions} from '../../../utilities/TabUtils';
 
 const {Navigator, Screen} = createBottomTabNavigator();
 
 const MainTab = () => {
   return (
     <Navigator
-      initialRouteName={kSTACKS.HOME_STACK}
+      initialRouteName={kTABS.HOME_TAB}
       backBehavior={'initialRoute'}
       screenOptions={{
         tabBarShowLabel: false,
@@ -19,8 +20,16 @@ const MainTab = () => {
         tabBarAllowFontScaling: false,
         headerShown: false,
       }}>
-      <Screen name={kSTACKS.HOME_STACK} component={HomeStack} />
-      <Screen name={kSTACKS.WATCHLIST_STACK} component={WatchlistStack} />
+      <Screen
+        name={kTABS.HOME_TAB}
+        component={HomeStack}
+        options={tabOptions(kTABS.HOME_TAB)}
+      />
+      <Screen
+        name={kTABS.WATCHLIST_TAB}
+        component={WatchlistStack}
+        options={tabOptions(kTABS.WATCHLIST_TAB)}
+      />
     </Navigator>
   );
 };

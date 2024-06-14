@@ -1,12 +1,57 @@
 import React from 'react';
-import {View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import {STYLES} from '../../../constants/Styles';
+import AppHeader from '../../common/AppHeader';
+import {styles} from './styles';
+import RNImage from '../../common/RNImage';
+import AppCTA from '../../common/AppCTA';
+import {ShadowedView} from 'react-native-fast-shadow';
 import RNText from '../../common/RNText';
 
 const HomeScreen = () => {
+  const imageURL =
+    'https://media.licdn.com/dms/image/D5603AQEwgqk61oy06Q/profile-displayphoto-shrink_400_400/0/1713561898723?e=1723680000&v=beta&t=bvo0MwBiuhn4XpTHH0vWO5xr_VK6osWdSXn_KFtWseM';
+
+  const openHamburger = () => {};
+
+  const headerLeftCTA = () => {
+    return (
+      <ShadowedView style={styles.headerLeftCTAShadow}>
+        <View style={styles.headerLeftCTA}>
+          <AppCTA onPress={openHamburger}>
+            <RNImage
+              imageURL={imageURL}
+              imageViewStyles={styles.headerLeftCTAImage}
+            />
+          </AppCTA>
+        </View>
+      </ShadowedView>
+    );
+  };
+
+  const renderPageHeader = () => {
+    return <AppHeader LeftComponent={headerLeftCTA()} />;
+  };
+
+  const renderPageContent = () => {
+    return (
+      <View style={[STYLES.flex01, styles.pageContentView]}>
+        <RNText>Home Page</RNText>
+      </View>
+    );
+  };
+
+  const renderPageFooter = () => {
+    return <></>;
+  };
+
   return (
-    <View style={[STYLES.flex01, STYLES.flexItemsFullyCenter]}>
-      <RNText>HomeScreen</RNText>
+    <View style={STYLES.flex01}>
+      <ScrollView bounces={false} contentContainerStyle={STYLES.flexGrow}>
+        {renderPageHeader()}
+        {renderPageContent()}
+        {renderPageFooter()}
+      </ScrollView>
     </View>
   );
 };

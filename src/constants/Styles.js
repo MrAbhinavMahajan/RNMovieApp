@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../utilities/AppUtils';
+import {hpx} from '../libraries/responsive-pixels';
 export const STYLES = StyleSheet.create({
   fullWidth: {
     width: '100%',
@@ -57,3 +58,6 @@ export const STYLES = StyleSheet.create({
     flex: 3,
   },
 });
+
+export const STD_HORIZONTAL_SPACING = hpx(24);
+export const STD_VERTICAL_SPACING = hpx(16);
