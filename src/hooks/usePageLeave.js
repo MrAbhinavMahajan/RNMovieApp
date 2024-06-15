@@ -2,16 +2,15 @@
 import {useFocusEffect} from '@react-navigation/native';
 import {useCallback} from 'react';
 
-const usePageLeave = (props, callback) => {
+const usePageLeave = (callback, dependencies) => {
   useFocusEffect(
     useCallback(() => {
       return () => {
-        // sendPageLeaveEvent(props);
         if (typeof callback === 'function') {
           callback();
         }
       };
-    }, []),
+    }, [dependencies]),
   );
 };
 

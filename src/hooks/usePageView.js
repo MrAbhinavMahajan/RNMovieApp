@@ -2,14 +2,13 @@
 import {useFocusEffect} from '@react-navigation/native';
 import {useCallback} from 'react';
 
-const usePageView = (props, callback) => {
+const usePageView = (callback, dependencies) => {
   useFocusEffect(
     useCallback(() => {
-      // sendPageViewEvent(props);
       if (typeof callback === 'function') {
         callback();
       }
-    }, []),
+    }, [dependencies]),
   );
 };
 

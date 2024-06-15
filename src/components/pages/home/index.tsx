@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {ScrollView, View} from 'react-native';
 import {STYLES} from '../../../constants/Styles';
 import AppHeader from '../../common/AppHeader';
@@ -10,6 +10,8 @@ import {ShadowedView} from 'react-native-fast-shadow';
 const HomeScreen = () => {
   const imageURL =
     'https://media.licdn.com/dms/image/D5603AQEwgqk61oy06Q/profile-displayphoto-shrink_400_400/0/1713561898723?e=1723680000&v=beta&t=bvo0MwBiuhn4XpTHH0vWO5xr_VK6osWdSXn_KFtWseM';
+
+  useEffect(() => {}, []);
 
   const openHamburger = () => {};
 
