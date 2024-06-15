@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 import {vpx} from '../../../libraries/responsive-pixels';
 import {COLORS} from '../../../constants/Colors';
-import {STD_HORIZONTAL_SPACING} from '../../../constants/Styles';
+import {STD_SCREEN_COLOR, STYLES} from '../../../constants/Styles';
 
 export const styles = StyleSheet.create({
   headerLeftCTA: {
@@ -23,7 +23,9 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
   },
-  pageContentView: {
-    paddingHorizontal: STD_HORIZONTAL_SPACING,
+  screenView: {
+    ...STYLES.flex01,
+    backgroundColor: STD_SCREEN_COLOR,
   },
+  pageContentView: {},
 });

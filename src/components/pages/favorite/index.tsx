@@ -1,11 +1,13 @@
 import React from 'react';
 import {View} from 'react-native';
-import {STYLES} from '../../../constants/Styles';
 import RNText from '../../common/RNText';
+import {styles} from './styles';
+import AppHeader from '../../common/AppHeader';
 
 const FavoriteScreen = () => {
   return (
-    <View style={[STYLES.flex01, STYLES.flexItemsFullyCenter]}>
+    <View style={styles.screenView}>
+      <AppHeader />
       <RNText>FavoriteScreen</RNText>
     </View>
   );

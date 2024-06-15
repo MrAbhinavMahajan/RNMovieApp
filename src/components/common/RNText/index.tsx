@@ -2,7 +2,12 @@ import React from 'react';
 import {Text} from 'react-native';
 import {FONTS} from '../../../constants/Fonts';
 
-const RNText = (props: any) => {
+interface RNTextProps {
+  style: any;
+  children: any;
+}
+
+const RNText = (props: RNTextProps) => {
   const {children, style, ...textProps} = props;
   return (
     <Text

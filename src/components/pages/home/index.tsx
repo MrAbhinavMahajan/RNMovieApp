@@ -6,7 +6,6 @@ import {styles} from './styles';
 import RNImage from '../../common/RNImage';
 import AppCTA from '../../common/AppCTA';
 import {ShadowedView} from 'react-native-fast-shadow';
-import RNText from '../../common/RNText';
 
 const HomeScreen = () => {
   const imageURL =
@@ -30,15 +29,11 @@ const HomeScreen = () => {
   };
 
   const renderPageHeader = () => {
-    return <AppHeader LeftComponent={headerLeftCTA()} />;
+    return <AppHeader LeftComponent={headerLeftCTA()} title="Show Time" />;
   };
 
   const renderPageContent = () => {
-    return (
-      <View style={[STYLES.flex01, styles.pageContentView]}>
-        <RNText>Home Page</RNText>
-      </View>
-    );
+    return <View style={styles.pageContentView}></View>;
   };
 
   const renderPageFooter = () => {
@@ -46,7 +41,7 @@ const HomeScreen = () => {
   };
 
   return (
-    <View style={STYLES.flex01}>
+    <View style={styles.screenView}>
       <ScrollView bounces={false} contentContainerStyle={STYLES.flexGrow}>
         {renderPageHeader()}
         {renderPageContent()}

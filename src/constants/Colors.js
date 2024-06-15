@@ -66,6 +66,7 @@ export const COLORS = {
   fullBlack: '#000000',
   fullWhite: '#FFFFFF',
   azureishWhite: '#dbeafe',
+  antiFlashWhite: '#f3f4f6',
   oceanBlue: '#4338ca',
   lightGray: '#d4d4d4',
 };
