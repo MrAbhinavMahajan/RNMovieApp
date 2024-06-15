@@ -11,11 +11,15 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: vpx(16),
     justifyContent: 'space-between',
+    backgroundColor: COLORS.fullWhite,
   },
-  headerLeftInfoView: {
-    flexDirection: 'row',
+  headerLeftInfoView: {},
+  headerCenteredInfoView: {
+    flex: 1,
     alignItems: 'center',
+    marginHorizontal: STD_HORIZONTAL_SPACING,
   },
+  headerRightInfoView: {},
   headerTitle: {
     marginLeft: hpx(8),
     fontFamily: FONTS.Medium,

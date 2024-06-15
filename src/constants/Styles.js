@@ -59,5 +59,5 @@ export const STYLES = StyleSheet.create({
   },
 });
 
-export const STD_HORIZONTAL_SPACING = hpx(24);
+export const STD_HORIZONTAL_SPACING = hpx(16);
 export const STD_VERTICAL_SPACING = hpx(16);
