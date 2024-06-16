@@ -29,10 +29,11 @@ export const styles = StyleSheet.create({
   },
   pageView: {
     flex: 1,
-    paddingBottom: vpx(150),
   },
   listContentView: {
     ...STYLES.flexGrow,
     gap: vpx(16),
+    paddingBottom: vpx(150),
+    paddingTop: vpx(16),
   },
 });

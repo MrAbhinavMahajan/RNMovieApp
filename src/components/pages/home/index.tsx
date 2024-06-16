@@ -85,21 +85,22 @@ const HomeScreen = () => {
 
   const renderPageLayout = () => {
     return (
-      <FlatList
-        ref={listRef}
-        data={pageData?.results || []}
-        renderItem={data => {
-          return <MovieItem {...data} />;
-        }}
-        keyExtractor={item => `${item?.id}`}
-        style={styles.pageView}
-        contentContainerStyle={styles.listContentView} // * To take entire list view height
-        ListHeaderComponent={renderPageHeaderView}
-        showsVerticalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
-        }
-      />
+      <View style={styles.pageView}>
+        {renderPageHeaderView()}
+        <FlatList
+          ref={listRef}
+          data={pageData?.results || []}
+          renderItem={data => {
+            return <MovieItem {...data} />;
+          }}
+          keyExtractor={item => `${item?.id}`}
+          contentContainerStyle={styles.listContentView} // * To take entire list view height
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
+          }
+        />
+      </View>
     );
   };
 
