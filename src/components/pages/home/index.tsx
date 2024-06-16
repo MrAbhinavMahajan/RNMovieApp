@@ -1,14 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useRef} from 'react';
-import {
-  ActivityIndicator,
-  FlatList,
-  RefreshControl,
-  ScrollView,
-  View,
-} from 'react-native';
+import React, {useRef} from 'react';
+import {ActivityIndicator, FlatList, RefreshControl, View} from 'react-native';
 import {ShadowedView} from 'react-native-fast-shadow';
-import {STYLES} from '../../../constants/Styles';
 import {styles} from './styles';
 import AppHeader from '../../common/AppHeader';
 import RNImage from '../../common/RNImage';
@@ -56,25 +49,6 @@ const HomeScreen = () => {
     return <AppHeader LeftComponent={headerLeftCTA()} title="Show Time" />;
   };
 
-  const renderPageSuccessView = () => {
-    return (
-      <View style={styles.pageView}>
-        <FlatList
-          ref={listRef}
-          data={pageData?.results || []}
-          renderItem={data => {
-            return <MovieItem {...data} />;
-          }}
-          refreshControl={
-            <RefreshControl refreshing={isLoading} onRefresh={onPageRefresh} />
-          }
-          keyExtractor={item => `${item?.id}`}
-          contentContainerStyle={styles.listContentView} // * To take entire list view height
-        />
-      </View>
-    );
-  };
-
   const renderPageErrorView = () => {
     return (
       <View>
@@ -90,11 +64,13 @@ const HomeScreen = () => {
         <FlatList
           ref={listRef}
           data={pageData?.results || []}
+          numColumns={2}
           renderItem={data => {
             return <MovieItem {...data} />;
           }}
           keyExtractor={item => `${item?.id}`}
           contentContainerStyle={styles.listContentView} // * To take entire list view height
+          columnWrapperStyle={styles.listColumnWrapper}
           showsVerticalScrollIndicator={false}
           refreshControl={
             <RefreshControl refreshing={false} onRefresh={onPageRefresh} />

@@ -38,7 +38,6 @@ const RNImage = (props: RNImageProps) => {
     <View style={[styles.imageView, imageViewStyles]}>
       {loading && <ActivityIndicator size={'small'} style={styles.loader} />}
       <Image
-        {...data}
         source={{uri: imageURL}}
         style={[styles.image, imageStyles]}
         onError={onError}

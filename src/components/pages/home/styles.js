@@ -32,8 +32,12 @@ export const styles = StyleSheet.create({
   },
   listContentView: {
     ...STYLES.flexGrow,
-    gap: vpx(16),
-    paddingBottom: vpx(150),
-    paddingTop: vpx(16),
+    paddingBottom: vpx(100),
+    paddingTop: vpx(5),
+    paddingHorizontal: vpx(5),
+    gap: vpx(5), // Vertical Gap
+  },
+  listColumnWrapper: {
+    gap: vpx(5), // Horizontal Gap
   },
 });
