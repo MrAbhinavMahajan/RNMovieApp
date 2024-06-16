@@ -24,14 +24,10 @@ interface MovieItemProps {
 const MovieItem = ({item, index}: {item: MovieItemProps; index: number}) => {
   const {poster_path, backdrop_path} = item;
   const imageURL = `${IMAGE_BASEURL}${poster_path}`;
-  const backdropImageURL = `${IMAGE_BASEURL}${backdrop_path}`;
 
   return (
     <View key={index} style={styles.movieCardView}>
-      <RNImage
-        imageURL={imageURL || backdropImageURL}
-        imageStyles={styles.imageStyles}
-      />
+      <RNImage imageURL={imageURL} imageStyles={styles.imageStyles} />
     </View>
   );
 };
