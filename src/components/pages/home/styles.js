@@ -28,6 +28,11 @@ export const styles = StyleSheet.create({
     backgroundColor: STD_SCREEN_COLOR,
   },
   pageView: {
+    flex: 1,
     paddingBottom: vpx(150),
+  },
+  listContentView: {
+    ...STYLES.flexGrow,
+    gap: vpx(16),
   },
 });
