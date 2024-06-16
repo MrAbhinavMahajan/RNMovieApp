@@ -27,5 +27,7 @@ export const styles = StyleSheet.create({
     ...STYLES.flex01,
     backgroundColor: STD_SCREEN_COLOR,
   },
-  pageContentView: {},
+  pageView: {
+    paddingBottom: vpx(150),
+  },
 });
