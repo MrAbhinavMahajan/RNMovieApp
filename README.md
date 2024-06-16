@@ -1,1 +1,1 @@
-# RNMoviesApp
+# RNMovieApp
