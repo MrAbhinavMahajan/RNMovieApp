@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {NativeAppEventEmitter} from 'react-native';
 
-const UpcomingMoviesWidget = () => {
+const NowPlayingMoviesWidget = () => {
   const refreshWidget = () => {};
 
   useEffect(() => {
@@ -10,4 +10,4 @@ const UpcomingMoviesWidget = () => {
   return <></>;
 };
 
-export default UpcomingMoviesWidget;
+export default NowPlayingMoviesWidget;

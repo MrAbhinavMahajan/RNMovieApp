@@ -27,17 +27,4 @@ export const styles = StyleSheet.create({
     ...STYLES.flex01,
     backgroundColor: STD_SCREEN_COLOR,
   },
-  pageView: {
-    flex: 1,
-  },
-  listContentView: {
-    ...STYLES.flexGrow,
-    paddingBottom: vpx(100),
-    paddingTop: vpx(5),
-    paddingHorizontal: vpx(5),
-    gap: vpx(5), // Vertical Gap
-  },
-  listColumnWrapper: {
-    gap: vpx(5), // Horizontal Gap
-  },
 });

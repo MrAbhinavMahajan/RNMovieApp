@@ -3,8 +3,10 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {navigationRef} from '../../service/Navigation';
 import LaunchStack from './Launch';
-import {kSTACKS} from '../../constants/Navigation';
+import {kROUTES, kSTACKS} from '../../constants/Navigation';
 import MainTab from '../tabs/main';
+import MovieDetailsScreen from '../pages/movieDetails';
+import ViewAllMoviesScreen from '../pages/viewAllMovies';
 const {Navigator, Screen} = createNativeStackNavigator();
 
 // * NavigationContainer is a component which manages our navigation tree and contains the navigation state
@@ -21,8 +23,19 @@ const MainStack = () => {
           orientation: 'portrait',
           headerShown: false,
         }}>
+        {/* Tab Bar */}
         <Screen name={kSTACKS.LAUNCH_STACK} component={LaunchStack} />
         <Screen name={kSTACKS.MAIN_TAB} component={MainTab} />
+
+        {/* Non-Tab Bar Screens */}
+        <Screen
+          name={kROUTES.MOVIE_DETAILS_SCREEN}
+          component={MovieDetailsScreen}
+        />
+        <Screen
+          name={kROUTES.VIEW_ALL_MOVIES_SCREEN}
+          component={ViewAllMoviesScreen}
+        />
       </Navigator>
     </NavigationContainer>
   );
