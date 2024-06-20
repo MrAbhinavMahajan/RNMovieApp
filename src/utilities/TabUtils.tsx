@@ -19,6 +19,19 @@ export const TABS = {
       ),
     },
   },
+  [kTABS.SEARCH_TAB]: {
+    name: kTABS.SEARCH_TAB,
+    options: {
+      tabBarIcon: (data: TabInfo) => (
+        <BottomTabIcon
+          {...data}
+          iconName={'local-fire-department'}
+          label={'Search'}
+        />
+      ),
+    },
+  },
+
   [kTABS.FAVORITE_TAB]: {
     name: kTABS.FAVORITE_TAB,
     options: {

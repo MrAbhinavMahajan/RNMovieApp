@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react';
 import {NativeAppEventEmitter} from 'react-native';
+import {PAGE_REFRESH} from '../../../constants/Page';
 
 const UpcomingMoviesWidget = () => {
   const refreshWidget = () => {};
 
   useEffect(() => {
-    NativeAppEventEmitter.addListener('HOME_PAGE_REFRESH', refreshWidget);
+    NativeAppEventEmitter.addListener(PAGE_REFRESH.HOME_SCREEN, refreshWidget);
   }, []);
   return <></>;
 };

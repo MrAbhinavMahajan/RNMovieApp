@@ -7,6 +7,7 @@ import WatchlistStack from '../../stacks/Watchlist';
 import {tabOptions} from '../../../utilities/TabUtils';
 import FavoriteStack from '../../stacks/Favorite';
 import {COLORS} from '../../../constants/Colors';
+import SearchStack from '../../stacks/Search';
 
 const {Navigator, Screen} = createBottomTabNavigator();
 
@@ -28,6 +29,11 @@ const MainTab = () => {
         name={kTABS.HOME_TAB}
         component={HomeStack}
         options={tabOptions(kTABS.HOME_TAB)}
+      />
+      <Screen
+        name={kTABS.SEARCH_TAB}
+        component={SearchStack}
+        options={tabOptions(kTABS.SEARCH_TAB)}
       />
       <Screen
         name={kTABS.FAVORITE_TAB}

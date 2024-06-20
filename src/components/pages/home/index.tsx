@@ -16,6 +16,8 @@ import UpcomingMoviesWidget from '../../widgets/UpcomingMovies';
 import TopRatedMoviesWidget from '../../widgets/TopRatedMovies';
 import NowPlayingMoviesWidget from '../../widgets/NowPlaying';
 import QuotationWidget from '../../widgets/Quotation';
+import {PAGE_REFRESH} from '../../../constants/Page';
+import RecommendedMoviesWidget from '../../widgets/RecommendedMovies';
 
 const HomeScreen = () => {
   const imageURL =
@@ -25,13 +27,13 @@ const HomeScreen = () => {
 
   useEffect(() => {
     return () => {
-      NativeAppEventEmitter.removeAllListeners('HOME_PAGE_REFRESH');
+      NativeAppEventEmitter.removeAllListeners(PAGE_REFRESH.HOME_SCREEN);
     };
   }, []);
 
   const onPageRefresh = () => {
     // Emit HomePage Refresh Event
-    NativeAppEventEmitter.emit('HOME_PAGE_REFRESH');
+    NativeAppEventEmitter.emit(PAGE_REFRESH.HOME_SCREEN);
   };
 
   const headerLeftCTA = () => {
@@ -61,6 +63,7 @@ const HomeScreen = () => {
         <NowPlayingMoviesWidget />
         <UpcomingMoviesWidget />
         <TopRatedMoviesWidget />
+        <RecommendedMoviesWidget />
         <QuotationWidget />
       </ScrollView>
     </View>
