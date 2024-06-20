@@ -44,6 +44,11 @@ export const AppBackIcon = ({
   size = IconSize.large,
 }) => <MaterialIcon name={'arrow-back'} size={size} color={color} />;
 
+export const AppArrowUpIcon = ({
+  color = COLORS.fullWhite,
+  size = IconSize.large,
+}) => <MaterialIcon name={'keyboard-arrow-up'} size={size} color={color} />;
+
 export const AppCrossIcon = ({
   color = COLORS.fullBlack,
   size = IconSize.large,

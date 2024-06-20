@@ -27,4 +27,13 @@ export const styles = StyleSheet.create({
     ...STYLES.flex01,
     backgroundColor: STD_SCREEN_COLOR,
   },
+  scrollToTopBtn: {
+    backgroundColor: COLORS.oceanBlue,
+    alignSelf: 'center',
+    position: 'absolute',
+    zIndex: 1,
+    bottom: vpx(120),
+    borderRadius: 1000,
+    padding: vpx(3),
+  },
 });
