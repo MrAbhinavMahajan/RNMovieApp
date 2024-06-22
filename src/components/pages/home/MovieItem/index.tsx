@@ -23,14 +23,22 @@ interface MovieItemProps {
   vote_count: number;
 }
 
-const MovieItem = ({item, index}: {item: MovieItemProps; index: number}) => {
+const MovieItem = ({
+  item,
+  index,
+  style,
+}: {
+  item: MovieItemProps;
+  index: number;
+  style: any;
+}) => {
   const {poster_path, backdrop_path, title} = item;
   const imageURL = `${IMAGE_BASEURL}${poster_path}`;
 
   return (
     <TouchableOpacity
       key={index}
-      style={styles.movieCardView}
+      style={[styles.movieCardView, style]}
       onPress={() => {
         NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
           queryParams: {screenTitle: title},

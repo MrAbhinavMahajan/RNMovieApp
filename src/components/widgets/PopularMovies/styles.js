@@ -2,6 +2,7 @@ import {StyleSheet} from 'react-native';
 import {STD_HORIZONTAL_SPACING} from '../../../constants/Styles';
 import {hpx, vpx} from '../../../libraries/responsive-pixels';
 import {COLORS} from '../../../constants/Colors';
+import {SCREEN_WIDTH} from '../../../utilities/AppUtils';
 
 export const styles = StyleSheet.create({
   headerView: {
@@ -25,5 +26,8 @@ export const styles = StyleSheet.create({
     bottom: vpx(120),
     borderRadius: 1000,
     padding: vpx(3),
+  },
+  movieItem: {
+    width: SCREEN_WIDTH / 3 - STD_HORIZONTAL_SPACING,
   },
 });

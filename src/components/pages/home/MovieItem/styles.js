@@ -5,8 +5,8 @@ import {hpx, vpx} from '../../../../libraries/responsive-pixels';
 export const styles = StyleSheet.create({
   movieCardView: {
     backgroundColor: COLORS.fullWhite,
-    height: vpx(150),
-    width: hpx(90),
+    width: vpx(80),
+    aspectRatio: 3 / 5,
     borderRadius: vpx(8),
     overflow: 'hidden',
   },

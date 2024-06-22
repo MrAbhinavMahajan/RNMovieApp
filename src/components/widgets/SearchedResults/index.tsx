@@ -5,6 +5,7 @@ import {FlatList} from 'react-native';
 import MovieItem from '../../pages/home/MovieItem';
 import {styles} from './styles';
 import {fetchSearchedMovieResults} from '../../../apis/Main';
+import {SCREEN_WIDTH} from '../../../utilities/AppUtils';
 
 interface SearchedResultsWidgetProps {
   searchedText: string;
@@ -33,7 +34,7 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
       ref={listRef}
       data={data?.results || []}
       renderItem={data => {
-        return <MovieItem {...data} />;
+        return <MovieItem {...data} style={styles.movieItem} />;
       }}
       keyExtractor={item => `${item?.id}`}
       numColumns={3}

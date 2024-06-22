@@ -33,7 +33,7 @@ const HomeScreen = () => {
   };
 
   const scrollToTop = () => {
-    scrollRef?.current.scrollTo({x: 0, y: 0, animated: true});
+    scrollRef.current?.scrollTo({x: 0, y: 0, animated: true});
   };
 
   return (
