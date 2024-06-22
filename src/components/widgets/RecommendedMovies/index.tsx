@@ -1,5 +1,5 @@
-import {queryOptions, useQuery, useQueryClient} from '@tanstack/react-query';
-import React, {useEffect, useRef} from 'react';
+import {useQuery, useQueryClient} from '@tanstack/react-query';
+import React, {useEffect, useRef, useState} from 'react';
 import {fetchRecommendedMovies} from '../../../apis/Main';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
 import * as NavigationService from '../../../service/Navigation';
@@ -18,8 +18,8 @@ const RecommendedMoviesWidget = () => {
   });
   console.log(`recommendedMovies for id ${lastMovieId}: \n`, query);
   const {data, error, isLoading, isSuccess, refetch} = query;
-
   const listRef = useRef(null);
+  const [isRightCTAEnabled, setRightCTAEnabled] = useState(false);
 
   const refreshWidget = () => {
     refetch();
@@ -33,6 +33,11 @@ const RecommendedMoviesWidget = () => {
     });
   };
 
+  const onScroll = (event: any) => {
+    const listScrollPos = event?.nativeEvent?.contentOffset?.x || 0;
+    setRightCTAEnabled(listScrollPos > 120);
+  };
+
   useEffect(() => {
     NativeAppEventEmitter.addListener(PAGE_REFRESH.HOME_SCREEN, refreshWidget);
   }, []);
@@ -43,9 +48,11 @@ const RecommendedMoviesWidget = () => {
         title={'Recommended'}
         containerStyles={styles.headerView}
         rightCTAAction={onViewAllAction}
+        rightCTAEnabled={isRightCTAEnabled}
       />
       <FlatList
         ref={listRef}
+        onScroll={onScroll}
         data={data?.results || []}
         renderItem={data => {
           return <MovieItem {...data} />;

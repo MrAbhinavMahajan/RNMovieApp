@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
 import {PAGE_REFRESH} from '../../../constants/Page';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
@@ -17,8 +17,8 @@ const TopRatedMoviesWidget = () => {
   });
   console.log('topRatedMovies: \n', query);
   const {data, error, isLoading, isSuccess, refetch} = query;
-
   const listRef = useRef(null);
+  const [isRightCTAEnabled, setRightCTAEnabled] = useState(false);
 
   const refreshWidget = () => {
     refetch();
@@ -32,6 +32,11 @@ const TopRatedMoviesWidget = () => {
     });
   };
 
+  const onScroll = (event: any) => {
+    const listScrollPos = event?.nativeEvent?.contentOffset?.x || 0;
+    setRightCTAEnabled(listScrollPos > 120);
+  };
+
   useEffect(() => {
     NativeAppEventEmitter.addListener(PAGE_REFRESH.HOME_SCREEN, refreshWidget);
   }, []);
@@ -42,9 +47,11 @@ const TopRatedMoviesWidget = () => {
         title={'Top Rated'}
         containerStyles={styles.headerView}
         rightCTAAction={onViewAllAction}
+        rightCTAEnabled={isRightCTAEnabled}
       />
       <FlatList
         ref={listRef}
+        onScroll={onScroll}
         data={data?.results || []}
         renderItem={data => {
           return <MovieItem {...data} />;

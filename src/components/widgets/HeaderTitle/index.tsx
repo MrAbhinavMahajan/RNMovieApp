@@ -9,10 +9,11 @@ interface HeaderTitleWidgetProps {
   title: string;
   containerStyles: any;
   rightCTAAction: () => void;
+  rightCTAEnabled: boolean;
 }
 
 const HeaderTitleWidget = (props: HeaderTitleWidgetProps) => {
-  const {title, containerStyles, rightCTAAction} = props;
+  const {title, containerStyles, rightCTAEnabled, rightCTAAction} = props;
   return (
     <TouchableOpacity
       style={[styles.contentView, containerStyles]}
@@ -20,7 +21,9 @@ const HeaderTitleWidget = (props: HeaderTitleWidgetProps) => {
       disabled={!rightCTAAction}
       onPress={rightCTAAction}>
       <RNText style={styles.titleText}>{title}</RNText>
-      <AppNextIcon color={COLORS.fullBlack} />
+      {rightCTAEnabled && !!rightCTAAction && (
+        <AppNextIcon color={COLORS.fullBlack} />
+      )}
     </TouchableOpacity>
   );
 };
