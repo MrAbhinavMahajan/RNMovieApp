@@ -17,6 +17,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: STD_HORIZONTAL_SPACING,
     gap: hpx(8),
     paddingBottom: vpx(200),
+    flexGrow: 1,
   },
   columnWrapperView: {
     gap: hpx(8),

@@ -8,6 +8,10 @@ const FavoriteScreen = () => {
   const scrollRef = useRef(null);
   const onPageRefresh = () => {};
 
+  const scrollToTop = () => {
+    scrollRef?.current.scrollTo({x: 0, y: 0, animated: true});
+  };
+
   return (
     <View style={styles.screenView}>
       <ScrollView
@@ -18,7 +22,10 @@ const FavoriteScreen = () => {
         }>
         <AppHeader title={'Favorites'} />
       </ScrollView>
-      <ScrollToTopCTA scrollRef={scrollRef} styles={[styles.scrollToTopBtn]} />
+      <ScrollToTopCTA
+        scrollToTop={scrollToTop}
+        styles={[styles.scrollToTopBtn]}
+      />
     </View>
   );
 };

@@ -32,6 +32,10 @@ const HomeScreen = () => {
     NativeAppEventEmitter.emit(PAGE_REFRESH.HOME_SCREEN);
   };
 
+  const scrollToTop = () => {
+    scrollRef?.current.scrollTo({x: 0, y: 0, animated: true});
+  };
+
   return (
     <View style={styles.screenView}>
       <ScrollView
@@ -54,7 +58,10 @@ const HomeScreen = () => {
           subtitle={'Crafted with ❤️ in Chamba, India'}
         />
       </ScrollView>
-      <ScrollToTopCTA scrollRef={scrollRef} styles={[styles.scrollToTopBtn]} />
+      <ScrollToTopCTA
+        scrollToTop={scrollToTop}
+        styles={[styles.scrollToTopBtn]}
+      />
     </View>
   );
 };

@@ -10,8 +10,8 @@ interface AppCTAProps {
 }
 
 interface ScrollToTopCTAProps {
-  scrollRef: any;
   styles?: any;
+  scrollToTop: () => void;
 }
 const AppCTA = (props: AppCTAProps) => {
   const {children, ...remainingProps} = props;
@@ -19,10 +19,7 @@ const AppCTA = (props: AppCTAProps) => {
 };
 
 export const ScrollToTopCTA = (props: ScrollToTopCTAProps) => {
-  const {styles, scrollRef} = props;
-  const scrollToTop = () => {
-    scrollRef?.current.scrollTo({x: 0, y: 0, animated: true});
-  };
+  const {styles, scrollToTop} = props;
 
   return (
     <TouchableOpacity style={styles} onPress={scrollToTop}>

@@ -11,5 +11,6 @@ export const styles = StyleSheet.create({
     marginTop: vpx(10),
     paddingHorizontal: STD_HORIZONTAL_SPACING,
     gap: hpx(8),
+    flexGrow: 1,
   },
 });

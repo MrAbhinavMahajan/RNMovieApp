@@ -1,9 +1,12 @@
 import {StyleSheet} from 'react-native';
 import {STD_HORIZONTAL_SPACING} from '../../../constants/Styles';
 import {hpx, vpx} from '../../../libraries/responsive-pixels';
-import {COLORS} from '../../../constants/Colors';
 
 export const styles = StyleSheet.create({
+  containerView: {
+    zIndex: 1,
+    flex: 1,
+  },
   headerView: {
     paddingLeft: STD_HORIZONTAL_SPACING,
     paddingRight: hpx(8),
@@ -16,14 +19,5 @@ export const styles = StyleSheet.create({
   },
   columnWrapperView: {
     gap: hpx(8),
-  },
-  scrollToTopBtn: {
-    backgroundColor: COLORS.oceanBlue,
-    alignSelf: 'center',
-    position: 'absolute',
-    zIndex: 1,
-    bottom: vpx(120),
-    borderRadius: 1000,
-    padding: vpx(3),
   },
 });

@@ -6,5 +6,6 @@ export const styles = StyleSheet.create({
   scrollableContentView: {
     paddingHorizontal: STD_HORIZONTAL_SPACING,
     gap: hpx(8),
+    flexGrow: 1,
   },
 });

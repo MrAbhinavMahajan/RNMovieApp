@@ -19,10 +19,6 @@ const PopularMoviesWidget = () => {
     refetch();
   };
 
-  const onScroll = (event: any) => {
-    const listScrollPos = event?.nativeEvent?.contentOffset?.y || 0;
-  };
-
   useEffect(() => {
     NativeAppEventEmitter.addListener(PAGE_REFRESH.HOME_SCREEN, refreshWidget);
   }, []);
@@ -30,15 +26,15 @@ const PopularMoviesWidget = () => {
   return (
     <FlatList
       ref={listRef}
-      onScroll={onScroll}
       data={data?.results || []}
       renderItem={data => {
         return <MovieItem {...data} />;
       }}
       keyExtractor={item => `${item?.id}`}
+      contentInsetAdjustmentBehavior={'automatic'}
+      keyboardDismissMode="on-drag"
       numColumns={3}
       columnWrapperStyle={styles.columnWrapperView}
-      showsVerticalScrollIndicator={false}
       contentContainerStyle={styles.scrollableContentView}
     />
   );

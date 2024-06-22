@@ -6,7 +6,12 @@ import {ScrollToTopCTA} from '../../common/AppCTA';
 
 const WatchlistScreen = () => {
   const scrollRef = useRef(null);
+
   const onPageRefresh = () => {};
+
+  const scrollToTop = () => {
+    scrollRef?.current.scrollTo({x: 0, y: 0, animated: true});
+  };
 
   return (
     <View style={styles.screenView}>
@@ -18,7 +23,10 @@ const WatchlistScreen = () => {
         }>
         <AppHeader title={'Watchlist'} />
       </ScrollView>
-      <ScrollToTopCTA scrollRef={scrollRef} styles={[styles.scrollToTopBtn]} />
+      <ScrollToTopCTA
+        scrollToTop={scrollToTop}
+        styles={[styles.scrollToTopBtn]}
+      />
     </View>
   );
 };

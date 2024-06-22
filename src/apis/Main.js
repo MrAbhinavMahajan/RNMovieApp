@@ -132,3 +132,25 @@ export const fetchPopularMovies = async () => {
   const json = await response.json();
   return json;
 };
+
+export const fetchSearchedMovieResults = async searchedText => {
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${AccessToken}`,
+    },
+  };
+
+  const response = await fetch(
+    `https://api.themoviedb.org/3/search/movie?query=${searchedText}&language=en-US&page=1`,
+    options,
+  );
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch search results for ${searchedText}`);
+  }
+
+  const json = await response.json();
+  return json;
+};

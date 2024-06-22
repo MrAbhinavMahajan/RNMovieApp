@@ -10,7 +10,7 @@ import HeaderTitleWidget from '../HeaderTitle';
 import MovieItem from '../../pages/home/MovieItem';
 
 const RecommendedMoviesWidget = () => {
-  const queryClient = useQueryClient(); // * Access the TanStack Query Client
+  const queryClient = useQueryClient();
   const lastMovieId = 278;
   const query = useQuery({
     queryKey: ['recommendedMovies'],
