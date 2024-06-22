@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {STD_HORIZONTAL_SPACING} from '../../../constants/Styles';
-import {hpx, vpx} from '../../../libraries/responsive-pixels';
+import {hpx} from '../../../libraries/responsive-pixels';
 
 export const styles = StyleSheet.create({
   headerView: {
@@ -8,7 +8,6 @@ export const styles = StyleSheet.create({
     paddingRight: hpx(8),
   },
   scrollableContentView: {
-    marginTop: vpx(16),
     paddingHorizontal: STD_HORIZONTAL_SPACING,
     gap: hpx(8),
   },

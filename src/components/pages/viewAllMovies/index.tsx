@@ -1,14 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect} from 'react';
-import {
-  NativeAppEventEmitter,
-  RefreshControl,
-  ScrollView,
-  View,
-} from 'react-native';
+import React, {useRef} from 'react';
+import {FlatList, RefreshControl, View} from 'react-native';
 import {styles} from './styles';
 import AppHeader from '../../common/AppHeader';
-import {PAGE_REFRESH} from '../../../constants/Page';
+import {useQuery, useQueryClient} from '@tanstack/react-query';
+import {fetchUpcomingMovies} from '../../../apis/Main';
+import MovieItem from '../home/MovieItem';
 
 interface ViewAllMoviesScreenProps {
   route: {
@@ -21,31 +18,39 @@ interface ViewAllMoviesScreenProps {
 }
 
 const ViewAllMoviesScreen = (props: ViewAllMoviesScreenProps) => {
+  const queryClient = useQueryClient();
+  const query = useQuery({
+    queryKey: ['upcomingMovies'],
+    queryFn: fetchUpcomingMovies,
+  });
+  console.log('upcomingMovies: \n', query);
+  const {data, error, isLoading, isSuccess, refetch} = query;
   const {queryParams} = props.route?.params;
   const {screenTitle} = queryParams;
-  useEffect(() => {
-    return () => {
-      NativeAppEventEmitter.removeAllListeners(
-        PAGE_REFRESH.MOVIE_DETAILS_SCREEN,
-      );
-    };
-  }, []);
+  const listRef = useRef(null);
 
   const onPageRefresh = () => {
-    // Emit HomePage Refresh Event
-    NativeAppEventEmitter.emit(PAGE_REFRESH.MOVIE_DETAILS_SCREEN);
+    refetch();
   };
 
   return (
     <View style={styles.screenView}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
+      <AppHeader title={screenTitle} />
+      <FlatList
+        ref={listRef}
+        data={data?.results || []}
+        renderItem={data => {
+          return <MovieItem {...data} />;
+        }}
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
-        }>
-        <AppHeader title={screenTitle} />
-        {/* Tab Bar */}
-      </ScrollView>
+        }
+        keyExtractor={item => `${item?.id}`}
+        numColumns={3}
+        columnWrapperStyle={styles.columnWrapperView}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollableContentView}
+      />
     </View>
   );
 };

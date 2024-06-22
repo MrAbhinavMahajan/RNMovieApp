@@ -1,8 +1,10 @@
 import React from 'react';
-import {View} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import {styles} from './styles';
 import RNImage from '../../../common/RNImage';
 import {IMAGE_BASEURL} from '../../../../constants/Main';
+import * as NavigationService from '../../../../service/Navigation';
+import {kROUTES} from '../../../../constants/Navigation';
 
 interface MovieItemProps {
   adult: boolean;
@@ -22,13 +24,20 @@ interface MovieItemProps {
 }
 
 const MovieItem = ({item, index}: {item: MovieItemProps; index: number}) => {
-  const {poster_path, backdrop_path} = item;
+  const {poster_path, backdrop_path, title} = item;
   const imageURL = `${IMAGE_BASEURL}${poster_path}`;
 
   return (
-    <View key={index} style={styles.movieCardView}>
+    <TouchableOpacity
+      key={index}
+      style={styles.movieCardView}
+      onPress={() => {
+        NavigationService.navigate(kROUTES.MOVIE_DETAILS_SCREEN, {
+          queryParams: {screenTitle: title},
+        });
+      }}>
       <RNImage imageURL={imageURL} imageStyles={styles.imageStyles} />
-    </View>
+    </TouchableOpacity>
   );
 };
 

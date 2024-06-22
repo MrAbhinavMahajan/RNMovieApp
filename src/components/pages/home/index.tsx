@@ -16,7 +16,7 @@ import QuotationWidget from '../../widgets/Quotation';
 import {PAGE_REFRESH} from '../../../constants/Page';
 import RecommendedMoviesWidget from '../../widgets/RecommendedMovies';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {vpx} from '../../../libraries/responsive-pixels';
+import {STD_VERTICAL_SPACING} from '../../../constants/Styles';
 
 const HomeScreen = () => {
   const insets = useSafeAreaInsets();
@@ -33,10 +33,13 @@ const HomeScreen = () => {
   };
 
   return (
-    <View style={[styles.screenView, {paddingTop: insets.top + vpx(16)}]}>
+    <View style={styles.screenView}>
       <ScrollView
         ref={scrollRef}
-        contentContainerStyle={styles.screenScrollableView}
+        contentContainerStyle={[
+          styles.screenScrollableView,
+          {paddingTop: insets.top + STD_VERTICAL_SPACING},
+        ]}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={onPageRefresh} />

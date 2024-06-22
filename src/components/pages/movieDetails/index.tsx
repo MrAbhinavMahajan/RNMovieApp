@@ -1,28 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect} from 'react';
-import {
-  NativeAppEventEmitter,
-  RefreshControl,
-  ScrollView,
-  View,
-} from 'react-native';
+import React from 'react';
+import {RefreshControl, ScrollView, View} from 'react-native';
 import {styles} from './styles';
 import AppHeader from '../../common/AppHeader';
-import {PAGE_REFRESH} from '../../../constants/Page';
 
-const MovieDetailsScreen = () => {
-  useEffect(() => {
-    return () => {
-      NativeAppEventEmitter.removeAllListeners(
-        PAGE_REFRESH.MOVIE_DETAILS_SCREEN,
-      );
+interface MovieDetailsScreenProps {
+  route: {
+    params: {
+      queryParams: {
+        screenTitle: string;
+      };
     };
-  }, []);
-
-  const onPageRefresh = () => {
-    // Emit HomePage Refresh Event
-    NativeAppEventEmitter.emit(PAGE_REFRESH.MOVIE_DETAILS_SCREEN);
   };
+}
+
+const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
+  const {queryParams} = props.route?.params;
+  const {screenTitle} = queryParams;
+  const onPageRefresh = () => {};
 
   return (
     <View style={styles.screenView}>
@@ -31,7 +26,7 @@ const MovieDetailsScreen = () => {
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
         }>
-        <AppHeader title="Movies" />
+        <AppHeader title={screenTitle} />
         {/* Tab Bar */}
       </ScrollView>
     </View>
