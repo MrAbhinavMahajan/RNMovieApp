@@ -8,14 +8,17 @@ import {COLORS} from '../../../constants/Colors';
 interface HeaderTitleWidgetProps {
   title: string;
   containerStyles: any;
+  rightCTAAction: () => void;
 }
 
 const HeaderTitleWidget = (props: HeaderTitleWidgetProps) => {
-  const {title, containerStyles} = props;
+  const {title, containerStyles, rightCTAAction} = props;
   return (
     <TouchableOpacity
       style={[styles.contentView, containerStyles]}
-      activeOpacity={0.7}>
+      activeOpacity={0.7}
+      disabled={!rightCTAAction}
+      onPress={rightCTAAction}>
       <RNText style={styles.titleText}>{title}</RNText>
       <AppNextIcon color={COLORS.fullBlack} />
     </TouchableOpacity>

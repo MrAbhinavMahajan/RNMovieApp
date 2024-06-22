@@ -51,7 +51,7 @@ export const AppArrowUpIcon = ({
 
 export const AppNextIcon = ({
   color = COLORS.fullWhite,
-  size = IconSize.large,
+  size = IconSize.extraLarge,
 }) => <MaterialIcon name={'chevron-right'} size={size} color={color} />;
 
 export const AppCrossIcon = ({

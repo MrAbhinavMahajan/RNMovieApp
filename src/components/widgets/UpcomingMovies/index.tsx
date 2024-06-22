@@ -3,8 +3,10 @@ import {FlatList, NativeAppEventEmitter, View} from 'react-native';
 import {PAGE_REFRESH} from '../../../constants/Page';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
 import {fetchUpcomingMovies} from '../../../apis/Main';
-import MovieItem from '../../pages/home/MovieItem';
+import * as NavigationService from '../../../service/Navigation';
+import {kROUTES} from '../../../constants/Navigation';
 import {styles} from './styles';
+import MovieItem from '../../pages/home/MovieItem';
 import HeaderTitleWidget from '../HeaderTitle';
 
 const UpcomingMoviesWidget = () => {
@@ -22,6 +24,14 @@ const UpcomingMoviesWidget = () => {
     refetch();
   };
 
+  const onViewAllAction = () => {
+    NavigationService.navigate(kROUTES.VIEW_ALL_MOVIES_SCREEN, {
+      queryParams: {
+        screenTitle: 'Coming Soon Movies',
+      },
+    });
+  };
+
   useEffect(() => {
     NativeAppEventEmitter.addListener(PAGE_REFRESH.HOME_SCREEN, refreshWidget);
   }, []);
@@ -31,6 +41,7 @@ const UpcomingMoviesWidget = () => {
       <HeaderTitleWidget
         title={'Coming Soon'}
         containerStyles={styles.headerView}
+        rightCTAAction={onViewAllAction}
       />
       <FlatList
         ref={listRef}

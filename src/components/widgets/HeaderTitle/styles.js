@@ -14,4 +14,8 @@ export const styles = StyleSheet.create({
     fontSize: fpx(18),
     color: COLORS.fullBlack,
   },
+  rightCTA: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 });

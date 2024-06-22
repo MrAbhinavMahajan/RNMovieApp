@@ -1,11 +1,13 @@
-import {useQuery, useQueryClient} from '@tanstack/react-query';
+import {queryOptions, useQuery, useQueryClient} from '@tanstack/react-query';
 import React, {useEffect, useRef} from 'react';
 import {fetchRecommendedMovies} from '../../../apis/Main';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
-import {PAGE_REFRESH} from '../../../constants/Page';
-import MovieItem from '../../pages/home/MovieItem';
+import * as NavigationService from '../../../service/Navigation';
+import {kROUTES} from '../../../constants/Navigation';
 import {styles} from './styles';
+import {PAGE_REFRESH} from '../../../constants/Page';
 import HeaderTitleWidget from '../HeaderTitle';
+import MovieItem from '../../pages/home/MovieItem';
 
 const RecommendedMoviesWidget = () => {
   const queryClient = useQueryClient(); // * Access the TanStack Query Client
@@ -23,6 +25,14 @@ const RecommendedMoviesWidget = () => {
     refetch();
   };
 
+  const onViewAllAction = () => {
+    NavigationService.navigate(kROUTES.VIEW_ALL_MOVIES_SCREEN, {
+      queryParams: {
+        screenTitle: 'Recommended Movies',
+      },
+    });
+  };
+
   useEffect(() => {
     NativeAppEventEmitter.addListener(PAGE_REFRESH.HOME_SCREEN, refreshWidget);
   }, []);
@@ -32,6 +42,7 @@ const RecommendedMoviesWidget = () => {
       <HeaderTitleWidget
         title={'Recommended'}
         containerStyles={styles.headerView}
+        rightCTAAction={onViewAllAction}
       />
       <FlatList
         ref={listRef}
