@@ -69,4 +69,5 @@ export const COLORS = {
   antiFlashWhite: '#f3f4f6',
   oceanBlue: '#4338ca',
   lightGray: '#d4d4d4',
+  quickSilver: '#a3a3a3',
 };

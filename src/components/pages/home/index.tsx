@@ -18,10 +18,9 @@ import NowPlayingMoviesWidget from '../../widgets/NowPlaying';
 import QuotationWidget from '../../widgets/Quotation';
 import {PAGE_REFRESH} from '../../../constants/Page';
 import RecommendedMoviesWidget from '../../widgets/RecommendedMovies';
+import {PROFILE_IMAGE} from '../../../constants/Assets';
 
 const HomeScreen = () => {
-  const imageURL =
-    'https://media.licdn.com/dms/image/D5603AQEwgqk61oy06Q/profile-displayphoto-shrink_400_400/0/1713561898723?e=1723680000&v=beta&t=bvo0MwBiuhn4XpTHH0vWO5xr_VK6osWdSXn_KFtWseM';
   const scrollRef = useRef(null);
   const openHamburger = () => {};
 
@@ -42,7 +41,7 @@ const HomeScreen = () => {
         <View style={styles.headerLeftCTA}>
           <AppCTA onPress={openHamburger}>
             <RNImage
-              imageURL={imageURL}
+              imageURL={PROFILE_IMAGE}
               imageViewStyles={styles.headerLeftCTAImage}
             />
           </AppCTA>
@@ -56,6 +55,7 @@ const HomeScreen = () => {
       <AppHeader LeftComponent={headerLeftCTA()} title="Show Time" />
       <ScrollView
         ref={scrollRef}
+        contentContainerStyle={styles.screenScrollableView}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
@@ -65,7 +65,10 @@ const HomeScreen = () => {
         <UpcomingMoviesWidget />
         <TopRatedMoviesWidget />
         <RecommendedMoviesWidget />
-        <QuotationWidget />
+        <QuotationWidget
+          title={`Live${'\n'}it up!`}
+          subtitle={'Crafted with ❤️ in Chamba, India'}
+        />
       </ScrollView>
       <ScrollToTopCTA scrollRef={scrollRef} styles={[styles.scrollToTopBtn]} />
     </View>
