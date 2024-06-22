@@ -32,19 +32,11 @@ export const TABS = {
     },
   },
 
-  [kTABS.FAVORITE_TAB]: {
-    name: kTABS.FAVORITE_TAB,
+  [kTABS.PROFILE_TAB]: {
+    name: kTABS.PROFILE_TAB,
     options: {
       tabBarIcon: (data: TabInfo) => (
-        <BottomTabIcon {...data} iconName={'favorite'} label={'Watchlist'} />
-      ),
-    },
-  },
-  [kTABS.WATCHLIST_TAB]: {
-    name: kTABS.WATCHLIST_TAB,
-    options: {
-      tabBarIcon: (data: TabInfo) => (
-        <BottomTabIcon {...data} iconName={'bookmark'} label={'Watchlist'} />
+        <BottomTabIcon {...data} iconName={'person'} label={'Me'} />
       ),
     },
   },
