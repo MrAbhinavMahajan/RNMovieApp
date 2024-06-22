@@ -4,7 +4,7 @@ import {PAGE_REFRESH} from '../../../constants/Page';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
 import {fetchTopRatedMovies} from '../../../apis/Main';
 import * as NavigationService from '../../../service/Navigation';
-import {kROUTES} from '../../../constants/Navigation';
+import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
 import {styles} from './styles';
 import MovieItem from '../../pages/home/MovieItem';
 import HeaderTitleWidget from '../HeaderTitle';
@@ -25,9 +25,10 @@ const TopRatedMoviesWidget = () => {
   };
 
   const onViewAllAction = () => {
-    NavigationService.navigate(kROUTES.VIEW_ALL_MOVIES_SCREEN, {
+    NavigationService.navigate(APP_PAGES_MAP.VIEW_ALL_MOVIES_SCREEN, {
       queryParams: {
         screenTitle: 'Top Rated Movies',
+        widgetId: APP_WIDGETS_MAP.TOP_RATED_MOVIES,
       },
     });
   };

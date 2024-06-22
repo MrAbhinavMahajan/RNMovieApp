@@ -4,14 +4,21 @@ import {FlatList, RefreshControl, View} from 'react-native';
 import {styles} from './styles';
 import AppHeader from '../../common/AppHeader';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
-import {fetchUpcomingMovies} from '../../../apis/Main';
+import {
+  fetchNowPlayingMovies,
+  fetchRecommendedMovies,
+  fetchTopRatedMovies,
+  fetchUpcomingMovies,
+} from '../../../apis/Main';
 import MovieItem from '../home/MovieItem';
+import {APP_WIDGETS_MAP} from '../../../constants/Navigation';
 
 interface ViewAllMoviesScreenProps {
   route: {
     params: {
       queryParams: {
         screenTitle: string;
+        widgetId: string;
       };
     };
   };
@@ -19,14 +26,32 @@ interface ViewAllMoviesScreenProps {
 
 const ViewAllMoviesScreen = (props: ViewAllMoviesScreenProps) => {
   const queryClient = useQueryClient();
-  const query = useQuery({
-    queryKey: ['upcomingMovies'],
-    queryFn: fetchUpcomingMovies,
-  });
-  console.log('upcomingMovies: \n', query);
-  const {data, error, isLoading, isSuccess, refetch} = query;
   const {queryParams} = props.route?.params;
-  const {screenTitle} = queryParams;
+  const {screenTitle, widgetId} = queryParams;
+  const makeAPICall = async () => {
+    switch (widgetId) {
+      case APP_WIDGETS_MAP.NOW_PLAYING:
+        return fetchNowPlayingMovies();
+
+      case APP_WIDGETS_MAP.UPCOMING_MOVIES:
+        return fetchUpcomingMovies();
+
+      case APP_WIDGETS_MAP.TOP_RATED_MOVIES:
+        return fetchTopRatedMovies();
+
+      case APP_WIDGETS_MAP.RECOMMENDED_MOVIES:
+        const lastMovieId = 278;
+        return fetchRecommendedMovies(lastMovieId);
+    }
+  };
+
+  const query = useQuery({
+    queryKey: ['viewAllMovies'],
+    queryFn: makeAPICall,
+  });
+  console.log('viewAllMovies: \n', query);
+  const {data, error, isLoading, isSuccess, refetch} = query;
+
   const listRef = useRef(null);
 
   const onPageRefresh = () => {

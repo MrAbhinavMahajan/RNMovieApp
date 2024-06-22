@@ -1,5 +1,5 @@
 import React from 'react';
-import {kTABS} from '../constants/Navigation';
+import {APP_TABS_MAP} from '../constants/Navigation';
 import BottomTabIcon from '../components/common/BottomTabIcon';
 
 export interface TabInfo {
@@ -11,16 +11,16 @@ export interface TabInfo {
 }
 
 export const TABS = {
-  [kTABS.HOME_TAB]: {
-    name: kTABS.HOME_TAB,
+  [APP_TABS_MAP.HOME_TAB]: {
+    name: APP_TABS_MAP.HOME_TAB,
     options: {
       tabBarIcon: (data: TabInfo) => (
         <BottomTabIcon {...data} iconName={'home'} label={'Home'} />
       ),
     },
   },
-  [kTABS.SEARCH_TAB]: {
-    name: kTABS.SEARCH_TAB,
+  [APP_TABS_MAP.SEARCH_TAB]: {
+    name: APP_TABS_MAP.SEARCH_TAB,
     options: {
       tabBarIcon: (data: TabInfo) => (
         <BottomTabIcon
@@ -32,8 +32,8 @@ export const TABS = {
     },
   },
 
-  [kTABS.PROFILE_TAB]: {
-    name: kTABS.PROFILE_TAB,
+  [APP_TABS_MAP.PROFILE_TAB]: {
+    name: APP_TABS_MAP.PROFILE_TAB,
     options: {
       tabBarIcon: (data: TabInfo) => (
         <BottomTabIcon {...data} iconName={'person'} label={'Me'} />

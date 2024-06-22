@@ -1,18 +1,18 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {kROUTES} from '../../constants/Navigation';
+import {APP_PAGES_MAP} from '../../constants/Navigation';
 import ProfileScreen from '../pages/profile';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 
 const ProfileStack = () => (
   <Navigator
-    initialRouteName={kROUTES.PROFILE_SCREEN}
+    initialRouteName={APP_PAGES_MAP.PROFILE_SCREEN}
     screenOptions={{
       gestureEnabled: false,
       headerShown: false,
     }}>
-    <Screen name={kROUTES.PROFILE_SCREEN} component={ProfileScreen} />
+    <Screen name={APP_PAGES_MAP.PROFILE_SCREEN} component={ProfileScreen} />
   </Navigator>
 );
 

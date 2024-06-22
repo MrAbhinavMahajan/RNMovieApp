@@ -1,7 +1,7 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {styles} from './styles';
-import {kTABS} from '../../../constants/Navigation';
+import {APP_TABS_MAP} from '../../../constants/Navigation';
 import HomeStack from '../../stacks/Home';
 import {tabOptions} from '../../../utilities/TabUtils';
 import {COLORS} from '../../../constants/Colors';
@@ -13,7 +13,7 @@ const {Navigator, Screen} = createBottomTabNavigator();
 const MainTab = () => {
   return (
     <Navigator
-      initialRouteName={kTABS.HOME_TAB}
+      initialRouteName={APP_TABS_MAP.HOME_TAB}
       backBehavior={'initialRoute'}
       screenOptions={{
         tabBarShowLabel: false,
@@ -25,19 +25,19 @@ const MainTab = () => {
         tabBarInactiveTintColor: COLORS.lightGray,
       }}>
       <Screen
-        name={kTABS.HOME_TAB}
+        name={APP_TABS_MAP.HOME_TAB}
         component={HomeStack}
-        options={tabOptions(kTABS.HOME_TAB)}
+        options={tabOptions(APP_TABS_MAP.HOME_TAB)}
       />
       <Screen
-        name={kTABS.SEARCH_TAB}
+        name={APP_TABS_MAP.SEARCH_TAB}
         component={SearchStack}
-        options={tabOptions(kTABS.SEARCH_TAB)}
+        options={tabOptions(APP_TABS_MAP.SEARCH_TAB)}
       />
       <Screen
-        name={kTABS.PROFILE_TAB}
+        name={APP_TABS_MAP.PROFILE_TAB}
         component={ProfileStack}
-        options={tabOptions(kTABS.PROFILE_TAB)}
+        options={tabOptions(APP_TABS_MAP.PROFILE_TAB)}
       />
     </Navigator>
   );

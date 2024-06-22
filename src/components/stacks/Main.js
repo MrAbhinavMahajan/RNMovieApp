@@ -3,7 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {navigationRef} from '../../service/Navigation';
 import LaunchStack from './Launch';
-import {kROUTES, kSTACKS} from '../../constants/Navigation';
+import {APP_PAGES_MAP, APP_STACKS_MAP} from '../../constants/Navigation';
 import MainTab from '../tabs/main';
 import MovieDetailsScreen from '../pages/movieDetails';
 import ViewAllMoviesScreen from '../pages/viewAllMovies';
@@ -16,7 +16,7 @@ const MainStack = () => {
   return (
     <NavigationContainer ref={navigationRef}>
       <Navigator
-        initialRouteName={kSTACKS.LAUNCH_STACK}
+        initialRouteName={APP_STACKS_MAP.LAUNCH_STACK}
         screenOptions={{
           gestureEnabled: false,
           animation: 'fade_from_bottom',
@@ -24,16 +24,16 @@ const MainStack = () => {
           headerShown: false,
         }}>
         {/* Tab Bar */}
-        <Screen name={kSTACKS.LAUNCH_STACK} component={LaunchStack} />
-        <Screen name={kSTACKS.MAIN_TAB} component={MainTab} />
+        <Screen name={APP_STACKS_MAP.LAUNCH_STACK} component={LaunchStack} />
+        <Screen name={APP_STACKS_MAP.MAIN_TAB} component={MainTab} />
 
         {/* Non-Tab Bar Screens */}
         <Screen
-          name={kROUTES.MOVIE_DETAILS_SCREEN}
+          name={APP_PAGES_MAP.MOVIE_DETAILS_SCREEN}
           component={MovieDetailsScreen}
         />
         <Screen
-          name={kROUTES.VIEW_ALL_MOVIES_SCREEN}
+          name={APP_PAGES_MAP.VIEW_ALL_MOVIES_SCREEN}
           component={ViewAllMoviesScreen}
         />
       </Navigator>

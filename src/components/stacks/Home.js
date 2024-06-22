@@ -1,18 +1,18 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {kROUTES} from '../../constants/Navigation';
+import {APP_PAGES_MAP} from '../../constants/Navigation';
 import HomeScreen from '../pages/home';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 
 const HomeStack = () => (
   <Navigator
-    initialRouteName={kROUTES.HOME_SCREEN}
+    initialRouteName={APP_PAGES_MAP.HOME_SCREEN}
     screenOptions={{
       gestureEnabled: false,
       headerShown: false,
     }}>
-    <Screen name={kROUTES.HOME_SCREEN} component={HomeScreen} />
+    <Screen name={APP_PAGES_MAP.HOME_SCREEN} component={HomeScreen} />
   </Navigator>
 );
 

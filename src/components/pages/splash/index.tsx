@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import * as NavigationService from '../../../service/Navigation';
-import {kSTACKS} from '../../../constants/Navigation';
+import {APP_STACKS_MAP} from '../../../constants/Navigation';
 import RNLottie from '../../common/RNLottie';
 import {HAPPY_SPACEMAN_ANIM} from '../../../constants/Assets';
 import {styles} from './styles';
@@ -8,7 +8,7 @@ import {styles} from './styles';
 const SplashScreen = () => {
   useEffect(() => {
     initialLaunchTimer.current = setTimeout(() => {
-      NavigationService.navigateReplace(kSTACKS.MAIN_TAB);
+      NavigationService.navigateReplace(APP_STACKS_MAP.MAIN_TAB);
     }, 3000);
 
     return () => {

@@ -3,7 +3,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {fetchRecommendedMovies} from '../../../apis/Main';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
 import * as NavigationService from '../../../service/Navigation';
-import {kROUTES} from '../../../constants/Navigation';
+import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
 import {styles} from './styles';
 import {PAGE_REFRESH} from '../../../constants/Page';
 import HeaderTitleWidget from '../HeaderTitle';
@@ -26,9 +26,10 @@ const RecommendedMoviesWidget = () => {
   };
 
   const onViewAllAction = () => {
-    NavigationService.navigate(kROUTES.VIEW_ALL_MOVIES_SCREEN, {
+    NavigationService.navigate(APP_PAGES_MAP.VIEW_ALL_MOVIES_SCREEN, {
       queryParams: {
         screenTitle: 'Recommended Movies',
+        widgetId: APP_WIDGETS_MAP.RECOMMENDED_MOVIES,
       },
     });
   };

@@ -5,7 +5,7 @@ import {
   STD_VERTICAL_SPACING,
   STYLES,
 } from '../../../constants/Styles';
-import {hpx} from '../../../libraries/responsive-pixels';
+import {hpx, vpx} from '../../../libraries/responsive-pixels';
 
 export const styles = StyleSheet.create({
   screenView: {
@@ -16,6 +16,7 @@ export const styles = StyleSheet.create({
     marginTop: STD_VERTICAL_SPACING,
     paddingHorizontal: STD_HORIZONTAL_SPACING,
     gap: hpx(8),
+    paddingBottom: vpx(200),
   },
   columnWrapperView: {
     gap: hpx(8),

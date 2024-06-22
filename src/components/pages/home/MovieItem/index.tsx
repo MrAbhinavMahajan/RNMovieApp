@@ -4,7 +4,7 @@ import {styles} from './styles';
 import RNImage from '../../../common/RNImage';
 import {IMAGE_BASEURL} from '../../../../constants/Main';
 import * as NavigationService from '../../../../service/Navigation';
-import {kROUTES} from '../../../../constants/Navigation';
+import {APP_PAGES_MAP} from '../../../../constants/Navigation';
 
 interface MovieItemProps {
   adult: boolean;
@@ -32,7 +32,7 @@ const MovieItem = ({item, index}: {item: MovieItemProps; index: number}) => {
       key={index}
       style={styles.movieCardView}
       onPress={() => {
-        NavigationService.navigate(kROUTES.MOVIE_DETAILS_SCREEN, {
+        NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
           queryParams: {screenTitle: title},
         });
       }}>
