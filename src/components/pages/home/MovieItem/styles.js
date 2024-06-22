@@ -1,14 +1,14 @@
 import {StyleSheet} from 'react-native';
 import {COLORS} from '../../../../constants/Colors';
-import {vpx} from '../../../../libraries/responsive-pixels';
+import {hpx, vpx} from '../../../../libraries/responsive-pixels';
 
 export const styles = StyleSheet.create({
   movieCardView: {
     backgroundColor: COLORS.fullWhite,
-    height: vpx(300),
-    flex: 1,
-  },
-  imageStyles: {
+    height: vpx(150),
+    width: hpx(90),
     borderRadius: vpx(8),
+    overflow: 'hidden',
   },
+  imageStyles: {},
 });
