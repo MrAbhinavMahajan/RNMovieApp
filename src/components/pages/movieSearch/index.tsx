@@ -12,14 +12,15 @@ const MovieSearchScreen = () => {
 
   return (
     <View style={styles.screenView}>
+      <AppHeader title={'Movies'} />
       <ScrollView
         ref={scrollRef}
+        contentContainerStyle={styles.screenScrollableView}
         showsVerticalScrollIndicator={false}
         keyboardDismissMode="on-drag"
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
         }>
-        <AppHeader title={'Movies'} />
         <PopularMoviesWidget />
       </ScrollView>
       <ScrollToTopCTA scrollRef={scrollRef} styles={[styles.scrollToTopBtn]} />

@@ -6,11 +6,8 @@ import {
   ScrollView,
   View,
 } from 'react-native';
-import {ShadowedView} from 'react-native-fast-shadow';
 import {styles} from './styles';
-import AppHeader from '../../common/AppHeader';
-import RNImage from '../../common/RNImage';
-import AppCTA, {ScrollToTopCTA} from '../../common/AppCTA';
+import {ScrollToTopCTA} from '../../common/AppCTA';
 import TrendingMoviesWidget from '../../widgets/TrendingMovies';
 import UpcomingMoviesWidget from '../../widgets/UpcomingMovies';
 import TopRatedMoviesWidget from '../../widgets/TopRatedMovies';
@@ -18,11 +15,12 @@ import NowPlayingMoviesWidget from '../../widgets/NowPlaying';
 import QuotationWidget from '../../widgets/Quotation';
 import {PAGE_REFRESH} from '../../../constants/Page';
 import RecommendedMoviesWidget from '../../widgets/RecommendedMovies';
-import {PROFILE_IMAGE} from '../../../constants/Assets';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {vpx} from '../../../libraries/responsive-pixels';
 
 const HomeScreen = () => {
+  const insets = useSafeAreaInsets();
   const scrollRef = useRef(null);
-  const openHamburger = () => {};
 
   useEffect(() => {
     return () => {
@@ -31,28 +29,11 @@ const HomeScreen = () => {
   }, []);
 
   const onPageRefresh = () => {
-    // Emit HomePage Refresh Event
     NativeAppEventEmitter.emit(PAGE_REFRESH.HOME_SCREEN);
   };
 
-  const headerLeftCTA = () => {
-    return (
-      <ShadowedView style={styles.headerLeftCTAShadow}>
-        <View style={styles.headerLeftCTA}>
-          <AppCTA onPress={openHamburger}>
-            <RNImage
-              imageURL={PROFILE_IMAGE}
-              imageViewStyles={styles.headerLeftCTAImage}
-            />
-          </AppCTA>
-        </View>
-      </ShadowedView>
-    );
-  };
-
   return (
-    <View style={styles.screenView}>
-      <AppHeader LeftComponent={headerLeftCTA()} title="Show Time" />
+    <View style={[styles.screenView, {paddingTop: insets.top + vpx(16)}]}>
       <ScrollView
         ref={scrollRef}
         contentContainerStyle={styles.screenScrollableView}

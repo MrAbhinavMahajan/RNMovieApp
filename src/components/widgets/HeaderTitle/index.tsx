@@ -18,7 +18,7 @@ const HeaderTitleWidget = (props: HeaderTitleWidgetProps) => {
     <TouchableOpacity
       style={[styles.contentView, containerStyles]}
       activeOpacity={0.7}
-      disabled={!rightCTAAction}
+      disabled={!rightCTAEnabled || !rightCTAAction}
       onPress={rightCTAAction}>
       <RNText style={styles.titleText}>{title}</RNText>
       {rightCTAEnabled && !!rightCTAAction && (

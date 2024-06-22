@@ -8,6 +8,9 @@ export const styles = StyleSheet.create({
     ...STYLES.flex01,
     backgroundColor: STD_SCREEN_COLOR,
   },
+  screenScrollableView: {
+    paddingBottom: vpx(200),
+  },
   scrollToTopBtn: {
     backgroundColor: COLORS.oceanBlue,
     alignSelf: 'center',
