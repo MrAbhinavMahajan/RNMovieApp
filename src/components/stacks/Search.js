@@ -24,7 +24,7 @@ const SearchStack = () => {
         name={APP_PAGES_MAP.SEARCH_SCREEN}
         component={MovieSearchScreen}
         options={({navigation}) => ({
-          headerTitle: 'Movies',
+          headerTitle: 'Popular Movies',
           headerBlurEffect: 'prominent',
           headerLargeTitle: true,
           headerTransparent: true,

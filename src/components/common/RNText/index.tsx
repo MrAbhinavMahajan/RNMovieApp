@@ -5,6 +5,7 @@ import {FONTS} from '../../../constants/Fonts';
 interface RNTextProps {
   style: any;
   children: any;
+  numberOfLines?: number;
 }
 
 const RNText = (props: RNTextProps) => {
