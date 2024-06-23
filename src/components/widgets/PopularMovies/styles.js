@@ -1,7 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {STD_HORIZONTAL_SPACING} from '../../../constants/Styles';
 import {hpx, vpx} from '../../../libraries/responsive-pixels';
-import {COLORS} from '../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../utilities/AppUtils';
 
 export const styles = StyleSheet.create({
@@ -17,15 +16,6 @@ export const styles = StyleSheet.create({
   },
   columnWrapperView: {
     gap: hpx(8),
-  },
-  scrollToTopBtn: {
-    backgroundColor: COLORS.oceanBlue,
-    alignSelf: 'center',
-    position: 'absolute',
-    zIndex: 1,
-    bottom: vpx(120),
-    borderRadius: 1000,
-    padding: vpx(3),
   },
   moviePoster: {
     width: SCREEN_WIDTH / 3 - STD_HORIZONTAL_SPACING,

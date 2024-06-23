@@ -2,7 +2,6 @@ import React, {useRef} from 'react';
 import {RefreshControl, ScrollView, View} from 'react-native';
 import {styles} from './styles';
 import AppHeader from '../../common/AppHeader';
-import {ScrollToTopCTA} from '../../common/AppCTA';
 
 const WatchlistScreen = () => {
   const scrollRef = useRef(null);
@@ -23,10 +22,6 @@ const WatchlistScreen = () => {
         }>
         <AppHeader title={'Watchlist'} />
       </ScrollView>
-      <ScrollToTopCTA
-        scrollToTop={scrollToTop}
-        styles={[styles.scrollToTopBtn]}
-      />
     </View>
   );
 };

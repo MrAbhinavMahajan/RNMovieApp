@@ -29,15 +29,20 @@ export const styles = StyleSheet.create({
   },
   screenScrollableView: {
     gap: vpx(8),
-    paddingBottom: vpx(250),
+    paddingBottom: vpx(200),
   },
   scrollToTopBtn: {
     backgroundColor: COLORS.oceanBlue,
     alignSelf: 'center',
     position: 'absolute',
     zIndex: 1,
-    bottom: vpx(120),
+    bottom: vpx(100),
     borderRadius: 1000,
-    padding: vpx(3),
+  },
+  scrollToTopBtnHitSlop: {
+    top: 20,
+    bottom: 20,
+    left: 20,
+    right: 20,
   },
 });

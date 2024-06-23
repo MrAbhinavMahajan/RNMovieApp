@@ -42,12 +42,7 @@ const TrendingMoviesWidget = () => {
 
   return (
     <LinearGradient
-      colors={[
-        COLORS.transparent,
-        COLORS.fullWhite,
-        COLORS.oceanBlue,
-        COLORS.fullBlack,
-      ]}
+      colors={[COLORS.transparent, COLORS.oceanBlue, COLORS.fullBlack]}
       style={[
         styles.containerView,
         {paddingTop: insets.top + STD_VERTICAL_SPACING},

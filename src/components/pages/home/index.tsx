@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect} from 'react';
 import {
   NativeAppEventEmitter,
   RefreshControl,
@@ -7,7 +7,6 @@ import {
   View,
 } from 'react-native';
 import {styles} from './styles';
-import {ScrollToTopCTA} from '../../common/AppCTA';
 import TrendingMoviesWidget from '../../widgets/TrendingMovies';
 import UpcomingMoviesWidget from '../../widgets/UpcomingMovies';
 import TopRatedMoviesWidget from '../../widgets/TopRatedMovies';
@@ -15,9 +14,18 @@ import NowPlayingMoviesWidget from '../../widgets/NowPlaying';
 import QuotationWidget from '../../widgets/Quotation';
 import {PAGE_REFRESH} from '../../../constants/Page';
 import RecommendedMoviesWidget from '../../widgets/RecommendedMovies';
+import Animated, {
+  useAnimatedRef,
+  useAnimatedStyle,
+  useScrollViewOffset,
+  withTiming,
+} from 'react-native-reanimated';
+import {AppArrowUpIcon} from '../../common/RNIcon';
+import AppCTA from '../../common/AppCTA';
 
 const HomeScreen = () => {
-  const scrollRef = useRef(null);
+  const scrollRef = useAnimatedRef<Animated.ScrollView>();
+  const scrollHandler = useScrollViewOffset(scrollRef); // * Gives Current offset of ScrollView
 
   useEffect(() => {
     return () => {
@@ -32,6 +40,10 @@ const HomeScreen = () => {
   const scrollToTop = () => {
     scrollRef.current?.scrollTo({x: 0, y: 0, animated: true});
   };
+
+  const scrollToTopCTAFadeAnimationStyles = useAnimatedStyle(() => ({
+    opacity: withTiming(scrollHandler.value > 600 ? 1 : 0),
+  }));
 
   return (
     <View style={styles.screenView}>
@@ -52,10 +64,13 @@ const HomeScreen = () => {
           subtitle={'Crafted with ❤️ in Chamba, India'}
         />
       </ScrollView>
-      <ScrollToTopCTA
-        scrollToTop={scrollToTop}
-        styles={[styles.scrollToTopBtn]}
-      />
+
+      <Animated.View
+        style={[styles.scrollToTopBtn, scrollToTopCTAFadeAnimationStyles]}>
+        <AppCTA hitSlop={styles.scrollToTopBtnHitSlop} onPress={scrollToTop}>
+          <AppArrowUpIcon />
+        </AppCTA>
+      </Animated.View>
     </View>
   );
 };
