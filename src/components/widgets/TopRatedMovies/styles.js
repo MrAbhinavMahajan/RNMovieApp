@@ -22,4 +22,7 @@ export const styles = StyleSheet.create({
     gap: hpx(8),
     flexGrow: 1,
   },
+  moviePoster: {
+    width: hpx(80),
+  },
 });

@@ -5,6 +5,7 @@ import RNImage from '../../common/RNImage';
 import {IMAGE_BASEURL} from '../../../constants/Main';
 import * as NavigationService from '../../../service/Navigation';
 import {APP_PAGES_MAP} from '../../../constants/Navigation';
+import {ShadowedView} from 'react-native-fast-shadow';
 
 interface MoviePosterWidgetProps {
   adult: boolean;
@@ -21,7 +22,7 @@ interface MoviePosterWidgetProps {
   video: boolean;
   vote_average: number;
   vote_count: number;
-  containerStyles?: any;
+  containerStyles: any;
 }
 
 const MoviePosterWidget = ({
@@ -37,16 +38,18 @@ const MoviePosterWidget = ({
   const imageURL = `${IMAGE_BASEURL}${poster_path}`;
 
   return (
-    <TouchableOpacity
-      key={index}
-      style={[styles.movieCardView, containerStyles]}
-      onPress={() => {
-        NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
-          queryParams: {screenTitle: title, movieId: id},
-        });
-      }}>
-      <RNImage imageURL={imageURL} imageStyles={styles.imageStyles} />
-    </TouchableOpacity>
+    <ShadowedView style={styles.shadowEffect}>
+      <TouchableOpacity
+        key={index}
+        style={[styles.movieCardView, containerStyles]}
+        onPress={() => {
+          NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
+            queryParams: {screenTitle: title, movieId: id},
+          });
+        }}>
+        <RNImage imageURL={imageURL} />
+      </TouchableOpacity>
+    </ShadowedView>
   );
 };
 

@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
     borderRadius: 1000,
     padding: vpx(3),
   },
-  movieItem: {
+  moviePoster: {
     width: SCREEN_WIDTH / 3 - STD_HORIZONTAL_SPACING,
   },
 });

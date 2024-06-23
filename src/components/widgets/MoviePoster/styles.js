@@ -1,14 +1,24 @@
 import {StyleSheet} from 'react-native';
 import {COLORS} from '../../../constants/Colors';
-import {vpx} from '../../../libraries/responsive-pixels';
+import {hpx, vpx} from '../../../libraries/responsive-pixels';
 
 export const styles = StyleSheet.create({
   movieCardView: {
     backgroundColor: COLORS.fullWhite,
-    width: vpx(80),
     aspectRatio: 3 / 5,
     borderRadius: vpx(8),
     overflow: 'hidden',
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: COLORS.lightGray,
   },
-  imageStyles: {},
+  shadowEffect: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    paddingVertical: vpx(3),
+  },
 });

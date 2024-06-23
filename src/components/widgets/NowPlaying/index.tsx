@@ -54,7 +54,9 @@ const NowPlayingMoviesWidget = () => {
         onScroll={onScroll}
         data={data?.results || []}
         renderItem={data => {
-          return <MoviePosterWidget {...data} />;
+          return (
+            <MoviePosterWidget {...data} containerStyles={styles.moviePoster} />
+          );
         }}
         keyExtractor={item => `${item?.id}`}
         horizontal

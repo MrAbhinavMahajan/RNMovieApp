@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
   columnWrapperView: {
     gap: hpx(8),
   },
-  movieItem: {
+  moviePoster: {
     width: SCREEN_WIDTH / 3 - STD_HORIZONTAL_SPACING,
   },
 });

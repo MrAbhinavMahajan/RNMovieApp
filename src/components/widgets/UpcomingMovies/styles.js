@@ -12,7 +12,6 @@ export const styles = StyleSheet.create({
     paddingTop: STD_VERTICAL_SPACING,
     paddingBottom: vpx(24),
   },
-
   headerView: {
     paddingLeft: STD_HORIZONTAL_SPACING,
     paddingRight: hpx(8),
@@ -22,5 +21,8 @@ export const styles = StyleSheet.create({
     paddingHorizontal: STD_HORIZONTAL_SPACING,
     gap: hpx(8),
     flexGrow: 1,
+  },
+  moviePoster: {
+    width: hpx(80),
   },
 });

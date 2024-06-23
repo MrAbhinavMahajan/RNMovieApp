@@ -6,7 +6,7 @@ import {
   STYLES,
 } from '../../../constants/Styles';
 import {hpx, vpx} from '../../../libraries/responsive-pixels';
-import { SCREEN_WIDTH } from '../../../utilities/AppUtils';
+import {SCREEN_WIDTH} from '../../../utilities/AppUtils';
 
 export const styles = StyleSheet.create({
   screenView: {
@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
   columnWrapperView: {
     gap: hpx(8),
   },
-  movieItem: {
+  moviePoster: {
     width: SCREEN_WIDTH / 3 - STD_HORIZONTAL_SPACING,
   },
 });
