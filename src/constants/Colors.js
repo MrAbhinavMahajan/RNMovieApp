@@ -70,4 +70,5 @@ export const COLORS = {
   oceanBlue: '#4338ca',
   lightGray: '#d4d4d4',
   quickSilver: '#a3a3a3',
+  oliveBlack: '#404040',
 };

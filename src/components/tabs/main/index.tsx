@@ -7,6 +7,7 @@ import {tabOptions} from '../../../utilities/TabUtils';
 import {COLORS} from '../../../constants/Colors';
 import SearchStack from '../../stacks/Search';
 import ProfileStack from '../../stacks/Profile';
+import {BlurView} from '@react-native-community/blur';
 
 const {Navigator, Screen} = createBottomTabNavigator();
 
@@ -22,7 +23,8 @@ const MainTab = () => {
         tabBarAllowFontScaling: false,
         headerShown: false,
         tabBarActiveTintColor: COLORS.oceanBlue,
-        tabBarInactiveTintColor: COLORS.lightGray,
+        tabBarInactiveTintColor: COLORS.oliveBlack,
+        tabBarBackground: () => <TabBarBlurEffect />,
       }}>
       <Screen
         name={APP_TABS_MAP.HOME_TAB}
@@ -43,4 +45,12 @@ const MainTab = () => {
   );
 };
 
+const TabBarBlurEffect = () => (
+  <BlurView
+    blurType="light"
+    blurAmount={15}
+    reducedTransparencyFallbackColor="white"
+    style={styles.tabBarBlurEffect}
+  />
+);
 export default MainTab;
