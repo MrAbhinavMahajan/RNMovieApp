@@ -19,13 +19,16 @@ const MainStack = () => {
         initialRouteName={APP_STACKS_MAP.LAUNCH_STACK}
         screenOptions={{
           gestureEnabled: false,
-          animation: 'fade_from_bottom',
           orientation: 'portrait',
           headerShown: false,
         }}>
-        {/* Tab Bar */}
+        {/* Tab Bar Screens*/}
         <Screen name={APP_STACKS_MAP.LAUNCH_STACK} component={LaunchStack} />
-        <Screen name={APP_STACKS_MAP.MAIN_TAB} component={MainTab} />
+        <Screen
+          name={APP_STACKS_MAP.MAIN_TAB}
+          component={MainTab}
+          options={{animation: 'slide_from_bottom'}}
+        />
 
         {/* Non-Tab Bar Screens */}
         <Screen
