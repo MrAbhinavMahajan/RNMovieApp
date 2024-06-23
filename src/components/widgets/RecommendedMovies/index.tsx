@@ -44,7 +44,7 @@ const RecommendedMoviesWidget = () => {
   }, []);
 
   return (
-    <View>
+    <View style={styles.containerView}>
       <HeaderTitleWidget
         title={'Recommended'}
         containerStyles={styles.headerView}

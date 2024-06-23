@@ -44,7 +44,7 @@ const UpcomingMoviesWidget = () => {
   }, []);
 
   return (
-    <View>
+    <View style={styles.containerView}>
       <HeaderTitleWidget
         title={'Coming Soon'}
         containerStyles={styles.headerView}

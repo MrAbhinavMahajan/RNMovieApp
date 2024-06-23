@@ -42,7 +42,7 @@ const NowPlayingMoviesWidget = () => {
   }, []);
 
   return (
-    <View>
+    <View style={styles.containerView}>
       <HeaderTitleWidget
         title={'Now Playing'}
         containerStyles={styles.headerView}

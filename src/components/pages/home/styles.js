@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
     backgroundColor: STD_SCREEN_COLOR,
   },
   screenScrollableView: {
-    gap: vpx(24),
+    gap: vpx(8),
     paddingBottom: vpx(250),
   },
   scrollToTopBtn: {

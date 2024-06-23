@@ -43,7 +43,7 @@ const TopRatedMoviesWidget = () => {
   }, []);
 
   return (
-    <View>
+    <View style={styles.containerView}>
       <HeaderTitleWidget
         title={'Top Rated'}
         containerStyles={styles.headerView}

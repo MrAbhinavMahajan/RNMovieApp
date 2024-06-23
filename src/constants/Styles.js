@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../utilities/AppUtils';
-import {hpx} from '../libraries/responsive-pixels';
+import {hpx, vpx} from '../libraries/responsive-pixels';
 import {COLORS} from './Colors';
 export const STYLES = StyleSheet.create({
   fullWidth: {
@@ -61,5 +61,5 @@ export const STYLES = StyleSheet.create({
 });
 
 export const STD_HORIZONTAL_SPACING = hpx(16);
-export const STD_VERTICAL_SPACING = hpx(16);
+export const STD_VERTICAL_SPACING = vpx(16);
 export const STD_SCREEN_COLOR = COLORS.antiFlashWhite;
