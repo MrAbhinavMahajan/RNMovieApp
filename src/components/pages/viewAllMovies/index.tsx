@@ -65,7 +65,9 @@ const ViewAllMoviesScreen = (props: ViewAllMoviesScreenProps) => {
         ref={listRef}
         data={data?.results || []}
         renderItem={data => {
-          return <MoviePosterWidget {...data} style={styles.movieItem} />;
+          return (
+            <MoviePosterWidget {...data} containerStyles={styles.movieItem} />
+          );
         }}
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={onPageRefresh} />

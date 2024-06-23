@@ -28,7 +28,9 @@ const PopularMoviesWidget = () => {
       ref={listRef}
       data={data?.results || []}
       renderItem={data => {
-        return <MoviePosterWidget {...data} style={styles.movieItem} />;
+        return (
+          <MoviePosterWidget {...data} containerStyles={styles.movieItem} />
+        );
       }}
       keyExtractor={item => `${item?.id}`}
       contentInsetAdjustmentBehavior={'automatic'}

@@ -21,16 +21,17 @@ interface MoviePosterWidgetProps {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  containerStyles?: any;
 }
 
 const MoviePosterWidget = ({
   item,
   index,
-  style,
+  containerStyles,
 }: {
   item: MoviePosterWidgetProps;
   index: number;
-  style: any;
+  containerStyles: any;
 }) => {
   const {poster_path, title, id} = item;
   const imageURL = `${IMAGE_BASEURL}${poster_path}`;
@@ -38,7 +39,7 @@ const MoviePosterWidget = ({
   return (
     <TouchableOpacity
       key={index}
-      style={[styles.movieCardView, style]}
+      style={[styles.movieCardView, containerStyles]}
       onPress={() => {
         NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
           queryParams: {screenTitle: title, movieId: id},
