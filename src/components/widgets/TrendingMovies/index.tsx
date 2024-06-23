@@ -64,10 +64,12 @@ const TrendingMoviesWidget = () => {
         renderItem={itemProps => (
           <MoviePosterWidget
             {...itemProps}
-            containerStyles={{
-              height: POSTER_HEIGHT,
-              borderWidth: 0,
-            }}
+            containerStyles={[
+              styles.moviePoster,
+              {
+                height: POSTER_HEIGHT,
+              },
+            ]}
           />
         )}
       />

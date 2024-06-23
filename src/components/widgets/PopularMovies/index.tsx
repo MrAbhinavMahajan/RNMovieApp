@@ -27,9 +27,12 @@ const PopularMoviesWidget = () => {
     <FlatList
       ref={listRef}
       data={data?.results || []}
-      renderItem={data => {
+      renderItem={itemProps => {
         return (
-          <MoviePosterWidget {...data} containerStyles={styles.moviePoster} />
+          <MoviePosterWidget
+            {...itemProps}
+            containerStyles={styles.moviePoster}
+          />
         );
       }}
       keyExtractor={item => `${item?.id}`}

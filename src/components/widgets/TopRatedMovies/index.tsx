@@ -54,8 +54,13 @@ const TopRatedMoviesWidget = () => {
         ref={listRef}
         onScroll={onScroll}
         data={data?.results || []}
-        renderItem={data => {
-          return <MoviePosterWidget {...data} containerStyles={styles.moviePoster}/>;
+        renderItem={itemProps => {
+          return (
+            <MoviePosterWidget
+              {...itemProps}
+              containerStyles={styles.moviePoster}
+            />
+          );
         }}
         keyExtractor={item => `${item?.id}`}
         horizontal
