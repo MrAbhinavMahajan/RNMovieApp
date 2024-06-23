@@ -5,7 +5,6 @@ import {FlatList} from 'react-native';
 import MovieItem from '../../pages/home/MovieItem';
 import {styles} from './styles';
 import {fetchSearchedMovieResults} from '../../../apis/Main';
-import {SCREEN_WIDTH} from '../../../utilities/AppUtils';
 
 interface SearchedResultsWidgetProps {
   searchedText: string;
@@ -13,13 +12,11 @@ interface SearchedResultsWidgetProps {
 
 const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
   const {searchedText} = props;
-  console.log('SearchedResultsWidget::: ', searchedText);
   const queryClient = useQueryClient();
   const query = useQuery({
     queryKey: ['searchedMovies'],
     queryFn: () => fetchSearchedMovieResults(searchedText),
   });
-  console.log('searchedMovies :::', query);
   const {data, error, isLoading, isSuccess, refetch} = query;
   const listRef = useRef(null);
 
