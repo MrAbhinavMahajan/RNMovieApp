@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
   containerView: {
     backgroundColor: COLORS.oceanBlue,
     paddingBottom: vpx(8),
+    borderRadius: vpx(8),
   },
   scrollableContentView: {
     paddingHorizontal: STD_HORIZONTAL_SPACING,
