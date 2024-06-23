@@ -4,7 +4,7 @@ import {PAGE_REFRESH} from '../../../constants/Page';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
 import {fetchNowPlayingMovies} from '../../../apis/Main';
 import {styles} from './styles';
-import MovieItem from '../../pages/home/MovieItem';
+import MoviePosterWidget from '../MoviePoster';
 
 const PopularMoviesWidget = () => {
   const queryClient = useQueryClient();
@@ -28,7 +28,7 @@ const PopularMoviesWidget = () => {
       ref={listRef}
       data={data?.results || []}
       renderItem={data => {
-        return <MovieItem {...data} style={styles.movieItem} />;
+        return <MoviePosterWidget {...data} style={styles.movieItem} />;
       }}
       keyExtractor={item => `${item?.id}`}
       contentInsetAdjustmentBehavior={'automatic'}

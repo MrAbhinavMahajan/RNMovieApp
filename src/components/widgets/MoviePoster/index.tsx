@@ -1,12 +1,12 @@
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import {styles} from './styles';
-import RNImage from '../../../common/RNImage';
-import {IMAGE_BASEURL} from '../../../../constants/Main';
-import * as NavigationService from '../../../../service/Navigation';
-import {APP_PAGES_MAP} from '../../../../constants/Navigation';
+import RNImage from '../../common/RNImage';
+import {IMAGE_BASEURL} from '../../../constants/Main';
+import * as NavigationService from '../../../service/Navigation';
+import {APP_PAGES_MAP} from '../../../constants/Navigation';
 
-interface MovieItemProps {
+interface MoviePosterWidgetProps {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
@@ -23,16 +23,16 @@ interface MovieItemProps {
   vote_count: number;
 }
 
-const MovieItem = ({
+const MoviePosterWidget = ({
   item,
   index,
   style,
 }: {
-  item: MovieItemProps;
+  item: MoviePosterWidgetProps;
   index: number;
   style: any;
 }) => {
-  const {poster_path, backdrop_path, title} = item;
+  const {poster_path, title, id} = item;
   const imageURL = `${IMAGE_BASEURL}${poster_path}`;
 
   return (
@@ -41,7 +41,7 @@ const MovieItem = ({
       style={[styles.movieCardView, style]}
       onPress={() => {
         NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
-          queryParams: {screenTitle: title},
+          queryParams: {screenTitle: title, movieId: id},
         });
       }}>
       <RNImage imageURL={imageURL} imageStyles={styles.imageStyles} />
@@ -49,4 +49,4 @@ const MovieItem = ({
   );
 };
 
-export default MovieItem;
+export default MoviePosterWidget;

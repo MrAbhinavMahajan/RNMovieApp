@@ -7,7 +7,7 @@ import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
 import {styles} from './styles';
 import {PAGE_REFRESH} from '../../../constants/Page';
 import HeaderTitleWidget from '../HeaderTitle';
-import MovieItem from '../../pages/home/MovieItem';
+import MoviePosterWidget from '../MoviePoster';
 
 const RecommendedMoviesWidget = () => {
   const queryClient = useQueryClient();
@@ -56,7 +56,7 @@ const RecommendedMoviesWidget = () => {
         onScroll={onScroll}
         data={data?.results || []}
         renderItem={data => {
-          return <MovieItem {...data} />;
+          return <MoviePosterWidget {...data} />;
         }}
         keyExtractor={item => `${item?.id}`}
         horizontal

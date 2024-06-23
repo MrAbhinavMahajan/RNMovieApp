@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
-import {COLORS} from '../../../../constants/Colors';
-import {hpx, vpx} from '../../../../libraries/responsive-pixels';
+import {COLORS} from '../../../constants/Colors';
+import {vpx} from '../../../libraries/responsive-pixels';
 
 export const styles = StyleSheet.create({
   movieCardView: {

@@ -3,7 +3,7 @@ import {FlatList, NativeAppEventEmitter} from 'react-native';
 import {PAGE_REFRESH} from '../../../constants/Page';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
 import {fetchTrendingMovies} from '../../../apis/Main';
-import MovieItem from '../../pages/home/MovieItem';
+import MoviePosterWidget from '../MoviePoster';
 import {styles} from './styles';
 
 const TrendingMoviesWidget = () => {
@@ -30,7 +30,7 @@ const TrendingMoviesWidget = () => {
       ref={listRef}
       data={data?.results || []}
       renderItem={data => {
-        return <MovieItem {...data} />;
+        return <MoviePosterWidget {...data} />;
       }}
       keyExtractor={item => `${item?.id}`}
       horizontal

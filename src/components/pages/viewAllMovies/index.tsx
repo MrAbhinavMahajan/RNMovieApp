@@ -10,7 +10,7 @@ import {
   fetchTopRatedMovies,
   fetchUpcomingMovies,
 } from '../../../apis/Main';
-import MovieItem from '../home/MovieItem';
+import MoviePosterWidget from '../../widgets/MoviePoster';
 import {APP_WIDGETS_MAP} from '../../../constants/Navigation';
 
 interface ViewAllMoviesScreenProps {
@@ -65,7 +65,7 @@ const ViewAllMoviesScreen = (props: ViewAllMoviesScreenProps) => {
         ref={listRef}
         data={data?.results || []}
         renderItem={data => {
-          return <MovieItem {...data} style={styles.movieItem}/>;
+          return <MoviePosterWidget {...data} style={styles.movieItem} />;
         }}
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={onPageRefresh} />

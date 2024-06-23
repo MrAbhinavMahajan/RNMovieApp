@@ -6,7 +6,7 @@ import {fetchTopRatedMovies} from '../../../apis/Main';
 import * as NavigationService from '../../../service/Navigation';
 import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
 import {styles} from './styles';
-import MovieItem from '../../pages/home/MovieItem';
+import MoviePosterWidget from '../MoviePoster';
 import HeaderTitleWidget from '../HeaderTitle';
 
 const TopRatedMoviesWidget = () => {
@@ -55,7 +55,7 @@ const TopRatedMoviesWidget = () => {
         onScroll={onScroll}
         data={data?.results || []}
         renderItem={data => {
-          return <MovieItem {...data} />;
+          return <MoviePosterWidget {...data} />;
         }}
         keyExtractor={item => `${item?.id}`}
         horizontal

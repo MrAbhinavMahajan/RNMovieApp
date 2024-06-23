@@ -2,7 +2,7 @@
 import {useQuery, useQueryClient} from '@tanstack/react-query';
 import React, {useEffect, useRef} from 'react';
 import {FlatList} from 'react-native';
-import MovieItem from '../../pages/home/MovieItem';
+import MoviePosterWidget from '../MoviePoster';
 import {styles} from './styles';
 import {fetchSearchedMovieResults} from '../../../apis/Main';
 
@@ -31,7 +31,7 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
       ref={listRef}
       data={data?.results || []}
       renderItem={data => {
-        return <MovieItem {...data} style={styles.movieItem} />;
+        return <MoviePosterWidget {...data} style={styles.movieItem} />;
       }}
       keyExtractor={item => `${item?.id}`}
       numColumns={3}
