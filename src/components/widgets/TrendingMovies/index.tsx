@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import {NativeAppEventEmitter, View} from 'react-native';
+import {NativeAppEventEmitter} from 'react-native';
 import {PAGE_REFRESH} from '../../../constants/Page';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
 import {fetchTrendingMovies} from '../../../apis/Main';
@@ -10,6 +10,8 @@ import {STD_VERTICAL_SPACING} from '../../../constants/Styles';
 import {styles} from './styles';
 import MoviePosterWidget from '../MoviePoster';
 import {hpx, vpx} from '../../../libraries/responsive-pixels';
+import {COLORS} from '../../../constants/Colors';
+import LinearGradient from 'react-native-linear-gradient';
 
 const POSTER_HEIGHT = vpx(300);
 
@@ -39,7 +41,13 @@ const TrendingMoviesWidget = () => {
   }, []);
 
   return (
-    <View
+    <LinearGradient
+      colors={[
+        COLORS.transparent,
+        COLORS.fullWhite,
+        COLORS.oceanBlue,
+        COLORS.fullBlack,
+      ]}
       style={[
         styles.containerView,
         {paddingTop: insets.top + STD_VERTICAL_SPACING},
@@ -73,7 +81,7 @@ const TrendingMoviesWidget = () => {
           />
         )}
       />
-    </View>
+    </LinearGradient>
   );
 };
 
