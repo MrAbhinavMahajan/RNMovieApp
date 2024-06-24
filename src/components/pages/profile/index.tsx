@@ -1,20 +1,18 @@
-import React, {useRef} from 'react';
-import {RefreshControl, ScrollView, View} from 'react-native';
+import React from 'react';
+import {View} from 'react-native';
 import {styles} from './styles';
+import RNLottie from '../../common/RNLottie';
+import {COMING_SOON_ANIM} from '../../../constants/Assets';
 
 const ProfileScreen = () => {
-  const scrollRef = useRef(null);
-
-  const onPageRefresh = () => {};
-
   return (
     <View style={styles.screenView}>
-      <ScrollView
-        ref={scrollRef}
-        showsVerticalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
-        }></ScrollView>
+      <RNLottie
+        source={COMING_SOON_ANIM}
+        autoPlay
+        loop
+        style={styles.lottieView}
+      />
     </View>
   );
 };

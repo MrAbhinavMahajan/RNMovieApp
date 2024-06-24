@@ -26,7 +26,7 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
   });
   console.log(`movieDetails: for ${movieId} \n`, query);
   const {data: item, error, isLoading, isSuccess, refetch} = query;
-  const {vote_average, tagline, vote_count, backdrop_path} = item;
+  const {vote_average, tagline, vote_count, backdrop_path} = item || {};
   const imageURL = `${IMAGE_BASEURL}${backdrop_path}`;
   const [controlsViewLayout, setControlsViewLayout] = useState({
     height: 0,
@@ -38,7 +38,10 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
   };
 
   useEffect(() => {
-    NativeAppEventEmitter.addListener(PAGE_REFRESH.HOME_SCREEN, refreshWidget);
+    NativeAppEventEmitter.addListener(
+      PAGE_REFRESH.MOVIE_DETAILS_SCREEN,
+      refreshWidget,
+    );
   }, []);
 
   const onLayout = ({nativeEvent: {layout}}) => {

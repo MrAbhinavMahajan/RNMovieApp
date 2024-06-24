@@ -7,27 +7,15 @@ import {
   View,
 } from 'react-native';
 import {styles} from './styles';
-import NowPlayingMoviesWidget from '../../widgets/NowPlaying';
-import UpcomingMoviesWidget from '../../widgets/UpcomingMovies';
 import TopRatedMoviesWidget from '../../widgets/TopRatedMovies';
 import RecommendedMoviesWidget from '../../widgets/RecommendedMovies';
 import QuotationWidget from '../../widgets/Quotation';
 import {PAGE_REFRESH} from '../../../constants/Page';
 
-interface MovieAboutScreenProps {
-  route: {
-    params: {
-      queryParams: {
-        screenTitle: string;
-      };
-    };
-  };
-}
+interface MovieAboutScreenProps {}
 
 const MovieAboutScreen = (props: MovieAboutScreenProps) => {
   const scrollRef = useRef(null);
-  const {queryParams} = props.route?.params;
-  const {screenTitle} = queryParams;
 
   const onPageRefresh = () => {};
 
@@ -47,8 +35,6 @@ const MovieAboutScreen = (props: MovieAboutScreenProps) => {
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
         }>
-        <NowPlayingMoviesWidget />
-        <UpcomingMoviesWidget />
         <TopRatedMoviesWidget />
         <RecommendedMoviesWidget />
         <QuotationWidget

@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
     backgroundColor: STD_SCREEN_COLOR,
   },
   screenScrollableView: {
+    flexGrow: 1,
     gap: vpx(8),
-    paddingBottom: vpx(200),
   },
 });

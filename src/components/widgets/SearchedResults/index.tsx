@@ -52,7 +52,7 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
   };
 
   const renderItem = ({item, index}: {item: any; index: number}) => {
-    const {title, id, vote_average, overview} = item;
+    const {title, id, vote_average, overview} = item || {};
 
     return (
       <TouchableOpacity

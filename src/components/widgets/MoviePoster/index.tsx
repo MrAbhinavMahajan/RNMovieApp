@@ -33,7 +33,7 @@ const MoviePosterWidget = ({
   index: number;
   containerStyles: any;
 }) => {
-  const {poster_path, title, id} = item;
+  const {poster_path, title, id} = item || {};
   const imageURL = `${IMAGE_BASEURL}${poster_path}`;
 
   return (
