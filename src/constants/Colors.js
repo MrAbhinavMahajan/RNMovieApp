@@ -71,4 +71,5 @@ export const COLORS = {
   lightGray: '#d4d4d4',
   quickSilver: '#a3a3a3',
   oliveBlack: '#404040',
+  lotionWhite60: '#fafafa60',
 };

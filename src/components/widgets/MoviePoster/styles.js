@@ -9,7 +9,6 @@ export const styles = StyleSheet.create({
     borderRadius: vpx(8),
     overflow: 'hidden',
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: COLORS.lightGray,
   },
   shadowEffect: {
     shadowColor: '#000',

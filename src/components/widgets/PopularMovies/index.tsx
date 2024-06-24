@@ -3,7 +3,7 @@ import {FlatList, RefreshControl, View} from 'react-native';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
 import {fetchNowPlayingMovies} from '../../../apis/Main';
 import {styles} from './styles';
-import MoviePosterWidget from '../MoviePoster';
+import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import Animated, {
   useAnimatedRef,
   useAnimatedStyle,
@@ -43,14 +43,13 @@ const PopularMoviesWidget = () => {
       <FlatList
         ref={listRef}
         data={data?.results || []}
-        renderItem={itemProps => {
-          return (
-            <MoviePosterWidget
-              {...itemProps}
-              containerStyles={styles.moviePoster}
-            />
-          );
-        }}
+        renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
+          <MoviePosterWidget
+            item={item}
+            index={index}
+            containerStyles={styles.moviePoster}
+          />
+        )}
         keyExtractor={item => `${item?.id}`}
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={refreshWidget} />

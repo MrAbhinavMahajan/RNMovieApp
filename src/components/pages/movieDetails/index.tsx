@@ -7,14 +7,20 @@ import {
   View,
 } from 'react-native';
 import {styles} from './styles';
-import AppHeader from '../../common/AppHeader';
 import {PAGE_REFRESH} from '../../../constants/Page';
+import MovieDetailsTab from '../../tabs/movieDetails';
+import MovieDetailsScreenHeader from './header';
+import AppCTA from '../../common/AppCTA';
+import {AppBackIcon} from '../../common/RNIcon';
+import {goBack} from '../../../service/Navigation';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 interface MovieDetailsScreenProps {
   route: {
     params: {
       queryParams: {
         screenTitle: string;
+        movieId: number;
       };
     };
   };
@@ -22,8 +28,9 @@ interface MovieDetailsScreenProps {
 
 const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
   const scrollRef = useRef(null);
+  const insets = useSafeAreaInsets();
   const {queryParams} = props.route?.params;
-  const {screenTitle} = queryParams;
+  const {screenTitle, movieId} = queryParams;
 
   const onPageRefresh = () => {
     NativeAppEventEmitter.emit(PAGE_REFRESH.MOVIE_DETAILS_SCREEN);
@@ -31,7 +38,10 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
 
   return (
     <View style={styles.screenView}>
-      <AppHeader title={screenTitle} />
+      <AppCTA onPress={goBack} style={[styles.headerView, {top: insets.top}]}>
+        <AppBackIcon />
+      </AppCTA>
+
       <ScrollView
         ref={scrollRef}
         showsVerticalScrollIndicator={false}
@@ -39,7 +49,8 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
         }>
-        {/* Tabs */}
+        <MovieDetailsScreenHeader screenTitle={screenTitle} movieId={movieId} />
+        <MovieDetailsTab />
       </ScrollView>
     </View>
   );

@@ -6,10 +6,16 @@ interface RNImageProps {
   imageURL: string;
   imageViewStyles?: any;
   imageStyles?: any;
+  blurRadius?: number;
 }
 
 const RNImage = (props: RNImageProps) => {
-  const {imageURL, imageViewStyles = {}, imageStyles = {}, ...data} = props;
+  const {
+    imageURL,
+    imageViewStyles = {},
+    imageStyles = {},
+    ...imageData
+  } = props;
   const [loading, setLoading] = useState(false);
 
   const startLoading = () => setLoading(true);
@@ -43,6 +49,7 @@ const RNImage = (props: RNImageProps) => {
         onError={onError}
         onLoadStart={onLoadStart}
         onLoadEnd={onLoadEnd}
+        {...imageData}
       />
     </View>
   );

@@ -1,21 +1,21 @@
 import React, {useEffect, useRef} from 'react';
 import {NativeAppEventEmitter} from 'react-native';
-import {PAGE_REFRESH} from '../../../constants/Page';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
-import {fetchTrendingMovies} from '../../../apis/Main';
 import Carousel, {ICarouselInstance} from 'react-native-reanimated-carousel';
-import {SCREEN_WIDTH} from '../../../utilities/AppUtils';
+import {SCREEN_WIDTH} from '../../../../utilities/AppUtils';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {STD_VERTICAL_SPACING} from '../../../constants/Styles';
+import {STD_VERTICAL_SPACING} from '../../../../constants/Styles';
 import {styles} from './styles';
-import MoviePosterWidget from '../MoviePoster';
-import {hpx, vpx} from '../../../libraries/responsive-pixels';
-import {COLORS} from '../../../constants/Colors';
+import {hpx, vpx} from '../../../../libraries/responsive-pixels';
+import {COLORS} from '../../../../constants/Colors';
 import LinearGradient from 'react-native-linear-gradient';
+import {PAGE_REFRESH} from '../../../../constants/Page';
+import {fetchTrendingMovies} from '../../../../apis/Main';
+import MoviePosterWidget, {MoviePosterItem} from '../../../widgets/MoviePoster';
 
 const POSTER_HEIGHT = vpx(300);
 
-const TrendingMoviesWidget = () => {
+const HomeScreenHeader = () => {
   const queryClient = useQueryClient();
   const insets = useSafeAreaInsets();
   const query = useQuery({
@@ -42,7 +42,7 @@ const TrendingMoviesWidget = () => {
 
   return (
     <LinearGradient
-      colors={[COLORS.transparent, COLORS.oceanBlue, COLORS.fullBlack]}
+      colors={[COLORS.transparent, COLORS.fullBlack]}
       style={[
         styles.containerView,
         {paddingTop: insets.top + STD_VERTICAL_SPACING},
@@ -64,9 +64,10 @@ const TrendingMoviesWidget = () => {
           parallaxScrollingOffset: hpx(30),
         }}
         data={data?.results}
-        renderItem={itemProps => (
+        renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
           <MoviePosterWidget
-            {...itemProps}
+            item={item}
+            index={index}
             containerStyles={[
               styles.moviePoster,
               {
@@ -80,4 +81,4 @@ const TrendingMoviesWidget = () => {
   );
 };
 
-export default TrendingMoviesWidget;
+export default HomeScreenHeader;

@@ -7,7 +7,7 @@ import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
 import {styles} from './styles';
 import {PAGE_REFRESH} from '../../../constants/Page';
 import HeaderTitleWidget from '../HeaderTitle';
-import MoviePosterWidget from '../MoviePoster';
+import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 
 const RecommendedMoviesWidget = () => {
   const queryClient = useQueryClient();
@@ -55,14 +55,13 @@ const RecommendedMoviesWidget = () => {
         ref={listRef}
         onScroll={onScroll}
         data={data?.results || []}
-        renderItem={itemProps => {
-          return (
-            <MoviePosterWidget
-              {...itemProps}
-              containerStyles={styles.moviePoster}
-            />
-          );
-        }}
+        renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
+          <MoviePosterWidget
+            item={item}
+            index={index}
+            containerStyles={styles.moviePoster}
+          />
+        )}
         keyExtractor={item => `${item?.id}`}
         horizontal
         showsHorizontalScrollIndicator={false}

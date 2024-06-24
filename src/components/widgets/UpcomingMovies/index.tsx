@@ -55,10 +55,11 @@ const UpcomingMoviesWidget = () => {
         ref={listRef}
         onScroll={onScroll}
         data={data?.results || []}
-        renderItem={itemProps => {
+        renderItem={({item, index}) => {
           return (
             <MoviePosterWidget
-              {...itemProps}
+              item={item}
+              index={index}
               containerStyles={styles.moviePoster}
             />
           );

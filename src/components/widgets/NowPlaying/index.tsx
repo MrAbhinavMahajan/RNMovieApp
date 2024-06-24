@@ -6,7 +6,7 @@ import {fetchNowPlayingMovies} from '../../../apis/Main';
 import * as NavigationService from '../../../service/Navigation';
 import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
 import {styles} from './styles';
-import MoviePosterWidget from '../MoviePoster';
+import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import HeaderTitleWidget from '../HeaderTitle';
 
 const NowPlayingMoviesWidget = () => {
@@ -53,14 +53,13 @@ const NowPlayingMoviesWidget = () => {
         ref={listRef}
         onScroll={onScroll}
         data={data?.results || []}
-        renderItem={itemProps => {
-          return (
-            <MoviePosterWidget
-              {...itemProps}
-              containerStyles={styles.moviePoster}
-            />
-          );
-        }}
+        renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
+          <MoviePosterWidget
+            item={item}
+            index={index}
+            containerStyles={styles.moviePoster}
+          />
+        )}
         keyExtractor={item => `${item?.id}`}
         horizontal
         showsHorizontalScrollIndicator={false}

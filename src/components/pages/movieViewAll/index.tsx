@@ -10,7 +10,7 @@ import {
   fetchTopRatedMovies,
   fetchUpcomingMovies,
 } from '../../../apis/Main';
-import MoviePosterWidget from '../../widgets/MoviePoster';
+import MoviePosterWidget, {MoviePosterItem} from '../../widgets/MoviePoster';
 import {APP_WIDGETS_MAP} from '../../../constants/Navigation';
 
 interface MovieViewAllScreenProps {
@@ -64,14 +64,13 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
       <FlatList
         ref={listRef}
         data={data?.results || []}
-        renderItem={itemProps => {
-          return (
-            <MoviePosterWidget
-              {...itemProps}
-              containerStyles={styles.moviePoster}
-            />
-          );
-        }}
+        renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
+          <MoviePosterWidget
+            item={item}
+            index={index}
+            containerStyles={styles.moviePoster}
+          />
+        )}
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
         }

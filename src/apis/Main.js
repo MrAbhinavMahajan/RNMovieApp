@@ -154,3 +154,25 @@ export const fetchSearchedMovieResults = async searchedText => {
   const json = await response.json();
   return json;
 };
+
+export const fetchMovieDetails = async movieId => {
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${AccessToken}`,
+    },
+  };
+
+  const response = await fetch(
+    `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`,
+    options,
+  );
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch movie details for ${movieId}`);
+  }
+
+  const json = await response.json();
+  return json;
+};

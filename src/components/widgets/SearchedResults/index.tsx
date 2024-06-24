@@ -51,8 +51,8 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
     listRef.current?.scrollToOffset({animated: true, offset: 0});
   };
 
-  const renderItem = (itemProps: any) => {
-    const {title, id, vote_average, overview} = itemProps?.item;
+  const renderItem = ({item, index}: {item: any; index: number}) => {
+    const {title, id, vote_average, overview} = item;
 
     return (
       <TouchableOpacity
@@ -63,7 +63,8 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
           });
         }}>
         <MoviePosterWidget
-          {...itemProps}
+          item={item}
+          index={index}
           containerStyles={styles.moviePoster}
         />
         <View style={styles.itemInfoView}>

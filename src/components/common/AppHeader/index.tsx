@@ -12,12 +12,12 @@ interface AppHeaderProps {
   LeftComponent?: any;
   RightComponent?: any;
   title?: string;
-  showDivider?: boolean;
+  containerStyles?: any;
 }
 
 const AppHeader = (props: AppHeaderProps) => {
   const insets = useSafeAreaInsets();
-  const {LeftComponent, RightComponent, title, showDivider} = props;
+  const {LeftComponent, RightComponent, title, containerStyles = {}} = props;
   const [controlsViewLayout, setControlsViewLayout] = useState({
     height: 0,
     width: 0,
@@ -42,36 +42,34 @@ const AppHeader = (props: AppHeaderProps) => {
   };
 
   return (
-    <View>
-      <View style={[styles.headerView, {paddingTop: insets.top}]}>
-        <View
-          onLayout={e => {
-            onLayout('CONTROLS_VIEW', e);
-          }}
-          style={styles.headerLeftInfoView}>
-          {/* Left Component */}
-          {!_.isEmpty(LeftComponent) ? (
-            LeftComponent
-          ) : (
-            <AppCTA onPress={goBack}>
-              <AppBackIcon />
-            </AppCTA>
-          )}
-        </View>
-
-        <View style={styles.headerCenteredInfoView}>
-          {/* Center Component */}
-          {!_.isEmpty(title) && (
-            <RNText style={styles.headerTitle}>{title}</RNText>
-          )}
-        </View>
-
-        <View style={[styles.headerRightInfoView, {...controlsViewLayout}]}>
-          {/* Right Component */}
-          {!_.isEmpty(RightComponent) ? RightComponent : <View />}
-        </View>
+    <View
+      style={[styles.headerView, {paddingTop: insets.top}, containerStyles]}>
+      <View
+        onLayout={e => {
+          onLayout('CONTROLS_VIEW', e);
+        }}
+        style={styles.headerLeftInfoView}>
+        {/* Left Component */}
+        {!_.isEmpty(LeftComponent) ? (
+          LeftComponent
+        ) : (
+          <AppCTA onPress={goBack}>
+            <AppBackIcon />
+          </AppCTA>
+        )}
       </View>
-      {showDivider && <View style={styles.headerDivider} />}
+
+      <View style={styles.headerCenteredInfoView}>
+        {/* Center Component */}
+        {!_.isEmpty(title) && (
+          <RNText style={styles.headerTitle}>{title}</RNText>
+        )}
+      </View>
+
+      <View style={[styles.headerRightInfoView, {...controlsViewLayout}]}>
+        {/* Right Component */}
+        {!_.isEmpty(RightComponent) ? RightComponent : <View />}
+      </View>
     </View>
   );
 };

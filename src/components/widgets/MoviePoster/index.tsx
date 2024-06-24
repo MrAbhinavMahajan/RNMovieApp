@@ -7,7 +7,7 @@ import * as NavigationService from '../../../service/Navigation';
 import {APP_PAGES_MAP} from '../../../constants/Navigation';
 import {ShadowedView} from 'react-native-fast-shadow';
 
-interface MoviePosterWidgetProps {
+export interface MoviePosterItem {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
@@ -22,15 +22,14 @@ interface MoviePosterWidgetProps {
   video: boolean;
   vote_average: number;
   vote_count: number;
-  containerStyles: any;
 }
 
 const MoviePosterWidget = ({
   item,
   index,
-  containerStyles,
+  containerStyles = {},
 }: {
-  item: MoviePosterWidgetProps;
+  item: MoviePosterItem;
   index: number;
   containerStyles: any;
 }) => {
