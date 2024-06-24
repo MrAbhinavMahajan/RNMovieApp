@@ -6,7 +6,7 @@ import LaunchStack from './Launch';
 import {APP_PAGES_MAP, APP_STACKS_MAP} from '../../constants/Navigation';
 import MainTab from '../tabs/main';
 import MovieDetailsScreen from '../pages/movieDetails';
-import ViewAllMoviesScreen from '../pages/viewAllMovies';
+import MovieViewAllScreen from '../pages/movieViewAll';
 const {Navigator, Screen} = createNativeStackNavigator();
 
 // * NavigationContainer is a component which manages our navigation tree and contains the navigation state
@@ -36,8 +36,8 @@ const MainStack = () => {
           component={MovieDetailsScreen}
         />
         <Screen
-          name={APP_PAGES_MAP.VIEW_ALL_MOVIES_SCREEN}
-          component={ViewAllMoviesScreen}
+          name={APP_PAGES_MAP.MOVIE_VIEW_ALL_SCREEN}
+          component={MovieViewAllScreen}
         />
       </Navigator>
     </NavigationContainer>

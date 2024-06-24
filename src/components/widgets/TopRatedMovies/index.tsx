@@ -25,7 +25,7 @@ const TopRatedMoviesWidget = () => {
   };
 
   const onViewAllAction = () => {
-    NavigationService.navigate(APP_PAGES_MAP.VIEW_ALL_MOVIES_SCREEN, {
+    NavigationService.navigate(APP_PAGES_MAP.MOVIE_VIEW_ALL_SCREEN, {
       queryParams: {
         screenTitle: 'Top Rated Movies',
         widgetId: APP_WIDGETS_MAP.TOP_RATED_MOVIES,

@@ -2,7 +2,7 @@
 import React, {useEffect} from 'react';
 import _ from 'lodash';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
-import {FlatList, TouchableOpacity, View} from 'react-native';
+import {FlatList, RefreshControl, TouchableOpacity, View} from 'react-native';
 import * as NavigationService from '../../../service/Navigation';
 import Animated, {
   useAnimatedRef,
@@ -38,6 +38,10 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
       refetch();
     }
   }, [searchedText]);
+
+  const refreshWidget = () => {
+    refetch();
+  };
 
   const scrollToTopCTAFadeAnimationStyles = useAnimatedStyle(() => ({
     opacity: withTiming(scrollHandler.value > 600 ? 1 : 0),
@@ -89,8 +93,12 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
         renderItem={renderItem}
         keyExtractor={item => `${item?.id}`}
         contentInsetAdjustmentBehavior={'automatic'}
+        keyboardDismissMode="on-drag"
         contentContainerStyle={styles.scrollableContentView}
         ItemSeparatorComponent={ItemSeparatorComponent}
+        refreshControl={
+          <RefreshControl refreshing={false} onRefresh={refreshWidget} />
+        }
       />
       <Animated.View
         style={[styles.scrollToTopBtn, scrollToTopCTAFadeAnimationStyles]}>

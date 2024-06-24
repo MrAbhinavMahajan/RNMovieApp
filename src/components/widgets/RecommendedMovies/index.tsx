@@ -26,7 +26,7 @@ const RecommendedMoviesWidget = () => {
   };
 
   const onViewAllAction = () => {
-    NavigationService.navigate(APP_PAGES_MAP.VIEW_ALL_MOVIES_SCREEN, {
+    NavigationService.navigate(APP_PAGES_MAP.MOVIE_VIEW_ALL_SCREEN, {
       queryParams: {
         screenTitle: 'Recommended Movies',
         widgetId: APP_WIDGETS_MAP.RECOMMENDED_MOVIES,

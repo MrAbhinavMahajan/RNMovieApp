@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
-import {FlatList, NativeAppEventEmitter, View} from 'react-native';
-import {PAGE_REFRESH} from '../../../constants/Page';
+import {FlatList, RefreshControl, View} from 'react-native';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
 import {fetchNowPlayingMovies} from '../../../apis/Main';
 import {styles} from './styles';
@@ -37,9 +36,7 @@ const PopularMoviesWidget = () => {
     listRef.current?.scrollToOffset({animated: true, offset: 0});
   };
 
-  useEffect(() => {
-    NativeAppEventEmitter.addListener(PAGE_REFRESH.HOME_SCREEN, refreshWidget);
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <View style={styles.containerView}>
@@ -55,6 +52,9 @@ const PopularMoviesWidget = () => {
           );
         }}
         keyExtractor={item => `${item?.id}`}
+        refreshControl={
+          <RefreshControl refreshing={false} onRefresh={refreshWidget} />
+        }
         contentInsetAdjustmentBehavior={'automatic'}
         keyboardDismissMode="on-drag"
         numColumns={3}

@@ -13,7 +13,7 @@ import {
 import MoviePosterWidget from '../../widgets/MoviePoster';
 import {APP_WIDGETS_MAP} from '../../../constants/Navigation';
 
-interface ViewAllMoviesScreenProps {
+interface MovieViewAllScreenProps {
   route: {
     params: {
       queryParams: {
@@ -24,7 +24,7 @@ interface ViewAllMoviesScreenProps {
   };
 }
 
-const ViewAllMoviesScreen = (props: ViewAllMoviesScreenProps) => {
+const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
   const queryClient = useQueryClient();
   const {queryParams} = props.route?.params;
   const {screenTitle, widgetId} = queryParams;
@@ -85,4 +85,4 @@ const ViewAllMoviesScreen = (props: ViewAllMoviesScreenProps) => {
   );
 };
 
-export default ViewAllMoviesScreen;
+export default MovieViewAllScreen;
