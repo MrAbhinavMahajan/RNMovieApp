@@ -10,9 +10,8 @@
 6. Movie's Favorite Screen
 7. Movie's Watchlist Screen
 
-## TanStack Query for APIs
+## TanStack Query
 
-- API Response Caching
 - Query for fetching data
 - Mutation for sending data
 - Pagination
