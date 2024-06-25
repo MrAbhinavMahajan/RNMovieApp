@@ -7,6 +7,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import {PAGE_REFRESH} from '../../../../constants/Page';
 import {
   fetchMovieDetails,
+  fetchMovieFavorites,
+  fetchMovieWatchlist,
   updateMovieFavorites,
   updateMovieWatchlist,
 } from '../../../../apis/Main';
@@ -18,21 +20,29 @@ import _ from 'lodash';
 import {IconSize, MaterialIcon} from '../../../common/RNIcon';
 import {
   FavoriteRequestBody,
-  MovieItem,
   WatchlistRequestBody,
 } from '../../../../constants/AppInterfaces';
 
 interface MovieDetailsScreenHeaderProps {
   screenTitle: string;
   movieId: number;
+  navigation: any;
 }
 
 const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
-  const {screenTitle, movieId} = props;
+  const {screenTitle, movieId, navigation} = props;
   const queryClient = useQueryClient();
   const query = useQuery({
     queryKey: ['movieDetails'],
     queryFn: () => fetchMovieDetails(movieId),
+  });
+  const favoriteMoviesQuery = useQuery({
+    queryKey: ['favoriteMovies'],
+    queryFn: () => fetchMovieFavorites(),
+  });
+  const watchlistMoviesDataQuery = useQuery({
+    queryKey: ['watchlistMovies'],
+    queryFn: () => fetchMovieWatchlist(),
   });
   const favoritesMutation = useMutation({
     mutationFn: updateMovieFavorites,
@@ -47,6 +57,7 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
     },
   });
   console.log(`movieDetails: for ${movieId} \n`, query);
+
   const {data: item, error, isLoading, isSuccess, refetch} = query;
   const {vote_average, tagline, vote_count, backdrop_path, id} = item || {};
   const imageURL = `${IMAGE_BASEURL}${backdrop_path}`;
@@ -54,14 +65,8 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
     height: 0,
     width: 0,
   });
-  const favlist: MovieItem[] = [];
-  const watchlist: MovieItem[] = [];
-  const [isFavorite, setIsFavorite] = useState(
-    favlist.filter(movieItem => movieItem.id === id)?.length > 0,
-  );
-  const [isWatchlist, setIsWatchlist] = useState(
-    watchlist.filter(movieItem => movieItem.id === id)?.length > 0,
-  );
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [isWatchlist, setIsWatchlist] = useState(false);
 
   const refreshWidget = () => {
     refetch();
@@ -72,6 +77,27 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
       PAGE_REFRESH.MOVIE_DETAILS_SCREEN,
       refreshWidget,
     );
+
+    setIsFavorite(() => {
+      let isMovieFound = false;
+      if (!_.isEmpty(favoriteMoviesQuery?.data?.results)) {
+        isMovieFound =
+          favoriteMoviesQuery?.data?.results.filter(el => el.id === movieId)
+            ?.length > 0;
+      }
+      return isMovieFound;
+    });
+
+    setIsWatchlist(() => {
+      let isMovieFound = false;
+      if (!_.isEmpty(watchlistMoviesDataQuery?.data?.results)) {
+        isMovieFound =
+          watchlistMoviesDataQuery?.data?.results.filter(
+            el => el.id === movieId,
+          )?.length > 0;
+      }
+      return isMovieFound;
+    });
   }, []);
 
   const onLayout = ({nativeEvent: {layout}}) => {
