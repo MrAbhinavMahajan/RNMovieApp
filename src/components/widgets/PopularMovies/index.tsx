@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {FlatList, RefreshControl, View} from 'react-native';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
-import {fetchNowPlayingMovies} from '../../../apis/Main';
+import {fetchPopularMovies} from '../../../apis/Main';
 import {styles} from './styles';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import Animated, {
@@ -17,10 +17,10 @@ import {FALLBACK_DATA} from '../../data/Main';
 const PopularMoviesWidget = () => {
   const queryClient = useQueryClient();
   const query = useQuery({
-    queryKey: ['nowPlayingMovies'],
-    queryFn: fetchNowPlayingMovies,
+    queryKey: ['popularMovies'],
+    queryFn: fetchPopularMovies,
   });
-  console.log('nowPlayingMovies:\n', query);
+  console.log('popularMovies:\n', query);
   const {data, error, isLoading, isSuccess, refetch} = query;
   const listRef = useAnimatedRef<any>();
   const scrollHandler = useScrollViewOffset(listRef); // * Gives Current offset of ScrollView
