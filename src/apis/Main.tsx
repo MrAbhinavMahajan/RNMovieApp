@@ -240,7 +240,7 @@ export const fetchMovieFavorites = async () => {
   };
 
   const response = await fetch(
-    'https://api.themoviedb.org/3/account/null/favorite/movies?language=en-US&page=1&sort_by=created_at.asc',
+    'https://api.themoviedb.org/3/account/null/favorite/movies?language=en-US&page=1&sort_by=created_at.desc',
     options,
   );
 
@@ -262,7 +262,7 @@ export const fetchMovieWatchlist = async () => {
   };
 
   const response = await fetch(
-    'https://api.themoviedb.org/3/account/null/watchlist/movies?language=en-US&page=1&sort_by=created_at.asc',
+    'https://api.themoviedb.org/3/account/null/watchlist/movies?language=en-US&page=1&sort_by=created_at.desc',
     options,
   );
 
