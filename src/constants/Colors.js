@@ -72,4 +72,5 @@ export const COLORS = {
   quickSilver: '#a3a3a3',
   oliveBlack: '#404040',
   lotionWhite60: '#fafafa60',
+  red: 'red',
 };

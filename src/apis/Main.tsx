@@ -1,3 +1,8 @@
+import {
+  FavoriteRequestBody,
+  WatchlistRequestBody,
+} from '../constants/AppInterfaces';
+
 const AccessToken =
   'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMDUyNjRlYmI4ZTYyODVhYjlkYjQ1ZDdlYmVjZmM2YiIsInN1YiI6IjY2NmQ0OTU0NmI4YzQ3OTQ1YTM2MzVhNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.QjBCWACkZDu3OnmyGtfkhcD6oBs-eWez0VgPH7PR6w0';
 
@@ -89,7 +94,7 @@ export const fetchTopRatedMovies = async () => {
   return json;
 };
 
-export const fetchRecommendedMovies = async movieId => {
+export const fetchRecommendedMovies = async (movieId: number) => {
   const options = {
     method: 'GET',
     headers: {
@@ -133,7 +138,7 @@ export const fetchPopularMovies = async () => {
   return json;
 };
 
-export const fetchSearchedMovieResults = async searchedText => {
+export const fetchSearchedMovieResults = async (searchedText: string) => {
   const options = {
     method: 'GET',
     headers: {
@@ -155,7 +160,7 @@ export const fetchSearchedMovieResults = async searchedText => {
   return json;
 };
 
-export const fetchMovieDetails = async movieId => {
+export const fetchMovieDetails = async (movieId: number) => {
   const options = {
     method: 'GET',
     headers: {
@@ -171,6 +176,98 @@ export const fetchMovieDetails = async movieId => {
 
   if (!response.ok) {
     throw new Error(`Failed to fetch movie details for ${movieId}`);
+  }
+
+  const json = await response.json();
+  return json;
+};
+
+export const updateMovieFavorites = async (body: FavoriteRequestBody) => {
+  const options = {
+    method: 'POST',
+    headers: {
+      accept: 'application/json',
+      'content-type': 'application/json',
+      Authorization: `Bearer ${AccessToken}`,
+    },
+    body: JSON.stringify(body),
+  };
+
+  const response = await fetch(
+    'https://api.themoviedb.org/3/account/null/favorite',
+    options,
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to update Favorites');
+  }
+
+  const json = await response.json();
+  return json;
+};
+
+export const updateMovieWatchlist = async (body: WatchlistRequestBody) => {
+  const options = {
+    method: 'POST',
+    headers: {
+      accept: 'application/json',
+      'content-type': 'application/json',
+      Authorization: `Bearer ${AccessToken}`,
+    },
+    body: JSON.stringify(body),
+  };
+
+  const response = await fetch(
+    'https://api.themoviedb.org/3/account/null/watchlist',
+    options,
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to update Watchlist');
+  }
+
+  const json = await response.json();
+  return json;
+};
+
+export const fetchMovieFavorites = async () => {
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${AccessToken}`,
+    },
+  };
+
+  const response = await fetch(
+    'https://api.themoviedb.org/3/account/null/favorite/movies?language=en-US&page=1&sort_by=created_at.asc',
+    options,
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch Favorites');
+  }
+
+  const json = await response.json();
+  return json;
+};
+
+export const fetchMovieWatchlist = async () => {
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${AccessToken}`,
+    },
+  };
+
+  const response = await fetch(
+    'https://api.themoviedb.org/3/account/null/watchlist/movies?language=en-US&page=1&sort_by=created_at.asc',
+    options,
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch Watchlist');
   }
 
   const json = await response.json();

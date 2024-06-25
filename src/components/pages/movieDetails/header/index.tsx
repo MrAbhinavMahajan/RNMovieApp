@@ -1,17 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import {NativeAppEventEmitter, TouchableOpacity, View} from 'react-native';
-import {useQuery, useQueryClient} from '@tanstack/react-query';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {styles} from './styles';
 import {COLORS} from '../../../../constants/Colors';
 import LinearGradient from 'react-native-linear-gradient';
 import {PAGE_REFRESH} from '../../../../constants/Page';
-import {fetchMovieDetails} from '../../../../apis/Main';
+import {
+  fetchMovieDetails,
+  updateMovieFavorites,
+  updateMovieWatchlist,
+} from '../../../../apis/Main';
 import RNText from '../../../common/RNText';
 import MoviePosterWidget from '../../../widgets/MoviePoster';
 import RNImage from '../../../common/RNImage';
 import {IMAGE_BASEURL} from '../../../../constants/Main';
 import _ from 'lodash';
 import {IconSize, MaterialIcon} from '../../../common/RNIcon';
+import {
+  FavoriteRequestBody,
+  WatchlistRequestBody,
+} from '../../../../constants/AppInterfaces';
 
 interface MovieDetailsScreenHeaderProps {
   screenTitle: string;
@@ -24,6 +32,12 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
   const query = useQuery({
     queryKey: ['movieDetails'],
     queryFn: () => fetchMovieDetails(movieId),
+  });
+  const favoritesMutation = useMutation({
+    mutationFn: updateMovieFavorites,
+  });
+  const watchlistMutation = useMutation({
+    mutationFn: updateMovieWatchlist,
   });
   console.log(`movieDetails: for ${movieId} \n`, query);
   const {data: item, error, isLoading, isSuccess, refetch} = query;
@@ -53,22 +67,24 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
 
   const toggleFavorite = () => {
     setIsFavorite(val => {
-      if (val) {
-        // Remove
-      } else {
-        // Add
-      }
+      const body: FavoriteRequestBody = {
+        media_type: 'movie',
+        media_id: id,
+        favorite: !val,
+      };
+      favoritesMutation.mutateAsync(body);
       return !val;
     });
   };
 
   const toggleWatchlist = () => {
     setIsWatchlist(val => {
-      if (val) {
-        // Remove
-      } else {
-        // Add
-      }
+      const body: WatchlistRequestBody = {
+        media_type: 'movie',
+        media_id: id,
+        watchlist: !val,
+      };
+      watchlistMutation.mutateAsync(body);
       return !val;
     });
   };
@@ -127,7 +143,7 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
             <MaterialIcon
               name={isFavorite ? 'favorite' : 'favorite-outline'}
               size={IconSize.extraLarge}
-              color={isFavorite ? 'red' : COLORS.azureishWhite}
+              color={isFavorite ? COLORS.red : COLORS.azureishWhite}
             />
           </TouchableOpacity>
           <TouchableOpacity

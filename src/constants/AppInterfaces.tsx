@@ -24,3 +24,15 @@ export interface QueryClientProps {
   status: string;
   refetch: () => void;
 }
+
+export interface FavoriteRequestBody {
+  media_type: string;
+  media_id: number;
+  favorite: boolean;
+}
+
+export interface WatchlistRequestBody {
+  media_type: string;
+  media_id: number;
+  watchlist: boolean;
+}
