@@ -69,4 +69,11 @@ export const styles = StyleSheet.create({
     left: 20,
     right: 20,
   },
+  loaderView: {
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    position: 'absolute',
+    zIndex: 1,
+  },
 });

@@ -12,6 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {PAGE_REFRESH} from '../../../../constants/Page';
 import {fetchTrendingMovies} from '../../../../apis/Main';
 import MoviePosterWidget, {MoviePosterItem} from '../../../widgets/MoviePoster';
+import {FALLBACK_DATA} from '../../../data/Main';
 
 const POSTER_HEIGHT = vpx(300);
 
@@ -42,6 +43,7 @@ const HomeScreenHeader = () => {
 
   return (
     <LinearGradient
+      pointerEvents={isLoading ? 'none' : 'auto'}
       colors={[COLORS.transparent, COLORS.fullBlack]}
       style={[
         styles.containerView,
@@ -63,7 +65,7 @@ const HomeScreenHeader = () => {
           parallaxScrollingScale: 0.9,
           parallaxScrollingOffset: hpx(30),
         }}
-        data={data?.results}
+        data={data?.results ?? FALLBACK_DATA}
         renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
           <MoviePosterWidget
             item={item}

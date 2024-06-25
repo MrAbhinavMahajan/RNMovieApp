@@ -12,6 +12,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import AppCTA from '../../common/AppCTA';
 import {AppArrowUpIcon} from '../../common/RNIcon';
+import {FALLBACK_DATA} from '../../data/Main';
 
 const PopularMoviesWidget = () => {
   const queryClient = useQueryClient();
@@ -42,7 +43,7 @@ const PopularMoviesWidget = () => {
     <View style={styles.containerView}>
       <FlatList
         ref={listRef}
-        data={data?.results || []}
+        data={data?.results || FALLBACK_DATA}
         renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
           <MoviePosterWidget
             item={item}

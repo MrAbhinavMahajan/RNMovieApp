@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
   imageView: {
     height: '100%',
     width: '100%',
-    backgroundColor: COLORS.azureishWhite,
+    backgroundColor: COLORS.oceanBlue,
     justifyContent: 'center',
   },
   image: {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import {ActivityIndicator, TouchableOpacity} from 'react-native';
 import RNText from '../../common/RNText';
 import {styles} from './styles';
 import {AppNextIcon} from '../../common/RNIcon';
@@ -10,20 +10,39 @@ interface HeaderTitleWidgetProps {
   containerStyles: any;
   rightCTAAction: () => void;
   rightCTAEnabled: boolean;
+  loaderEnabled?: boolean;
 }
 
 const HeaderTitleWidget = (props: HeaderTitleWidgetProps) => {
-  const {title, containerStyles, rightCTAEnabled, rightCTAAction} = props;
+  const {
+    title,
+    containerStyles,
+    rightCTAEnabled,
+    rightCTAAction,
+    loaderEnabled = false,
+  } = props;
+
+  const renderLeftJSX = () => {
+    return <RNText style={styles.titleText}>{title}</RNText>;
+  };
+
+  const renderRightJSX = () => {
+    if (loaderEnabled) {
+      return <ActivityIndicator color={COLORS.fullBlack} />;
+    } else if (rightCTAEnabled && !!rightCTAAction) {
+      return <AppNextIcon color={COLORS.fullBlack} />;
+    }
+    return <></>;
+  };
+
   return (
     <TouchableOpacity
       style={[styles.contentView, containerStyles]}
       activeOpacity={0.7}
       disabled={!rightCTAEnabled || !rightCTAAction}
       onPress={rightCTAAction}>
-      <RNText style={styles.titleText}>{title}</RNText>
-      {rightCTAEnabled && !!rightCTAAction && (
-        <AppNextIcon color={COLORS.fullBlack} />
-      )}
+      {renderLeftJSX()}
+      {renderRightJSX()}
     </TouchableOpacity>
   );
 };

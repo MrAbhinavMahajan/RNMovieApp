@@ -8,6 +8,7 @@ import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
 import {styles} from './styles';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import HeaderTitleWidget from '../HeaderTitle';
+import {FALLBACK_DATA} from '../../data/Main';
 
 const TopRatedMoviesWidget = () => {
   const queryClient = useQueryClient();
@@ -43,17 +44,20 @@ const TopRatedMoviesWidget = () => {
   }, []);
 
   return (
-    <View style={styles.containerView}>
+    <View
+      style={styles.containerView}
+      pointerEvents={isLoading ? 'none' : 'auto'}>
       <HeaderTitleWidget
         title={'Top Rated'}
         containerStyles={styles.headerView}
         rightCTAAction={onViewAllAction}
         rightCTAEnabled={isRightCTAEnabled}
+        loaderEnabled={!data?.results}
       />
       <FlatList
         ref={listRef}
         onScroll={onScroll}
-        data={data?.results || []}
+        data={data?.results ?? FALLBACK_DATA}
         renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
           <MoviePosterWidget
             item={item}

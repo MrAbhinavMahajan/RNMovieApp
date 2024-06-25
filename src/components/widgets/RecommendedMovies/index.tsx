@@ -8,6 +8,7 @@ import {styles} from './styles';
 import {PAGE_REFRESH} from '../../../constants/Page';
 import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
+import {FALLBACK_DATA} from '../../data/Main';
 
 const RecommendedMoviesWidget = () => {
   const queryClient = useQueryClient();
@@ -44,17 +45,20 @@ const RecommendedMoviesWidget = () => {
   }, []);
 
   return (
-    <View style={styles.containerView}>
+    <View
+      style={styles.containerView}
+      pointerEvents={isLoading ? 'none' : 'auto'}>
       <HeaderTitleWidget
         title={'Recommended'}
         containerStyles={styles.headerView}
         rightCTAAction={onViewAllAction}
         rightCTAEnabled={isRightCTAEnabled}
+        loaderEnabled={!data?.results}
       />
       <FlatList
         ref={listRef}
         onScroll={onScroll}
-        data={data?.results || []}
+        data={data?.results ?? FALLBACK_DATA}
         renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
           <MoviePosterWidget
             item={item}

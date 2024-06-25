@@ -2,7 +2,13 @@
 import React, {useEffect} from 'react';
 import _ from 'lodash';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
-import {FlatList, RefreshControl, TouchableOpacity, View} from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import * as NavigationService from '../../../service/Navigation';
 import Animated, {
   useAnimatedRef,
@@ -87,7 +93,14 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
   };
 
   return (
-    <View style={styles.containerView}>
+    <View
+      style={styles.containerView}
+      pointerEvents={isLoading ? 'none' : 'auto'}>
+      {isLoading && (
+        <View style={styles.loaderView}>
+          <ActivityIndicator size={'large'} />
+        </View>
+      )}
       <FlatList
         ref={listRef}
         data={data?.results || []}
