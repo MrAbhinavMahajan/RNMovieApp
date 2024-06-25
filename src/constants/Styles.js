@@ -63,3 +63,4 @@ export const STYLES = StyleSheet.create({
 export const STD_HORIZONTAL_SPACING = hpx(16);
 export const STD_VERTICAL_SPACING = vpx(16);
 export const STD_SCREEN_COLOR = COLORS.antiFlashWhite;
+export const STD_ACTIVITY_COLOR = COLORS.fullBlack;

@@ -23,6 +23,7 @@ import {styles} from './styles';
 import MoviePosterWidget from '../MoviePoster';
 import RNText from '../../common/RNText';
 import AppCTA from '../../common/AppCTA';
+import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
 
 interface SearchedResultsWidgetProps {
   searchedText: string;
@@ -98,7 +99,7 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
       pointerEvents={isLoading ? 'none' : 'auto'}>
       {isLoading && (
         <View style={styles.loaderView}>
-          <ActivityIndicator size={'large'} />
+          <ActivityIndicator size={'large'} color={STD_ACTIVITY_COLOR} />
         </View>
       )}
       <FlatList

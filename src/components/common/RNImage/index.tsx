@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {ActivityIndicator, Image, View} from 'react-native';
 import {styles} from './styles';
+import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
 
 interface RNImageProps {
   imageURL: string;
@@ -42,7 +43,13 @@ const RNImage = (props: RNImageProps) => {
 
   return (
     <View style={[styles.imageView, imageViewStyles]}>
-      {loading && <ActivityIndicator size={'small'} style={styles.loader} />}
+      {loading && (
+        <ActivityIndicator
+          size={'small'}
+          style={styles.loader}
+          color={STD_ACTIVITY_COLOR}
+        />
+      )}
       <Image
         source={{uri: imageURL}}
         style={[styles.image, imageStyles]}

@@ -4,6 +4,7 @@ import RNText from '../../common/RNText';
 import {styles} from './styles';
 import {AppNextIcon} from '../../common/RNIcon';
 import {COLORS} from '../../../constants/Colors';
+import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
 
 interface HeaderTitleWidgetProps {
   title: string;
@@ -28,7 +29,7 @@ const HeaderTitleWidget = (props: HeaderTitleWidgetProps) => {
 
   const renderRightJSX = () => {
     if (loaderEnabled) {
-      return <ActivityIndicator color={COLORS.fullBlack} />;
+      return <ActivityIndicator color={STD_ACTIVITY_COLOR} />;
     } else if (rightCTAEnabled && !!rightCTAAction) {
       return <AppNextIcon color={COLORS.fullBlack} />;
     }
