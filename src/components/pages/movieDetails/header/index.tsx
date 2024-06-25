@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {NativeAppEventEmitter, View} from 'react-native';
+import {NativeAppEventEmitter, TouchableOpacity, View} from 'react-native';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
 import {styles} from './styles';
 import {COLORS} from '../../../../constants/Colors';
@@ -11,6 +11,7 @@ import MoviePosterWidget from '../../../widgets/MoviePoster';
 import RNImage from '../../../common/RNImage';
 import {IMAGE_BASEURL} from '../../../../constants/Main';
 import _ from 'lodash';
+import {IconSize, MaterialIcon} from '../../../common/RNIcon';
 
 interface MovieDetailsScreenHeaderProps {
   screenTitle: string;
@@ -26,12 +27,14 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
   });
   console.log(`movieDetails: for ${movieId} \n`, query);
   const {data: item, error, isLoading, isSuccess, refetch} = query;
-  const {vote_average, tagline, vote_count, backdrop_path} = item || {};
+  const {vote_average, tagline, vote_count, backdrop_path, id} = item || {};
   const imageURL = `${IMAGE_BASEURL}${backdrop_path}`;
   const [controlsViewLayout, setControlsViewLayout] = useState({
     height: 0,
     width: 0,
   });
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [isWatchlist, setIsWatchlist] = useState(false);
 
   const refreshWidget = () => {
     refetch();
@@ -46,6 +49,28 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
 
   const onLayout = ({nativeEvent: {layout}}) => {
     setControlsViewLayout(layout);
+  };
+
+  const toggleFavorite = () => {
+    setIsFavorite(val => {
+      if (val) {
+        // Remove
+      } else {
+        // Add
+      }
+      return !val;
+    });
+  };
+
+  const toggleWatchlist = () => {
+    setIsWatchlist(val => {
+      if (val) {
+        // Remove
+      } else {
+        // Add
+      }
+      return !val;
+    });
   };
 
   return (
@@ -92,6 +117,31 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
         {vote_count > 0 && (
           <RNText style={styles.movieVotesText}>{vote_count}+ votes</RNText>
         )}
+
+        <View style={styles.movieCTAView}>
+          <TouchableOpacity
+            style={styles.movieCTA}
+            onPress={() => {
+              toggleFavorite();
+            }}>
+            <MaterialIcon
+              name={isFavorite ? 'favorite' : 'favorite-outline'}
+              size={IconSize.extraLarge}
+              color={isFavorite ? 'red' : COLORS.azureishWhite}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.movieCTA}
+            onPress={() => {
+              toggleWatchlist();
+            }}>
+            <MaterialIcon
+              name={isWatchlist ? 'bookmark' : 'bookmark-outline'}
+              size={IconSize.extraLarge}
+              color={COLORS.azureishWhite}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     </LinearGradient>
   );

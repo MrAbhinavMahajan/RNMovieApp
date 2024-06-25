@@ -52,6 +52,15 @@ export const styles = StyleSheet.create({
     flex: 1,
     marginTop: vpx(12),
   },
+  movieCTAView: {
+    marginTop: vpx(12),
+    flexDirection: 'row',
+  },
+  movieCTA: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: STD_HORIZONTAL_SPACING,
+  },
   movieVotesAvgView: {
     borderRadius: vpx(4),
     backgroundColor: COLORS.fullWhite,

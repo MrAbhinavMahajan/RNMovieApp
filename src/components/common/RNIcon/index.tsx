@@ -19,9 +19,9 @@ export interface IconProps {
 
 const IconSizes = {
   small: vpx(16),
-  medium: vpx(20),
-  large: vpx(24),
-  extraLarge: vpx(28),
+  medium: vpx(24),
+  large: vpx(28),
+  extraLarge: vpx(32),
 };
 
 export enum IconSize {
@@ -51,7 +51,7 @@ export const AppArrowUpIcon = ({
 
 export const AppNextIcon = ({
   color = COLORS.fullWhite,
-  size = IconSize.extraLarge,
+  size = IconSize.large,
 }) => <MaterialIcon name={'chevron-right'} size={size} color={color} />;
 
 export const AppCrossIcon = ({

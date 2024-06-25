@@ -35,10 +35,8 @@ const MovieAboutScreen = (props: MovieAboutScreenProps) => {
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
         }>
-        <TopRatedMoviesWidget />
-        <RecommendedMoviesWidget />
         <QuotationWidget
-          title={`Live${'\n'}it up!`}
+          title={`About!`}
           subtitle={'Crafted with ❤️ in Chamba, India'}
         />
       </ScrollView>

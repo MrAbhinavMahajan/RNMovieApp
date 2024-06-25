@@ -9,7 +9,7 @@ const BottomTabIcon = (props: TabInfo) => {
 
   return (
     <View style={styles.tabIconView}>
-      <MaterialIcon name={iconName} size={IconSize.extraLarge} color={color} />
+      <MaterialIcon name={iconName} size={IconSize.large} color={color} />
       {focused && <View style={[styles.indicator, {backgroundColor: color}]} />}
     </View>
   );

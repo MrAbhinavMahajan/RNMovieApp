@@ -7,8 +7,8 @@ import {
   View,
 } from 'react-native';
 import {styles} from './styles';
-import RecommendedMoviesWidget from '../../widgets/RecommendedMovies';
 import {PAGE_REFRESH} from '../../../constants/Page';
+import QuotationWidget from '../../widgets/Quotation';
 
 interface MovieSimilarScreenProps {}
 
@@ -33,7 +33,10 @@ const MovieSimilarScreen = (props: MovieSimilarScreenProps) => {
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
         }>
-        <RecommendedMoviesWidget />
+        <QuotationWidget
+          title={`Live${'\n'}it up!`}
+          subtitle={'Crafted with ❤️ in Chamba, India'}
+        />
       </ScrollView>
     </View>
   );
