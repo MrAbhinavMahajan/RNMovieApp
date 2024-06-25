@@ -1,5 +1,6 @@
-import {useQuery, useQueryClient} from '@tanstack/react-query';
 import React, {useEffect, useRef, useState} from 'react';
+import {useQuery, useQueryClient} from '@tanstack/react-query';
+import _ from 'lodash';
 import {fetchMovieWatchlist} from '../../../apis/Main';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
 import * as NavigationService from '../../../service/Navigation';
@@ -42,6 +43,10 @@ const WatchlistMoviesWidget = () => {
   useEffect(() => {
     NativeAppEventEmitter.addListener(PAGE_REFRESH.HOME_SCREEN, refreshWidget);
   }, []);
+
+  if (_.isEmpty(data?.results)) {
+    return <></>;
+  }
 
   return (
     <View
