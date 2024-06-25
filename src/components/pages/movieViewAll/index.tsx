@@ -5,6 +5,8 @@ import {styles} from './styles';
 import AppHeader from '../../common/AppHeader';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
 import {
+  fetchMovieFavorites,
+  fetchMovieWatchlist,
   fetchNowPlayingMovies,
   fetchRecommendedMovies,
   fetchTopRatedMovies,
@@ -42,6 +44,12 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
       case APP_WIDGETS_MAP.RECOMMENDED_MOVIES:
         const lastMovieId = 278;
         return fetchRecommendedMovies(lastMovieId);
+
+      case APP_WIDGETS_MAP.FAVORITE_MOVIES:
+        return fetchMovieFavorites();
+
+      case APP_WIDGETS_MAP.WATCHLIST_MOVIES:
+        return fetchMovieWatchlist();
     }
   };
 

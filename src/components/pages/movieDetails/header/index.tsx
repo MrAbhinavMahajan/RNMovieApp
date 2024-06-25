@@ -18,6 +18,7 @@ import _ from 'lodash';
 import {IconSize, MaterialIcon} from '../../../common/RNIcon';
 import {
   FavoriteRequestBody,
+  MovieItem,
   WatchlistRequestBody,
 } from '../../../../constants/AppInterfaces';
 
@@ -35,9 +36,15 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
   });
   const favoritesMutation = useMutation({
     mutationFn: updateMovieFavorites,
+    onSuccess: () => {
+      queryClient.invalidateQueries(['favoriteMovies']); // ! Invalidates the favoriteMovies query data and fetch on successful mutation
+    },
   });
   const watchlistMutation = useMutation({
     mutationFn: updateMovieWatchlist,
+    onSuccess: () => {
+      queryClient.invalidateQueries(['watchlistMovies']); // ! Invalidates the watchlistMovies query data and fetch on successful mutation
+    },
   });
   console.log(`movieDetails: for ${movieId} \n`, query);
   const {data: item, error, isLoading, isSuccess, refetch} = query;
@@ -47,8 +54,14 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
     height: 0,
     width: 0,
   });
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [isWatchlist, setIsWatchlist] = useState(false);
+  const favlist: MovieItem[] = [];
+  const watchlist: MovieItem[] = [];
+  const [isFavorite, setIsFavorite] = useState(
+    favlist.filter(movieItem => movieItem.id === id)?.length > 0,
+  );
+  const [isWatchlist, setIsWatchlist] = useState(
+    watchlist.filter(movieItem => movieItem.id === id)?.length > 0,
+  );
 
   const refreshWidget = () => {
     refetch();
