@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect} from 'react';
+import React, {useEffect, useMemo, useRef} from 'react';
 import _ from 'lodash';
-import {useQuery, useQueryClient} from '@tanstack/react-query';
+import {useInfiniteQuery} from '@tanstack/react-query';
 import {
   ActivityIndicator,
   FlatList,
@@ -31,14 +31,26 @@ interface SearchedResultsWidgetProps {
 
 const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
   const {searchedText} = props;
-  const queryClient = useQueryClient();
-  const query = useQuery({
+  const targetPage = useRef(1);
+  const query = useInfiniteQuery({
     queryKey: ['searchedMovies'],
-    queryFn: () => fetchSearchedMovieResults(searchedText),
+    queryFn: ({pageParam}) =>
+      fetchSearchedMovieResults(searchedText, pageParam),
+    initialPageParam: targetPage.current,
+    getNextPageParam: info => {
+      if (targetPage.current > info.total_pages) {
+        return undefined;
+      }
+      return targetPage.current;
+    },
   });
-  const {data, error, isLoading, isSuccess, refetch} = query;
+  const {data, isLoading, refetch, fetchNextPage} = query;
   const listRef = useAnimatedRef<any>();
   const scrollHandler = useScrollViewOffset(listRef); // * Gives Current offset of ScrollView
+
+  const movies = useMemo(() => {
+    return data?.pages.flatMap(page => page.results) || [];
+  }, [data]);
 
   useEffect(() => {
     if (searchedText) {
@@ -93,6 +105,11 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
     );
   };
 
+  const onEndReached = () => {
+    targetPage.current = targetPage.current + 1;
+    fetchNextPage();
+  };
+
   return (
     <View
       style={styles.containerView}
@@ -104,7 +121,7 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
       )}
       <FlatList
         ref={listRef}
-        data={data?.results || []}
+        data={movies || []}
         renderItem={renderItem}
         keyExtractor={item => `${item?.id}`}
         contentInsetAdjustmentBehavior={'automatic'}
@@ -114,6 +131,7 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={refreshWidget} />
         }
+        onEndReached={onEndReached}
       />
       <Animated.View
         style={[styles.scrollToTopBtn, scrollToTopCTAFadeAnimationStyles]}>

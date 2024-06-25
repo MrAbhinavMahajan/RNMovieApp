@@ -11,11 +11,12 @@ import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import {FALLBACK_DATA} from '../../data/Main';
 
 const RecommendedMoviesWidget = () => {
+  const page = 1;
   const queryClient = useQueryClient();
   const lastMovieId = 278;
   const query = useQuery({
     queryKey: ['recommendedMovies'],
-    queryFn: () => fetchRecommendedMovies(lastMovieId),
+    queryFn: () => fetchRecommendedMovies(lastMovieId, page),
   });
   console.log(`recommendedMovies for id ${lastMovieId}: \n`, query);
   const {data, error, isLoading, isSuccess, refetch} = query;

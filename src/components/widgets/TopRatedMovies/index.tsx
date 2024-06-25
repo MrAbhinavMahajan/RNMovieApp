@@ -11,10 +11,11 @@ import HeaderTitleWidget from '../HeaderTitle';
 import {FALLBACK_DATA} from '../../data/Main';
 
 const TopRatedMoviesWidget = () => {
+  const page = 1;
   const queryClient = useQueryClient();
   const query = useQuery({
     queryKey: ['topRatedMovies'],
-    queryFn: fetchTopRatedMovies,
+    queryFn: () => fetchTopRatedMovies(page),
   });
   console.log('topRatedMovies: \n', query);
   const {data, error, isLoading, isSuccess, refetch} = query;

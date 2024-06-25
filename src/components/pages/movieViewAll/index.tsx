@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useRef} from 'react';
+import React, {useEffect, useMemo, useRef} from 'react';
 import {FlatList, RefreshControl, View} from 'react-native';
 import {styles} from './styles';
 import AppHeader from '../../common/AppHeader';
-import {useQuery, useQueryClient} from '@tanstack/react-query';
+import {useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
 import {
   fetchMovieFavorites,
   fetchMovieWatchlist,
@@ -30,35 +30,55 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
   const queryClient = useQueryClient();
   const {queryParams} = props.route?.params;
   const {screenTitle, widgetId} = queryParams;
-  const makeAPICall = async () => {
+  const targetPage = useRef(1);
+  const makeAPICall = async (pageParam = 1) => {
     switch (widgetId) {
       case APP_WIDGETS_MAP.NOW_PLAYING:
-        return fetchNowPlayingMovies();
+        return fetchNowPlayingMovies(pageParam);
 
       case APP_WIDGETS_MAP.UPCOMING_MOVIES:
-        return fetchUpcomingMovies();
+        return fetchUpcomingMovies(pageParam);
 
       case APP_WIDGETS_MAP.TOP_RATED_MOVIES:
-        return fetchTopRatedMovies();
+        return fetchTopRatedMovies(pageParam);
 
       case APP_WIDGETS_MAP.RECOMMENDED_MOVIES:
         const lastMovieId = 278;
-        return fetchRecommendedMovies(lastMovieId);
+        return fetchRecommendedMovies(lastMovieId, pageParam);
 
       case APP_WIDGETS_MAP.FAVORITE_MOVIES:
-        return fetchMovieFavorites();
+        return fetchMovieFavorites(pageParam);
 
       case APP_WIDGETS_MAP.WATCHLIST_MOVIES:
-        return fetchMovieWatchlist();
+        return fetchMovieWatchlist(pageParam);
     }
   };
 
-  const query = useQuery({
+  const query = useInfiniteQuery({
     queryKey: ['viewAllMovies'],
-    queryFn: makeAPICall,
+    queryFn: ({pageParam}) => makeAPICall(pageParam),
+    initialPageParam: targetPage.current,
+    getNextPageParam: info => {
+      if (targetPage.current > info.total_pages) {
+        return undefined;
+      }
+      return targetPage.current;
+    },
   });
   console.log('viewAllMovies: \n', query);
-  const {data, error, isLoading, isSuccess, refetch} = query;
+  const {data, error, isLoading, isSuccess, refetch, fetchNextPage} = query;
+
+  const movies = useMemo(() => {
+    return data?.pages.flatMap(page => page.results) || [];
+  }, [data?.pages]);
+
+  console.log('movies :', movies);
+
+  useEffect(() => {
+    return () => {
+      queryClient.invalidateQueries(['viewAllMovies']);
+    };
+  }, []);
 
   const listRef = useRef(null);
 
@@ -66,12 +86,17 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
     refetch();
   };
 
+  const onEndReached = () => {
+    targetPage.current = targetPage.current + 1;
+    fetchNextPage();
+  };
+
   return (
     <View style={styles.screenView}>
       <AppHeader title={screenTitle} />
       <FlatList
         ref={listRef}
-        data={data?.results || []}
+        data={movies || []}
         renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
           <MoviePosterWidget
             item={item}
@@ -87,6 +112,7 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
         columnWrapperStyle={styles.columnWrapperView}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollableContentView}
+        onEndReached={onEndReached}
       />
     </View>
   );

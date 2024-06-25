@@ -28,7 +28,7 @@ export const fetchTrendingMovies = async () => {
   return json;
 };
 
-export const fetchNowPlayingMovies = async () => {
+export const fetchNowPlayingMovies = async (pageParam: number) => {
   const options = {
     method: 'GET',
     headers: {
@@ -38,7 +38,7 @@ export const fetchNowPlayingMovies = async () => {
   };
 
   const response = await fetch(
-    'https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1',
+    `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${pageParam}`,
     options,
   );
 
@@ -50,7 +50,7 @@ export const fetchNowPlayingMovies = async () => {
   return json;
 };
 
-export const fetchUpcomingMovies = async () => {
+export const fetchUpcomingMovies = async (pageParam: number) => {
   const options = {
     method: 'GET',
     headers: {
@@ -60,7 +60,7 @@ export const fetchUpcomingMovies = async () => {
   };
 
   const response = await fetch(
-    'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1',
+    `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=${pageParam}`,
     options,
   );
 
@@ -72,7 +72,7 @@ export const fetchUpcomingMovies = async () => {
   return json;
 };
 
-export const fetchTopRatedMovies = async () => {
+export const fetchTopRatedMovies = async (pageParam: number) => {
   const options = {
     method: 'GET',
     headers: {
@@ -82,7 +82,7 @@ export const fetchTopRatedMovies = async () => {
   };
 
   const response = await fetch(
-    'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1',
+    `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${pageParam}`,
     options,
   );
 
@@ -94,7 +94,10 @@ export const fetchTopRatedMovies = async () => {
   return json;
 };
 
-export const fetchRecommendedMovies = async (movieId: number) => {
+export const fetchRecommendedMovies = async (
+  movieId: number,
+  pageParam: number,
+) => {
   const options = {
     method: 'GET',
     headers: {
@@ -104,7 +107,7 @@ export const fetchRecommendedMovies = async (movieId: number) => {
   };
 
   const response = await fetch(
-    `https://api.themoviedb.org/3/movie/${movieId}/recommendations`,
+    `https://api.themoviedb.org/3/movie/${movieId}/recommendations?language=en-US&page=${pageParam}`,
     options,
   );
 
@@ -116,7 +119,7 @@ export const fetchRecommendedMovies = async (movieId: number) => {
   return json;
 };
 
-export const fetchPopularMovies = async () => {
+export const fetchPopularMovies = async (pageParam: number) => {
   const options = {
     method: 'GET',
     headers: {
@@ -126,7 +129,7 @@ export const fetchPopularMovies = async () => {
   };
 
   const response = await fetch(
-    'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1',
+    `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${pageParam}`,
     options,
   );
 
@@ -138,7 +141,10 @@ export const fetchPopularMovies = async () => {
   return json;
 };
 
-export const fetchSearchedMovieResults = async (searchedText: string) => {
+export const fetchSearchedMovieResults = async (
+  searchedText: string,
+  pageParam: number,
+) => {
   const options = {
     method: 'GET',
     headers: {
@@ -148,7 +154,7 @@ export const fetchSearchedMovieResults = async (searchedText: string) => {
   };
 
   const response = await fetch(
-    `https://api.themoviedb.org/3/search/movie?query=${searchedText}&language=en-US&page=1`,
+    `https://api.themoviedb.org/3/search/movie?query=${searchedText}&language=en-US&page=${pageParam}`,
     options,
   );
 
@@ -230,7 +236,7 @@ export const updateMovieWatchlist = async (body: WatchlistRequestBody) => {
   return json;
 };
 
-export const fetchMovieFavorites = async () => {
+export const fetchMovieFavorites = async (pageParam: number) => {
   const options = {
     method: 'GET',
     headers: {
@@ -240,7 +246,7 @@ export const fetchMovieFavorites = async () => {
   };
 
   const response = await fetch(
-    'https://api.themoviedb.org/3/account/null/favorite/movies?language=en-US&page=1&sort_by=created_at.desc',
+    `https://api.themoviedb.org/3/account/null/favorite/movies?language=en-US&page=${pageParam}&sort_by=created_at.desc`,
     options,
   );
 
@@ -252,7 +258,7 @@ export const fetchMovieFavorites = async () => {
   return json;
 };
 
-export const fetchMovieWatchlist = async () => {
+export const fetchMovieWatchlist = async (pageParam: number) => {
   const options = {
     method: 'GET',
     headers: {
@@ -262,7 +268,7 @@ export const fetchMovieWatchlist = async () => {
   };
 
   const response = await fetch(
-    'https://api.themoviedb.org/3/account/null/watchlist/movies?language=en-US&page=1&sort_by=created_at.desc',
+    `https://api.themoviedb.org/3/account/null/watchlist/movies?language=en-US&page=${pageParam}&sort_by=created_at.desc`,
     options,
   );
 

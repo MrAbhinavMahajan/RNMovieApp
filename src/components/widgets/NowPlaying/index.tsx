@@ -11,10 +11,11 @@ import HeaderTitleWidget from '../HeaderTitle';
 import {FALLBACK_DATA} from '../../data/Main';
 
 const NowPlayingMoviesWidget = () => {
+  const page = 1;
   const queryClient = useQueryClient();
   const query = useQuery({
     queryKey: ['nowPlayingMovies'],
-    queryFn: fetchNowPlayingMovies,
+    queryFn: () => fetchNowPlayingMovies(page),
   });
   console.log('nowPlayingMovies:\n', query);
   const {data, error, isLoading, isSuccess, refetch} = query;

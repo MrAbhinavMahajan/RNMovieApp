@@ -12,10 +12,11 @@ import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import {FALLBACK_DATA} from '../../data/Main';
 
 const FavoritesMoviesWidget = () => {
+  const page=1
   const queryClient = useQueryClient();
   const query = useQuery({
     queryKey: ['favoriteMovies'],
-    queryFn: fetchMovieFavorites,
+    queryFn: () => fetchMovieFavorites(page),
   });
   console.log('favoriteMovies: \n', query);
   const {data, error, isLoading, isSuccess, refetch} = query;

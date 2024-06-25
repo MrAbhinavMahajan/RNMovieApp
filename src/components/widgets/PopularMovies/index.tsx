@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useMemo, useRef} from 'react';
 import {FlatList, RefreshControl, View} from 'react-native';
-import {useQuery, useQueryClient} from '@tanstack/react-query';
+import {useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
 import {fetchPopularMovies} from '../../../apis/Main';
 import {styles} from './styles';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
@@ -16,14 +16,27 @@ import {FALLBACK_DATA} from '../../data/Main';
 
 const PopularMoviesWidget = () => {
   const queryClient = useQueryClient();
-  const query = useQuery({
+  const targetPage = useRef(1);
+  const query = useInfiniteQuery({
     queryKey: ['popularMovies'],
-    queryFn: fetchPopularMovies,
+    queryFn: ({pageParam}) => fetchPopularMovies(pageParam),
+    initialPageParam: targetPage.current,
+    getNextPageParam: info => {
+      if (targetPage.current > info.total_pages) {
+        return undefined;
+      }
+      return targetPage.current;
+    },
   });
+
   console.log('popularMovies:\n', query);
-  const {data, error, isLoading, isSuccess, refetch} = query;
+  const {data, refetch, fetchNextPage} = query;
   const listRef = useAnimatedRef<any>();
   const scrollHandler = useScrollViewOffset(listRef); // * Gives Current offset of ScrollView
+
+  const movies = useMemo(() => {
+    return data?.pages.flatMap(page => page.results) || [];
+  }, [data]);
 
   const refreshWidget = () => {
     refetch();
@@ -37,13 +50,22 @@ const PopularMoviesWidget = () => {
     listRef.current?.scrollToOffset({animated: true, offset: 0});
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    return () => {
+      queryClient.invalidateQueries(['popularMovies']);
+    };
+  }, []);
+
+  const onEndReached = () => {
+    targetPage.current = targetPage.current + 1;
+    fetchNextPage();
+  };
 
   return (
     <View style={styles.containerView}>
       <FlatList
         ref={listRef}
-        data={data?.results || FALLBACK_DATA}
+        data={movies || FALLBACK_DATA}
         renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
           <MoviePosterWidget
             item={item}
@@ -60,6 +82,7 @@ const PopularMoviesWidget = () => {
         numColumns={3}
         columnWrapperStyle={styles.columnWrapperView}
         contentContainerStyle={styles.scrollableContentView}
+        onEndReached={onEndReached}
       />
       <Animated.View
         style={[styles.scrollToTopBtn, scrollToTopCTAFadeAnimationStyles]}>
