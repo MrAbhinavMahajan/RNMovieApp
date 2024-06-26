@@ -15,6 +15,7 @@ import AppCTA from '../../common/AppCTA';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
 import RNText from '../../common/RNText';
+import ErrorInfoWidget from '../ErrorInfo';
 
 const PopularMoviesWidget = () => {
   const queryClient = useQueryClient();
@@ -67,12 +68,6 @@ const PopularMoviesWidget = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (error) {
-      // sendErrorEvent
-    }
-  }, [error]);
-
   const onEndReached = () => {
     if (isFetching) {
       // ! Throttle unnecessary API Calls
@@ -83,11 +78,17 @@ const PopularMoviesWidget = () => {
     }
   };
 
-  const renderListEmptyCard = () => {
-    if (isLoading || isFetching) {
-      return <></>;
+  const renderListHeader = () => {
+    if (isError) {
+      return (
+        <ErrorInfoWidget
+          error={error}
+          containerStyles={styles.errorContainer}
+          retryCTA={refreshWidget}
+        />
+      );
     }
-    return <RNText>No Movies Found</RNText>;
+    return <></>;
   };
 
   const renderListFooter = () => {
@@ -97,13 +98,12 @@ const PopularMoviesWidget = () => {
     return <></>;
   };
 
-  if (isError) {
-    return (
-      <View>
-        <RNText>{error?.message}</RNText>
-      </View>
-    );
-  }
+  const renderListEmptyCard = () => {
+    if (isError || isLoading || isFetching) {
+      return <></>;
+    }
+    return <RNText>No Movies Found</RNText>;
+  };
 
   return (
     <View style={styles.containerView}>
@@ -112,6 +112,7 @@ const PopularMoviesWidget = () => {
           <ActivityIndicator size={'large'} color={STD_ACTIVITY_COLOR} />
         </View>
       )}
+
       <FlatList
         ref={listRef}
         data={movies || FALLBACK_DATA}
@@ -133,6 +134,7 @@ const PopularMoviesWidget = () => {
         contentContainerStyle={styles.scrollableContentView}
         onEndReached={onEndReached}
         onEndReachedThreshold={5}
+        ListHeaderComponent={renderListHeader}
         ListFooterComponent={renderListFooter}
         ListEmptyComponent={renderListEmptyCard}
         windowSize={1}

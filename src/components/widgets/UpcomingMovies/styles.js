@@ -15,12 +15,12 @@ export const styles = StyleSheet.create({
   headerView: {
     paddingLeft: STD_HORIZONTAL_SPACING,
     paddingRight: hpx(8),
-    marginBottom: vpx(10),
   },
   scrollableContentView: {
     paddingHorizontal: STD_HORIZONTAL_SPACING,
     gap: hpx(8),
     flexGrow: 1,
+    marginTop: vpx(10),
   },
   moviePoster: {
     width: hpx(80),
@@ -30,5 +30,6 @@ export const styles = StyleSheet.create({
     paddingVertical: vpx(24),
     marginHorizontal: STD_HORIZONTAL_SPACING,
     borderRadius: 8,
+    marginTop: vpx(10),
   },
 });

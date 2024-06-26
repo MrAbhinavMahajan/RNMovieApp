@@ -3,6 +3,7 @@ import _ from 'lodash';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {APP_PAGES_MAP} from '../../constants/Navigation';
 import MovieSearchScreen from '../pages/movieSearch';
+import {STD_SCREEN_COLOR} from '../../constants/Styles';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 
@@ -28,6 +29,9 @@ const SearchStack = () => {
           headerBlurEffect: 'prominent',
           headerLargeTitle: true,
           headerTransparent: true,
+          headerStyle: {
+            backgroundColor: STD_SCREEN_COLOR,
+          },
           headerSearchBarOptions: {
             placeholder: 'Search Movie',
             hideWhenScrolling: false,

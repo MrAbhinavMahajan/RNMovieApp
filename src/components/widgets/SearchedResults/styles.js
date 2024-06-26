@@ -6,6 +6,7 @@ import {
 import {fpx, hpx, vpx} from '../../../libraries/responsive-pixels';
 import {COLORS} from '../../../constants/Colors';
 import {FONTS} from '../../../constants/Fonts';
+import {SCREEN_HEIGHT} from '../../../utilities/AppUtils';
 
 export const styles = StyleSheet.create({
   containerView: {
@@ -75,5 +76,13 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     position: 'absolute',
     zIndex: 1,
+  },
+  errorContainer: {
+    backgroundColor: COLORS.fullWhite,
+    paddingVertical: vpx(24),
+    marginVertical: vpx(24),
+    borderRadius: 8,
+    height: SCREEN_HEIGHT / 2,
+    justifyContent: 'center',
   },
 });

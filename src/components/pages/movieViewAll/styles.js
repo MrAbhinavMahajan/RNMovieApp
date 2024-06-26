@@ -6,7 +6,7 @@ import {
   STYLES,
 } from '../../../constants/Styles';
 import {hpx, vpx} from '../../../libraries/responsive-pixels';
-import {SCREEN_WIDTH} from '../../../utilities/AppUtils';
+import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../utilities/AppUtils';
 import {COLORS} from '../../../constants/Colors';
 
 export const styles = StyleSheet.create({
@@ -47,5 +47,13 @@ export const styles = StyleSheet.create({
     bottom: 20,
     left: 20,
     right: 20,
+  },
+  errorContainer: {
+    backgroundColor: COLORS.fullWhite,
+    paddingVertical: vpx(24),
+    marginVertical: vpx(24),
+    borderRadius: 8,
+    height: SCREEN_HEIGHT / 2,
+    justifyContent: 'center',
   },
 });

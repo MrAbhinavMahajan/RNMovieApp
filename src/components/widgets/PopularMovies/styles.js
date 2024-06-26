@@ -4,7 +4,7 @@ import {
   STD_VERTICAL_SPACING,
 } from '../../../constants/Styles';
 import {hpx, vpx} from '../../../libraries/responsive-pixels';
-import {SCREEN_WIDTH} from '../../../utilities/AppUtils';
+import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../utilities/AppUtils';
 import {COLORS} from '../../../constants/Colors';
 
 export const styles = StyleSheet.create({
@@ -49,5 +49,13 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     position: 'absolute',
     zIndex: 1,
+  },
+  errorContainer: {
+    backgroundColor: COLORS.fullWhite,
+    paddingVertical: vpx(24),
+    marginVertical: vpx(24),
+    borderRadius: 8,
+    height: SCREEN_HEIGHT / 2,
+    justifyContent: 'center',
   },
 });

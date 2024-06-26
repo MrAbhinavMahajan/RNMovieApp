@@ -24,6 +24,7 @@ import AppHeader from '../../common/AppHeader';
 import AppCTA from '../../common/AppCTA';
 import MoviePosterWidget, {MoviePosterItem} from '../../widgets/MoviePoster';
 import RNText from '../../common/RNText';
+import ErrorInfoWidget from '../../widgets/ErrorInfo';
 
 interface MovieViewAllScreenProps {
   route: {
@@ -125,11 +126,17 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
     }
   };
 
-  const renderListEmptyCard = () => {
-    if (isLoading || isFetching) {
-      return <></>;
+  const renderListHeader = () => {
+    if (isError) {
+      return (
+        <ErrorInfoWidget
+          error={error}
+          containerStyles={styles.errorContainer}
+          retryCTA={onPageRefresh}
+        />
+      );
     }
-    return <RNText>No Movies Found</RNText>;
+    return <></>;
   };
 
   const renderListFooter = () => {
@@ -139,17 +146,19 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
     return <></>;
   };
 
+  const renderListEmptyCard = () => {
+    if (isError || isLoading || isFetching) {
+      return <></>;
+    }
+    return <RNText>No Movies Found</RNText>;
+  };
+
   return (
     <View style={styles.screenView}>
       <AppHeader title={screenTitle} />
       {isLoading && (
         <View style={styles.loaderView}>
           <ActivityIndicator size={'large'} color={STD_ACTIVITY_COLOR} />
-        </View>
-      )}
-      {isError && (
-        <View>
-          <RNText>{error?.message}</RNText>
         </View>
       )}
       <FlatList
@@ -173,6 +182,7 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
         contentContainerStyle={styles.scrollableContentView}
         onEndReached={onEndReached}
         onEndReachedThreshold={5}
+        ListHeaderComponent={renderListHeader}
         ListFooterComponent={renderListFooter}
         ListEmptyComponent={renderListEmptyCard}
         windowSize={1}

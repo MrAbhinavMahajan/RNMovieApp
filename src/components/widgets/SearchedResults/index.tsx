@@ -24,6 +24,7 @@ import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
 import AppCTA from '../../common/AppCTA';
 import RNText from '../../common/RNText';
 import MoviePosterWidget from '../MoviePoster';
+import ErrorInfoWidget from '../ErrorInfo';
 
 interface SearchedResultsWidgetProps {
   searchedText: string;
@@ -67,12 +68,6 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
       refetch();
     }
   }, [searchedText]);
-
-  useEffect(() => {
-    if (error) {
-      // sendErrorEvent
-    }
-  }, [error]);
 
   const refreshWidget = () => {
     refetch();
@@ -132,6 +127,19 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
     }
   };
 
+  const renderListHeader = () => {
+    if (isError) {
+      return (
+        <ErrorInfoWidget
+          error={error}
+          containerStyles={styles.errorContainer}
+          retryCTA={refreshWidget}
+        />
+      );
+    }
+    return <></>;
+  };
+
   const renderListFooter = () => {
     if (isFetchingNextPage) {
       return <ActivityIndicator color={STD_ACTIVITY_COLOR} />;
@@ -140,19 +148,11 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
   };
 
   const renderListEmptyCard = () => {
-    if (isLoading || isFetching) {
+    if (isError || isLoading || isFetching) {
       return <></>;
     }
     return <RNText>No Results Found</RNText>;
   };
-
-  if (isError) {
-    return (
-      <View>
-        <RNText>{error?.message}</RNText>
-      </View>
-    );
-  }
 
   return (
     <View
@@ -178,6 +178,7 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
         }
         onEndReached={onEndReached}
         onEndReachedThreshold={5}
+        ListHeaderComponent={renderListHeader}
         ListFooterComponent={renderListFooter}
         ListEmptyComponent={renderListEmptyCard}
         windowSize={1}
