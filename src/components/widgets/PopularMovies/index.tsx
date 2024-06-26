@@ -67,6 +67,12 @@ const PopularMoviesWidget = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (error) {
+      // sendErrorEvent
+    }
+  }, [error]);
+
   const onEndReached = () => {
     if (isFetching) {
       // ! Throttle unnecessary API Calls
@@ -91,16 +97,19 @@ const PopularMoviesWidget = () => {
     return <></>;
   };
 
+  if (isError) {
+    return (
+      <View>
+        <RNText>{error?.message}</RNText>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.containerView}>
       {isLoading && (
         <View style={styles.loaderView}>
           <ActivityIndicator size={'large'} color={STD_ACTIVITY_COLOR} />
-        </View>
-      )}
-      {isError && (
-        <View>
-          <RNText>{error?.message}</RNText>
         </View>
       )}
       <FlatList

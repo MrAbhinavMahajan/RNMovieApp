@@ -68,6 +68,12 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
     }
   }, [searchedText]);
 
+  useEffect(() => {
+    if (error) {
+      // sendErrorEvent
+    }
+  }, [error]);
+
   const refreshWidget = () => {
     refetch();
   };
@@ -140,6 +146,14 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
     return <RNText>No Results Found</RNText>;
   };
 
+  if (isError) {
+    return (
+      <View>
+        <RNText>{error?.message}</RNText>
+      </View>
+    );
+  }
+
   return (
     <View
       style={styles.containerView}
@@ -149,11 +163,7 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
           <ActivityIndicator size={'large'} color={STD_ACTIVITY_COLOR} />
         </View>
       )}
-      {isError && (
-        <View>
-          <RNText>{error?.message}</RNText>
-        </View>
-      )}
+
       <FlatList
         ref={listRef}
         data={movies || []}

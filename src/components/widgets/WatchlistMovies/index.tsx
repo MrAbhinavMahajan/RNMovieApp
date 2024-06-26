@@ -8,8 +8,10 @@ import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
 import {styles} from './styles';
 import {PAGE_REFRESH} from '../../../constants/Page';
 import {FALLBACK_DATA} from '../../data/Main';
+import {QUERY_STATUS} from '../../../constants/Main';
 import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
+import ErrorInfoWidget from '../ErrorInfo';
 
 const WatchlistMoviesWidget = () => {
   const page = 1;
@@ -18,7 +20,7 @@ const WatchlistMoviesWidget = () => {
     queryFn: ({signal}) => fetchMovieWatchlist(signal, page),
   });
   console.log('watchlistMovies: \n', query);
-  const {data, refetch, isLoading, isError, error} = query;
+  const {data, refetch, isLoading, isError, error, status} = query;
   const listRef = useRef(null);
   const [isRightCTAEnabled, setRightCTAEnabled] = useState<boolean>(false);
 
@@ -44,7 +46,7 @@ const WatchlistMoviesWidget = () => {
     NativeAppEventEmitter.addListener(PAGE_REFRESH.HOME_SCREEN, refreshWidget);
   }, []);
 
-  if (_.isEmpty(data?.results)) {
+  if (!isError && status !== QUERY_STATUS.PENDING && _.isEmpty(data?.results)) {
     return <></>;
   }
 
@@ -57,8 +59,15 @@ const WatchlistMoviesWidget = () => {
         containerStyles={styles.headerView}
         rightCTAAction={onViewAllAction}
         rightCTAEnabled={isRightCTAEnabled}
-        loaderEnabled={!data?.results}
+        loaderEnabled={status === QUERY_STATUS.PENDING}
       />
+      {isError && (
+        <ErrorInfoWidget
+          error={error}
+          containerStyles={styles.errorContainer}
+          retryCTA={refreshWidget}
+        />
+      )}
       <FlatList
         ref={listRef}
         onScroll={onScroll}

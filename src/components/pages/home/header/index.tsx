@@ -1,6 +1,7 @@
 import React, {useEffect, useRef} from 'react';
+import _ from 'lodash';
 import {useQuery} from '@tanstack/react-query';
-import {NativeAppEventEmitter} from 'react-native';
+import {ActivityIndicator, NativeAppEventEmitter, View} from 'react-native';
 import Carousel, {ICarouselInstance} from 'react-native-reanimated-carousel';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -13,6 +14,7 @@ import {COLORS} from '../../../../constants/Colors';
 import {FALLBACK_DATA} from '../../../data/Main';
 import {styles} from './styles';
 import MoviePosterWidget, {MoviePosterItem} from '../../../widgets/MoviePoster';
+import ErrorInfoWidget from '../../../widgets/ErrorInfo';
 
 const POSTER_HEIGHT = vpx(300);
 
@@ -48,36 +50,56 @@ const HomeScreenHeader = () => {
         styles.containerView,
         {paddingTop: insets.top + STD_VERTICAL_SPACING},
       ]}>
-      <Carousel
-        ref={carouselRef}
-        {...baseOptions}
-        style={{
-          width: SCREEN_WIDTH,
-        }}
-        loop
-        pagingEnabled={true}
-        snapEnabled={true}
-        autoPlay={true}
-        autoPlayInterval={1500}
-        mode={'parallax'}
-        modeConfig={{
-          parallaxScrollingScale: 0.9,
-          parallaxScrollingOffset: hpx(30),
-        }}
-        data={data?.results ?? FALLBACK_DATA}
-        renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
-          <MoviePosterWidget
-            item={item}
-            index={index}
-            containerStyles={[
-              styles.moviePoster,
-              {
-                height: POSTER_HEIGHT,
-              },
-            ]}
-          />
-        )}
-      />
+      {isLoading && (
+        <View style={styles.loaderView}>
+          <ActivityIndicator size={'large'} color={COLORS.antiFlashWhite} />
+        </View>
+      )}
+      {isError && (
+        <ErrorInfoWidget
+          error={error}
+          containerStyles={styles.errorContainer}
+          retryCTA={refreshWidget}
+        />
+      )}
+      {!_.isEmpty(data?.results) && (
+        <Carousel
+          ref={carouselRef}
+          {...baseOptions}
+          style={{
+            width: SCREEN_WIDTH,
+          }}
+          loop
+          pagingEnabled={true}
+          snapEnabled={true}
+          autoPlay={true}
+          autoPlayInterval={1500}
+          mode={'parallax'}
+          modeConfig={{
+            parallaxScrollingScale: 0.9,
+            parallaxScrollingOffset: hpx(30),
+          }}
+          data={data?.results ?? FALLBACK_DATA}
+          renderItem={({
+            item,
+            index,
+          }: {
+            item: MoviePosterItem;
+            index: number;
+          }) => (
+            <MoviePosterWidget
+              item={item}
+              index={index}
+              containerStyles={[
+                styles.moviePoster,
+                {
+                  height: POSTER_HEIGHT,
+                },
+              ]}
+            />
+          )}
+        />
+      )}
     </LinearGradient>
   );
 };

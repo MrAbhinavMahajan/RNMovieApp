@@ -22,6 +22,10 @@ const IconSizes = {
   medium: vpx(24),
   large: vpx(28),
   extraLarge: vpx(32),
+  smallSemi: vpx(36),
+  mediumSemi: vpx(40),
+  largeSemi: vpx(44),
+  extraLargeSemi: vpx(48),
 };
 
 export enum IconSize {
@@ -29,6 +33,10 @@ export enum IconSize {
   medium = 'medium',
   large = 'large',
   extraLarge = 'extraLarge',
+  smallSemi = 'smallSemi',
+  mediumSemi = 'mediumSemi',
+  largeSemi = 'largeSemi',
+  extraLargeSemi = 'extraLargeSemi',
 }
 
 export const IoniIcon = ({size, name, color}: IconProps) => (
@@ -82,3 +90,8 @@ export const AppCheckboxBtnIcon = ({
     color={color}
   />
 );
+
+export const AppRetryIcon = ({
+  color = COLORS.fullBlack,
+  size = IconSize.largeSemi,
+}) => <MaterialIcon name={'replay-circle-filled'} size={size} color={color} />;

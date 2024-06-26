@@ -1,4 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
+import _ from 'lodash';
 import {useQuery} from '@tanstack/react-query';
 import * as NavigationService from '../../../service/Navigation';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
@@ -7,8 +8,10 @@ import {fetchTopRatedMovies} from '../../../apis/Main';
 import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
 import {styles} from './styles';
 import {FALLBACK_DATA} from '../../data/Main';
+import {QUERY_STATUS} from '../../../constants/Main';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import HeaderTitleWidget from '../HeaderTitle';
+import ErrorInfoWidget from '../ErrorInfo';
 
 const TopRatedMoviesWidget = () => {
   const page = 1;
@@ -17,7 +20,7 @@ const TopRatedMoviesWidget = () => {
     queryFn: ({signal}) => fetchTopRatedMovies(signal, page),
   });
   console.log('topRatedMovies: \n', query);
-  const {data, refetch, isLoading, isError, error} = query;
+  const {data, refetch, isLoading, isError, error, status} = query;
   const listRef = useRef(null);
   const [isRightCTAEnabled, setRightCTAEnabled] = useState(false);
 
@@ -43,6 +46,10 @@ const TopRatedMoviesWidget = () => {
     NativeAppEventEmitter.addListener(PAGE_REFRESH.HOME_SCREEN, refreshWidget);
   }, []);
 
+  if (!isError && status !== QUERY_STATUS.PENDING && _.isEmpty(data?.results)) {
+    return <></>;
+  }
+
   return (
     <View
       style={styles.containerView}
@@ -52,8 +59,16 @@ const TopRatedMoviesWidget = () => {
         containerStyles={styles.headerView}
         rightCTAAction={onViewAllAction}
         rightCTAEnabled={isRightCTAEnabled}
-        loaderEnabled={!data?.results}
+        loaderEnabled={status === QUERY_STATUS.PENDING}
       />
+
+      {isError && (
+        <ErrorInfoWidget
+          error={error}
+          containerStyles={styles.errorContainer}
+          retryCTA={refreshWidget}
+        />
+      )}
       <FlatList
         ref={listRef}
         onScroll={onScroll}

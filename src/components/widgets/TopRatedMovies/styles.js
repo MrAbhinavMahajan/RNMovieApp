@@ -15,14 +15,20 @@ export const styles = StyleSheet.create({
   headerView: {
     paddingLeft: STD_HORIZONTAL_SPACING,
     paddingRight: hpx(8),
+    marginBottom: vpx(10),
   },
   scrollableContentView: {
-    marginTop: vpx(10),
     paddingHorizontal: STD_HORIZONTAL_SPACING,
     gap: hpx(8),
     flexGrow: 1,
   },
   moviePoster: {
     width: hpx(80),
+  },
+  errorContainer: {
+    backgroundColor: COLORS.antiFlashWhite,
+    paddingVertical: vpx(24),
+    marginHorizontal: STD_HORIZONTAL_SPACING,
+    borderRadius: 8,
   },
 });
