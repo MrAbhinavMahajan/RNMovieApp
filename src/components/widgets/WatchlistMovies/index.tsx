@@ -20,7 +20,7 @@ const WatchlistMoviesWidget = () => {
     queryFn: ({signal}) => fetchMovieWatchlist(signal, page),
   });
   console.log('watchlistMovies: \n', query);
-  const {data, refetch, isLoading, isError, error, status} = query;
+  const {data, refetch, isLoading, isFetching, isError, error, status} = query;
   const listRef = useRef(null);
   const [isRightCTAEnabled, setRightCTAEnabled] = useState<boolean>(false);
 
@@ -59,7 +59,7 @@ const WatchlistMoviesWidget = () => {
         containerStyles={styles.headerView}
         rightCTAAction={onViewAllAction}
         rightCTAEnabled={isRightCTAEnabled}
-        loaderEnabled={status === QUERY_STATUS.PENDING}
+        loaderEnabled={isFetching}
       />
       {isError && (
         <ErrorInfoWidget

@@ -20,7 +20,7 @@ const FavoritesMoviesWidget = () => {
     queryFn: ({signal}) => fetchMovieFavorites(signal, page),
   });
   console.log('favoriteMovies: \n', query);
-  const {data, refetch, isLoading, isError, error, status} = query;
+  const {data, refetch, isLoading, isFetching, isError, error, status} = query;
   const listRef = useRef(null);
   const [isRightCTAEnabled, setRightCTAEnabled] = useState(false);
 
@@ -59,7 +59,7 @@ const FavoritesMoviesWidget = () => {
         containerStyles={styles.headerView}
         rightCTAAction={onViewAllAction}
         rightCTAEnabled={isRightCTAEnabled}
-        loaderEnabled={status === QUERY_STATUS.PENDING}
+        loaderEnabled={isFetching}
       />
       {isError && (
         <ErrorInfoWidget

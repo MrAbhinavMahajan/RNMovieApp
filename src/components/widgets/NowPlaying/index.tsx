@@ -20,7 +20,7 @@ const NowPlayingMoviesWidget = () => {
     queryFn: ({signal}) => fetchNowPlayingMovies(signal, page),
   });
   console.log('nowPlayingMovies:\n', query);
-  const {data, refetch, isLoading, isError, error, status} = query;
+  const {data, refetch, isLoading, isFetching, isError, error, status} = query;
   const listRef = useRef(null);
   const [isRightCTAEnabled, setRightCTAEnabled] = useState(false);
   const refreshWidget = () => {
@@ -58,7 +58,7 @@ const NowPlayingMoviesWidget = () => {
         containerStyles={styles.headerView}
         rightCTAAction={onViewAllAction}
         rightCTAEnabled={isRightCTAEnabled}
-        loaderEnabled={status === QUERY_STATUS.PENDING}
+        loaderEnabled={isFetching}
       />
       {isError && (
         <ErrorInfoWidget

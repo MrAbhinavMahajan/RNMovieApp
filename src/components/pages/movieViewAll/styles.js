@@ -2,7 +2,6 @@ import {StyleSheet} from 'react-native';
 import {
   STD_HORIZONTAL_SPACING,
   STD_SCREEN_COLOR,
-  STD_VERTICAL_SPACING,
   STYLES,
 } from '../../../constants/Styles';
 import {hpx, vpx} from '../../../libraries/responsive-pixels';
@@ -15,7 +14,6 @@ export const styles = StyleSheet.create({
     backgroundColor: STD_SCREEN_COLOR,
   },
   scrollableContentView: {
-    marginTop: STD_VERTICAL_SPACING,
     paddingHorizontal: STD_HORIZONTAL_SPACING,
     gap: hpx(8),
     paddingBottom: vpx(200),

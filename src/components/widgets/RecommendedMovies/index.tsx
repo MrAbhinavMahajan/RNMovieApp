@@ -21,7 +21,7 @@ const RecommendedMoviesWidget = () => {
     queryFn: ({signal}) => fetchRecommendedMovies(signal, lastMovieId, page),
   });
   console.log(`recommendedMovies for id ${lastMovieId}: \n`, query);
-  const {data, refetch, isLoading, isError, error, status} = query;
+  const {data, refetch, isLoading, isFetching, isError, error, status} = query;
   const listRef = useRef(null);
   const [isRightCTAEnabled, setRightCTAEnabled] = useState(false);
 
@@ -60,7 +60,7 @@ const RecommendedMoviesWidget = () => {
         containerStyles={styles.headerView}
         rightCTAAction={onViewAllAction}
         rightCTAEnabled={isRightCTAEnabled}
-        loaderEnabled={status === QUERY_STATUS.PENDING}
+        loaderEnabled={isFetching}
       />
       {isError && (
         <ErrorInfoWidget
