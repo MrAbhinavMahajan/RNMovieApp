@@ -1,24 +1,23 @@
 import React, {useEffect, useRef, useState} from 'react';
+import {useQuery} from '@tanstack/react-query';
+import * as NavigationService from '../../../service/Navigation';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
 import {PAGE_REFRESH} from '../../../constants/Page';
-import {useQuery, useQueryClient} from '@tanstack/react-query';
 import {fetchTopRatedMovies} from '../../../apis/Main';
-import * as NavigationService from '../../../service/Navigation';
 import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
 import {styles} from './styles';
+import {FALLBACK_DATA} from '../../data/Main';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import HeaderTitleWidget from '../HeaderTitle';
-import {FALLBACK_DATA} from '../../data/Main';
 
 const TopRatedMoviesWidget = () => {
   const page = 1;
-  const queryClient = useQueryClient();
   const query = useQuery({
     queryKey: ['topRatedMovies'],
-    queryFn: () => fetchTopRatedMovies(page),
+    queryFn: ({signal}) => fetchTopRatedMovies(signal, page),
   });
   console.log('topRatedMovies: \n', query);
-  const {data, error, isLoading, isSuccess, refetch} = query;
+  const {data, isLoading, refetch} = query;
   const listRef = useRef(null);
   const [isRightCTAEnabled, setRightCTAEnabled] = useState(false);
 

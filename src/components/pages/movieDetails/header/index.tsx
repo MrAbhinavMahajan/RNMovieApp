@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {NativeAppEventEmitter, TouchableOpacity, View} from 'react-native';
+import _ from 'lodash';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
-import {styles} from './styles';
-import {COLORS} from '../../../../constants/Colors';
+import {
+  Alert,
+  NativeAppEventEmitter,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {PAGE_REFRESH} from '../../../../constants/Page';
 import {
   fetchMovieDetails,
   fetchMovieFavorites,
@@ -12,42 +15,51 @@ import {
   updateMovieFavorites,
   updateMovieWatchlist,
 } from '../../../../apis/Main';
-import RNText from '../../../common/RNText';
-import MoviePosterWidget from '../../../widgets/MoviePoster';
-import RNImage from '../../../common/RNImage';
+import {PAGE_REFRESH} from '../../../../constants/Page';
 import {IMAGE_BASEURL} from '../../../../constants/Main';
-import _ from 'lodash';
 import {IconSize, MaterialIcon} from '../../../common/RNIcon';
+import {COLORS} from '../../../../constants/Colors';
+import {styles} from './styles';
 import {
   FavoriteRequestBody,
   WatchlistRequestBody,
 } from '../../../../constants/AppInterfaces';
+import RNText from '../../../common/RNText';
+import MoviePosterWidget from '../../../widgets/MoviePoster';
+import RNImage from '../../../common/RNImage';
+import {
+  GENERIC_ERROR_MESSAGE,
+  GENERIC_ERROR_TITLE,
+} from '../../../../constants/Error';
 
 interface MovieDetailsScreenHeaderProps {
   screenTitle: string;
   movieId: number;
-  navigation: any;
 }
 
 const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
-  const {screenTitle, movieId, navigation} = props;
   const queryClient = useQueryClient();
+  const {screenTitle, movieId} = props;
+  const page = 1;
   const query = useQuery({
-    queryKey: ['movieDetails'],
-    queryFn: () => fetchMovieDetails(movieId),
+    queryKey: ['movieDetails', movieId],
+    queryFn: ({signal}) => fetchMovieDetails(signal, movieId),
   });
   const favoriteMoviesQuery = useQuery({
     queryKey: ['favoriteMovies'],
-    queryFn: () => fetchMovieFavorites(),
+    queryFn: ({signal}) => fetchMovieFavorites(signal, page),
   });
   const watchlistMoviesDataQuery = useQuery({
     queryKey: ['watchlistMovies'],
-    queryFn: () => fetchMovieWatchlist(),
+    queryFn: ({signal}) => fetchMovieWatchlist(signal, page),
   });
   const favoritesMutation = useMutation({
     mutationFn: updateMovieFavorites,
     onSuccess: () => {
       queryClient.invalidateQueries(['favoriteMovies']); // ! Invalidates the favoriteMovies query data and fetch on successful mutation
+    },
+    onError: () => {
+      Alert.alert(GENERIC_ERROR_TITLE, GENERIC_ERROR_MESSAGE);
     },
   });
   const watchlistMutation = useMutation({
@@ -55,10 +67,13 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
     onSuccess: () => {
       queryClient.invalidateQueries(['watchlistMovies']); // ! Invalidates the watchlistMovies query data and fetch on successful mutation
     },
+    onError: () => {
+      Alert.alert(GENERIC_ERROR_TITLE, GENERIC_ERROR_MESSAGE);
+    },
   });
   console.log(`movieDetails: for ${movieId} \n`, query);
 
-  const {data: item, error, isLoading, isSuccess, refetch} = query;
+  const {data: item, refetch} = query;
   const {vote_average, tagline, vote_count, backdrop_path, id} = item || {};
   const imageURL = `${IMAGE_BASEURL}${backdrop_path}`;
   const [controlsViewLayout, setControlsViewLayout] = useState({

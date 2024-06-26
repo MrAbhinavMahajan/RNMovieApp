@@ -6,13 +6,14 @@ import {
 const AccessToken =
   'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMDUyNjRlYmI4ZTYyODVhYjlkYjQ1ZDdlYmVjZmM2YiIsInN1YiI6IjY2NmQ0OTU0NmI4YzQ3OTQ1YTM2MzVhNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.QjBCWACkZDu3OnmyGtfkhcD6oBs-eWez0VgPH7PR6w0';
 
-export const fetchTrendingMovies = async () => {
+export const fetchTrendingMovies = async (signal: AbortSignal) => {
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
       Authorization: `Bearer ${AccessToken}`,
     },
+    signal,
   };
 
   const response = await fetch(
@@ -28,13 +29,17 @@ export const fetchTrendingMovies = async () => {
   return json;
 };
 
-export const fetchNowPlayingMovies = async (pageParam: number) => {
+export const fetchNowPlayingMovies = async (
+  signal: AbortSignal,
+  pageParam: number,
+) => {
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
       Authorization: `Bearer ${AccessToken}`,
     },
+    signal,
   };
 
   const response = await fetch(
@@ -50,13 +55,17 @@ export const fetchNowPlayingMovies = async (pageParam: number) => {
   return json;
 };
 
-export const fetchUpcomingMovies = async (pageParam: number) => {
+export const fetchUpcomingMovies = async (
+  signal: AbortSignal,
+  pageParam: number,
+) => {
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
       Authorization: `Bearer ${AccessToken}`,
     },
+    signal,
   };
 
   const response = await fetch(
@@ -72,13 +81,17 @@ export const fetchUpcomingMovies = async (pageParam: number) => {
   return json;
 };
 
-export const fetchTopRatedMovies = async (pageParam: number) => {
+export const fetchTopRatedMovies = async (
+  signal: AbortSignal,
+  pageParam: number,
+) => {
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
       Authorization: `Bearer ${AccessToken}`,
     },
+    signal,
   };
 
   const response = await fetch(
@@ -95,6 +108,7 @@ export const fetchTopRatedMovies = async (pageParam: number) => {
 };
 
 export const fetchRecommendedMovies = async (
+  signal: AbortSignal,
   movieId: number,
   pageParam: number,
 ) => {
@@ -104,6 +118,7 @@ export const fetchRecommendedMovies = async (
       accept: 'application/json',
       Authorization: `Bearer ${AccessToken}`,
     },
+    signal,
   };
 
   const response = await fetch(
@@ -119,13 +134,17 @@ export const fetchRecommendedMovies = async (
   return json;
 };
 
-export const fetchPopularMovies = async (pageParam: number) => {
+export const fetchPopularMovies = async (
+  signal: AbortSignal,
+  pageParam: number,
+) => {
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
       Authorization: `Bearer ${AccessToken}`,
     },
+    signal,
   };
 
   const response = await fetch(
@@ -142,6 +161,7 @@ export const fetchPopularMovies = async (pageParam: number) => {
 };
 
 export const fetchSearchedMovieResults = async (
+  signal: AbortSignal,
   searchedText: string,
   pageParam: number,
 ) => {
@@ -151,6 +171,7 @@ export const fetchSearchedMovieResults = async (
       accept: 'application/json',
       Authorization: `Bearer ${AccessToken}`,
     },
+    signal,
   };
 
   const response = await fetch(
@@ -166,13 +187,17 @@ export const fetchSearchedMovieResults = async (
   return json;
 };
 
-export const fetchMovieDetails = async (movieId: number) => {
+export const fetchMovieDetails = async (
+  signal: AbortSignal,
+  movieId: number,
+) => {
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
       Authorization: `Bearer ${AccessToken}`,
     },
+    signal,
   };
 
   const response = await fetch(
@@ -236,13 +261,17 @@ export const updateMovieWatchlist = async (body: WatchlistRequestBody) => {
   return json;
 };
 
-export const fetchMovieFavorites = async (pageParam: number) => {
+export const fetchMovieFavorites = async (
+  signal: AbortSignal,
+  pageParam: number,
+) => {
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
       Authorization: `Bearer ${AccessToken}`,
     },
+    signal,
   };
 
   const response = await fetch(
@@ -258,13 +287,17 @@ export const fetchMovieFavorites = async (pageParam: number) => {
   return json;
 };
 
-export const fetchMovieWatchlist = async (pageParam: number) => {
+export const fetchMovieWatchlist = async (
+  signal: AbortSignal,
+  pageParam: number,
+) => {
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
       Authorization: `Bearer ${AccessToken}`,
     },
+    signal,
   };
 
   const response = await fetch(

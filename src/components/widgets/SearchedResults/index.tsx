@@ -2,6 +2,7 @@
 import React, {useEffect, useMemo, useRef} from 'react';
 import _ from 'lodash';
 import {useInfiniteQuery} from '@tanstack/react-query';
+import * as NavigationService from '../../../service/Navigation';
 import {
   ActivityIndicator,
   FlatList,
@@ -9,7 +10,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import * as NavigationService from '../../../service/Navigation';
 import Animated, {
   useAnimatedRef,
   useAnimatedStyle,
@@ -20,10 +20,10 @@ import {APP_PAGES_MAP} from '../../../constants/Navigation';
 import {fetchSearchedMovieResults} from '../../../apis/Main';
 import {AppArrowUpIcon} from '../../common/RNIcon';
 import {styles} from './styles';
+import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
 import MoviePosterWidget from '../MoviePoster';
 import RNText from '../../common/RNText';
 import AppCTA from '../../common/AppCTA';
-import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
 
 interface SearchedResultsWidgetProps {
   searchedText: string;
@@ -34,8 +34,8 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
   const targetPage = useRef(1);
   const query = useInfiniteQuery({
     queryKey: ['searchedMovies'],
-    queryFn: ({pageParam}) =>
-      fetchSearchedMovieResults(searchedText, pageParam),
+    queryFn: ({signal, pageParam}) =>
+      fetchSearchedMovieResults(signal, searchedText, pageParam),
     initialPageParam: targetPage.current,
     getNextPageParam: info => {
       if (targetPage.current > info.total_pages) {

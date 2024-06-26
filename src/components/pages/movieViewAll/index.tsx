@@ -1,9 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useMemo, useRef} from 'react';
-import {FlatList, RefreshControl, View} from 'react-native';
-import {styles} from './styles';
-import AppHeader from '../../common/AppHeader';
 import {useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
+import {FlatList, RefreshControl, View} from 'react-native';
 import {
   fetchMovieFavorites,
   fetchMovieWatchlist,
@@ -12,8 +10,10 @@ import {
   fetchTopRatedMovies,
   fetchUpcomingMovies,
 } from '../../../apis/Main';
-import MoviePosterWidget, {MoviePosterItem} from '../../widgets/MoviePoster';
+import {styles} from './styles';
+import AppHeader from '../../common/AppHeader';
 import {APP_WIDGETS_MAP} from '../../../constants/Navigation';
+import MoviePosterWidget, {MoviePosterItem} from '../../widgets/MoviePoster';
 
 interface MovieViewAllScreenProps {
   route: {
@@ -28,35 +28,35 @@ interface MovieViewAllScreenProps {
 
 const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
   const queryClient = useQueryClient();
-  const {queryParams} = props.route?.params;
+  const {queryParams} = props?.route?.params || {};
   const {screenTitle, widgetId} = queryParams;
   const targetPage = useRef(1);
-  const makeAPICall = async (pageParam = 1) => {
+  const makeAPICall = async (signal: AbortSignal, pageParam = 1) => {
     switch (widgetId) {
       case APP_WIDGETS_MAP.NOW_PLAYING:
-        return fetchNowPlayingMovies(pageParam);
+        return fetchNowPlayingMovies(signal, pageParam);
 
       case APP_WIDGETS_MAP.UPCOMING_MOVIES:
-        return fetchUpcomingMovies(pageParam);
+        return fetchUpcomingMovies(signal, pageParam);
 
       case APP_WIDGETS_MAP.TOP_RATED_MOVIES:
-        return fetchTopRatedMovies(pageParam);
+        return fetchTopRatedMovies(signal, pageParam);
 
       case APP_WIDGETS_MAP.RECOMMENDED_MOVIES:
         const lastMovieId = 278;
-        return fetchRecommendedMovies(lastMovieId, pageParam);
+        return fetchRecommendedMovies(signal, lastMovieId, pageParam);
 
       case APP_WIDGETS_MAP.FAVORITE_MOVIES:
-        return fetchMovieFavorites(pageParam);
+        return fetchMovieFavorites(signal, pageParam);
 
       case APP_WIDGETS_MAP.WATCHLIST_MOVIES:
-        return fetchMovieWatchlist(pageParam);
+        return fetchMovieWatchlist(signal, pageParam);
     }
   };
 
   const query = useInfiniteQuery({
-    queryKey: ['viewAllMovies'],
-    queryFn: ({pageParam}) => makeAPICall(pageParam),
+    queryKey: ['viewAllMovies', widgetId],
+    queryFn: ({pageParam, signal}) => makeAPICall(signal, pageParam),
     initialPageParam: targetPage.current,
     getNextPageParam: info => {
       if (targetPage.current > info.total_pages) {
@@ -66,7 +66,7 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
     },
   });
   console.log('viewAllMovies: \n', query);
-  const {data, error, isLoading, isSuccess, refetch, fetchNextPage} = query;
+  const {data, refetch, fetchNextPage} = query;
 
   const movies = useMemo(() => {
     return data?.pages.flatMap(page => page.results) || [];

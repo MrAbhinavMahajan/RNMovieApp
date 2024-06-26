@@ -1,25 +1,25 @@
 import React, {useEffect, useMemo, useRef} from 'react';
-import {FlatList, RefreshControl, View} from 'react-native';
 import {useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
-import {fetchPopularMovies} from '../../../apis/Main';
-import {styles} from './styles';
-import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
+import {FlatList, RefreshControl, View} from 'react-native';
 import Animated, {
   useAnimatedRef,
   useAnimatedStyle,
   useScrollViewOffset,
   withTiming,
 } from 'react-native-reanimated';
-import AppCTA from '../../common/AppCTA';
+import {fetchPopularMovies} from '../../../apis/Main';
+import {styles} from './styles';
 import {AppArrowUpIcon} from '../../common/RNIcon';
 import {FALLBACK_DATA} from '../../data/Main';
+import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
+import AppCTA from '../../common/AppCTA';
 
 const PopularMoviesWidget = () => {
   const queryClient = useQueryClient();
   const targetPage = useRef(1);
   const query = useInfiniteQuery({
     queryKey: ['popularMovies'],
-    queryFn: ({pageParam}) => fetchPopularMovies(pageParam),
+    queryFn: ({signal, pageParam}) => fetchPopularMovies(signal, pageParam),
     initialPageParam: targetPage.current,
     getNextPageParam: info => {
       if (targetPage.current > info.total_pages) {

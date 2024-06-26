@@ -1,30 +1,29 @@
 import React, {useEffect, useRef} from 'react';
+import {useQuery} from '@tanstack/react-query';
 import {NativeAppEventEmitter} from 'react-native';
-import {useQuery, useQueryClient} from '@tanstack/react-query';
 import Carousel, {ICarouselInstance} from 'react-native-reanimated-carousel';
-import {SCREEN_WIDTH} from '../../../../utilities/AppUtils';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {STD_VERTICAL_SPACING} from '../../../../constants/Styles';
-import {styles} from './styles';
-import {hpx, vpx} from '../../../../libraries/responsive-pixels';
-import {COLORS} from '../../../../constants/Colors';
 import LinearGradient from 'react-native-linear-gradient';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {PAGE_REFRESH} from '../../../../constants/Page';
+import {hpx, vpx} from '../../../../libraries/responsive-pixels';
+import {SCREEN_WIDTH} from '../../../../utilities/AppUtils';
 import {fetchTrendingMovies} from '../../../../apis/Main';
-import MoviePosterWidget, {MoviePosterItem} from '../../../widgets/MoviePoster';
+import {STD_VERTICAL_SPACING} from '../../../../constants/Styles';
+import {COLORS} from '../../../../constants/Colors';
 import {FALLBACK_DATA} from '../../../data/Main';
+import {styles} from './styles';
+import MoviePosterWidget, {MoviePosterItem} from '../../../widgets/MoviePoster';
 
 const POSTER_HEIGHT = vpx(300);
 
 const HomeScreenHeader = () => {
-  const queryClient = useQueryClient();
   const insets = useSafeAreaInsets();
   const query = useQuery({
     queryKey: ['trendingMovies'],
-    queryFn: fetchTrendingMovies,
+    queryFn: ({signal}) => fetchTrendingMovies(signal),
   });
   console.log('trendingMovies: \n', query);
-  const {data, error, isLoading, isSuccess, refetch} = query;
+  const {data, isLoading, refetch} = query;
 
   const carouselRef = useRef<ICarouselInstance>(null);
   const baseOptions = {

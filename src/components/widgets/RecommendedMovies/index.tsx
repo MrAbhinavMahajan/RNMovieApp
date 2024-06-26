@@ -1,25 +1,24 @@
-import {useQuery, useQueryClient} from '@tanstack/react-query';
 import React, {useEffect, useRef, useState} from 'react';
+import {useQuery} from '@tanstack/react-query';
+import * as NavigationService from '../../../service/Navigation';
 import {fetchRecommendedMovies} from '../../../apis/Main';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
-import * as NavigationService from '../../../service/Navigation';
 import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
 import {styles} from './styles';
 import {PAGE_REFRESH} from '../../../constants/Page';
+import {FALLBACK_DATA} from '../../data/Main';
 import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
-import {FALLBACK_DATA} from '../../data/Main';
 
 const RecommendedMoviesWidget = () => {
   const page = 1;
-  const queryClient = useQueryClient();
   const lastMovieId = 278;
   const query = useQuery({
-    queryKey: ['recommendedMovies'],
-    queryFn: () => fetchRecommendedMovies(lastMovieId, page),
+    queryKey: ['recommendedMovies', lastMovieId],
+    queryFn: ({signal}) => fetchRecommendedMovies(signal, lastMovieId, page),
   });
   console.log(`recommendedMovies for id ${lastMovieId}: \n`, query);
-  const {data, error, isLoading, isSuccess, refetch} = query;
+  const {data, isLoading, refetch} = query;
   const listRef = useRef(null);
   const [isRightCTAEnabled, setRightCTAEnabled] = useState(false);
 
