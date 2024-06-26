@@ -67,20 +67,11 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
   });
   console.log('viewAllMovies: \n', query);
   const {data, refetch, fetchNextPage} = query;
-
+  const listRef = useRef(null);
   const movies = useMemo(() => {
     return data?.pages.flatMap(page => page.results) || [];
   }, [data?.pages]);
-
   console.log('movies :', movies);
-
-  useEffect(() => {
-    return () => {
-      queryClient.invalidateQueries(['viewAllMovies']);
-    };
-  }, []);
-
-  const listRef = useRef(null);
 
   const onPageRefresh = () => {
     refetch();
@@ -90,6 +81,12 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
     targetPage.current = targetPage.current + 1;
     fetchNextPage();
   };
+
+  useEffect(() => {
+    return () => {
+      queryClient.cancelQueries({queryKey: ['viewAllMovies', widgetId]});
+    };
+  }, []);
 
   return (
     <View style={styles.screenView}>

@@ -28,12 +28,10 @@ const PopularMoviesWidget = () => {
       return targetPage.current;
     },
   });
-
   console.log('popularMovies:\n', query);
   const {data, refetch, fetchNextPage} = query;
   const listRef = useAnimatedRef<any>();
   const scrollHandler = useScrollViewOffset(listRef); // * Gives Current offset of ScrollView
-
   const movies = useMemo(() => {
     return data?.pages.flatMap(page => page.results) || [];
   }, [data]);
@@ -50,16 +48,16 @@ const PopularMoviesWidget = () => {
     listRef.current?.scrollToOffset({animated: true, offset: 0});
   };
 
-  useEffect(() => {
-    return () => {
-      queryClient.invalidateQueries(['popularMovies']);
-    };
-  }, []);
-
   const onEndReached = () => {
     targetPage.current = targetPage.current + 1;
     fetchNextPage();
   };
+
+  useEffect(() => {
+    return () => {
+      queryClient.cancelQueries({queryKey: ['popularMovies']});
+    };
+  }, []);
 
   return (
     <View style={styles.containerView}>

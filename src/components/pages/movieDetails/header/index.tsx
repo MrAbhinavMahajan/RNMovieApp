@@ -87,7 +87,7 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
     refetch();
   };
 
-  useEffect(() => {
+  const onPageMount = () => {
     NativeAppEventEmitter.addListener(
       PAGE_REFRESH.MOVIE_DETAILS_SCREEN,
       refreshWidget,
@@ -113,6 +113,15 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
       }
       return isMovieFound;
     });
+  };
+
+  const onPageUnmount = () => {
+    queryClient.cancelQueries({queryKey: ['movieDetails', movieId]});
+  };
+
+  useEffect(() => {
+    onPageMount();
+    return onPageUnmount;
   }, []);
 
   const onLayout = ({nativeEvent: {layout}}) => {
