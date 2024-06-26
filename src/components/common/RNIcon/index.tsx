@@ -50,7 +50,12 @@ export const MaterialIcon = ({size, name, color}: IconProps) => (
 export const AppBackIcon = ({
   color = COLORS.fullBlack,
   size = IconSize.large,
-}) => <MaterialIcon name={'arrow-back'} size={size} color={color} />;
+}) => <IoniIcon name={'arrow-back'} size={size} color={color} />;
+
+export const AppSearchIcon = ({
+  color = COLORS.fullBlack,
+  size = IconSize.large,
+}) => <IoniIcon name={'search'} size={size} color={color} />;
 
 export const AppArrowUpIcon = ({
   color = COLORS.fullWhite,

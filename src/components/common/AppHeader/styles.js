@@ -25,8 +25,9 @@ export const styles = StyleSheet.create({
   headerRightInfoView: {},
   headerTitle: {
     marginLeft: hpx(8),
-    fontFamily: FONTS.Medium,
-    fontSize: fpx(16),
+    fontFamily: FONTS.SemiBold,
+    fontSize: fpx(18),
+    color: COLORS.fullBlack,
   },
   headerDivider: {
     height: StyleSheet.hairlineWidth,

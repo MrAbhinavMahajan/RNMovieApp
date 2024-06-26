@@ -8,6 +8,7 @@ import Animated, {
   useScrollViewOffset,
   withTiming,
 } from 'react-native-reanimated';
+import * as NavigationService from '../../../service/Navigation';
 import {
   fetchMovieFavorites,
   fetchMovieWatchlist,
@@ -17,9 +18,9 @@ import {
   fetchUpcomingMovies,
 } from '../../../apis/Main';
 import {styles} from './styles';
-import {APP_WIDGETS_MAP} from '../../../constants/Navigation';
+import {APP_TABS_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
 import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
-import {AppArrowUpIcon} from '../../common/RNIcon';
+import {AppArrowUpIcon, AppSearchIcon} from '../../common/RNIcon';
 import AppHeader from '../../common/AppHeader';
 import AppCTA from '../../common/AppCTA';
 import MoviePosterWidget, {MoviePosterItem} from '../../widgets/MoviePoster';
@@ -108,6 +109,10 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
     refetch();
   };
 
+  const onSearchCTA = () => {
+    NavigationService.navigate(APP_TABS_MAP.SEARCH_TAB);
+  };
+
   useEffect(() => {
     return () => {
       // ! Cancelling Query Data on unmount
@@ -153,9 +158,15 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
     return <RNText>No Movies Found</RNText>;
   };
 
+  const RightComponent = (
+    <AppCTA onPress={onSearchCTA}>
+      <AppSearchIcon />
+    </AppCTA>
+  );
+
   return (
     <View style={styles.screenView}>
-      <AppHeader title={screenTitle} />
+      <AppHeader title={screenTitle} RightComponent={RightComponent} />
       {isLoading && (
         <View style={styles.loaderView}>
           <ActivityIndicator size={'large'} color={STD_ACTIVITY_COLOR} />
