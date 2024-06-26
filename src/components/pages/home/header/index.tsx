@@ -23,7 +23,7 @@ const HomeScreenHeader = () => {
     queryFn: ({signal}) => fetchTrendingMovies(signal),
   });
   console.log('trendingMovies: \n', query);
-  const {data, isLoading, refetch} = query;
+  const {data, refetch, isLoading, isError, error} = query;
 
   const carouselRef = useRef<ICarouselInstance>(null);
   const baseOptions = {
