@@ -29,7 +29,7 @@ interface MovieDetailsScreenProps {
 const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
   const scrollRef = useRef(null);
   const insets = useSafeAreaInsets();
-  const {queryParams} = props.route?.params;
+  const {queryParams} = props.route?.params || {};
   const {screenTitle, movieId} = queryParams;
 
   const onPageRefresh = () => {

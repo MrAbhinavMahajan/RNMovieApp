@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useMemo, useRef} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import _ from 'lodash';
 import {useInfiniteQuery} from '@tanstack/react-query';
 import * as NavigationService from '../../../service/Navigation';
@@ -21,9 +21,9 @@ import {fetchSearchedMovieResults} from '../../../apis/Main';
 import {AppArrowUpIcon} from '../../common/RNIcon';
 import {styles} from './styles';
 import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
-import MoviePosterWidget from '../MoviePoster';
-import RNText from '../../common/RNText';
 import AppCTA from '../../common/AppCTA';
+import RNText from '../../common/RNText';
+import MoviePosterWidget from '../MoviePoster';
 
 interface SearchedResultsWidgetProps {
   searchedText: string;
@@ -31,20 +31,27 @@ interface SearchedResultsWidgetProps {
 
 const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
   const {searchedText} = props;
-  const targetPage = useRef(1);
   const query = useInfiniteQuery({
     queryKey: ['searchedMovies'],
     queryFn: ({signal, pageParam}) =>
       fetchSearchedMovieResults(signal, searchedText, pageParam),
-    initialPageParam: targetPage.current,
-    getNextPageParam: info => {
-      if (targetPage.current > info.total_pages) {
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages, lastPageParam) => {
+      if (lastPage.page > lastPage.total_pages) {
         return undefined;
       }
-      return targetPage.current;
+      return lastPageParam + 1;
     },
   });
-  const {data, isLoading, refetch, fetchNextPage} = query;
+  const {
+    data,
+    refetch,
+    isLoading,
+    isFetching,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+  } = query;
   const listRef = useAnimatedRef<any>();
   const scrollHandler = useScrollViewOffset(listRef); // * Gives Current offset of ScrollView
 
@@ -58,9 +65,7 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
     }
   }, [searchedText]);
 
-  const refreshWidget = () => {
-    refetch();
-  };
+  const refreshWidget = () => {};
 
   const scrollToTopCTAFadeAnimationStyles = useAnimatedStyle(() => ({
     opacity: withTiming(scrollHandler.value > 600 ? 1 : 0),
@@ -106,8 +111,21 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
   };
 
   const onEndReached = () => {
-    targetPage.current = targetPage.current + 1;
-    fetchNextPage();
+    if (isFetching) {
+      // ! Throttle unnecessary API Calls
+      return;
+    }
+    if (hasNextPage) {
+      // ! hasNextPage becomes false when getNextPageParam returns undefined
+      fetchNextPage();
+    }
+  };
+
+  const renderListFooter = () => {
+    if (isFetchingNextPage) {
+      return <ActivityIndicator color={STD_ACTIVITY_COLOR} />;
+    }
+    return <></>;
   };
 
   return (
@@ -132,6 +150,9 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
           <RefreshControl refreshing={false} onRefresh={refreshWidget} />
         }
         onEndReached={onEndReached}
+        onEndReachedThreshold={5}
+        ListFooterComponent={renderListFooter}
+        windowSize={1}
       />
       <Animated.View
         style={[styles.scrollToTopBtn, scrollToTopCTAFadeAnimationStyles]}>

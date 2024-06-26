@@ -1,7 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useMemo, useRef} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import {useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
-import {FlatList, RefreshControl, View} from 'react-native';
+import {ActivityIndicator, FlatList, RefreshControl, View} from 'react-native';
+import Animated, {
+  useAnimatedRef,
+  useAnimatedStyle,
+  useScrollViewOffset,
+  withTiming,
+} from 'react-native-reanimated';
 import {
   fetchMovieFavorites,
   fetchMovieWatchlist,
@@ -11,8 +17,11 @@ import {
   fetchUpcomingMovies,
 } from '../../../apis/Main';
 import {styles} from './styles';
-import AppHeader from '../../common/AppHeader';
 import {APP_WIDGETS_MAP} from '../../../constants/Navigation';
+import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
+import {AppArrowUpIcon} from '../../common/RNIcon';
+import AppHeader from '../../common/AppHeader';
+import AppCTA from '../../common/AppCTA';
 import MoviePosterWidget, {MoviePosterItem} from '../../widgets/MoviePoster';
 
 interface MovieViewAllScreenProps {
@@ -30,7 +39,6 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
   const queryClient = useQueryClient();
   const {queryParams} = props?.route?.params || {};
   const {screenTitle, widgetId} = queryParams;
-  const targetPage = useRef(1);
   const makeAPICall = async (signal: AbortSignal, pageParam = 1) => {
     switch (widgetId) {
       case APP_WIDGETS_MAP.NOW_PLAYING:
@@ -57,40 +65,78 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
   const query = useInfiniteQuery({
     queryKey: ['viewAllMovies', widgetId],
     queryFn: ({pageParam, signal}) => makeAPICall(signal, pageParam),
-    initialPageParam: targetPage.current,
-    getNextPageParam: info => {
-      if (targetPage.current > info.total_pages) {
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages, lastPageParam) => {
+      if (lastPage.page > lastPage.total_pages) {
         return undefined;
       }
-      return targetPage.current;
+      return lastPageParam + 1;
     },
   });
   console.log('viewAllMovies: \n', query);
-  const {data, refetch, fetchNextPage} = query;
-  const listRef = useRef(null);
+  const {
+    data,
+    refetch,
+    isLoading,
+    isFetching,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+  } = query;
+  const listRef = useAnimatedRef<any>();
+  const scrollHandler = useScrollViewOffset(listRef); // * Gives Current offset of ScrollView
+
   const movies = useMemo(() => {
     return data?.pages.flatMap(page => page.results) || [];
   }, [data?.pages]);
   console.log('movies :', movies);
 
-  const onPageRefresh = () => {
-    refetch();
+  const scrollToTopCTAFadeAnimationStyles = useAnimatedStyle(() => ({
+    opacity: withTiming(scrollHandler.value > 600 ? 1 : 0),
+  }));
+
+  const scrollToTop = () => {
+    listRef.current?.scrollToOffset({animated: true, offset: 0});
   };
 
-  const onEndReached = () => {
-    targetPage.current = targetPage.current + 1;
-    fetchNextPage();
+  const onPageRefresh = () => {
+    // ! Refetch All the Query Data
+    refetch();
   };
 
   useEffect(() => {
     return () => {
+      // ! Cancelling Query Data on unmount
       queryClient.cancelQueries({queryKey: ['viewAllMovies', widgetId]});
     };
   }, []);
 
+  const onEndReached = () => {
+    if (isFetching) {
+      // ! Throttle unnecessary API Calls
+      return;
+    }
+    if (hasNextPage) {
+      // ! hasNextPage becomes false when getNextPageParam returns undefined
+      fetchNextPage();
+    }
+  };
+
+  const renderListFooter = () => {
+    if (isFetchingNextPage) {
+      return <ActivityIndicator color={STD_ACTIVITY_COLOR} />;
+    }
+    return <></>;
+  };
+
   return (
     <View style={styles.screenView}>
       <AppHeader title={screenTitle} />
+      {isLoading && (
+        <View style={styles.loaderView}>
+          <ActivityIndicator size={'large'} color={STD_ACTIVITY_COLOR} />
+        </View>
+      )}
       <FlatList
         ref={listRef}
         data={movies || []}
@@ -106,11 +152,21 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
         }
         keyExtractor={item => `${item?.id}`}
         numColumns={3}
+        initialNumToRender={10}
         columnWrapperStyle={styles.columnWrapperView}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollableContentView}
         onEndReached={onEndReached}
+        onEndReachedThreshold={5}
+        ListFooterComponent={renderListFooter}
+        windowSize={1}
       />
+      <Animated.View
+        style={[styles.scrollToTopBtn, scrollToTopCTAFadeAnimationStyles]}>
+        <AppCTA hitSlop={styles.scrollToTopBtnHitSlop} onPress={scrollToTop}>
+          <AppArrowUpIcon />
+        </AppCTA>
+      </Animated.View>
     </View>
   );
 };

@@ -1,8 +1,8 @@
 import React from 'react';
-import MainStack from '../stacks/Main';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {ErrorBoundary} from '../common/ErrorBoundary';
 import AppFallback from '../common/AppFallback';
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import MainStack from '../stacks/Main';
 
 const queryClient = new QueryClient({
   defaultOptions: {
