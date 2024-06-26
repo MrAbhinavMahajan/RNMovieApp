@@ -23,6 +23,7 @@ import {AppArrowUpIcon} from '../../common/RNIcon';
 import AppHeader from '../../common/AppHeader';
 import AppCTA from '../../common/AppCTA';
 import MoviePosterWidget, {MoviePosterItem} from '../../widgets/MoviePoster';
+import RNText from '../../common/RNText';
 
 interface MovieViewAllScreenProps {
   route: {
@@ -77,19 +78,21 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
   const {
     data,
     refetch,
-    isLoading,
-    isFetching,
+    isLoading, // isLoading -> true for Initial Loading
+    isFetching, // isFetching -> is true when Data is present & either new or old data being fetched
     isFetchingNextPage,
+    isError,
+    error,
     hasNextPage,
     fetchNextPage,
   } = query;
   const listRef = useAnimatedRef<any>();
   const scrollHandler = useScrollViewOffset(listRef); // * Gives Current offset of ScrollView
-
+  console.log('ViewAllMovies Data :\n', data);
   const movies = useMemo(() => {
     return data?.pages.flatMap(page => page.results) || [];
   }, [data?.pages]);
-  console.log('movies :', movies);
+  console.log('View-All Movies :', movies);
 
   const scrollToTopCTAFadeAnimationStyles = useAnimatedStyle(() => ({
     opacity: withTiming(scrollHandler.value > 600 ? 1 : 0),
@@ -122,6 +125,13 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
     }
   };
 
+  const renderListEmptyCard = () => {
+    if (isLoading || isFetching) {
+      return <></>;
+    }
+    return <RNText>No Movies Found</RNText>;
+  };
+
   const renderListFooter = () => {
     if (isFetchingNextPage) {
       return <ActivityIndicator color={STD_ACTIVITY_COLOR} />;
@@ -135,6 +145,11 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
       {isLoading && (
         <View style={styles.loaderView}>
           <ActivityIndicator size={'large'} color={STD_ACTIVITY_COLOR} />
+        </View>
+      )}
+      {isError && (
+        <View>
+          <RNText>{error?.message}</RNText>
         </View>
       )}
       <FlatList
@@ -159,6 +174,7 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
         onEndReached={onEndReached}
         onEndReachedThreshold={5}
         ListFooterComponent={renderListFooter}
+        ListEmptyComponent={renderListEmptyCard}
         windowSize={1}
       />
       <Animated.View

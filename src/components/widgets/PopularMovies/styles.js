@@ -9,6 +9,8 @@ import {COLORS} from '../../../constants/Colors';
 
 export const styles = StyleSheet.create({
   containerView: {
+    height: '100%',
+    width: '100%',
     paddingTop: STD_VERTICAL_SPACING,
   },
   headerView: {
@@ -40,5 +42,12 @@ export const styles = StyleSheet.create({
     bottom: 20,
     left: 20,
     right: 20,
+  },
+  loaderView: {
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    position: 'absolute',
+    zIndex: 1,
   },
 });

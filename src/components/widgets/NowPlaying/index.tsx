@@ -17,7 +17,7 @@ const NowPlayingMoviesWidget = () => {
     queryFn: ({signal}) => fetchNowPlayingMovies(signal, page),
   });
   console.log('nowPlayingMovies:\n', query);
-  const {data, isLoading, refetch} = query;
+  const {data, refetch, isLoading, isError, error} = query;
   const listRef = useRef(null);
   const [isRightCTAEnabled, setRightCTAEnabled] = useState(false);
   const refreshWidget = () => {

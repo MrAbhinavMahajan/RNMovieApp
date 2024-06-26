@@ -46,18 +46,21 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
   const {
     data,
     refetch,
-    isLoading,
-    isFetching,
+    isLoading, // isLoading -> true for Initial Loading
+    isFetching, // isFetching -> is true when Data is present & either new or old data being fetched
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
+    isError,
+    error,
   } = query;
   const listRef = useAnimatedRef<any>();
   const scrollHandler = useScrollViewOffset(listRef); // * Gives Current offset of ScrollView
-
+  console.log('Search Data :\n', data);
   const movies = useMemo(() => {
     return data?.pages.flatMap(page => page.results) || [];
   }, [data]);
+  console.log('Search Movies::::', movies);
 
   useEffect(() => {
     if (searchedText) {
@@ -65,7 +68,9 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
     }
   }, [searchedText]);
 
-  const refreshWidget = () => {};
+  const refreshWidget = () => {
+    refetch();
+  };
 
   const scrollToTopCTAFadeAnimationStyles = useAnimatedStyle(() => ({
     opacity: withTiming(scrollHandler.value > 600 ? 1 : 0),
@@ -128,6 +133,13 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
     return <></>;
   };
 
+  const renderListEmptyCard = () => {
+    if (isLoading || isFetching) {
+      return <></>;
+    }
+    return <RNText>No Results Found</RNText>;
+  };
+
   return (
     <View
       style={styles.containerView}
@@ -135,6 +147,11 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
       {isLoading && (
         <View style={styles.loaderView}>
           <ActivityIndicator size={'large'} color={STD_ACTIVITY_COLOR} />
+        </View>
+      )}
+      {isError && (
+        <View>
+          <RNText>{error?.message}</RNText>
         </View>
       )}
       <FlatList
@@ -152,6 +169,7 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
         onEndReached={onEndReached}
         onEndReachedThreshold={5}
         ListFooterComponent={renderListFooter}
+        ListEmptyComponent={renderListEmptyCard}
         windowSize={1}
       />
       <Animated.View

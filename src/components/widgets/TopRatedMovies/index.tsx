@@ -17,7 +17,7 @@ const TopRatedMoviesWidget = () => {
     queryFn: ({signal}) => fetchTopRatedMovies(signal, page),
   });
   console.log('topRatedMovies: \n', query);
-  const {data, isLoading, refetch} = query;
+  const {data, refetch, isLoading, isError, error} = query;
   const listRef = useRef(null);
   const [isRightCTAEnabled, setRightCTAEnabled] = useState(false);
 

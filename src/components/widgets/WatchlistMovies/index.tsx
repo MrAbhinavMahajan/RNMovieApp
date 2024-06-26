@@ -18,7 +18,7 @@ const WatchlistMoviesWidget = () => {
     queryFn: ({signal}) => fetchMovieWatchlist(signal, page),
   });
   console.log('watchlistMovies: \n', query);
-  const {data, isLoading, refetch} = query;
+  const {data, refetch, isLoading, isError, error} = query;
   const listRef = useRef(null);
   const [isRightCTAEnabled, setRightCTAEnabled] = useState<boolean>(false);
 

@@ -18,7 +18,7 @@ const RecommendedMoviesWidget = () => {
     queryFn: ({signal}) => fetchRecommendedMovies(signal, lastMovieId, page),
   });
   console.log(`recommendedMovies for id ${lastMovieId}: \n`, query);
-  const {data, isLoading, refetch} = query;
+  const {data, refetch, isLoading, isError, error} = query;
   const listRef = useRef(null);
   const [isRightCTAEnabled, setRightCTAEnabled] = useState(false);
 

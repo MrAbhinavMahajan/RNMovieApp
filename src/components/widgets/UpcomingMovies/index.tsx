@@ -17,8 +17,7 @@ const UpcomingMoviesWidget = () => {
     queryFn: ({signal}) => fetchUpcomingMovies(signal, page),
   });
   console.log('upcomingMovies: \n', query);
-  const {data, isLoading, refetch} = query;
-
+  const {data, refetch, isLoading, isError, error} = query;
   const listRef = useRef(null);
   const [isRightCTAEnabled, setRightCTAEnabled] = useState(false);
 

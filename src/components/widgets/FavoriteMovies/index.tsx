@@ -18,7 +18,7 @@ const FavoritesMoviesWidget = () => {
     queryFn: ({signal}) => fetchMovieFavorites(signal, page),
   });
   console.log('favoriteMovies: \n', query);
-  const {data, isLoading, refetch} = query;
+  const {data, refetch, isLoading, isError, error} = query;
   const listRef = useRef(null);
   const [isRightCTAEnabled, setRightCTAEnabled] = useState(false);
 

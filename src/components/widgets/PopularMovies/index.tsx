@@ -14,6 +14,7 @@ import {styles} from './styles';
 import AppCTA from '../../common/AppCTA';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
+import RNText from '../../common/RNText';
 
 const PopularMoviesWidget = () => {
   const queryClient = useQueryClient();
@@ -32,17 +33,21 @@ const PopularMoviesWidget = () => {
   const {
     data,
     refetch,
-    isLoading,
-    isFetching,
+    isLoading, // isLoading -> true for Initial Loading
+    isFetching, // isFetching -> is true when Data is present & either new or old data being fetched
     isFetchingNextPage,
-    hasNextPage,
+    hasNextPage, // ! hasNextPage becomes false when getNextPageParam returns undefined
     fetchNextPage,
+    isError,
+    error,
   } = query;
   const listRef = useAnimatedRef<any>();
   const scrollHandler = useScrollViewOffset(listRef); // * Gives Current offset of ScrollView
+  console.log('PopularMovies Data :\n', data);
   const movies = useMemo(() => {
     return data?.pages.flatMap(page => page.results) || [];
   }, [data]);
+  console.log('PopularMovies :\n', movies);
 
   const refreshWidget = () => {
     refetch();
@@ -68,9 +73,15 @@ const PopularMoviesWidget = () => {
       return;
     }
     if (hasNextPage) {
-      // ! hasNextPage becomes false when getNextPageParam returns undefined
       fetchNextPage();
     }
+  };
+
+  const renderListEmptyCard = () => {
+    if (isLoading || isFetching) {
+      return <></>;
+    }
+    return <RNText>No Movies Found</RNText>;
   };
 
   const renderListFooter = () => {
@@ -82,6 +93,16 @@ const PopularMoviesWidget = () => {
 
   return (
     <View style={styles.containerView}>
+      {isLoading && (
+        <View style={styles.loaderView}>
+          <ActivityIndicator size={'large'} color={STD_ACTIVITY_COLOR} />
+        </View>
+      )}
+      {isError && (
+        <View>
+          <RNText>{error?.message}</RNText>
+        </View>
+      )}
       <FlatList
         ref={listRef}
         data={movies || FALLBACK_DATA}
@@ -104,6 +125,7 @@ const PopularMoviesWidget = () => {
         onEndReached={onEndReached}
         onEndReachedThreshold={5}
         ListFooterComponent={renderListFooter}
+        ListEmptyComponent={renderListEmptyCard}
         windowSize={1}
       />
       <Animated.View
