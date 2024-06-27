@@ -8,7 +8,7 @@ import {styles} from './styles';
 const SplashScreen = () => {
   useEffect(() => {
     initialLaunchTimer.current = setTimeout(() => {
-      NavigationService.navigateReplace(APP_STACKS_MAP.MAIN_TAB);
+      NavigationService.navigateReplace(APP_STACKS_MAP.AUTH_STACK);
     }, 3000);
 
     return () => {
