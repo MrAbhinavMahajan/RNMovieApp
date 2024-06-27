@@ -46,7 +46,7 @@ const PopularMoviesWidget = () => {
   const scrollHandler = useScrollViewOffset(listRef); // * Gives Current offset of ScrollView
   console.log('PopularMovies Data :\n', data);
   const movies = useMemo(() => {
-    return data?.pages.flatMap(page => page.results) || [];
+    return data?.pages.flatMap(page => page.results) || FALLBACK_DATA;
   }, [data]);
   console.log('PopularMovies :\n', movies);
 
@@ -115,7 +115,7 @@ const PopularMoviesWidget = () => {
 
       <FlatList
         ref={listRef}
-        data={movies || FALLBACK_DATA}
+        data={movies}
         renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
           <MoviePosterWidget
             item={item}
@@ -137,6 +137,9 @@ const PopularMoviesWidget = () => {
         ListHeaderComponent={renderListHeader}
         ListFooterComponent={renderListFooter}
         ListEmptyComponent={renderListEmptyCard}
+        initialNumToRender={10}
+        maxToRenderPerBatch={10}
+        extraData={movies}
         windowSize={1}
       />
       <Animated.View

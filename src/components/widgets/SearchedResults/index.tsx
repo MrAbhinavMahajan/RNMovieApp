@@ -166,7 +166,7 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
 
       <FlatList
         ref={listRef}
-        data={movies || []}
+        data={movies}
         renderItem={renderItem}
         keyExtractor={item => `${item?.id}`}
         contentInsetAdjustmentBehavior={'automatic'}
@@ -181,6 +181,9 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
         ListHeaderComponent={renderListHeader}
         ListFooterComponent={renderListFooter}
         ListEmptyComponent={renderListEmptyCard}
+        initialNumToRender={10}
+        maxToRenderPerBatch={10}
+        extraData={movies}
         windowSize={1}
       />
       <Animated.View

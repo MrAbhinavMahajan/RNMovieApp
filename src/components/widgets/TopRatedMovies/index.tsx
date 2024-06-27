@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import _ from 'lodash';
 import {useQuery} from '@tanstack/react-query';
 import * as NavigationService from '../../../service/Navigation';
@@ -22,6 +22,9 @@ const TopRatedMoviesWidget = () => {
   console.log('topRatedMovies: \n', query);
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
   const listRef = useRef(null);
+  const movies = useMemo(() => {
+    return data?.results || FALLBACK_DATA;
+  }, [data?.results]);
   const [isRightCTAEnabled, setRightCTAEnabled] = useState(false);
 
   const refreshWidget = () => {
@@ -46,7 +49,7 @@ const TopRatedMoviesWidget = () => {
     NativeAppEventEmitter.addListener(PAGE_REFRESH.HOME_SCREEN, refreshWidget);
   }, []);
 
-  if (!isError && status !== QUERY_STATUS.PENDING && _.isEmpty(data?.results)) {
+  if (!isError && status !== QUERY_STATUS.PENDING && _.isEmpty(movies)) {
     return <></>;
   }
 
@@ -72,7 +75,7 @@ const TopRatedMoviesWidget = () => {
       <FlatList
         ref={listRef}
         onScroll={onScroll}
-        data={data?.results ?? FALLBACK_DATA}
+        data={movies}
         renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
           <MoviePosterWidget
             item={item}
@@ -84,6 +87,9 @@ const TopRatedMoviesWidget = () => {
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.scrollableContentView}
+        initialNumToRender={6}
+        maxToRenderPerBatch={6}
+        extraData={movies}
       />
     </View>
   );

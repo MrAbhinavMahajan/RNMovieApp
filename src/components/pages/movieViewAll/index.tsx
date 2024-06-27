@@ -187,16 +187,17 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
         }
         keyExtractor={item => `${item?.id}`}
         numColumns={3}
-        initialNumToRender={10}
         columnWrapperStyle={styles.columnWrapperView}
-        showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollableContentView}
         onEndReached={onEndReached}
-        onEndReachedThreshold={5}
+        onEndReachedThreshold={5} // tells FlatList to trigger onEndReached earlier
         ListHeaderComponent={renderListHeader}
         ListFooterComponent={renderListFooter}
         ListEmptyComponent={renderListEmptyCard}
-        windowSize={1}
+        initialNumToRender={10} // items to render in initial render batch
+        maxToRenderPerBatch={10} // limits the number of items rendered per incremental batch
+        extraData={movies} // tells FlatList to render whenever the chosen variable updates
+        windowSize={1} // the number of "pages" of items rendered in either direction from the visible content
       />
       <Animated.View
         style={[styles.scrollToTopBtn, scrollToTopCTAFadeAnimationStyles]}>
