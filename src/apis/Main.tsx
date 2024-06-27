@@ -2,16 +2,14 @@ import {
   FavoriteRequestBody,
   WatchlistRequestBody,
 } from '../constants/AppInterfaces';
-
-const AccessToken =
-  'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMDUyNjRlYmI4ZTYyODVhYjlkYjQ1ZDdlYmVjZmM2YiIsInN1YiI6IjY2NmQ0OTU0NmI4YzQ3OTQ1YTM2MzVhNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.QjBCWACkZDu3OnmyGtfkhcD6oBs-eWez0VgPH7PR6w0';
+const AuthToken = process.env.AUTH_KEY;
 
 export const fetchTrendingMovies = async (signal: AbortSignal) => {
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: `Bearer ${AccessToken}`,
+      Authorization: `Bearer ${AuthToken}`,
     },
     signal,
   };
@@ -37,7 +35,7 @@ export const fetchNowPlayingMovies = async (
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: `Bearer ${AccessToken}`,
+      Authorization: `Bearer ${AuthToken}`,
     },
     signal,
   };
@@ -63,7 +61,7 @@ export const fetchUpcomingMovies = async (
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: `Bearer ${AccessToken}`,
+      Authorization: `Bearer ${AuthToken}`,
     },
     signal,
   };
@@ -89,7 +87,7 @@ export const fetchTopRatedMovies = async (
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: `Bearer ${AccessToken}`,
+      Authorization: `Bearer ${AuthToken}`,
     },
     signal,
   };
@@ -116,7 +114,7 @@ export const fetchRecommendedMovies = async (
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: `Bearer ${AccessToken}`,
+      Authorization: `Bearer ${AuthToken}`,
     },
     signal,
   };
@@ -142,7 +140,7 @@ export const fetchPopularMovies = async (
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: `Bearer ${AccessToken}`,
+      Authorization: `Bearer ${AuthToken}`,
     },
     signal,
   };
@@ -169,7 +167,7 @@ export const fetchSearchedMovieResults = async (
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: `Bearer ${AccessToken}`,
+      Authorization: `Bearer ${AuthToken}`,
     },
     signal,
   };
@@ -195,7 +193,7 @@ export const fetchMovieDetails = async (
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: `Bearer ${AccessToken}`,
+      Authorization: `Bearer ${AuthToken}`,
     },
     signal,
   };
@@ -219,7 +217,7 @@ export const updateMovieFavorites = async (body: FavoriteRequestBody) => {
     headers: {
       accept: 'application/json',
       'content-type': 'application/json',
-      Authorization: `Bearer ${AccessToken}`,
+      Authorization: `Bearer ${AuthToken}`,
     },
     body: JSON.stringify(body),
   };
@@ -243,7 +241,7 @@ export const updateMovieWatchlist = async (body: WatchlistRequestBody) => {
     headers: {
       accept: 'application/json',
       'content-type': 'application/json',
-      Authorization: `Bearer ${AccessToken}`,
+      Authorization: `Bearer ${AuthToken}`,
     },
     body: JSON.stringify(body),
   };
@@ -269,7 +267,7 @@ export const fetchMovieFavorites = async (
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: `Bearer ${AccessToken}`,
+      Authorization: `Bearer ${AuthToken}`,
     },
     signal,
   };
@@ -295,7 +293,7 @@ export const fetchMovieWatchlist = async (
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: `Bearer ${AccessToken}`,
+      Authorization: `Bearer ${AuthToken}`,
     },
     signal,
   };
