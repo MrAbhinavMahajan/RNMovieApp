@@ -62,6 +62,8 @@ const PopularMoviesWidget = () => {
     listRef.current?.scrollToOffset({animated: true, offset: 0});
   };
 
+  const keyExtractor = (item: MoviePosterItem) => `${item?.id}`;
+
   useEffect(() => {
     return () => {
       queryClient.cancelQueries({queryKey: ['popularMovies']});
@@ -77,6 +79,20 @@ const PopularMoviesWidget = () => {
       fetchNextPage();
     }
   };
+
+  const renderItem = ({
+    item,
+    index,
+  }: {
+    item: MoviePosterItem;
+    index: number;
+  }) => (
+    <MoviePosterWidget
+      item={item}
+      index={index}
+      containerStyles={styles.moviePoster}
+    />
+  );
 
   const renderListHeader = () => {
     if (isError) {
@@ -116,17 +132,8 @@ const PopularMoviesWidget = () => {
       <FlatList
         ref={listRef}
         data={movies}
-        renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
-          <MoviePosterWidget
-            item={item}
-            index={index}
-            containerStyles={styles.moviePoster}
-          />
-        )}
-        keyExtractor={item => `${item?.id}`}
-        refreshControl={
-          <RefreshControl refreshing={false} onRefresh={refreshWidget} />
-        }
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
         contentInsetAdjustmentBehavior={'automatic'}
         keyboardDismissMode="on-drag"
         numColumns={3}
@@ -141,6 +148,9 @@ const PopularMoviesWidget = () => {
         maxToRenderPerBatch={10}
         extraData={movies}
         windowSize={1}
+        refreshControl={
+          <RefreshControl refreshing={false} onRefresh={refreshWidget} />
+        }
       />
       <Animated.View
         style={[styles.scrollToTopBtn, scrollToTopCTAFadeAnimationStyles]}>

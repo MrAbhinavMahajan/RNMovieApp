@@ -23,7 +23,7 @@ import {styles} from './styles';
 import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
 import AppCTA from '../../common/AppCTA';
 import RNText from '../../common/RNText';
-import MoviePosterWidget from '../MoviePoster';
+import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import ErrorInfoWidget from '../ErrorInfo';
 
 interface SearchedResultsWidgetProps {
@@ -81,9 +81,14 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
     listRef.current?.scrollToOffset({animated: true, offset: 0});
   };
 
-  const renderItem = ({item, index}: {item: any; index: number}) => {
+  const renderItem = ({
+    item,
+    index,
+  }: {
+    item: MoviePosterItem;
+    index: number;
+  }) => {
     const {title, id, vote_average, overview} = item || {};
-
     return (
       <TouchableOpacity
         style={styles.itemContainerView}
@@ -154,6 +159,8 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
     return <RNText>No Results Found</RNText>;
   };
 
+  const keyExtractor = (item: MoviePosterItem) => `${item?.id}`;
+
   return (
     <View
       style={styles.containerView}
@@ -168,23 +175,23 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
         ref={listRef}
         data={movies}
         renderItem={renderItem}
-        keyExtractor={item => `${item?.id}`}
+        keyExtractor={keyExtractor}
         contentInsetAdjustmentBehavior={'automatic'}
         keyboardDismissMode="on-drag"
         contentContainerStyle={styles.scrollableContentView}
-        ItemSeparatorComponent={ItemSeparatorComponent}
-        refreshControl={
-          <RefreshControl refreshing={false} onRefresh={refreshWidget} />
-        }
         onEndReached={onEndReached}
         onEndReachedThreshold={5}
         ListHeaderComponent={renderListHeader}
         ListFooterComponent={renderListFooter}
         ListEmptyComponent={renderListEmptyCard}
+        ItemSeparatorComponent={ItemSeparatorComponent}
         initialNumToRender={10}
         maxToRenderPerBatch={10}
         extraData={movies}
         windowSize={1}
+        refreshControl={
+          <RefreshControl refreshing={false} onRefresh={refreshWidget} />
+        }
       />
       <Animated.View
         style={[styles.scrollToTopBtn, scrollToTopCTAFadeAnimationStyles]}>

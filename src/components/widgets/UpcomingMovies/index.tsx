@@ -9,7 +9,7 @@ import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
 import {styles} from './styles';
 import {FALLBACK_DATA} from '../../data/Main';
 import {QUERY_STATUS} from '../../../constants/Main';
-import MoviePosterWidget from '../MoviePoster';
+import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import HeaderTitleWidget from '../HeaderTitle';
 import ErrorInfoWidget from '../ErrorInfo';
 
@@ -45,9 +45,27 @@ const UpcomingMoviesWidget = () => {
     setRightCTAEnabled(listScrollPos > 120);
   };
 
+  const keyExtractor = (item: MoviePosterItem) => `${item?.id}`;
+
   useEffect(() => {
     NativeAppEventEmitter.addListener(PAGE_REFRESH.HOME_SCREEN, refreshWidget);
   }, []);
+
+  const renderItem = ({
+    item,
+    index,
+  }: {
+    item: MoviePosterItem;
+    index: number;
+  }) => {
+    return (
+      <MoviePosterWidget
+        item={item}
+        index={index}
+        containerStyles={styles.moviePoster}
+      />
+    );
+  };
 
   if (!isError && status !== QUERY_STATUS.PENDING && _.isEmpty(movies)) {
     return <></>;
@@ -73,20 +91,12 @@ const UpcomingMoviesWidget = () => {
       )}
       <FlatList
         ref={listRef}
-        onScroll={onScroll}
-        data={movies ?? FALLBACK_DATA}
-        renderItem={({item, index}) => {
-          return (
-            <MoviePosterWidget
-              item={item}
-              index={index}
-              containerStyles={styles.moviePoster}
-            />
-          );
-        }}
-        keyExtractor={item => `${item?.id}`}
+        data={movies}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
         horizontal
         showsHorizontalScrollIndicator={false}
+        onScroll={onScroll}
         contentContainerStyle={styles.scrollableContentView}
         initialNumToRender={6}
         maxToRenderPerBatch={6}

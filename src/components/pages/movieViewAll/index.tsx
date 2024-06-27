@@ -113,6 +113,8 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
     NavigationService.navigate(APP_TABS_MAP.SEARCH_TAB);
   };
 
+  const keyExtractor = (item: MoviePosterItem) => `${item?.id}`;
+
   useEffect(() => {
     return () => {
       // ! Cancelling Query Data on unmount
@@ -130,6 +132,20 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
       fetchNextPage();
     }
   };
+
+  const renderItem = ({
+    item,
+    index,
+  }: {
+    item: MoviePosterItem;
+    index: number;
+  }) => (
+    <MoviePosterWidget
+      item={item}
+      index={index}
+      containerStyles={styles.moviePoster}
+    />
+  );
 
   const renderListHeader = () => {
     if (isError) {
@@ -175,17 +191,8 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
       <FlatList
         ref={listRef}
         data={movies || []}
-        renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
-          <MoviePosterWidget
-            item={item}
-            index={index}
-            containerStyles={styles.moviePoster}
-          />
-        )}
-        refreshControl={
-          <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
-        }
-        keyExtractor={item => `${item?.id}`}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
         numColumns={3}
         columnWrapperStyle={styles.columnWrapperView}
         contentContainerStyle={styles.scrollableContentView}
@@ -198,6 +205,9 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
         maxToRenderPerBatch={10} // limits the number of items rendered per incremental batch
         extraData={movies} // tells FlatList to render whenever the chosen variable updates
         windowSize={1} // the number of "pages" of items rendered in either direction from the visible content
+        refreshControl={
+          <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
+        }
       />
       <Animated.View
         style={[styles.scrollToTopBtn, scrollToTopCTAFadeAnimationStyles]}>

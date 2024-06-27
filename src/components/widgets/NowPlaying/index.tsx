@@ -45,9 +45,25 @@ const NowPlayingMoviesWidget = () => {
     setRightCTAEnabled(listScrollPos > 120);
   };
 
+  const keyExtractor = (item: MoviePosterItem) => `${item?.id}`;
+
   useEffect(() => {
     NativeAppEventEmitter.addListener(PAGE_REFRESH.HOME_SCREEN, refreshWidget);
   }, []);
+
+  const renderItem = ({
+    item,
+    index,
+  }: {
+    item: MoviePosterItem;
+    index: number;
+  }) => (
+    <MoviePosterWidget
+      item={item}
+      index={index}
+      containerStyles={styles.moviePoster}
+    />
+  );
 
   if (!isError && status !== QUERY_STATUS.PENDING && _.isEmpty(movies)) {
     return <></>;
@@ -73,17 +89,11 @@ const NowPlayingMoviesWidget = () => {
       )}
       <FlatList
         ref={listRef}
-        onScroll={onScroll}
         data={movies}
-        renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
-          <MoviePosterWidget
-            item={item}
-            index={index}
-            containerStyles={styles.moviePoster}
-          />
-        )}
-        keyExtractor={item => `${item?.id}`}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
         horizontal
+        onScroll={onScroll}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.scrollableContentView}
         initialNumToRender={6}
