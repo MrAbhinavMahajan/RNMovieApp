@@ -7,6 +7,7 @@ import {APP_PAGES_MAP, APP_STACKS_MAP} from '../../constants/Navigation';
 import MainTab from '../tabs/main';
 import MovieDetailsScreen from '../pages/movieDetails';
 import MovieViewAllScreen from '../pages/movieViewAll';
+import AuthStack from './Auth';
 const {Navigator, Screen} = createNativeStackNavigator();
 
 // * NavigationContainer is a component which manages our navigation tree and contains the navigation state
@@ -22,8 +23,10 @@ const MainStack = () => {
           orientation: 'portrait',
           headerShown: false,
         }}>
-        {/* Tab Bar Screens*/}
         <Screen name={APP_STACKS_MAP.LAUNCH_STACK} component={LaunchStack} />
+        <Screen name={APP_STACKS_MAP.AUTH_STACK} component={AuthStack} />
+
+        {/* Tab Bar Screens*/}
         <Screen
           name={APP_STACKS_MAP.MAIN_TAB}
           component={MainTab}

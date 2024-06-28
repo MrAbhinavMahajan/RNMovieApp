@@ -10,10 +10,10 @@ import Animated, {
 } from 'react-native-reanimated';
 import * as NavigationService from '../../../service/Navigation';
 import {
-  fetchMovieFavorites,
-  fetchMovieWatchlist,
+  fetchMovieFavoritesV4,
+  fetchMovieWatchlistV4,
   fetchNowPlayingMovies,
-  fetchRecommendedMovies,
+  fetchRecommendedMoviesV4,
   fetchTopRatedMovies,
   fetchUpcomingMovies,
 } from '../../../apis/Main';
@@ -54,14 +54,13 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
         return fetchTopRatedMovies(signal, pageParam);
 
       case APP_WIDGETS_MAP.RECOMMENDED_MOVIES:
-        const lastMovieId = 278;
-        return fetchRecommendedMovies(signal, lastMovieId, pageParam);
+        return fetchRecommendedMoviesV4(signal, pageParam);
 
       case APP_WIDGETS_MAP.FAVORITE_MOVIES:
-        return fetchMovieFavorites(signal, pageParam);
+        return fetchMovieFavoritesV4(signal, pageParam);
 
       case APP_WIDGETS_MAP.WATCHLIST_MOVIES:
-        return fetchMovieWatchlist(signal, pageParam);
+        return fetchMovieWatchlistV4(signal, pageParam);
     }
   };
 
@@ -92,8 +91,11 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
   const scrollHandler = useScrollViewOffset(listRef); // * Gives Current offset of ScrollView
   console.log('ViewAllMovies Data :\n', data);
   const movies = useMemo(() => {
+    if (isError) {
+      return [];
+    }
     return data?.pages.flatMap(page => page.results) || [];
-  }, [data?.pages]);
+  }, [data?.pages, isError]);
   console.log('View-All Movies :', movies);
 
   const scrollToTopCTAFadeAnimationStyles = useAnimatedStyle(() => ({

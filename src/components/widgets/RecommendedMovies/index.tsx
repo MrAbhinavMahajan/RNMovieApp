@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 import _ from 'lodash';
 import {useQuery} from '@tanstack/react-query';
 import * as NavigationService from '../../../service/Navigation';
-import {fetchRecommendedMovies} from '../../../apis/Main';
+import {fetchRecommendedMoviesV4} from '../../../apis/Main';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
 import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
 import {styles} from './styles';
@@ -15,17 +15,18 @@ import ErrorInfoWidget from '../ErrorInfo';
 
 const RecommendedMoviesWidget = () => {
   const page = 1;
-  const lastMovieId = 278;
   const query = useQuery({
-    queryKey: ['recommendedMovies', lastMovieId],
-    queryFn: ({signal}) => fetchRecommendedMovies(signal, lastMovieId, page),
+    queryKey: ['recommendedMovies'],
+    queryFn: ({signal}) => fetchRecommendedMoviesV4(signal, page),
   });
-  console.log(`recommendedMovies for id ${lastMovieId}: \n`, query);
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
   const listRef = useRef(null);
   const movies = useMemo(() => {
+    if (isError) {
+      return [];
+    }
     return data?.results || FALLBACK_DATA;
-  }, [data?.results]);
+  }, [data?.results, isError]);
   const [isRightCTAEnabled, setRightCTAEnabled] = useState(false);
 
   const refreshWidget = () => {
