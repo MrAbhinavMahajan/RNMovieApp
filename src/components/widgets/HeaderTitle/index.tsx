@@ -9,8 +9,8 @@ import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
 interface HeaderTitleWidgetProps {
   title: string;
   containerStyles: any;
-  rightCTAAction: () => void;
-  rightCTAEnabled: boolean;
+  rightCTAAction?: () => void;
+  rightCTAEnabled?: boolean;
   loaderEnabled?: boolean;
 }
 

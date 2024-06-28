@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
-import {RefreshControl, ScrollView, View} from 'react-native';
+import {Alert, Linking, RefreshControl, ScrollView, View} from 'react-native';
+import {useQuery, useQueryClient} from '@tanstack/react-query';
 import Animated, {
   useAnimatedRef,
   useAnimatedStyle,
@@ -8,31 +9,85 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import LinearGradient from 'react-native-linear-gradient';
 import {STD_VERTICAL_SPACING} from '../../../constants/Styles';
 import {styles} from './styles';
-import RNText from '../../common/RNText';
-import AppCTA from '../../common/AppCTA';
-import {useQueryClient} from '@tanstack/react-query';
-import QuotationWidget from '../../widgets/Quotation';
-import LinearGradient from 'react-native-linear-gradient';
 import {COLORS} from '../../../constants/Colors';
 import {AppArrowUpIcon} from '../../common/RNIcon';
 import {AUTH_STEPS} from '../../data/Main';
+import {createAccessToken, createRequestToken} from '../../../apis/Main';
+import RNText from '../../common/RNText';
+import AppCTA from '../../common/AppCTA';
+import QuotationWidget from '../../widgets/Quotation';
+import HeaderTitleWidget from '../../widgets/HeaderTitle';
 
 const SignInScreen = () => {
   const queryClient = useQueryClient();
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollHandler = useScrollViewOffset(scrollRef); // * Gives Current offset of ScrollView
   const insets = useSafeAreaInsets();
+  const [requestTokenQueryFilter, setRequestTokenQueryFilter] =
+    useState<null | Date>(null);
+  const [accessTokenQueryFilter, setAccessTokenQueryFilter] =
+    useState<null | Date>(null);
   const [requestToken, setRequestToken] = useState('');
+  const requestTokenQuery = useQuery({
+    queryKey: ['requestToken', requestTokenQueryFilter],
+    queryFn: ({signal}) => createRequestToken(signal),
+    enabled: !!requestTokenQueryFilter,
+  });
+  const accessTokenQuery = useQuery({
+    queryKey: ['accessToken', accessTokenQueryFilter],
+    queryFn: ({signal}) => createAccessToken(signal, requestToken),
+    enabled: !!accessTokenQueryFilter,
+  });
+
+  useEffect(() => {
+    const {data, isError, error} = requestTokenQuery;
+    console.log(
+      'requestTokenQuery::::',
+      JSON.stringify(requestTokenQuery, null, 4),
+    );
+    if (isError) {
+      Alert.alert(error.name, error?.message);
+      return;
+    }
+    if (!!requestTokenQueryFilter && data?.request_token) {
+      const token = data?.request_token;
+      setRequestToken(token);
+      Linking.openURL(
+        `https://www.themoviedb.org/auth/access?request_token=${token}`,
+      );
+    }
+  }, [requestTokenQuery?.data]);
+
+  useEffect(() => {
+    const {data, isError, error} = accessTokenQuery;
+    console.log(
+      'accessTokenQuery::::',
+      JSON.stringify(accessTokenQuery, null, 4),
+    );
+    if (isError) {
+      Alert.alert(error.name, error?.message);
+      return;
+    }
+    if (!!accessTokenQueryFilter && data?.access_token) {
+      const token = data?.access_token;
+      console.log('Got Access Token::::', token);
+    }
+  }, [accessTokenQuery]);
 
   const clearCache = () => {
     queryClient.clear();
   };
 
-  const generateRequestToken = () => {};
+  const generateRequestToken = () => {
+    setRequestTokenQueryFilter(new Date());
+  };
 
-  const generateAccessToken = () => {};
+  const generateAccessToken = () => {
+    setAccessTokenQueryFilter(new Date());
+  };
 
   const onPageRefresh = () => {
     clearCache();
@@ -48,17 +103,27 @@ const SignInScreen = () => {
 
   useEffect(() => {
     clearCache();
+    return () => {
+      setRequestTokenQueryFilter(null);
+      setAccessTokenQueryFilter(null);
+    };
   }, []);
 
-  const renderWidgetCTA = (title: string, action: () => void) => {
+  const renderWidgetCTA = (
+    title: string,
+    action: () => void,
+    disabled: boolean,
+  ) => {
     return (
-      <AppCTA onPress={action} style={styles.ctaView}>
+      <AppCTA onPress={action} style={styles.ctaView} disabled={disabled}>
         <RNText style={styles.ctaTitleText}>{title}</RNText>
       </AppCTA>
     );
   };
 
   const renderLoginWidget = () => {
+    const isLoading =
+      requestTokenQuery?.isFetching || accessTokenQuery?.isFetching;
     return (
       <View style={styles.widgetView}>
         <LinearGradient
@@ -78,9 +143,21 @@ const SignInScreen = () => {
           ))}
         </LinearGradient>
         <View style={styles.containerView}>
-          <RNText style={styles.ctaLabelTitleText}>Proceed here</RNText>
-          {renderWidgetCTA('Request Token', generateRequestToken)}
-          {renderWidgetCTA('Access Token', generateAccessToken)}
+          <HeaderTitleWidget
+            title={'Proceed here'}
+            loaderEnabled={isLoading}
+            containerStyles={styles.ctaLabelTitleView}
+          />
+          {renderWidgetCTA(
+            'Generate Request Token',
+            generateRequestToken,
+            isLoading,
+          )}
+          {renderWidgetCTA(
+            'Generate Access Token',
+            generateAccessToken,
+            isLoading,
+          )}
         </View>
       </View>
     );

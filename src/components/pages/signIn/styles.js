@@ -38,10 +38,7 @@ export const styles = StyleSheet.create({
     fontSize: fpx(48),
     marginHorizontal: STD_HORIZONTAL_SPACING,
   },
-  ctaLabelTitleText: {
-    fontFamily: FONTS.BebasNeueRegular,
-    color: COLORS.fullBlack,
-    fontSize: fpx(24),
+  ctaLabelTitleView: {
     marginHorizontal: STD_HORIZONTAL_SPACING,
   },
   ctaView: {

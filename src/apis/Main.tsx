@@ -12,12 +12,6 @@ const accessToken: string = '';
 
 // # v4 apis:-
 export const createRequestToken = async (signal: AbortSignal) => {
-  /**
-   * Step-1 Create Request Token
-   * Step-2 Redirect to Webview asking user to approve on success to approve
-   * Step-3 Get Access Token
-   */
-  // https://www.themoviedb.org/auth/access?request_token=""
   const options = {
     method: 'POST',
     headers: {
@@ -45,8 +39,9 @@ export const createAccessToken = async (
   signal: AbortSignal,
   request_token: string,
 ) => {
+  console.log('request_token', request_token);
   const options = {
-    method: 'GET',
+    method: 'POST',
     headers: {
       accept: 'application/json',
       'content-type': 'application/json',
