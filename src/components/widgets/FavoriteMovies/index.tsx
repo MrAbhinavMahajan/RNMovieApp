@@ -3,7 +3,7 @@ import _ from 'lodash';
 import {useQuery} from '@tanstack/react-query';
 import * as NavigationService from '../../../service/Navigation';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
-import {fetchMovieFavoritesV4} from '../../../apis/Main';
+import {fetchMovieFavorites} from '../../../apis/Main';
 import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
 import {styles} from './styles';
 import {PAGE_REFRESH} from '../../../constants/Page';
@@ -17,7 +17,7 @@ const FavoritesMoviesWidget = () => {
   const page = 1;
   const query = useQuery({
     queryKey: ['favoriteMovies'],
-    queryFn: ({signal}) => fetchMovieFavoritesV4(signal, page),
+    queryFn: ({signal}) => fetchMovieFavorites(signal, page),
   });
   console.log('favoriteMovies: \n', query);
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;

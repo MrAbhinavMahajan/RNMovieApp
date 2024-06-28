@@ -154,45 +154,6 @@ export const fetchRecommendedMoviesV4 = async (
   return json;
 };
 
-// ? Change to v4 to toggle
-export const updateMovieFavorites = async (body: FavoriteRequestBody) => {
-  const url = 'https://api.themoviedb.org/3/account/null/favorite';
-  const options = {
-    method: 'POST',
-    headers: {
-      accept: 'application/json',
-      'content-type': 'application/json',
-      Authorization: `Bearer ${AuthToken}`,
-    },
-    body: JSON.stringify(body),
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    throw new Error('Failed to update Favorites');
-  }
-  const json = await response.json();
-  return json;
-};
-
-export const updateMovieWatchlist = async (body: WatchlistRequestBody) => {
-  const url = 'https://api.themoviedb.org/3/account/null/watchlist';
-  const options = {
-    method: 'POST',
-    headers: {
-      accept: 'application/json',
-      'content-type': 'application/json',
-      Authorization: `Bearer ${AuthToken}`,
-    },
-    body: JSON.stringify(body),
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    throw new Error('Failed to update Watchlist');
-  }
-  const json = await response.json();
-  return json;
-};
-
 // # v3 apis:-
 export const fetchPopularMovies = async (
   signal: AbortSignal,
@@ -327,6 +288,110 @@ export const fetchMovieDetails = async (
   const response = await fetch(url, options);
   if (!response.ok) {
     throw new Error(`Failed to fetch movie details for ${movieId}`);
+  }
+  const json = await response.json();
+  return json;
+};
+
+// ? deprecated
+export const fetchMovieFavorites = async (
+  signal: AbortSignal,
+  pageParam: number,
+) => {
+  const url = `https://api.themoviedb.org/3/account/${accountId}/favorite/movies?language=en-US&page=${pageParam}&sort_by=created_at.desc`;
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    signal,
+  };
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    if (response?.status === 401) {
+      // ! Unauthorized access
+      terminateSession();
+      return;
+    }
+    throw new Error('Failed to fetch Favorites');
+  }
+  const json = await response.json();
+  return json;
+};
+
+// ? deprecated
+export const fetchMovieWatchlist = async (
+  signal: AbortSignal,
+  pageParam: number,
+) => {
+  const url = `https://api.themoviedb.org/3/account/${accountId}/watchlist/movies?language=en-US&page=${pageParam}&sort_by=created_at.desc`;
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    signal,
+  };
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    if (response?.status === 401) {
+      // ! Unauthorized access
+      terminateSession();
+      return;
+    }
+    throw new Error('Failed to fetch Watchlist');
+  }
+  const json = await response.json();
+  return json;
+};
+
+// ? deprecated
+export const updateMovieFavorites = async (body: FavoriteRequestBody) => {
+  const url = `https://api.themoviedb.org/3/account/${accountId}/favorite`;
+  const options = {
+    method: 'POST',
+    headers: {
+      accept: 'application/json',
+      'content-type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify(body),
+  };
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    if (response?.status === 401) {
+      // ! Unauthorized access
+      terminateSession();
+      return;
+    }
+    throw new Error('Failed to update Favorites');
+  }
+  const json = await response.json();
+  return json;
+};
+
+// ? deprecated
+export const updateMovieWatchlist = async (body: WatchlistRequestBody) => {
+  const url = `https://api.themoviedb.org/3/account/${accountId}/watchlist`;
+  const options = {
+    method: 'POST',
+    headers: {
+      accept: 'application/json',
+      'content-type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify(body),
+  };
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    if (response?.status === 401) {
+      // ! Unauthorized access
+      terminateSession();
+      return;
+    }
+    throw new Error('Failed to update Watchlist');
   }
   const json = await response.json();
   return json;
