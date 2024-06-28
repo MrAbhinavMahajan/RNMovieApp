@@ -2,6 +2,7 @@ import {
   FavoriteRequestBody,
   WatchlistRequestBody,
 } from '../constants/AppInterfaces';
+import {terminateSession} from '../utilities/AppUtils';
 const APIKey = process.env.API_KEY;
 const AuthToken = process.env.AUTH_KEY;
 
@@ -115,9 +116,13 @@ export const fetchMovieFavorites = async (
   );
 
   if (!response.ok) {
+    if (response?.status === 401) {
+      // ! Unauthorized access
+      terminateSession();
+      return;
+    }
     throw new Error('Failed to fetch Favorites');
   }
-
   const json = await response.json();
   return json;
 };
@@ -141,6 +146,11 @@ export const fetchMovieWatchlist = async (
   );
 
   if (!response.ok) {
+    if (response?.status === 401) {
+      // ! Unauthorized access
+      terminateSession();
+      return;
+    }
     throw new Error('Failed to fetch Watchlist');
   }
 
@@ -167,6 +177,11 @@ export const fetchRecommendedMovies = async (
   );
 
   if (!response.ok) {
+    if (response?.status === 401) {
+      // ! Unauthorized access
+      terminateSession();
+      return;
+    }
     throw new Error('Failed to fetch recommended movies');
   }
 
