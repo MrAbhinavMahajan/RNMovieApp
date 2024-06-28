@@ -10,8 +10,8 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import {
   fetchMovieDetails,
-  fetchMovieFavorites,
-  fetchMovieWatchlist,
+  fetchMovieFavoritesV4,
+  fetchMovieWatchlistV4,
   updateMovieFavorites,
   updateMovieWatchlist,
 } from '../../../../apis/Main';
@@ -47,11 +47,11 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
   });
   const favoriteMoviesQuery = useQuery({
     queryKey: ['favoriteMovies'],
-    queryFn: ({signal}) => fetchMovieFavorites(signal, page),
+    queryFn: ({signal}) => fetchMovieFavoritesV4(signal, page),
   });
   const watchlistMoviesDataQuery = useQuery({
     queryKey: ['watchlistMovies'],
-    queryFn: ({signal}) => fetchMovieWatchlist(signal, page),
+    queryFn: ({signal}) => fetchMovieWatchlistV4(signal, page),
   });
   const favoritesMutation = useMutation({
     mutationFn: updateMovieFavorites,

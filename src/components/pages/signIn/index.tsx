@@ -15,7 +15,7 @@ import {styles} from './styles';
 import {COLORS} from '../../../constants/Colors';
 import {AppArrowUpIcon} from '../../common/RNIcon';
 import {AUTH_STEPS} from '../../data/Main';
-import {createAccessToken, createRequestToken} from '../../../apis/Main';
+import {createAccessTokenV4, createRequestTokenV4} from '../../../apis/Main';
 import RNText from '../../common/RNText';
 import AppCTA from '../../common/AppCTA';
 import QuotationWidget from '../../widgets/Quotation';
@@ -33,12 +33,12 @@ const SignInScreen = () => {
   const [requestToken, setRequestToken] = useState('');
   const requestTokenQuery = useQuery({
     queryKey: ['requestToken', requestTokenQueryFilter],
-    queryFn: ({signal}) => createRequestToken(signal),
+    queryFn: ({signal}) => createRequestTokenV4(signal),
     enabled: !!requestTokenQueryFilter,
   });
   const accessTokenQuery = useQuery({
     queryKey: ['accessToken', accessTokenQueryFilter],
-    queryFn: ({signal}) => createAccessToken(signal, requestToken),
+    queryFn: ({signal}) => createAccessTokenV4(signal, requestToken),
     enabled: !!accessTokenQueryFilter,
   });
 

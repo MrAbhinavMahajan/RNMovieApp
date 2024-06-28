@@ -10,10 +10,10 @@ import Animated, {
 } from 'react-native-reanimated';
 import * as NavigationService from '../../../service/Navigation';
 import {
-  fetchMovieFavorites,
-  fetchMovieWatchlist,
+  fetchMovieFavoritesV4,
+  fetchMovieWatchlistV4,
   fetchNowPlayingMovies,
-  fetchRecommendedMovies,
+  fetchRecommendedMoviesV4,
   fetchTopRatedMovies,
   fetchUpcomingMovies,
 } from '../../../apis/Main';
@@ -54,13 +54,13 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
         return fetchTopRatedMovies(signal, pageParam);
 
       case APP_WIDGETS_MAP.RECOMMENDED_MOVIES:
-        return fetchRecommendedMovies(signal, pageParam);
+        return fetchRecommendedMoviesV4(signal, pageParam);
 
       case APP_WIDGETS_MAP.FAVORITE_MOVIES:
-        return fetchMovieFavorites(signal, pageParam);
+        return fetchMovieFavoritesV4(signal, pageParam);
 
       case APP_WIDGETS_MAP.WATCHLIST_MOVIES:
-        return fetchMovieWatchlist(signal, pageParam);
+        return fetchMovieWatchlistV4(signal, pageParam);
     }
   };
 

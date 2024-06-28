@@ -11,7 +11,7 @@ const accountId: Object = '';
 const accessToken: string = '';
 
 // # v4 apis:-
-export const createRequestToken = async (signal: AbortSignal) => {
+export const createRequestTokenV4 = async (signal: AbortSignal) => {
   const options = {
     method: 'POST',
     headers: {
@@ -35,7 +35,7 @@ export const createRequestToken = async (signal: AbortSignal) => {
   return json;
 };
 
-export const createAccessToken = async (
+export const createAccessTokenV4 = async (
   signal: AbortSignal,
   request_token: string,
 ) => {
@@ -64,7 +64,7 @@ export const createAccessToken = async (
   return json;
 };
 
-export const expireAccessToken = async (
+export const expireAccessTokenV4 = async (
   signal: AbortSignal,
   access_token: string,
 ) => {
@@ -92,7 +92,7 @@ export const expireAccessToken = async (
   return json;
 };
 
-export const fetchMovieFavorites = async (
+export const fetchMovieFavoritesV4 = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
@@ -122,7 +122,7 @@ export const fetchMovieFavorites = async (
   return json;
 };
 
-export const fetchMovieWatchlist = async (
+export const fetchMovieWatchlistV4 = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
@@ -153,7 +153,7 @@ export const fetchMovieWatchlist = async (
   return json;
 };
 
-export const fetchRecommendedMovies = async (
+export const fetchRecommendedMoviesV4 = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {

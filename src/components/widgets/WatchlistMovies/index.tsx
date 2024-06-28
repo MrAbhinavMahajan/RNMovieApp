@@ -3,7 +3,7 @@ import _ from 'lodash';
 import {useQuery} from '@tanstack/react-query';
 import * as NavigationService from '../../../service/Navigation';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
-import {fetchMovieWatchlist} from '../../../apis/Main';
+import {fetchMovieWatchlistV4} from '../../../apis/Main';
 import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
 import {styles} from './styles';
 import {PAGE_REFRESH} from '../../../constants/Page';
@@ -17,7 +17,7 @@ const WatchlistMoviesWidget = () => {
   const page = 1;
   const query = useQuery({
     queryKey: ['watchlistMovies'],
-    queryFn: ({signal}) => fetchMovieWatchlist(signal, page),
+    queryFn: ({signal}) => fetchMovieWatchlistV4(signal, page),
   });
   console.log('watchlistMovies: \n', query);
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
