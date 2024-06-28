@@ -1,14 +1,13 @@
 import React, {useEffect, useRef} from 'react';
-import * as NavigationService from '../../../service/Navigation';
-import {APP_STACKS_MAP} from '../../../constants/Navigation';
 import RNLottie from '../../common/RNLottie';
 import {HAPPY_SPACEMAN_ANIM} from '../../../constants/Assets';
 import {styles} from './styles';
+import {startUserSession} from '../../../utilities/AppUtils';
 
 const SplashScreen = () => {
   useEffect(() => {
     initialLaunchTimer.current = setTimeout(() => {
-      NavigationService.navigateReplace(APP_STACKS_MAP.AUTH_STACK);
+      startUserSession();
     }, 3000);
 
     return () => {

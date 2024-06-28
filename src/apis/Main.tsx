@@ -2,13 +2,9 @@ import {
   FavoriteRequestBody,
   WatchlistRequestBody,
 } from '../constants/AppInterfaces';
-import {terminateSession} from '../utilities/AppUtils';
-const APIKey = process.env.API_KEY;
-const AuthToken = process.env.AUTH_KEY;
-
-// ? Store in secured storage
-const accountId: Object = '';
-const accessToken: string = '';
+import {userStorage} from '../constants/Storage';
+import {terminateUserSession} from '../utilities/AppUtils';
+const ReadAccessToken = process.env.READ_ACCESS_TOKEN;
 
 // # v4 apis:-
 export const createRequestTokenV4 = async (signal: AbortSignal) => {
@@ -18,7 +14,7 @@ export const createRequestTokenV4 = async (signal: AbortSignal) => {
     headers: {
       accept: 'application/json',
       'content-type': 'application/json',
-      Authorization: `Bearer ${AuthToken}`,
+      Authorization: `Bearer ${ReadAccessToken}`,
     },
     signal,
   };
@@ -40,7 +36,7 @@ export const createAccessTokenV4 = async (
     headers: {
       accept: 'application/json',
       'content-type': 'application/json',
-      Authorization: `Bearer ${AuthToken}`,
+      Authorization: `Bearer ${ReadAccessToken}`,
     },
     body: JSON.stringify({request_token}),
     signal,
@@ -80,6 +76,8 @@ export const fetchMovieFavoritesV4 = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
+  const accountId: Object = userStorage.getString('accountId') || '';
+  const accessToken: string = userStorage.getString('accessToken') || '';
   const url = `https://api.themoviedb.org/4/account/${accountId}/movie/favorites?language=en-US&page=${pageParam}&sort_by=created_at.desc`;
   const options = {
     method: 'GET',
@@ -93,7 +91,7 @@ export const fetchMovieFavoritesV4 = async (
   if (!response.ok) {
     if (response?.status === 401) {
       // ! Unauthorized access
-      terminateSession();
+      terminateUserSession();
       return;
     }
     throw new Error('Failed to fetch Favorites');
@@ -106,6 +104,8 @@ export const fetchMovieWatchlistV4 = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
+  const accountId: Object = userStorage.getString('accountId') || '';
+  const accessToken: string = userStorage.getString('accessToken') || '';
   const url = `https://api.themoviedb.org/4/account/${accountId}/movie/watchlist?language=en-US&page=${pageParam}&sort_by=created_at.desc`;
   const options = {
     method: 'GET',
@@ -119,7 +119,7 @@ export const fetchMovieWatchlistV4 = async (
   if (!response.ok) {
     if (response?.status === 401) {
       // ! Unauthorized access
-      terminateSession();
+      terminateUserSession();
       return;
     }
     throw new Error('Failed to fetch Watchlist');
@@ -145,7 +145,7 @@ export const fetchRecommendedMoviesV4 = async (
   if (!response.ok) {
     if (response?.status === 401) {
       // ! Unauthorized access
-      terminateSession();
+      terminateUserSession();
       return;
     }
     throw new Error('Failed to fetch recommended movies');
@@ -159,11 +159,12 @@ export const fetchPopularMovies = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
-  const url = `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${pageParam}&api_key=${APIKey}`;
+  const url = `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${pageParam}`;
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
+      Authorization: `Bearer ${ReadAccessToken}`,
     },
     signal,
   };
@@ -180,11 +181,12 @@ export const fetchSearchedMovieResults = async (
   searchedText: string,
   pageParam: number,
 ) => {
-  const url = `https://api.themoviedb.org/3/search/movie?query=${searchedText}&language=en-US&page=${pageParam}&api_key=${APIKey}`;
+  const url = `https://api.themoviedb.org/3/search/movie?query=${searchedText}&language=en-US&page=${pageParam}`;
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
+      Authorization: `Bearer ${ReadAccessToken}`,
     },
     signal,
   };
@@ -197,11 +199,12 @@ export const fetchSearchedMovieResults = async (
 };
 
 export const fetchTrendingMovies = async (signal: AbortSignal) => {
-  const url = `https://api.themoviedb.org/3/trending/movie/day?language=en-US&api_key=${APIKey}`;
+  const url = `https://api.themoviedb.org/3/trending/movie/day?language=en-US`;
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
+      Authorization: `Bearer ${ReadAccessToken}`,
     },
     signal,
   };
@@ -217,11 +220,12 @@ export const fetchNowPlayingMovies = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
-  const url = `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${pageParam}&api_key=${APIKey}`;
+  const url = `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${pageParam}`;
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
+      Authorization: `Bearer ${ReadAccessToken}`,
     },
     signal,
   };
@@ -237,11 +241,12 @@ export const fetchUpcomingMovies = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
-  const url = `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=${pageParam}&api_key=${APIKey}`;
+  const url = `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=${pageParam}`;
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
+      Authorization: `Bearer ${ReadAccessToken}`,
     },
     signal,
   };
@@ -257,11 +262,12 @@ export const fetchTopRatedMovies = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
-  const url = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${pageParam}&api_key=${APIKey}`;
+  const url = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${pageParam}`;
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
+      Authorization: `Bearer ${ReadAccessToken}`,
     },
     signal,
   };
@@ -277,11 +283,12 @@ export const fetchMovieDetails = async (
   signal: AbortSignal,
   movieId: number,
 ) => {
-  const url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&api_key=${APIKey}`;
+  const url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
+      Authorization: `Bearer ${ReadAccessToken}`,
     },
     signal,
   };
@@ -298,6 +305,8 @@ export const fetchMovieFavorites = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
+  const accountId: Object = userStorage.getString('accountId') || '';
+  const accessToken: string = userStorage.getString('accessToken') || '';
   const url = `https://api.themoviedb.org/3/account/${accountId}/favorite/movies?language=en-US&page=${pageParam}&sort_by=created_at.desc`;
   const options = {
     method: 'GET',
@@ -311,7 +320,7 @@ export const fetchMovieFavorites = async (
   if (!response.ok) {
     if (response?.status === 401) {
       // ! Unauthorized access
-      terminateSession();
+      terminateUserSession();
       return;
     }
     throw new Error('Failed to fetch Favorites');
@@ -325,6 +334,8 @@ export const fetchMovieWatchlist = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
+  const accountId: Object = userStorage.getString('accountId') || '';
+  const accessToken: string = userStorage.getString('accessToken') || '';
   const url = `https://api.themoviedb.org/3/account/${accountId}/watchlist/movies?language=en-US&page=${pageParam}&sort_by=created_at.desc`;
   const options = {
     method: 'GET',
@@ -338,7 +349,7 @@ export const fetchMovieWatchlist = async (
   if (!response.ok) {
     if (response?.status === 401) {
       // ! Unauthorized access
-      terminateSession();
+      terminateUserSession();
       return;
     }
     throw new Error('Failed to fetch Watchlist');
@@ -349,6 +360,8 @@ export const fetchMovieWatchlist = async (
 
 // ? deprecated
 export const updateMovieFavorites = async (body: FavoriteRequestBody) => {
+  const accountId: Object = userStorage.getString('accountId') || '';
+  const accessToken: string = userStorage.getString('accessToken') || '';
   const url = `https://api.themoviedb.org/3/account/${accountId}/favorite`;
   const options = {
     method: 'POST',
@@ -363,7 +376,7 @@ export const updateMovieFavorites = async (body: FavoriteRequestBody) => {
   if (!response.ok) {
     if (response?.status === 401) {
       // ! Unauthorized access
-      terminateSession();
+      terminateUserSession();
       return;
     }
     throw new Error('Failed to update Favorites');
@@ -374,6 +387,8 @@ export const updateMovieFavorites = async (body: FavoriteRequestBody) => {
 
 // ? deprecated
 export const updateMovieWatchlist = async (body: WatchlistRequestBody) => {
+  const accountId: Object = userStorage.getString('accountId') || '';
+  const accessToken: string = userStorage.getString('accessToken') || '';
   const url = `https://api.themoviedb.org/3/account/${accountId}/watchlist`;
   const options = {
     method: 'POST',
@@ -388,7 +403,7 @@ export const updateMovieWatchlist = async (body: WatchlistRequestBody) => {
   if (!response.ok) {
     if (response?.status === 401) {
       // ! Unauthorized access
-      terminateSession();
+      terminateUserSession();
       return;
     }
     throw new Error('Failed to update Watchlist');

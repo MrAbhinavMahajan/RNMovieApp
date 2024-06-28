@@ -20,6 +20,7 @@ import RNText from '../../common/RNText';
 import AppCTA from '../../common/AppCTA';
 import QuotationWidget from '../../widgets/Quotation';
 import HeaderTitleWidget from '../../widgets/HeaderTitle';
+import {userStorage} from '../../../constants/Storage';
 
 const SignInScreen = () => {
   const queryClient = useQueryClient();
@@ -72,8 +73,9 @@ const SignInScreen = () => {
       return;
     }
     if (!!accessTokenQueryFilter && data?.access_token) {
-      const token = data?.access_token;
-      console.log('Got Access Token::::', token);
+      const {access_token, id} = data;
+      userStorage.set('accountId', id);
+      userStorage.set('accessToken', access_token);
     }
   }, [accessTokenQuery]);
 
