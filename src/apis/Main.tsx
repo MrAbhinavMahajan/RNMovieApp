@@ -5,7 +5,7 @@ import {
 const APIKey = process.env.API_KEY;
 const AuthToken = process.env.AUTH_KEY;
 
-// ! Store in secured storage
+// ? Store in secured storage
 const accountId: Object = '';
 const accessToken: string = '';
 
@@ -52,6 +52,34 @@ export const createAccessToken = async (
       Authorization: `Bearer ${AuthToken}`,
     },
     body: JSON.stringify({request_token}),
+    signal,
+  };
+
+  const response = await fetch(
+    'https://api.themoviedb.org/4/auth/access_token',
+    options,
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch trending movies');
+  }
+
+  const json = await response.json();
+  return json;
+};
+
+export const expireAccessToken = async (
+  signal: AbortSignal,
+  access_token: string,
+) => {
+  const options = {
+    method: 'DELETE',
+    headers: {
+      accept: 'application/json',
+      'content-type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({access_token}),
     signal,
   };
 
