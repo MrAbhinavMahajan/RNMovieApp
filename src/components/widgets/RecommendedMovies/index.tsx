@@ -15,12 +15,10 @@ import ErrorInfoWidget from '../ErrorInfo';
 
 const RecommendedMoviesWidget = () => {
   const page = 1;
-  const lastMovieId = 278;
   const query = useQuery({
-    queryKey: ['recommendedMovies', lastMovieId],
-    queryFn: ({signal}) => fetchRecommendedMovies(signal, lastMovieId, page),
+    queryKey: ['recommendedMovies'],
+    queryFn: ({signal}) => fetchRecommendedMovies(signal, page),
   });
-  console.log(`recommendedMovies for id ${lastMovieId}: \n`, query);
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
   const listRef = useRef(null);
   const movies = useMemo(() => {

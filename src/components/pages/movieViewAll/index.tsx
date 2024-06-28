@@ -54,8 +54,7 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
         return fetchTopRatedMovies(signal, pageParam);
 
       case APP_WIDGETS_MAP.RECOMMENDED_MOVIES:
-        const lastMovieId = 278;
-        return fetchRecommendedMovies(signal, lastMovieId, pageParam);
+        return fetchRecommendedMovies(signal, pageParam);
 
       case APP_WIDGETS_MAP.FAVORITE_MOVIES:
         return fetchMovieFavorites(signal, pageParam);

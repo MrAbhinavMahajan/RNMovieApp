@@ -2,33 +2,21 @@ import {
   FavoriteRequestBody,
   WatchlistRequestBody,
 } from '../constants/AppInterfaces';
+const APIKey = process.env.API_KEY;
 const AuthToken = process.env.AUTH_KEY;
 
-export const requestAccessToken = async (signal: AbortSignal) => {
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${AuthToken}`,
-    },
-    signal,
-  };
+// ! Store in secured storage
+const accountId: Object = '';
+const accessToken: string = '';
 
-  const response = await fetch(
-    'https://api.themoviedb.org/3/authentication/token/new',
-    options,
-  );
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch trending movies');
-  }
-
-  const json = await response.json();
-  return json;
-};
-
-export const createNewSession = async (signal: AbortSignal) => {
-  // user has validated the request token via webview - https://www.themoviedb.org/authenticate/<REQUEST_TOKEN>?redirect_to=http://www.yourapp.com/approved
+// # v4 apis:-
+export const createRequestToken = async (signal: AbortSignal) => {
+  /**
+   * Step-1 Create Request Token
+   * Step-2 Redirect to Webview asking user to approve on success to approve
+   * Step-3 Get Access Token
+   */
+  // https://www.themoviedb.org/auth/access?request_token=""
   const options = {
     method: 'POST',
     headers: {
@@ -40,7 +28,7 @@ export const createNewSession = async (signal: AbortSignal) => {
   };
 
   const response = await fetch(
-    'https://api.themoviedb.org/3/authentication/session/new',
+    'https://api.themoviedb.org/4/auth/request_token',
     options,
   );
 
@@ -52,26 +40,23 @@ export const createNewSession = async (signal: AbortSignal) => {
   return json;
 };
 
-export const validateSessionWithLogin = async (
+export const createAccessToken = async (
   signal: AbortSignal,
-  username: string,
-  password: string,
   request_token: string,
 ) => {
-  // registered user
   const options = {
-    method: 'POST',
+    method: 'GET',
     headers: {
       accept: 'application/json',
       'content-type': 'application/json',
       Authorization: `Bearer ${AuthToken}`,
     },
-    body: JSON.stringify({username, password, request_token}),
+    body: JSON.stringify({request_token}),
     signal,
   };
 
   const response = await fetch(
-    'https://api.themoviedb.org/3/authentication/token/validate_with_login',
+    'https://api.themoviedb.org/4/auth/access_token',
     options,
   );
 
@@ -83,60 +68,7 @@ export const validateSessionWithLogin = async (
   return json;
 };
 
-export const deleteUserSession = async (
-  signal: AbortSignal,
-  session_id: string,
-) => {
-  const options = {
-    method: 'DELETE',
-    headers: {
-      accept: 'application/json',
-      'content-type': 'application/json',
-      Authorization: `Bearer ${AuthToken}`,
-    },
-    body: JSON.stringify({session_id}),
-    signal,
-  };
-
-  const response = await fetch(
-    'https://api.themoviedb.org/3/authentication/session',
-    options,
-  );
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch trending movies');
-  }
-
-  const json = await response.json();
-  return json;
-};
-
-/////
-
-export const fetchTrendingMovies = async (signal: AbortSignal) => {
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${AuthToken}`,
-    },
-    signal,
-  };
-
-  const response = await fetch(
-    'https://api.themoviedb.org/3/trending/movie/day?language=en-US',
-    options,
-  );
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch trending movies');
-  }
-
-  const json = await response.json();
-  return json;
-};
-
-export const fetchNowPlayingMovies = async (
+export const fetchMovieFavorites = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
@@ -144,25 +76,25 @@ export const fetchNowPlayingMovies = async (
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: `Bearer ${AuthToken}`,
+      Authorization: `Bearer ${accessToken}`,
     },
     signal,
   };
 
   const response = await fetch(
-    `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${pageParam}`,
+    `https://api.themoviedb.org/4/account/${accountId}/movie/favorites?language=en-US&page=${pageParam}&sort_by=created_at.desc`,
     options,
   );
 
   if (!response.ok) {
-    throw new Error('Failed to fetch now playing movies');
+    throw new Error('Failed to fetch Favorites');
   }
 
   const json = await response.json();
   return json;
 };
 
-export const fetchUpcomingMovies = async (
+export const fetchMovieWatchlist = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
@@ -170,44 +102,18 @@ export const fetchUpcomingMovies = async (
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: `Bearer ${AuthToken}`,
+      Authorization: `Bearer ${accessToken}`,
     },
     signal,
   };
 
   const response = await fetch(
-    `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=${pageParam}`,
+    `https://api.themoviedb.org/4/account/${accountId}/movie/watchlist?language=en-US&page=${pageParam}&sort_by=created_at.desc`,
     options,
   );
 
   if (!response.ok) {
-    throw new Error('Failed to fetch upcoming movies');
-  }
-
-  const json = await response.json();
-  return json;
-};
-
-export const fetchTopRatedMovies = async (
-  signal: AbortSignal,
-  pageParam: number,
-) => {
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${AuthToken}`,
-    },
-    signal,
-  };
-
-  const response = await fetch(
-    `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${pageParam}`,
-    options,
-  );
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch top rated movies');
+    throw new Error('Failed to fetch Watchlist');
   }
 
   const json = await response.json();
@@ -216,20 +122,19 @@ export const fetchTopRatedMovies = async (
 
 export const fetchRecommendedMovies = async (
   signal: AbortSignal,
-  movieId: number,
   pageParam: number,
 ) => {
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: `Bearer ${AuthToken}`,
+      Authorization: `Bearer ${accessToken}`,
     },
     signal,
   };
 
   const response = await fetch(
-    `https://api.themoviedb.org/3/movie/${movieId}/recommendations?language=en-US&page=${pageParam}`,
+    `https://api.themoviedb.org/4/account/${accountId}/movie/recommendations?language=en-US&page=${pageParam}`,
     options,
   );
 
@@ -241,85 +146,7 @@ export const fetchRecommendedMovies = async (
   return json;
 };
 
-export const fetchPopularMovies = async (
-  signal: AbortSignal,
-  pageParam: number,
-) => {
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${AuthToken}`,
-    },
-    signal,
-  };
-
-  const response = await fetch(
-    `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${pageParam}`,
-    options,
-  );
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch popular movies');
-  }
-
-  const json = await response.json();
-  return json;
-};
-
-export const fetchSearchedMovieResults = async (
-  signal: AbortSignal,
-  searchedText: string,
-  pageParam: number,
-) => {
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${AuthToken}`,
-    },
-    signal,
-  };
-
-  const response = await fetch(
-    `https://api.themoviedb.org/3/search/movie?query=${searchedText}&language=en-US&page=${pageParam}`,
-    options,
-  );
-
-  if (!response.ok) {
-    throw new Error(`Failed to fetch search results for ${searchedText}`);
-  }
-
-  const json = await response.json();
-  return json;
-};
-
-export const fetchMovieDetails = async (
-  signal: AbortSignal,
-  movieId: number,
-) => {
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${AuthToken}`,
-    },
-    signal,
-  };
-
-  const response = await fetch(
-    `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`,
-    options,
-  );
-
-  if (!response.ok) {
-    throw new Error(`Failed to fetch movie details for ${movieId}`);
-  }
-
-  const json = await response.json();
-  return json;
-};
-
+// ? Change to v4 to toggle
 export const updateMovieFavorites = async (body: FavoriteRequestBody) => {
   const options = {
     method: 'POST',
@@ -368,7 +195,8 @@ export const updateMovieWatchlist = async (body: WatchlistRequestBody) => {
   return json;
 };
 
-export const fetchMovieFavorites = async (
+// # v3 apis:-
+export const fetchPopularMovies = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
@@ -376,25 +204,72 @@ export const fetchMovieFavorites = async (
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: `Bearer ${AuthToken}`,
     },
     signal,
   };
 
   const response = await fetch(
-    `https://api.themoviedb.org/3/account/null/favorite/movies?language=en-US&page=${pageParam}&sort_by=created_at.desc`,
+    `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${pageParam}&api_key=${APIKey}`,
     options,
   );
 
   if (!response.ok) {
-    throw new Error('Failed to fetch Favorites');
+    throw new Error('Failed to fetch popular movies');
   }
 
   const json = await response.json();
   return json;
 };
 
-export const fetchMovieWatchlist = async (
+export const fetchSearchedMovieResults = async (
+  signal: AbortSignal,
+  searchedText: string,
+  pageParam: number,
+) => {
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+    },
+    signal,
+  };
+
+  const response = await fetch(
+    `https://api.themoviedb.org/3/search/movie?query=${searchedText}&language=en-US&page=${pageParam}&api_key=${APIKey}`,
+    options,
+  );
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch search results for ${searchedText}`);
+  }
+
+  const json = await response.json();
+  return json;
+};
+
+export const fetchTrendingMovies = async (signal: AbortSignal) => {
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+    },
+    signal,
+  };
+
+  const response = await fetch(
+    `https://api.themoviedb.org/3/trending/movie/day?language=en-US&api_key=${APIKey}`,
+    options,
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch trending movies');
+  }
+
+  const json = await response.json();
+  return json;
+};
+
+export const fetchNowPlayingMovies = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
@@ -402,18 +277,92 @@ export const fetchMovieWatchlist = async (
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: `Bearer ${AuthToken}`,
     },
     signal,
   };
 
   const response = await fetch(
-    `https://api.themoviedb.org/3/account/null/watchlist/movies?language=en-US&page=${pageParam}&sort_by=created_at.desc`,
+    `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${pageParam}&api_key=${APIKey}`,
     options,
   );
 
   if (!response.ok) {
-    throw new Error('Failed to fetch Watchlist');
+    throw new Error('Failed to fetch now playing movies');
+  }
+
+  const json = await response.json();
+  return json;
+};
+
+export const fetchUpcomingMovies = async (
+  signal: AbortSignal,
+  pageParam: number,
+) => {
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+    },
+    signal,
+  };
+
+  const response = await fetch(
+    `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=${pageParam}&api_key=${APIKey}`,
+    options,
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch upcoming movies');
+  }
+
+  const json = await response.json();
+  return json;
+};
+
+export const fetchTopRatedMovies = async (
+  signal: AbortSignal,
+  pageParam: number,
+) => {
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+    },
+    signal,
+  };
+
+  const response = await fetch(
+    `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${pageParam}&api_key=${APIKey}`,
+    options,
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch top rated movies');
+  }
+
+  const json = await response.json();
+  return json;
+};
+
+export const fetchMovieDetails = async (
+  signal: AbortSignal,
+  movieId: number,
+) => {
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+    },
+    signal,
+  };
+
+  const response = await fetch(
+    `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&api_key=${APIKey}`,
+    options,
+  );
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch movie details for ${movieId}`);
   }
 
   const json = await response.json();
