@@ -23,8 +23,11 @@ const FavoritesMoviesWidget = () => {
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
   const listRef = useRef(null);
   const movies = useMemo(() => {
+    if (isError) {
+      return [];
+    }
     return data?.results || FALLBACK_DATA;
-  }, [data?.results]);
+  }, [data?.results, isError]);
   const [isRightCTAEnabled, setRightCTAEnabled] = useState(false);
 
   const refreshWidget = () => {

@@ -91,8 +91,11 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
   const scrollHandler = useScrollViewOffset(listRef); // * Gives Current offset of ScrollView
   console.log('ViewAllMovies Data :\n', data);
   const movies = useMemo(() => {
+    if (isError) {
+      return [];
+    }
     return data?.pages.flatMap(page => page.results) || [];
-  }, [data?.pages]);
+  }, [data?.pages, isError]);
   console.log('View-All Movies :', movies);
 
   const scrollToTopCTAFadeAnimationStyles = useAnimatedStyle(() => ({

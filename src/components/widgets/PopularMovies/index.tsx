@@ -46,8 +46,11 @@ const PopularMoviesWidget = () => {
   const scrollHandler = useScrollViewOffset(listRef); // * Gives Current offset of ScrollView
   console.log('PopularMovies Data :\n', data);
   const movies = useMemo(() => {
+    if (isError) {
+      return [];
+    }
     return data?.pages.flatMap(page => page.results) || FALLBACK_DATA;
-  }, [data]);
+  }, [data, isError]);
   console.log('PopularMovies :\n', movies);
 
   const refreshWidget = () => {
