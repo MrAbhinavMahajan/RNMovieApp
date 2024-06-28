@@ -22,6 +22,7 @@ import {COLORS} from '../../../../constants/Colors';
 import {styles} from './styles';
 import {
   FavoriteRequestBody,
+  MovieItem,
   WatchlistRequestBody,
 } from '../../../../constants/AppInterfaces';
 import RNText from '../../../common/RNText';
@@ -97,8 +98,9 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
       let isMovieFound = false;
       if (!_.isEmpty(favoriteMoviesQuery?.data?.results)) {
         isMovieFound =
-          favoriteMoviesQuery?.data?.results.filter(el => el.id === movieId)
-            ?.length > 0;
+          favoriteMoviesQuery?.data?.results.filter(
+            (el: MovieItem) => el.id === movieId,
+          )?.length > 0;
       }
       return isMovieFound;
     });
@@ -108,7 +110,7 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
       if (!_.isEmpty(watchlistMoviesDataQuery?.data?.results)) {
         isMovieFound =
           watchlistMoviesDataQuery?.data?.results.filter(
-            el => el.id === movieId,
+            (el: MovieItem) => el?.id === movieId,
           )?.length > 0;
       }
       return isMovieFound;
