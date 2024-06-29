@@ -31,7 +31,7 @@ import RNImage from '../../../common/RNImage';
 import {
   GENERIC_ERROR_MESSAGE,
   GENERIC_ERROR_TITLE,
-} from '../../../../constants/Error';
+} from '../../../../constants/Messages';
 
 interface MovieDetailsScreenHeaderProps {
   screenTitle: string;

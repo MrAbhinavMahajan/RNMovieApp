@@ -67,6 +67,11 @@ export const AppNextIcon = ({
   size = IconSize.large,
 }) => <MaterialIcon name={'chevron-right'} size={size} color={color} />;
 
+export const AppLogoutIcon = ({
+  color = COLORS.fullWhite,
+  size = IconSize.medium,
+}) => <MaterialIcon name={'logout'} size={size} color={color} />;
+
 export const AppCrossIcon = ({
   color = COLORS.fullBlack,
   size = IconSize.large,

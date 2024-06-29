@@ -1,5 +1,6 @@
 import {
   FavoriteRequestBody,
+  SignOutRequestBody,
   WatchlistRequestBody,
 } from '../constants/AppInterfaces';
 import {SecuredStorage} from '../constants/Storage';
@@ -55,14 +56,14 @@ export const createAccessTokenV4 = async (
   return json;
 };
 
-export const expireAccessTokenV4 = async (signal: AbortSignal) => {
-  const accessToken: string | undefined =
-    SecuredStorage.getString('accessToken');
+export const expireAccessTokenV4 = async (body: SignOutRequestBody) => {
+  const accessToken: string | undefined = body.access_token;
   if (!accessToken) {
     // ! Unauthorized access
     terminateUserSession();
     return;
   }
+
   const url = 'https://api.themoviedb.org/4/auth/access_token';
   const options = {
     method: 'DELETE',
@@ -71,8 +72,7 @@ export const expireAccessTokenV4 = async (signal: AbortSignal) => {
       'content-type': 'application/json',
       Authorization: `Bearer ${ReadAccessToken}`,
     },
-    body: JSON.stringify({access_token: accessToken}),
-    signal,
+    body: JSON.stringify(body),
   };
   const response = await fetch(url, options);
   if (!response.ok) {
@@ -487,6 +487,41 @@ export const fetchAccountDetails = async () => {
       return;
     }
     throw new Error('Failed to fetch Account Details');
+  }
+  const json = await response.json();
+  return json;
+};
+
+// ? deprecated
+export const fetchMoviesRated = async (
+  signal: AbortSignal,
+  pageParam: number,
+) => {
+  const accountId: Object | undefined = SecuredStorage.getString('accountId');
+  const accessToken: string | undefined =
+    SecuredStorage.getString('accessToken');
+  if (!accountId || !accessToken) {
+    // ! Unauthorized access
+    terminateUserSession();
+    return;
+  }
+  const url = `https://api.themoviedb.org/4/account/${accountId}/movie/rated?page=${pageParam}&language=en-US`;
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    signal,
+  };
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    if (response?.status === 401) {
+      // ! Unauthorized access
+      terminateUserSession();
+      return;
+    }
+    throw new Error('Failed to fetch Favorites');
   }
   const json = await response.json();
   return json;

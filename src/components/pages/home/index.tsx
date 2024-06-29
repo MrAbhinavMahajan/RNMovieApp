@@ -22,14 +22,13 @@ import Animated, {
 import {AppArrowUpIcon} from '../../common/RNIcon';
 import AppCTA from '../../common/AppCTA';
 import HomeScreenHeader from './header';
-import WatchlistMoviesWidget from '../../widgets/WatchlistMovies';
-import FavoritesMoviesWidget from '../../widgets/FavoriteMovies';
 
 const HomeScreen = () => {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollHandler = useScrollViewOffset(scrollRef); // * Gives Current offset of ScrollView
 
   useEffect(() => {
+    NativeAppEventEmitter.emit(PAGE_REFRESH.PROFILE_SCREEN);
     return () => {
       NativeAppEventEmitter.removeAllListeners(PAGE_REFRESH.HOME_SCREEN);
     };
@@ -57,12 +56,10 @@ const HomeScreen = () => {
           <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
         }>
         <HomeScreenHeader />
-        <FavoritesMoviesWidget />
         <NowPlayingMoviesWidget />
         <TopRatedMoviesWidget />
         <UpcomingMoviesWidget />
         <RecommendedMoviesWidget />
-        <WatchlistMoviesWidget />
         <QuotationWidget
           title={`Live${'\n'}it up!`}
           subtitle={'Crafted with ❤️ in Chamba, India'}

@@ -8,20 +8,20 @@ import Animated, {
   useScrollViewOffset,
   withTiming,
 } from 'react-native-reanimated';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {STD_VERTICAL_SPACING} from '../../../constants/Styles';
-import {styles} from './styles';
-import {COLORS} from '../../../constants/Colors';
 import {AppArrowUpIcon} from '../../common/RNIcon';
 import {AUTH_STEPS, REQUEST_TOKEN} from '../../../data/Main';
 import {createAccessTokenV4, createRequestTokenV4} from '../../../apis/Main';
+import {saveToSecuredStorage} from '../../../constants/Storage';
+import {startUserSession} from '../../../utilities/AppUtils';
+import {COLORS} from '../../../constants/Colors';
+import {styles} from './styles';
 import RNText from '../../common/RNText';
 import AppCTA from '../../common/AppCTA';
 import QuotationWidget from '../../widgets/Quotation';
 import HeaderTitleWidget from '../../widgets/HeaderTitle';
-import {saveToSecuredStorage} from '../../../constants/Storage';
-import {startUserSession} from '../../../utilities/AppUtils';
 
 const SignInScreen = () => {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
@@ -59,9 +59,6 @@ const SignInScreen = () => {
       const token = data?.request_token;
       setRequestToken(token);
       saveToSecuredStorage('requestToken', token);
-      Linking.openURL(
-        `https://www.themoviedb.org/auth/access?request_token=${token}`,
-      );
     }
   }, [requestTokenQuery?.data]);
 
@@ -88,6 +85,12 @@ const SignInScreen = () => {
 
   const generateRequestToken = () => {
     setRequestTokenQueryFilter(Date.now());
+  };
+
+  const approveRequestToken = () => {
+    Linking.openURL(
+      `https://www.themoviedb.org/auth/access?request_token=${requestToken}`,
+    );
   };
 
   const generateAccessToken = () => {
@@ -123,7 +126,7 @@ const SignInScreen = () => {
     );
   };
 
-  const renderLoginWidget = () => {
+  const renderSignInWidget = () => {
     const isLoading =
       requestTokenQuery?.isFetching || accessTokenQuery?.isFetching;
     return (
@@ -134,7 +137,7 @@ const SignInScreen = () => {
             styles.headerView,
             {paddingTop: insets.top + STD_VERTICAL_SPACING},
           ]}>
-          <RNText style={styles.pageTitle}>Login</RNText>
+          <RNText style={styles.pageTitle}>SignIn</RNText>
           {AUTH_STEPS.map((el, idx) => (
             <View style={styles.guideView} key={idx}>
               <RNText style={styles.guideViewTitleText}>STEP-{el?.id}</RNText>
@@ -156,6 +159,11 @@ const SignInScreen = () => {
             isLoading,
           )}
           {renderWidgetCTA(
+            'SignIn | SignUp | Approve',
+            approveRequestToken,
+            isLoading,
+          )}
+          {renderWidgetCTA(
             'Generate Access Token',
             generateAccessToken,
             isLoading,
@@ -174,7 +182,7 @@ const SignInScreen = () => {
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
         }>
-        {renderLoginWidget()}
+        {renderSignInWidget()}
         <QuotationWidget
           title={`Embrace ${'\n'}Movie Magic!`}
           subtitle={'Crafted with ❤️ in Chamba, India'}
