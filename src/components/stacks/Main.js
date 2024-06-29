@@ -24,13 +24,17 @@ const MainStack = () => {
           headerShown: false,
         }}>
         <Screen name={APP_STACKS_MAP.LAUNCH_STACK} component={LaunchStack} />
-        <Screen name={APP_STACKS_MAP.AUTH_STACK} component={AuthStack} />
+        <Screen
+          name={APP_STACKS_MAP.AUTH_STACK}
+          component={AuthStack}
+          options={{animation: 'slide_from_bottom'}}
+        />
 
         {/* Tab Bar Screens*/}
         <Screen
           name={APP_STACKS_MAP.MAIN_TAB}
           component={MainTab}
-          options={{animation: 'slide_from_bottom'}}
+          options={{animation: 'fade'}}
         />
 
         {/* Non-Tab Bar Screens */}

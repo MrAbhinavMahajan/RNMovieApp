@@ -3,7 +3,7 @@ import _ from 'lodash';
 import {useQuery} from '@tanstack/react-query';
 import * as NavigationService from '../../../service/Navigation';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
-import {fetchMovieFavorites} from '../../../apis/Main';
+import {fetchMoviesRated} from '../../../apis/Main';
 import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
 import {styles} from './styles';
 import {PAGE_REFRESH} from '../../../constants/Page';
@@ -13,13 +13,13 @@ import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import ErrorInfoWidget from '../ErrorInfo';
 
-const FavoritesMoviesWidget = () => {
+const SelfRatedMoviesWidget = () => {
   const page = 1;
   const query = useQuery({
-    queryKey: ['favoriteMovies'],
-    queryFn: ({signal}) => fetchMovieFavorites(signal, page),
+    queryKey: ['selfRatedMovies'],
+    queryFn: ({signal}) => fetchMoviesRated(signal, page),
   });
-  console.log('favoriteMovies: \n', query);
+  console.log('selfRatedMovies: \n', query);
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
   const listRef = useRef(null);
   const movies = useMemo(() => {
@@ -37,7 +37,7 @@ const FavoritesMoviesWidget = () => {
   const onViewAllAction = () => {
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_VIEW_ALL_SCREEN, {
       queryParams: {
-        screenTitle: 'Favorite Movies',
+        screenTitle: 'Rated Movies',
         widgetId: APP_WIDGETS_MAP.FAVORITE_MOVIES,
       },
     });
@@ -80,7 +80,7 @@ const FavoritesMoviesWidget = () => {
       style={styles.containerView}
       pointerEvents={isLoading ? 'none' : 'auto'}>
       <HeaderTitleWidget
-        title={'Favorites 🥃'}
+        title={'Rated Movies'}
         containerStyles={styles.headerView}
         rightCTAAction={onViewAllAction}
         rightCTAEnabled={isRightCTAEnabled}
@@ -110,4 +110,4 @@ const FavoritesMoviesWidget = () => {
   );
 };
 
-export default FavoritesMoviesWidget;
+export default SelfRatedMoviesWidget;

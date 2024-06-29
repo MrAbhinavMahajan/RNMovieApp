@@ -29,7 +29,6 @@ export const styles = StyleSheet.create({
   },
   containerView: {
     flex: 1,
-    paddingTop: STD_VERTICAL_SPACING,
     paddingBottom: vpx(46),
   },
   pageTitle: {
@@ -40,6 +39,7 @@ export const styles = StyleSheet.create({
   },
   ctaLabelTitleView: {
     marginHorizontal: STD_HORIZONTAL_SPACING,
+    marginTop: STD_VERTICAL_SPACING,
   },
   ctaView: {
     borderWidth: 1,

@@ -51,7 +51,10 @@ const WatchlistMoviesWidget = () => {
   const keyExtractor = (item: MoviePosterItem) => `${item?.id}`;
 
   useEffect(() => {
-    NativeAppEventEmitter.addListener(PAGE_REFRESH.HOME_SCREEN, refreshWidget);
+    NativeAppEventEmitter.addListener(
+      PAGE_REFRESH.PROFILE_SCREEN,
+      refreshWidget,
+    );
   }, []);
 
   const renderItem = ({

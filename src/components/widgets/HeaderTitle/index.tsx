@@ -8,7 +8,9 @@ import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
 
 interface HeaderTitleWidgetProps {
   title: string;
-  containerStyles: any;
+  titleTextStyles?: any;
+  containerStyles?: any;
+  rightCTAIcon?: any;
   rightCTAAction?: () => void;
   rightCTAEnabled?: boolean;
   loaderEnabled?: boolean;
@@ -17,21 +19,23 @@ interface HeaderTitleWidgetProps {
 const HeaderTitleWidget = (props: HeaderTitleWidgetProps) => {
   const {
     title,
+    titleTextStyles,
     containerStyles,
     rightCTAEnabled,
     rightCTAAction,
+    rightCTAIcon = <AppNextIcon color={COLORS.fullBlack} />,
     loaderEnabled = false,
   } = props;
 
   const renderLeftJSX = () => {
-    return <RNText style={styles.titleText}>{title}</RNText>;
+    return <RNText style={[styles.titleText, titleTextStyles]}>{title}</RNText>;
   };
 
   const renderRightJSX = () => {
     if (loaderEnabled) {
       return <ActivityIndicator color={STD_ACTIVITY_COLOR} />;
-    } else if (rightCTAEnabled && !!rightCTAAction) {
-      return <AppNextIcon color={COLORS.fullBlack} />;
+    } else if (rightCTAEnabled && rightCTAIcon && !!rightCTAAction) {
+      return rightCTAIcon;
     }
     return <></>;
   };
@@ -40,7 +44,7 @@ const HeaderTitleWidget = (props: HeaderTitleWidgetProps) => {
     <TouchableOpacity
       style={[styles.contentView, containerStyles]}
       activeOpacity={0.7}
-      disabled={!rightCTAEnabled || !rightCTAAction}
+      disabled={loaderEnabled || !rightCTAEnabled || !rightCTAAction}
       onPress={rightCTAAction}>
       {renderLeftJSX()}
       {renderRightJSX()}

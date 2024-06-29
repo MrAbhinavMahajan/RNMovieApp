@@ -61,6 +61,9 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
 
       case APP_WIDGETS_MAP.WATCHLIST_MOVIES:
         return fetchMovieWatchlist(signal, pageParam);
+
+      case APP_WIDGETS_MAP.RATED_MOVIES:
+        return fetchMovieWatchlist(signal, pageParam);
     }
   };
 

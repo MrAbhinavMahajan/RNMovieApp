@@ -37,6 +37,10 @@ export interface WatchlistRequestBody {
   watchlist: boolean;
 }
 
+export interface SignOutRequestBody {
+  access_token: string;
+}
+
 export interface MovieItem {
   adult: boolean;
   backdrop_path: string;
