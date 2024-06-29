@@ -14,7 +14,7 @@ import {STD_VERTICAL_SPACING} from '../../../constants/Styles';
 import {styles} from './styles';
 import {COLORS} from '../../../constants/Colors';
 import {AppArrowUpIcon} from '../../common/RNIcon';
-import {AUTH_STEPS, REQUEST_TOKEN} from '../../data/Main';
+import {AUTH_STEPS, REQUEST_TOKEN} from '../../../data/Main';
 import {createAccessTokenV4, createRequestTokenV4} from '../../../apis/Main';
 import RNText from '../../common/RNText';
 import AppCTA from '../../common/AppCTA';

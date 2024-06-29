@@ -9,7 +9,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import {fetchPopularMovies} from '../../../apis/Main';
 import {AppArrowUpIcon} from '../../common/RNIcon';
-import {FALLBACK_DATA} from '../../data/Main';
+import {FALLBACK_DATA} from '../../../data/Main';
 import {styles} from './styles';
 import AppCTA from '../../common/AppCTA';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';

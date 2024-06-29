@@ -11,7 +11,7 @@ import {SCREEN_WIDTH} from '../../../../utilities/AppUtils';
 import {fetchTrendingMovies} from '../../../../apis/Main';
 import {STD_VERTICAL_SPACING} from '../../../../constants/Styles';
 import {COLORS} from '../../../../constants/Colors';
-import {FALLBACK_DATA} from '../../../data/Main';
+import {FALLBACK_DATA} from '../../../../data/Main';
 import {styles} from './styles';
 import MoviePosterWidget, {MoviePosterItem} from '../../../widgets/MoviePoster';
 import ErrorInfoWidget from '../../../widgets/ErrorInfo';
