@@ -28,8 +28,15 @@ export const createRequestTokenV4 = async (signal: AbortSignal) => {
 
 export const createAccessTokenV4 = async (
   signal: AbortSignal,
-  request_token: string,
+  request_token?: string,
 ) => {
+  let requestToken: string | undefined | null = null;
+  if (!request_token) {
+    const userStorage = StorageInstance.getUserStorageInstance();
+    requestToken = userStorage?.getString('requestToken');
+  } else {
+    requestToken = request_token;
+  }
   const url = 'https://api.themoviedb.org/4/auth/access_token';
   const options = {
     method: 'POST',
@@ -38,7 +45,7 @@ export const createAccessTokenV4 = async (
       'content-type': 'application/json',
       Authorization: `Bearer ${ReadAccessToken}`,
     },
-    body: JSON.stringify({request_token}),
+    body: JSON.stringify({request_token: requestToken}),
     signal,
   };
   const response = await fetch(url, options);

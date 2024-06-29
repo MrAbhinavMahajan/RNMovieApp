@@ -20,7 +20,10 @@ import RNText from '../../common/RNText';
 import AppCTA from '../../common/AppCTA';
 import QuotationWidget from '../../widgets/Quotation';
 import HeaderTitleWidget from '../../widgets/HeaderTitle';
-import {StorageInstance} from '../../../constants/Storage';
+import {
+  initializeUserStorage,
+  saveToUserStorage,
+} from '../../../constants/Storage';
 import {startUserSession} from '../../../utilities/AppUtils';
 
 const SignInScreen = () => {
@@ -56,6 +59,7 @@ const SignInScreen = () => {
     if (!!requestTokenQueryFilter && data?.request_token) {
       const token = data?.request_token;
       setRequestToken(token);
+      saveToUserStorage('requestToken', token);
       Linking.openURL(
         `https://www.themoviedb.org/auth/access?request_token=${token}`,
       );
@@ -74,10 +78,12 @@ const SignInScreen = () => {
     }
     if (!!accessTokenQueryFilter && data?.access_token) {
       const {access_token, account_id: id} = data;
-      StorageInstance.setUserStorageInstance(id);
-      const userStorage = StorageInstance.getUserStorageInstance();
-      userStorage?.set('accountId', id);
-      userStorage?.set('accessToken', access_token);
+      initializeUserStorage(id);
+      if (REQUEST_TOKEN) {
+        saveToUserStorage('requestToken', requestToken);
+      }
+      saveToUserStorage('accountId', id);
+      saveToUserStorage('accessToken', access_token);
       startUserSession();
     }
   }, [accessTokenQuery]);

@@ -68,5 +68,15 @@ class Storage {
 }
 
 export const StorageInstance = new Storage(process.env.STORAGE_ENCRYPTION_KEY);
-
+export const initializeUserStorage = (id: string) => {
+  StorageInstance.setUserStorageInstance(id);
+};
+export const saveToAppStorage = (key: string, val: any) => {
+  const appStorage = StorageInstance.getAppStorageInstance();
+  appStorage?.set(key, val);
+};
+export const saveToUserStorage = (key: string, val: any) => {
+  const userStorage = StorageInstance.getUserStorageInstance();
+  userStorage?.set(key, val);
+};
 // ? Enable New Architecture for using MMKV v3
