@@ -8,7 +8,7 @@ export const isAirplaneMode = DeviceInfo.isAirplaneMode();
 import * as NavigationService from '../service/Navigation';
 import {APP_STACKS_MAP, APP_TABS_MAP} from '../constants/Navigation';
 export const startUserSession = () => {
-  NavigationService.navigate(APP_TABS_MAP.MAIN_TAB);
+  NavigationService.navigateReplace(APP_TABS_MAP.MAIN_TAB);
 };
 export const terminateUserSession = () => {
   NavigationService.navigate(APP_STACKS_MAP.AUTH_STACK);

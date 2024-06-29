@@ -8,7 +8,7 @@ import * as NavigationService from '../../../service/Navigation';
 const SplashScreen = () => {
   useEffect(() => {
     initialLaunchTimer.current = setTimeout(() => {
-      NavigationService.navigate(APP_STACKS_MAP.AUTH_STACK);
+      NavigationService.navigateReplace(APP_STACKS_MAP.AUTH_STACK); // ! navigateReplace will unmount this route & mounts new one
     }, 3000);
 
     return () => {
