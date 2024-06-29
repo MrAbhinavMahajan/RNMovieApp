@@ -1,82 +1,19 @@
 import {MMKV} from 'react-native-mmkv';
 
-class Storage {
-  private static encryptionKey: string;
-  private static appStorageInstance: MMKV | null;
-  private static userStorageInstance: MMKV | null;
+export const AppStorage = new MMKV({
+  id: 'app-storage',
+});
 
-  constructor(encryptionKey: any) {
-    Storage.encryptionKey = encryptionKey;
-    if (!Storage.appStorageInstance) {
-      Storage.appStorageInstance = new MMKV({
-        id: 'app-storage',
-      });
-    }
-  }
+export const SecuredStorage = new MMKV({
+  id: 'secured-storage',
+  encryptionKey: process.env.STORAGE_ENCRYPTION_KEY,
+});
 
-  setUserStorageInstance(userId: string): MMKV {
-    if (!Storage.userStorageInstance) {
-      Storage.userStorageInstance = new MMKV({
-        id: `user${userId}storage`,
-        encryptionKey: Storage.encryptionKey,
-      });
-    }
-    return Storage.userStorageInstance;
-  }
-
-  getUserStorageInstance(): MMKV | null {
-    if (!Storage.userStorageInstance) {
-      console.log('User storage instance not initialized');
-      return null;
-    }
-    return Storage.userStorageInstance;
-  }
-
-  getAppStorageInstance(): MMKV | null {
-    if (!Storage.appStorageInstance) {
-      console.log('App storage instance not initialized');
-      return null;
-    }
-    return Storage.appStorageInstance;
-  }
-
-  clearUserStorage(): void {
-    // Clears user storage data
-    if (!Storage.userStorageInstance) {
-      console.log('UserStorage | No data found');
-      return;
-    }
-    Storage.userStorageInstance.clearAll();
-  }
-
-  clearAppStorage(): void {
-    // Clears app storage data
-    if (!Storage.appStorageInstance) {
-      console.log('AppStorage | No data found');
-      return;
-    }
-    Storage.appStorageInstance.clearAll();
-  }
-
-  clear(): MMKV {
-    // Clears all storage data
-    if (!Storage.appStorageInstance) {
-      throw new Error('App storage instance not initialized');
-    }
-    return Storage.appStorageInstance;
-  }
-}
-
-export const StorageInstance = new Storage(process.env.STORAGE_ENCRYPTION_KEY);
-export const initializeUserStorage = (id: string) => {
-  StorageInstance.setUserStorageInstance(id);
+export const saveToSecuredStorage = (
+  key: string,
+  value: string | number | boolean,
+) => {
+  SecuredStorage.set(key, value);
 };
-export const saveToAppStorage = (key: string, val: any) => {
-  const appStorage = StorageInstance.getAppStorageInstance();
-  appStorage?.set(key, val);
-};
-export const saveToUserStorage = (key: string, val: any) => {
-  const userStorage = StorageInstance.getUserStorageInstance();
-  userStorage?.set(key, val);
-};
+
 // ? Enable New Architecture for using MMKV v3

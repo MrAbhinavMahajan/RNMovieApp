@@ -2,7 +2,7 @@ import {
   FavoriteRequestBody,
   WatchlistRequestBody,
 } from '../constants/AppInterfaces';
-import {StorageInstance} from '../constants/Storage';
+import {SecuredStorage} from '../constants/Storage';
 import {terminateUserSession} from '../utilities/AppUtils';
 const ReadAccessToken = process.env.READ_ACCESS_TOKEN;
 
@@ -32,8 +32,7 @@ export const createAccessTokenV4 = async (
 ) => {
   let requestToken: string | undefined | null = null;
   if (!request_token) {
-    const userStorage = StorageInstance.getUserStorageInstance();
-    requestToken = userStorage?.getString('requestToken');
+    requestToken = SecuredStorage.getString('requestToken');
   } else {
     requestToken = request_token;
   }
@@ -57,8 +56,8 @@ export const createAccessTokenV4 = async (
 };
 
 export const expireAccessTokenV4 = async (signal: AbortSignal) => {
-  const userStorage = StorageInstance.getUserStorageInstance();
-  const accessToken: string | undefined = userStorage?.getString('accessToken');
+  const accessToken: string | undefined =
+    SecuredStorage.getString('accessToken');
   if (!accessToken) {
     // ! Unauthorized access
     terminateUserSession();
@@ -87,9 +86,9 @@ export const fetchMovieFavoritesV4 = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
-  const userStorage = StorageInstance.getUserStorageInstance();
-  const accountId: Object | undefined = userStorage?.getString('accountId');
-  const accessToken: string | undefined = userStorage?.getString('accessToken');
+  const accountId: Object | undefined = SecuredStorage.getString('accountId');
+  const accessToken: string | undefined =
+    SecuredStorage.getString('accessToken');
   if (!accountId || !accessToken) {
     // ! Unauthorized access
     terminateUserSession();
@@ -121,9 +120,9 @@ export const fetchMovieWatchlistV4 = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
-  const userStorage = StorageInstance.getUserStorageInstance();
-  const accountId: Object | undefined = userStorage?.getString('accountId');
-  const accessToken: string | undefined = userStorage?.getString('accessToken');
+  const accountId: Object | undefined = SecuredStorage.getString('accountId');
+  const accessToken: string | undefined =
+    SecuredStorage.getString('accessToken');
   if (!accountId || !accessToken) {
     // ! Unauthorized access
     terminateUserSession();
@@ -155,9 +154,9 @@ export const fetchRecommendedMoviesV4 = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
-  const userStorage = StorageInstance.getUserStorageInstance();
-  const accountId: Object | undefined = userStorage?.getString('accountId');
-  const accessToken: string | undefined = userStorage?.getString('accessToken');
+  const accountId: Object | undefined = SecuredStorage.getString('accountId');
+  const accessToken: string | undefined =
+    SecuredStorage.getString('accessToken');
   const url = `https://api.themoviedb.org/4/account/${accountId}/movie/recommendations?language=en-US&page=${pageParam}`;
   const options = {
     method: 'GET',
@@ -331,9 +330,9 @@ export const fetchMovieFavorites = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
-  const userStorage = StorageInstance.getUserStorageInstance();
-  const accountId: Object | undefined = userStorage?.getString('accountId');
-  const accessToken: string | undefined = userStorage?.getString('accessToken');
+  const accountId: Object | undefined = SecuredStorage.getString('accountId');
+  const accessToken: string | undefined =
+    SecuredStorage.getString('accessToken');
   if (!accountId || !accessToken) {
     // ! Unauthorized access
     terminateUserSession();
@@ -366,9 +365,9 @@ export const fetchMovieWatchlist = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
-  const userStorage = StorageInstance.getUserStorageInstance();
-  const accountId: Object | undefined = userStorage?.getString('accountId');
-  const accessToken: string | undefined = userStorage?.getString('accessToken');
+  const accountId: Object | undefined = SecuredStorage.getString('accountId');
+  const accessToken: string | undefined =
+    SecuredStorage.getString('accessToken');
   if (!accountId || !accessToken) {
     // ! Unauthorized access
     terminateUserSession();
@@ -398,9 +397,9 @@ export const fetchMovieWatchlist = async (
 
 // ? deprecated
 export const updateMovieFavorites = async (body: FavoriteRequestBody) => {
-  const userStorage = StorageInstance.getUserStorageInstance();
-  const accountId: Object | undefined = userStorage?.getString('accountId');
-  const accessToken: string | undefined = userStorage?.getString('accessToken');
+  const accountId: Object | undefined = SecuredStorage.getString('accountId');
+  const accessToken: string | undefined =
+    SecuredStorage.getString('accessToken');
   if (!accountId || !accessToken) {
     // ! Unauthorized access
     terminateUserSession();
@@ -431,9 +430,9 @@ export const updateMovieFavorites = async (body: FavoriteRequestBody) => {
 
 // ? deprecated
 export const updateMovieWatchlist = async (body: WatchlistRequestBody) => {
-  const userStorage = StorageInstance.getUserStorageInstance();
-  const accountId: Object | undefined = userStorage?.getString('accountId');
-  const accessToken: string | undefined = userStorage?.getString('accessToken');
+  const accountId: Object | undefined = SecuredStorage.getString('accountId');
+  const accessToken: string | undefined =
+    SecuredStorage.getString('accessToken');
   if (!accountId || !accessToken) {
     // ! Unauthorized access
     terminateUserSession();
@@ -457,6 +456,37 @@ export const updateMovieWatchlist = async (body: WatchlistRequestBody) => {
       return;
     }
     throw new Error('Failed to update Watchlist');
+  }
+  const json = await response.json();
+  return json;
+};
+
+// ? deprecated
+export const fetchAccountDetails = async () => {
+  const accountId: Object | undefined = SecuredStorage.getString('accountId');
+  const accessToken: string | undefined =
+    SecuredStorage.getString('accessToken');
+  if (!accountId || !accessToken) {
+    // ! Unauthorized access
+    terminateUserSession();
+    return;
+  }
+  const url = `https://api.themoviedb.org/3/account/${accountId}`;
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    if (response?.status === 401) {
+      // ! Unauthorized access
+      terminateUserSession();
+      return;
+    }
+    throw new Error('Failed to fetch Account Details');
   }
   const json = await response.json();
   return json;

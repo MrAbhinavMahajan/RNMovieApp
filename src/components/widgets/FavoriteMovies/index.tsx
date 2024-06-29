@@ -15,7 +15,7 @@ import ErrorInfoWidget from '../ErrorInfo';
 
 const FavoritesMoviesWidget = () => {
   const page = 1;
-  const [queryFilter, setQueryFilter] = useState<null | Date>(null);
+  const [queryFilter, setQueryFilter] = useState<null | number>(null);
   const query = useQuery({
     queryKey: ['favoriteMovies'],
     queryFn: ({signal}) => fetchMovieFavorites(signal, page),
@@ -54,7 +54,7 @@ const FavoritesMoviesWidget = () => {
 
   useEffect(() => {
     NativeAppEventEmitter.addListener(PAGE_REFRESH.HOME_SCREEN, refreshWidget);
-    setQueryFilter(new Date());
+    setQueryFilter(Date.now());
     return () => {
       setQueryFilter(null);
     };

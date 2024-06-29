@@ -20,20 +20,19 @@ import RNText from '../../common/RNText';
 import AppCTA from '../../common/AppCTA';
 import QuotationWidget from '../../widgets/Quotation';
 import HeaderTitleWidget from '../../widgets/HeaderTitle';
-import {
-  initializeUserStorage,
-  saveToUserStorage,
-} from '../../../constants/Storage';
+import {saveToSecuredStorage} from '../../../constants/Storage';
 import {startUserSession} from '../../../utilities/AppUtils';
 
 const SignInScreen = () => {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollHandler = useScrollViewOffset(scrollRef); // * Gives Current offset of ScrollView
   const insets = useSafeAreaInsets();
-  const [requestTokenQueryFilter, setRequestTokenQueryFilter] =
-    useState<null | Date>(null);
-  const [accessTokenQueryFilter, setAccessTokenQueryFilter] =
-    useState<null | Date>(null);
+  const [requestTokenQueryFilter, setRequestTokenQueryFilter] = useState<
+    null | number
+  >(null);
+  const [accessTokenQueryFilter, setAccessTokenQueryFilter] = useState<
+    null | number
+  >(null);
   const [requestToken, setRequestToken] = useState(REQUEST_TOKEN || '');
   const requestTokenQuery = useQuery({
     queryKey: ['requestToken', requestTokenQueryFilter],
@@ -59,7 +58,7 @@ const SignInScreen = () => {
     if (!!requestTokenQueryFilter && data?.request_token) {
       const token = data?.request_token;
       setRequestToken(token);
-      saveToUserStorage('requestToken', token);
+      saveToSecuredStorage('requestToken', token);
       Linking.openURL(
         `https://www.themoviedb.org/auth/access?request_token=${token}`,
       );
@@ -78,22 +77,21 @@ const SignInScreen = () => {
     }
     if (!!accessTokenQueryFilter && data?.access_token) {
       const {access_token, account_id: id} = data;
-      initializeUserStorage(id);
       if (REQUEST_TOKEN) {
-        saveToUserStorage('requestToken', requestToken);
+        saveToSecuredStorage('requestToken', requestToken);
       }
-      saveToUserStorage('accountId', id);
-      saveToUserStorage('accessToken', access_token);
+      saveToSecuredStorage('accountId', id);
+      saveToSecuredStorage('accessToken', access_token);
       startUserSession();
     }
   }, [accessTokenQuery]);
 
   const generateRequestToken = () => {
-    setRequestTokenQueryFilter(new Date());
+    setRequestTokenQueryFilter(Date.now());
   };
 
   const generateAccessToken = () => {
-    setAccessTokenQueryFilter(new Date());
+    setAccessTokenQueryFilter(Date.now());
   };
 
   const onPageRefresh = () => {};
