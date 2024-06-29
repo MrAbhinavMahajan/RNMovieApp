@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
 import {Alert, Linking, RefreshControl, ScrollView, View} from 'react-native';
-import {useQuery, useQueryClient} from '@tanstack/react-query';
+import {useQuery} from '@tanstack/react-query';
 import Animated, {
   useAnimatedRef,
   useAnimatedStyle,
@@ -14,23 +14,26 @@ import {STD_VERTICAL_SPACING} from '../../../constants/Styles';
 import {styles} from './styles';
 import {COLORS} from '../../../constants/Colors';
 import {AppArrowUpIcon} from '../../common/RNIcon';
-import {AUTH_STEPS} from '../../data/Main';
+import {AUTH_STEPS, REQUEST_TOKEN} from '../../../data/Main';
 import {createAccessTokenV4, createRequestTokenV4} from '../../../apis/Main';
 import RNText from '../../common/RNText';
 import AppCTA from '../../common/AppCTA';
 import QuotationWidget from '../../widgets/Quotation';
 import HeaderTitleWidget from '../../widgets/HeaderTitle';
+import {saveToSecuredStorage} from '../../../constants/Storage';
+import {startUserSession} from '../../../utilities/AppUtils';
 
 const SignInScreen = () => {
-  const queryClient = useQueryClient();
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollHandler = useScrollViewOffset(scrollRef); // * Gives Current offset of ScrollView
   const insets = useSafeAreaInsets();
-  const [requestTokenQueryFilter, setRequestTokenQueryFilter] =
-    useState<null | Date>(null);
-  const [accessTokenQueryFilter, setAccessTokenQueryFilter] =
-    useState<null | Date>(null);
-  const [requestToken, setRequestToken] = useState('');
+  const [requestTokenQueryFilter, setRequestTokenQueryFilter] = useState<
+    null | number
+  >(null);
+  const [accessTokenQueryFilter, setAccessTokenQueryFilter] = useState<
+    null | number
+  >(null);
+  const [requestToken, setRequestToken] = useState(REQUEST_TOKEN || '');
   const requestTokenQuery = useQuery({
     queryKey: ['requestToken', requestTokenQueryFilter],
     queryFn: ({signal}) => createRequestTokenV4(signal),
@@ -55,6 +58,7 @@ const SignInScreen = () => {
     if (!!requestTokenQueryFilter && data?.request_token) {
       const token = data?.request_token;
       setRequestToken(token);
+      saveToSecuredStorage('requestToken', token);
       Linking.openURL(
         `https://www.themoviedb.org/auth/access?request_token=${token}`,
       );
@@ -72,26 +76,25 @@ const SignInScreen = () => {
       return;
     }
     if (!!accessTokenQueryFilter && data?.access_token) {
-      const token = data?.access_token;
-      console.log('Got Access Token::::', token);
+      const {access_token, account_id: id} = data;
+      if (REQUEST_TOKEN) {
+        saveToSecuredStorage('requestToken', requestToken);
+      }
+      saveToSecuredStorage('accountId', id);
+      saveToSecuredStorage('accessToken', access_token);
+      startUserSession();
     }
   }, [accessTokenQuery]);
 
-  const clearCache = () => {
-    queryClient.clear();
-  };
-
   const generateRequestToken = () => {
-    setRequestTokenQueryFilter(new Date());
+    setRequestTokenQueryFilter(Date.now());
   };
 
   const generateAccessToken = () => {
-    setAccessTokenQueryFilter(new Date());
+    setAccessTokenQueryFilter(Date.now());
   };
 
-  const onPageRefresh = () => {
-    clearCache();
-  };
+  const onPageRefresh = () => {};
 
   const scrollToTop = () => {
     scrollRef.current?.scrollTo({x: 0, y: 0, animated: true});
@@ -102,7 +105,6 @@ const SignInScreen = () => {
   }));
 
   useEffect(() => {
-    clearCache();
     return () => {
       setRequestTokenQueryFilter(null);
       setAccessTokenQueryFilter(null);

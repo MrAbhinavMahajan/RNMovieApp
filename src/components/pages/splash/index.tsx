@@ -1,16 +1,27 @@
 import React, {useEffect, useRef} from 'react';
-import * as NavigationService from '../../../service/Navigation';
-import {APP_STACKS_MAP} from '../../../constants/Navigation';
 import RNLottie from '../../common/RNLottie';
 import {HAPPY_SPACEMAN_ANIM} from '../../../constants/Assets';
 import {styles} from './styles';
+import {SecuredStorage} from '../../../constants/Storage';
+import {APP_STACKS_MAP, APP_TABS_MAP} from '../../../constants/Navigation';
+import * as NavigationService from '../../../service/Navigation';
 
 const SplashScreen = () => {
-  useEffect(() => {
-    initialLaunchTimer.current = setTimeout(() => {
-      NavigationService.navigateReplace(APP_STACKS_MAP.AUTH_STACK);
-    }, 3000);
+  const preLaunchApp = () => {};
 
+  const launchApp = () => {
+    const token = SecuredStorage.getString('accessToken');
+    if (!token) {
+      // fresh login
+      NavigationService.navigateReplace(APP_STACKS_MAP.AUTH_STACK);
+    } else {
+      NavigationService.navigateReplace(APP_TABS_MAP.MAIN_TAB);
+    }
+  };
+
+  useEffect(() => {
+    preLaunchApp();
+    initialLaunchTimer.current = setTimeout(launchApp, 3000);
     return () => {
       clearTimeout(initialLaunchTimer?.current);
     };

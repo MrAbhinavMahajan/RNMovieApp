@@ -7,7 +7,7 @@ import {fetchMovieFavorites} from '../../../apis/Main';
 import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
 import {styles} from './styles';
 import {PAGE_REFRESH} from '../../../constants/Page';
-import {FALLBACK_DATA} from '../../data/Main';
+import {FALLBACK_DATA} from '../../../data/Main';
 import {QUERY_STATUS} from '../../../constants/Main';
 import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
@@ -15,9 +15,11 @@ import ErrorInfoWidget from '../ErrorInfo';
 
 const FavoritesMoviesWidget = () => {
   const page = 1;
+  const [queryFilter, setQueryFilter] = useState<null | number>(null);
   const query = useQuery({
     queryKey: ['favoriteMovies'],
     queryFn: ({signal}) => fetchMovieFavorites(signal, page),
+    enabled: !!queryFilter,
   });
   console.log('favoriteMovies: \n', query);
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
@@ -52,6 +54,10 @@ const FavoritesMoviesWidget = () => {
 
   useEffect(() => {
     NativeAppEventEmitter.addListener(PAGE_REFRESH.HOME_SCREEN, refreshWidget);
+    setQueryFilter(Date.now());
+    return () => {
+      setQueryFilter(null);
+    };
   }, []);
 
   const renderItem = ({
