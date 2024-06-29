@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
 import {Alert, Linking, RefreshControl, ScrollView, View} from 'react-native';
-import {useQuery, useQueryClient} from '@tanstack/react-query';
+import {useQuery} from '@tanstack/react-query';
 import Animated, {
   useAnimatedRef,
   useAnimatedStyle,
@@ -14,16 +14,16 @@ import {STD_VERTICAL_SPACING} from '../../../constants/Styles';
 import {styles} from './styles';
 import {COLORS} from '../../../constants/Colors';
 import {AppArrowUpIcon} from '../../common/RNIcon';
-import {AUTH_STEPS} from '../../data/Main';
+import {AUTH_STEPS, REQUEST_TOKEN} from '../../data/Main';
 import {createAccessTokenV4, createRequestTokenV4} from '../../../apis/Main';
 import RNText from '../../common/RNText';
 import AppCTA from '../../common/AppCTA';
 import QuotationWidget from '../../widgets/Quotation';
 import HeaderTitleWidget from '../../widgets/HeaderTitle';
-import {userStorage} from '../../../constants/Storage';
+import {StorageInstance} from '../../../constants/Storage';
+import {startUserSession} from '../../../utilities/AppUtils';
 
 const SignInScreen = () => {
-  const queryClient = useQueryClient();
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollHandler = useScrollViewOffset(scrollRef); // * Gives Current offset of ScrollView
   const insets = useSafeAreaInsets();
@@ -31,7 +31,7 @@ const SignInScreen = () => {
     useState<null | Date>(null);
   const [accessTokenQueryFilter, setAccessTokenQueryFilter] =
     useState<null | Date>(null);
-  const [requestToken, setRequestToken] = useState('');
+  const [requestToken, setRequestToken] = useState(REQUEST_TOKEN || '');
   const requestTokenQuery = useQuery({
     queryKey: ['requestToken', requestTokenQueryFilter],
     queryFn: ({signal}) => createRequestTokenV4(signal),
@@ -73,15 +73,14 @@ const SignInScreen = () => {
       return;
     }
     if (!!accessTokenQueryFilter && data?.access_token) {
-      const {access_token, id} = data;
-      userStorage.set('accountId', id);
-      userStorage.set('accessToken', access_token);
+      const {access_token, account_id: id} = data;
+      StorageInstance.setUserStorageInstance(id);
+      const userStorage = StorageInstance.getUserStorageInstance();
+      userStorage?.set('accountId', id);
+      userStorage?.set('accessToken', access_token);
+      startUserSession();
     }
   }, [accessTokenQuery]);
-
-  const clearCache = () => {
-    queryClient.clear();
-  };
 
   const generateRequestToken = () => {
     setRequestTokenQueryFilter(new Date());
@@ -91,9 +90,7 @@ const SignInScreen = () => {
     setAccessTokenQueryFilter(new Date());
   };
 
-  const onPageRefresh = () => {
-    clearCache();
-  };
+  const onPageRefresh = () => {};
 
   const scrollToTop = () => {
     scrollRef.current?.scrollTo({x: 0, y: 0, animated: true});
@@ -104,7 +101,6 @@ const SignInScreen = () => {
   }));
 
   useEffect(() => {
-    clearCache();
     return () => {
       setRequestTokenQueryFilter(null);
       setAccessTokenQueryFilter(null);

@@ -16,3 +16,5 @@ export const AUTH_STEPS = [
     message: 'Generate "ACCESS TOKEN" to proceed',
   },
 ];
+
+export const REQUEST_TOKEN = null;
