@@ -7,7 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {PAGE_REFRESH} from '../../../../constants/Page';
 import {hpx, vpx} from '../../../../libraries/responsive-pixels';
-import {SCREEN_WIDTH} from '../../../../utilities/AppUtils';
+import {SCREEN_WIDTH} from '../../../../utilities/App';
 import {fetchTrendingMovies} from '../../../../apis/Main';
 import {STD_VERTICAL_SPACING} from '../../../../constants/Styles';
 import {COLORS} from '../../../../constants/Colors';

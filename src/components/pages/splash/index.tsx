@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import RNLottie from '../../common/RNLottie';
 import {HAPPY_SPACEMAN_ANIM} from '../../../constants/Assets';
 import {styles} from './styles';
-import Storage from '../../../constants/Storage';
+import Storage from '../../../utilities/Storage';
 import {APP_STACKS_MAP, APP_TABS_MAP} from '../../../constants/Navigation';
 import * as NavigationService from '../../../service/Navigation';
 

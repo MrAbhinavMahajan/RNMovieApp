@@ -38,8 +38,8 @@ import {
   SIGN_OUT_SUCCESS_TITLE,
 } from '../../../constants/Messages';
 import {SignOutRequestBody} from '../../../constants/AppInterfaces';
-import Storage from '../../../constants/Storage';
-import {terminateUserSession} from '../../../utilities/AppUtils';
+import Storage from '../../../utilities/Storage';
+import {terminateUserSession} from '../../../utilities/App';
 
 const ProfileScreen = () => {
   const queryClient = useQueryClient();

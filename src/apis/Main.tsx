@@ -3,8 +3,8 @@ import {
   SignOutRequestBody,
   WatchlistRequestBody,
 } from '../constants/AppInterfaces';
-import Storage from '../constants/Storage';
-import {terminateUserSession} from '../utilities/AppUtils';
+import Storage from '../utilities/Storage';
+import {terminateUserSession} from '../utilities/App';
 const ReadAccessToken = process.env.READ_ACCESS_TOKEN;
 
 // # v4 apis:-

@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../utilities/AppUtils';
+import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../utilities/App';
 import {hpx, vpx} from '../libraries/responsive-pixels';
 import {COLORS} from './Colors';
 export const STYLES = StyleSheet.create({

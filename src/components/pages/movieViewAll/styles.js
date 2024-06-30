@@ -5,7 +5,7 @@ import {
   STYLES,
 } from '../../../constants/Styles';
 import {hpx, vpx} from '../../../libraries/responsive-pixels';
-import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../utilities/AppUtils';
+import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../utilities/App';
 import {COLORS} from '../../../constants/Colors';
 
 export const styles = StyleSheet.create({
