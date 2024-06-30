@@ -26,6 +26,12 @@
 1. App Storage
 2. User Storage ( Secured )
 
+## Miscellaneous
+
+### TMDB
+
+- A movie database (TMDB) API
+
 ### TanStack Query
 
 TanStack Query provides a high advantage in data fetching, caching, background updates and more.
