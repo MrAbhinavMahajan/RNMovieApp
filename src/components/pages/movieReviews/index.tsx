@@ -9,6 +9,7 @@ import {
 import {styles} from './styles';
 import {PAGE_REFRESH} from '../../../constants/Page';
 import QuotationWidget from '../../widgets/Quotation';
+import MoviesReviewsWidget from '../../widgets/MovieReviews';
 
 interface MovieReviewsScreenProps {}
 
@@ -33,6 +34,7 @@ const MovieReviewsScreen = (props: MovieReviewsScreenProps) => {
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
         }>
+        <MoviesReviewsWidget />
         <QuotationWidget
           title={'Reviews!'}
           subtitle={'Crafted with ❤️ in Chamba, India'}

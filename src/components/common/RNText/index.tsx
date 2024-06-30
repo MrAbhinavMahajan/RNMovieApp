@@ -6,6 +6,7 @@ interface RNTextProps {
   style: any;
   children: any;
   numberOfLines?: number;
+  onPress?: () => void;
 }
 
 const RNText = (props: RNTextProps) => {

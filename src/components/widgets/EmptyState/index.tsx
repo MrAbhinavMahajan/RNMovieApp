@@ -5,7 +5,7 @@ import AppCTA from '../../common/AppCTA';
 
 interface EmptyStateWidgetProps {
   containerStyles: any;
-  action: () => void;
+  action?: () => void;
   title: string;
   message: string;
   icon: any;
@@ -13,11 +13,18 @@ interface EmptyStateWidgetProps {
 
 const EmptyStateWidget = (props: EmptyStateWidgetProps) => {
   const {title, message, containerStyles, action, icon} = props;
-
+  const onPress = () => {
+    if (action) {
+      action();
+    }
+  };
   const renderIcon = () => icon || <></>;
 
   return (
-    <AppCTA onPress={action} style={[styles.contentView, containerStyles]}>
+    <AppCTA
+      onPress={onPress}
+      style={[styles.contentView, containerStyles]}
+      disabled={!action}>
       {renderIcon()}
       <RNText style={styles.titleText}>{title}</RNText>
       <RNText style={styles.subtitleText}>{message}</RNText>
