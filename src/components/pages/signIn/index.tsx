@@ -58,7 +58,6 @@ const SignInScreen = () => {
     if (!!requestTokenQueryFilter && data?.request_token) {
       const token = data?.request_token;
       setRequestToken(token);
-      saveToSecuredStorage('requestToken', token);
     }
   }, [requestTokenQuery?.data]);
 
@@ -74,9 +73,6 @@ const SignInScreen = () => {
     }
     if (!!accessTokenQueryFilter && data?.access_token) {
       const {access_token, account_id: id} = data;
-      if (REQUEST_TOKEN) {
-        saveToSecuredStorage('requestToken', requestToken);
-      }
       saveToSecuredStorage('accountId', id);
       saveToSecuredStorage('accessToken', access_token);
       startUserSession();
