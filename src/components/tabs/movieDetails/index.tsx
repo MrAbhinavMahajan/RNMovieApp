@@ -23,14 +23,14 @@ const MovieDetailsTab = () => {
         tabBarAllowFontScaling: false,
       }}>
       <Screen
-        name={'Explore'}
-        key={APP_PAGES_MAP.MOVIE_EXPLORE_SCREEN}
-        component={MovieExploreScreen}
-      />
-      <Screen
         name={'Reviews'}
         key={APP_PAGES_MAP.MOVIE_REVIEWS_SCREEN}
         component={MovieReviewsScreen}
+      />
+      <Screen
+        name={'Explore'}
+        key={APP_PAGES_MAP.MOVIE_EXPLORE_SCREEN}
+        component={MovieExploreScreen}
       />
     </Navigator>
   );
