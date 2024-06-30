@@ -28,13 +28,13 @@ const HomeScreen = () => {
   const scrollHandler = useScrollViewOffset(scrollRef); // * Gives Current offset of ScrollView
 
   useEffect(() => {
-    NativeAppEventEmitter.emit(PAGE_REFRESH.PROFILE_SCREEN);
     return () => {
       NativeAppEventEmitter.removeAllListeners(PAGE_REFRESH.HOME_SCREEN);
     };
   }, []);
 
   const onPageRefresh = () => {
+    console.log('Home Page Refresh ');
     NativeAppEventEmitter.emit(PAGE_REFRESH.HOME_SCREEN);
   };
 
