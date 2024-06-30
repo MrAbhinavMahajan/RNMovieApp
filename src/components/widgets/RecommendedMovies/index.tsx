@@ -13,7 +13,12 @@ import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import ErrorInfoWidget from '../ErrorInfo';
 
-const RecommendedMoviesWidget = () => {
+interface RecommendedMoviesWidgetProps {
+  widgetTitle?: string;
+}
+
+const RecommendedMoviesWidget = (props: RecommendedMoviesWidgetProps) => {
+  const {widgetTitle} = props || {};
   const page = 1;
   const query = useQuery({
     queryKey: ['recommendedMovies'],
@@ -36,7 +41,7 @@ const RecommendedMoviesWidget = () => {
   const onViewAllAction = () => {
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_VIEW_ALL_SCREEN, {
       queryParams: {
-        screenTitle: 'Recommended Movies',
+        screenTitle: widgetTitle || 'Recommended Movies',
         widgetId: APP_WIDGETS_MAP.RECOMMENDED_MOVIES,
       },
     });
@@ -76,7 +81,7 @@ const RecommendedMoviesWidget = () => {
       style={styles.containerView}
       pointerEvents={isLoading ? 'none' : 'auto'}>
       <HeaderTitleWidget
-        title={'Recommended'}
+        title={widgetTitle || 'Recommended'}
         containerStyles={styles.headerView}
         rightCTAAction={onViewAllAction}
         rightCTAEnabled={isRightCTAEnabled}

@@ -5,6 +5,7 @@ import {
 } from '../constants/AppInterfaces';
 import Storage from '../utilities/Storage';
 import {terminateUserSession} from '../utilities/App';
+import {SIMILAR_MOVIE_ID} from '../data/Main';
 const ReadAccessToken = process.env.READ_ACCESS_TOKEN;
 
 // # v4 apis:-
@@ -516,6 +517,34 @@ export const fetchMoviesRated = async (
       return;
     }
     throw new Error('Failed to fetch Favorites');
+  }
+  const json = await response.json();
+  return json;
+};
+
+export const fetchSimilarMovies = async (
+  signal: AbortSignal,
+  pageParam: number,
+) => {
+  const userStorage = Storage.getUserStorageInstance();
+  const accessToken: string | undefined = userStorage?.getString('accessToken');
+  const url = `https://api.themoviedb.org/3/movie/${SIMILAR_MOVIE_ID}/similar?language=en-US&page=${pageParam}`;
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    signal,
+  };
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    if (response?.status === 401) {
+      // ! Unauthorized access
+      terminateUserSession();
+      return;
+    }
+    throw new Error('Failed to fetch Similar Movies');
   }
   const json = await response.json();
   return json;

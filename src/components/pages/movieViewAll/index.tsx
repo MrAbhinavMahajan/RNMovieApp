@@ -14,6 +14,7 @@ import {
   fetchMovieWatchlist,
   fetchNowPlayingMovies,
   fetchRecommendedMoviesV4,
+  fetchSimilarMovies,
   fetchTopRatedMovies,
   fetchUpcomingMovies,
 } from '../../../apis/Main';
@@ -55,6 +56,9 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
 
       case APP_WIDGETS_MAP.RECOMMENDED_MOVIES:
         return fetchRecommendedMoviesV4(signal, pageParam);
+
+      case APP_WIDGETS_MAP.SIMILAR_MOVIES:
+        return fetchSimilarMovies(signal, pageParam);
 
       case APP_WIDGETS_MAP.FAVORITE_MOVIES:
         return fetchMovieFavorites(signal, pageParam);

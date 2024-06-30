@@ -16,3 +16,5 @@ export const AUTH_STEPS = [
     message: 'Generate "ACCESS TOKEN" to proceed',
   },
 ];
+
+export const SIMILAR_MOVIE_ID = 218;

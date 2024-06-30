@@ -7,12 +7,12 @@ import {
   View,
 } from 'react-native';
 import {styles} from './styles';
-import {PAGE_REFRESH} from '../../../constants/Page';
 import QuotationWidget from '../../widgets/Quotation';
+import {PAGE_REFRESH} from '../../../constants/Page';
+import SimilarMoviesWidget from '../../widgets/SimilarMovies';
+import RecommendedMoviesWidget from '../../widgets/RecommendedMovies';
 
-interface MovieSimilarScreenProps {}
-
-const MovieSimilarScreen = (props: MovieSimilarScreenProps) => {
+const MovieExploreScreen = (props: any) => {
   const scrollRef = useRef(null);
 
   const onPageRefresh = () => {};
@@ -33,8 +33,10 @@ const MovieSimilarScreen = (props: MovieSimilarScreenProps) => {
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
         }>
+        <SimilarMoviesWidget />
+        <RecommendedMoviesWidget widgetTitle={'Blockbuster Buzz'} />
         <QuotationWidget
-          title={`Live${'\n'}it up!`}
+          title={`Explore!`}
           subtitle={'Crafted with ❤️ in Chamba, India'}
         />
       </ScrollView>
@@ -42,4 +44,4 @@ const MovieSimilarScreen = (props: MovieSimilarScreenProps) => {
   );
 };
 
-export default MovieSimilarScreen;
+export default MovieExploreScreen;
