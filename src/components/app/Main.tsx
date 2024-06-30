@@ -4,7 +4,6 @@ import {ErrorBoundary} from '../common/ErrorBoundary';
 import {QUERY_CLIENT} from '../../constants/Main';
 import AppFallback from '../common/AppFallback';
 import MainStack from '../stacks/Main';
-
 const Main = () => {
   const fallback = (data: any) => <AppFallback {...data} />;
 

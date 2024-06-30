@@ -20,10 +20,15 @@ TanStack Query provides a high advantage in data fetching, caching, background u
 - End users approve the application request token
 - Encryption can be AES with a 256 bits key (token is HS256 signed with a 256 bit key).
 
-## Secured Storage ( MMKV Storage)
+## Storage ( MMKV Storage)
 
 MMKV is a Memory Map Key Value Storage.
 (developed by WeChat)
+
+1. App Storage
+2. User Storage ( Secured )
+
+### Highlights
 
 - Encryption
   - Keychain on iOS
@@ -31,13 +36,17 @@ MMKV is a Memory Map Key Value Storage.
 - Faster performance
 - Lesser Memory size
 
-## Screens
+## Overview | APP & Sections
 
 1. SignIn Screen
-2. HomeScreen
+2. Home Screen
 3. Search Screen
 4. Profile Screen
-5. Movie's Detail Screen
-6. Movie's ViewAll Screen
-7. Movie's Favorite Screen
-8. Movie's Watchlist Screen
+5. Movie's Detail Page
+6. ViewAll Movies
+
+# User Interaction
+
+1. Favorites
+2. Watchlist
+3. Rating

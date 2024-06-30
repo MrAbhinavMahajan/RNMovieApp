@@ -3,7 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {styles} from './styles';
 import {APP_TABS_MAP} from '../../../constants/Navigation';
 import HomeStack from '../../stacks/Home';
-import {tabOptions} from '../../../utilities/TabUtils';
+import {tabOptions} from '../../../utilities/Tabs';
 import {COLORS} from '../../../constants/Colors';
 import SearchStack from '../../stacks/Search';
 import ProfileStack from '../../stacks/Profile';

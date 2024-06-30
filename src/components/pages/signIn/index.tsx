@@ -14,10 +14,10 @@ import {STD_VERTICAL_SPACING} from '../../../constants/Styles';
 import {AppArrowUpIcon} from '../../common/RNIcon';
 import {AUTH_STEPS, REQUEST_TOKEN} from '../../../data/Main';
 import {createAccessTokenV4, createRequestTokenV4} from '../../../apis/Main';
-import {saveToSecuredStorage} from '../../../constants/Storage';
-import {startUserSession} from '../../../utilities/AppUtils';
+import {startUserSession} from '../../../utilities/App';
 import {COLORS} from '../../../constants/Colors';
 import {styles} from './styles';
+import Storage from '../../../utilities/Storage';
 import RNText from '../../common/RNText';
 import AppCTA from '../../common/AppCTA';
 import QuotationWidget from '../../widgets/Quotation';
@@ -73,8 +73,9 @@ const SignInScreen = () => {
     }
     if (!!accessTokenQueryFilter && data?.access_token) {
       const {access_token, account_id: id} = data;
-      saveToSecuredStorage('accountId', id);
-      saveToSecuredStorage('accessToken', access_token);
+      Storage.setUserStorageInstance(id);
+      Storage.saveToUserStorage('accountId', id);
+      Storage.saveToUserStorage('accessToken', access_token);
       startUserSession();
     }
   }, [accessTokenQuery]);

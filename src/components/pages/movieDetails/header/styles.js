@@ -6,7 +6,7 @@ import {
 import {fpx, hpx, vpx} from '../../../../libraries/responsive-pixels';
 import {COLORS} from '../../../../constants/Colors';
 import {FONTS} from '../../../../constants/Fonts';
-import {SCREEN_WIDTH} from '../../../../utilities/AppUtils';
+import {SCREEN_WIDTH} from '../../../../utilities/App';
 
 export const styles = StyleSheet.create({
   containerView: {
