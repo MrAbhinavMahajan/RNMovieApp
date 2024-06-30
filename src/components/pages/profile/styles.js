@@ -11,7 +11,6 @@ import {FONTS} from '../../../constants/Fonts';
 
 export const styles = StyleSheet.create({
   profileCardView: {
-    backgroundColor: COLORS.transparent,
     paddingHorizontal: STD_HORIZONTAL_SPACING,
     flexDirection: 'row',
     alignItems: 'center',
