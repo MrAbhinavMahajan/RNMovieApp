@@ -76,6 +76,9 @@ const ProfileScreen = () => {
   const onLogout = () => {
     Alert.alert(PRE_SIGN_OUT_TITLE, PRE_SIGN_OUT_MESSAGE, [
       {
+        text: 'Cancel',
+      },
+      {
         text: 'Confirm',
         onPress: () => {
           const accessToken: string | undefined =
@@ -85,9 +88,6 @@ const ProfileScreen = () => {
           };
           logoutMutation.mutate(body);
         },
-      },
-      {
-        text: 'Cancel',
       },
     ]);
   };

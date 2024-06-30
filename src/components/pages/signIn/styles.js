@@ -78,7 +78,7 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     position: 'absolute',
     zIndex: 1,
-    bottom: vpx(100),
+    bottom: vpx(60),
     borderRadius: 1000,
   },
   scrollToTopBtnHitSlop: {
