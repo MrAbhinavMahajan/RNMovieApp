@@ -22,6 +22,5 @@ export const styles = StyleSheet.create({
   },
   screenScrollableView: {
     flexGrow: 1,
-    gap: vpx(8),
   },
 });

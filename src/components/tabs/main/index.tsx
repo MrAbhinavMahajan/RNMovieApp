@@ -17,14 +17,14 @@ const MainTab = () => {
       initialRouteName={APP_TABS_MAP.HOME_TAB}
       backBehavior={'initialRoute'}
       screenOptions={{
-        tabBarShowLabel: false,
         tabBarStyle: styles.tabBar,
-        tabBarHideOnKeyboard: true,
-        tabBarAllowFontScaling: false,
-        headerShown: false,
         tabBarActiveTintColor: COLORS.oceanBlue,
         tabBarInactiveTintColor: COLORS.oliveBlack,
         tabBarBackground: () => <TabBarBlurEffect />,
+        tabBarHideOnKeyboard: true,
+        tabBarAllowFontScaling: false,
+        headerShown: false,
+        tabBarShowLabel: false,
       }}>
       <Screen
         name={APP_TABS_MAP.HOME_TAB}
