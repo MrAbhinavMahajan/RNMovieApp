@@ -20,6 +20,7 @@ A Singleton class maintaining following instances:-
 4. Profile Page
 5. Movie's Detail Page
 6. ViewAll Movies Page
+7. Movie Reviews Page
 
 ## User Engagement
 
