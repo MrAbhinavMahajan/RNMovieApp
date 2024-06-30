@@ -38,7 +38,7 @@ import {
   SIGN_OUT_SUCCESS_TITLE,
 } from '../../../constants/Messages';
 import {SignOutRequestBody} from '../../../constants/AppInterfaces';
-import {SecuredStorage} from '../../../constants/Storage';
+import Storage from '../../../constants/Storage';
 import {terminateUserSession} from '../../../utilities/AppUtils';
 
 const ProfileScreen = () => {
@@ -78,12 +78,17 @@ const ProfileScreen = () => {
       {
         text: 'Confirm',
         onPress: () => {
+          const userStorage = Storage.getUserStorageInstance();
           const accessToken: string | undefined =
-            SecuredStorage.getString('accessToken') || '';
-          const body: SignOutRequestBody = {
-            access_token: accessToken,
-          };
-          logoutMutation.mutate(body);
+            userStorage?.getString('accessToken');
+          if (accessToken) {
+            const body: SignOutRequestBody = {
+              access_token: accessToken,
+            };
+            logoutMutation.mutate(body);
+          } else {
+            throw new Error('Access Token Not Found');
+          }
         },
       },
       {

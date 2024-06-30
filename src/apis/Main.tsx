@@ -3,7 +3,7 @@ import {
   SignOutRequestBody,
   WatchlistRequestBody,
 } from '../constants/AppInterfaces';
-import {SecuredStorage} from '../constants/Storage';
+import Storage from '../constants/Storage';
 import {terminateUserSession} from '../utilities/AppUtils';
 const ReadAccessToken = process.env.READ_ACCESS_TOKEN;
 
@@ -80,9 +80,9 @@ export const fetchMovieFavoritesV4 = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
-  const accountId: Object | undefined = SecuredStorage.getString('accountId');
-  const accessToken: string | undefined =
-    SecuredStorage.getString('accessToken');
+  const userStorage = Storage.getUserStorageInstance();
+  const accountId: Object | undefined = userStorage?.getString('accountId');
+  const accessToken: string | undefined = userStorage?.getString('accessToken');
   if (!accountId || !accessToken) {
     // ! Unauthorized access
     terminateUserSession();
@@ -114,9 +114,9 @@ export const fetchMovieWatchlistV4 = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
-  const accountId: Object | undefined = SecuredStorage.getString('accountId');
-  const accessToken: string | undefined =
-    SecuredStorage.getString('accessToken');
+  const userStorage = Storage.getUserStorageInstance();
+  const accountId: Object | undefined = userStorage?.getString('accountId');
+  const accessToken: string | undefined = userStorage?.getString('accessToken');
   if (!accountId || !accessToken) {
     // ! Unauthorized access
     terminateUserSession();
@@ -148,9 +148,9 @@ export const fetchRecommendedMoviesV4 = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
-  const accountId: Object | undefined = SecuredStorage.getString('accountId');
-  const accessToken: string | undefined =
-    SecuredStorage.getString('accessToken');
+  const userStorage = Storage.getUserStorageInstance();
+  const accountId: Object | undefined = userStorage?.getString('accountId');
+  const accessToken: string | undefined = userStorage?.getString('accessToken');
   const url = `https://api.themoviedb.org/4/account/${accountId}/movie/recommendations?language=en-US&page=${pageParam}`;
   const options = {
     method: 'GET',
@@ -324,9 +324,9 @@ export const fetchMovieFavorites = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
-  const accountId: Object | undefined = SecuredStorage.getString('accountId');
-  const accessToken: string | undefined =
-    SecuredStorage.getString('accessToken');
+  const userStorage = Storage.getUserStorageInstance();
+  const accountId: Object | undefined = userStorage?.getString('accountId');
+  const accessToken: string | undefined = userStorage?.getString('accessToken');
   if (!accountId || !accessToken) {
     // ! Unauthorized access
     terminateUserSession();
@@ -359,9 +359,9 @@ export const fetchMovieWatchlist = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
-  const accountId: Object | undefined = SecuredStorage.getString('accountId');
-  const accessToken: string | undefined =
-    SecuredStorage.getString('accessToken');
+  const userStorage = Storage.getUserStorageInstance();
+  const accountId: Object | undefined = userStorage?.getString('accountId');
+  const accessToken: string | undefined = userStorage?.getString('accessToken');
   if (!accountId || !accessToken) {
     // ! Unauthorized access
     terminateUserSession();
@@ -391,9 +391,9 @@ export const fetchMovieWatchlist = async (
 
 // ? deprecated
 export const updateMovieFavorites = async (body: FavoriteRequestBody) => {
-  const accountId: Object | undefined = SecuredStorage.getString('accountId');
-  const accessToken: string | undefined =
-    SecuredStorage.getString('accessToken');
+  const userStorage = Storage.getUserStorageInstance();
+  const accountId: Object | undefined = userStorage?.getString('accountId');
+  const accessToken: string | undefined = userStorage?.getString('accessToken');
   if (!accountId || !accessToken) {
     // ! Unauthorized access
     terminateUserSession();
@@ -424,9 +424,9 @@ export const updateMovieFavorites = async (body: FavoriteRequestBody) => {
 
 // ? deprecated
 export const updateMovieWatchlist = async (body: WatchlistRequestBody) => {
-  const accountId: Object | undefined = SecuredStorage.getString('accountId');
-  const accessToken: string | undefined =
-    SecuredStorage.getString('accessToken');
+  const userStorage = Storage.getUserStorageInstance();
+  const accountId: Object | undefined = userStorage?.getString('accountId');
+  const accessToken: string | undefined = userStorage?.getString('accessToken');
   if (!accountId || !accessToken) {
     // ! Unauthorized access
     terminateUserSession();
@@ -457,9 +457,9 @@ export const updateMovieWatchlist = async (body: WatchlistRequestBody) => {
 
 // ? deprecated
 export const fetchAccountDetails = async () => {
-  const accountId: Object | undefined = SecuredStorage.getString('accountId');
-  const accessToken: string | undefined =
-    SecuredStorage.getString('accessToken');
+  const userStorage = Storage.getUserStorageInstance();
+  const accountId: Object | undefined = userStorage?.getString('accountId');
+  const accessToken: string | undefined = userStorage?.getString('accessToken');
   if (!accountId || !accessToken) {
     // ! Unauthorized access
     terminateUserSession();
@@ -491,9 +491,9 @@ export const fetchMoviesRated = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
-  const accountId: Object | undefined = SecuredStorage.getString('accountId');
-  const accessToken: string | undefined =
-    SecuredStorage.getString('accessToken');
+  const userStorage = Storage.getUserStorageInstance();
+  const accountId: Object | undefined = userStorage?.getString('accountId');
+  const accessToken: string | undefined = userStorage?.getString('accessToken');
   if (!accountId || !accessToken) {
     // ! Unauthorized access
     terminateUserSession();
