@@ -2,9 +2,8 @@
 
 ## Authentication & Authorization (JWT Token)
 
-1. Generate Request Token
-2. Approve Request Token
-3. Generate Access Token
+1. Generate & approve Request Token
+2. Generate Access Token
 
 ## Storage (MMKV Storage)
 
