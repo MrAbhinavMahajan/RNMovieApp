@@ -1,4 +1,4 @@
-import {Platform, Dimensions} from 'react-native';
+import {Platform, Dimensions, Alert} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 export const {height: SCREEN_HEIGHT, width: SCREEN_WIDTH} =
   Dimensions.get('window');
@@ -12,6 +12,13 @@ export const startUserSession = () => {
   NavigationService.navigateReplace(APP_TABS_MAP.MAIN_TAB);
 };
 export const terminateUserSession = () => {
-  QUERY_CLIENT.clear();
-  NavigationService.navigateReplace(APP_STACKS_MAP.AUTH_STACK);
+  Alert.alert('Session expired', 'Please sign in again to continue.', [
+    {
+      text: 'Okay',
+      onPress: () => {
+        QUERY_CLIENT.clear();
+        NavigationService.navigateReplace(APP_STACKS_MAP.AUTH_STACK);
+      },
+    },
+  ]);
 };
