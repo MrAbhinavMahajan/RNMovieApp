@@ -13,12 +13,12 @@
 
 ## Screens
 
-1. SignIn Screen
-2. Home Screen
-3. Search Screen
-4. Profile Screen
+1. SignIn Page
+2. Home Page
+3. Search Page
+4. Profile Page
 5. Movie's Detail Page
-6. ViewAll Movies
+6. ViewAll Movies Page
 
 ## User Engagement
 
