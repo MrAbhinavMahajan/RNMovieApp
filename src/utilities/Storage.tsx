@@ -45,7 +45,6 @@ class Storage {
         id: `user${id}storage`,
       });
       this.saveToAppStorage('id', id); // Storing to App Storage for init
-      this.saveToUserStorage('id', id); // Storing to User Storage for usage (if any)
     }
   }
 
