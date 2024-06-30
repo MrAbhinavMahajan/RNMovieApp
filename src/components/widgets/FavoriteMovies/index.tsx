@@ -80,7 +80,7 @@ const FavoritesMoviesWidget = () => {
       style={styles.containerView}
       pointerEvents={isLoading ? 'none' : 'auto'}>
       <HeaderTitleWidget
-        title={'Favorites 🥃'}
+        title={'Favorites'}
         containerStyles={styles.headerView}
         rightCTAAction={onViewAllAction}
         rightCTAEnabled={isRightCTAEnabled}
