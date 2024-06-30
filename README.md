@@ -1,5 +1,15 @@
 # Movie App
 
+<div align="center" style="display: inline_block">
+  <img height="400em" src="https://github.com/MrAbhinavMahajan/RNMovieApp/assets/98639822/82a63a5b-11a0-4d02-9d4b-aee7d233778d">
+  <img height="400em" src="https://github.com/MrAbhinavMahajan/RNMovieApp/assets/98639822/daad879f-8b68-4ff1-abe7-a7c4175d584b">
+  <img height="400em" src="https://github.com/MrAbhinavMahajan/RNMovieApp/assets/98639822/9e7e968c-eb44-4926-b20c-2def3723314c">
+  <img height="400em" src="https://github.com/MrAbhinavMahajan/RNMovieApp/assets/98639822/928e8efa-fdfa-4264-aee3-4ef8625c1001">
+  <img height="400em" src="https://github.com/MrAbhinavMahajan/RNMovieApp/assets/98639822/4720631f-e901-4be7-969f-292582c5edb1">
+  <img height="400em" src="https://github.com/MrAbhinavMahajan/RNMovieApp/assets/98639822/e0ecb08e-4148-4eb8-a9e8-9436a869b701">
+  <img height="400em" src="https://github.com/MrAbhinavMahajan/RNMovieApp/assets/98639822/364f9ccb-98ec-40fc-bc8b-687b05f0aa7a">
+</div>
+
 ## Authentication & Authorization (JWT Token)
 
 1. Generate & approve Request Token
