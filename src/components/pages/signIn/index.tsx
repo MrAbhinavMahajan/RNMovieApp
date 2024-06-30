@@ -41,7 +41,7 @@ const SignInScreen = () => {
   });
   const accessTokenQuery = useQuery({
     queryKey: ['accessToken', accessTokenQueryFilter],
-    queryFn: ({signal}) => createAccessTokenV4(signal),
+    queryFn: ({signal}) => createAccessTokenV4(signal, requestToken),
     enabled: !!accessTokenQueryFilter,
   });
 
@@ -58,7 +58,6 @@ const SignInScreen = () => {
     if (!!requestTokenQueryFilter && data?.request_token) {
       const token = data?.request_token;
       setRequestToken(token);
-      Storage.saveToUserStorage('requestToken', requestToken);
     }
   }, [requestTokenQuery?.data]);
 
@@ -73,9 +72,6 @@ const SignInScreen = () => {
       return;
     }
     if (!!accessTokenQueryFilter && data?.access_token) {
-      if (REQUEST_TOKEN) {
-        Storage.saveToUserStorage('requestToken', requestToken);
-      }
       const {access_token, account_id: id} = data;
       Storage.setUserStorageInstance(id);
       Storage.saveToUserStorage('accountId', id);
