@@ -1,5 +1,16 @@
 # Movie App
 
+## Authentication & Authorization (JWT Token)
+
+1. Generate Request Token
+2. Approve Request Token
+3. Generate Access Token
+
+## Storage (MMKV Storage)
+
+1. App Storage
+2. User Storage ( Secured )
+
 ## Screens
 
 1. SignIn Screen
@@ -14,17 +25,6 @@
 1. Favorites
 2. Watchlist
 3. Rating
-
-## Authentication & Authorization (JWT Token)
-
-1. Generate Request Token
-2. Approve Request Token
-3. Generate Access Token
-
-## Storage (MMKV Storage)
-
-1. App Storage
-2. User Storage ( Secured )
 
 ## Miscellaneous
 
