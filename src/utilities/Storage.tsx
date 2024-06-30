@@ -27,7 +27,7 @@ class Storage {
         id: 'app-storage',
         encryptionKey: Storage.encryptionKey,
       });
-      console.log('App Storage | Init');
+      console.log('App Storage | Init', this.appStorageInstance);
     }
     if (!this.userStorageInstance) {
       // User Storage init
@@ -35,7 +35,7 @@ class Storage {
       if (id) {
         this.setUserStorageInstance(id);
       }
-      console.log('User Storage | Init');
+      console.log('User Storage | Init', this.userStorageInstance);
     }
   }
 
