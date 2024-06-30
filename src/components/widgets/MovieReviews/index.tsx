@@ -167,7 +167,7 @@ const MovieReviewItem = ({item, index}: {item: MovieReview; index: number}) => {
           {content}
         </RNText>
         <RNText style={styles.reviewCTAText} onPress={toggleViewMore}>
-          {isExpanded ? 'collapse' : 'view more'}
+          {isExpanded ? 'hide' : 'view more'}
         </RNText>
       </View>
     </View>
