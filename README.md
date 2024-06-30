@@ -7,6 +7,8 @@
 
 ## Storage (MMKV Storage)
 
+A Singleton class maintaining following instances:-
+
 1. App Storage
 2. User Storage ( Secured )
 

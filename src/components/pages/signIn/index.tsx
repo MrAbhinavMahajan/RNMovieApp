@@ -12,7 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {STD_VERTICAL_SPACING} from '../../../constants/Styles';
 import {AppArrowUpIcon} from '../../common/RNIcon';
-import {AUTH_STEPS, REQUEST_TOKEN} from '../../../data/Main';
+import {AUTH_STEPS} from '../../../data/Main';
 import {createAccessTokenV4, createRequestTokenV4} from '../../../apis/Main';
 import {startUserSession} from '../../../utilities/App';
 import {COLORS} from '../../../constants/Colors';
@@ -33,7 +33,7 @@ const SignInScreen = () => {
   const [accessTokenQueryFilter, setAccessTokenQueryFilter] = useState<
     null | number
   >(null);
-  const [requestToken, setRequestToken] = useState(REQUEST_TOKEN || '');
+  const [requestToken, setRequestToken] = useState('');
   const requestTokenQuery = useQuery({
     queryKey: ['requestToken', requestTokenQueryFilter],
     queryFn: ({signal}) => createRequestTokenV4(signal),
