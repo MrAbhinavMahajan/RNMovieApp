@@ -7,28 +7,34 @@ class Storage {
 
   constructor(encryptionKey: any) {
     Storage.encryptionKey = encryptionKey;
-    this.setAppStorageInstance();
+    Storage.initializeStorage();
   }
 
-  setAppStorageInstance(): void {
+  static initializeStorage(): void {
     if (!Storage.appStorageInstance) {
       Storage.appStorageInstance = new MMKV({
         id: 'app-storage',
         encryptionKey: Storage.encryptionKey,
       });
-      const userId: string | undefined =
-        Storage.appStorageInstance.getString('userId');
-      if (userId) {
-        Storage.setUserStorageInstance(userId);
+      console.log('App Storage | Init');
+    }
+    if (!Storage.userStorageInstance) {
+      const id: string | undefined =
+        Storage.appStorageInstance?.getString('id');
+      if (id) {
+        Storage.setUserStorageInstance(id);
       }
+      console.log('User Storage | Init');
     }
   }
 
-  static setUserStorageInstance(userId: string): void {
+  static setUserStorageInstance(id: string): void {
     if (!Storage.userStorageInstance) {
       Storage.userStorageInstance = new MMKV({
-        id: `user${userId}storage`,
+        id: `user${id}storage`,
       });
+      Storage.saveToAppStorage('id', id);
+      Storage.saveToUserStorage('id', id);
     }
   }
 
@@ -41,14 +47,25 @@ class Storage {
   }
 
   static getUserStorageInstance(): MMKV | null {
-    return this.userStorageInstance;
+    if (!Storage.userStorageInstance) {
+      console.error('User storage not initialized');
+      return null;
+    }
+    console.log('User storage::', Storage.userStorageInstance);
+    return Storage.userStorageInstance;
   }
 
   static getAppStorageInstance(): MMKV | null {
-    return this.appStorageInstance;
+    if (!Storage.appStorageInstance) {
+      console.error('App storage not initialized');
+      return null;
+    }
+    console.log('App storage::', Storage.appStorageInstance);
+    return Storage.appStorageInstance;
   }
 }
 
+const storage = new Storage(process.env.STORAGE_ENCRYPTION_KEY);
 export default Storage;
 export const getAppStorage = () => Storage.getAppStorageInstance();
 export const getUserStorage = () => Storage.getUserStorageInstance();

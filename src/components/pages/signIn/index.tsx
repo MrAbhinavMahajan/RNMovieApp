@@ -73,8 +73,7 @@ const SignInScreen = () => {
     }
     if (!!accessTokenQueryFilter && data?.access_token) {
       const {access_token, account_id: id} = data;
-      Storage.saveToAppStorage('accountId', id);
-      Storage.saveToUserStorage('accountId', id);
+      Storage.setUserStorageInstance(id);
       Storage.saveToUserStorage('accessToken', access_token);
       startUserSession();
     }

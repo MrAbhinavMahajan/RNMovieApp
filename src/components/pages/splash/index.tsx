@@ -10,8 +10,9 @@ const SplashScreen = () => {
   const preLaunchApp = () => {};
 
   const launchApp = () => {
+    let token = null;
     const userStorage = Storage.getUserStorageInstance();
-    const token = userStorage?.getString('accessToken');
+    token = userStorage?.getString('accessToken');
     if (!token) {
       // fresh login
       NavigationService.navigateReplace(APP_STACKS_MAP.AUTH_STACK);
