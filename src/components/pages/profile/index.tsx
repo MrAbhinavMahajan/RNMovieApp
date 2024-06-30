@@ -76,6 +76,9 @@ const ProfileScreen = () => {
   const onLogout = () => {
     Alert.alert(PRE_SIGN_OUT_TITLE, PRE_SIGN_OUT_MESSAGE, [
       {
+        text: 'Cancel',
+      },
+      {
         text: 'Confirm',
         onPress: () => {
           const userStorage = Storage.getUserStorageInstance();
@@ -90,9 +93,6 @@ const ProfileScreen = () => {
             throw new Error('Access Token Not Found');
           }
         },
-      },
-      {
-        text: 'Cancel',
       },
     ]);
   };

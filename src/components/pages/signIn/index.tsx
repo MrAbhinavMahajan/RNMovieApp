@@ -81,16 +81,20 @@ const SignInScreen = () => {
   }, [accessTokenQuery]);
 
   const generateRequestToken = () => {
+    setAccessTokenQueryFilter(null);
     setRequestTokenQueryFilter(Date.now());
   };
 
   const approveRequestToken = () => {
+    setAccessTokenQueryFilter(null);
+    setRequestTokenQueryFilter(null);
     Linking.openURL(
       `https://www.themoviedb.org/auth/access?request_token=${requestToken}`,
     );
   };
 
   const generateAccessToken = () => {
+    setRequestTokenQueryFilter(null);
     setAccessTokenQueryFilter(Date.now());
   };
 
@@ -114,7 +118,7 @@ const SignInScreen = () => {
   const renderWidgetCTA = (
     title: string,
     action: () => void,
-    disabled: boolean,
+    disabled: boolean = false,
   ) => {
     return (
       <AppCTA onPress={action} style={styles.ctaView} disabled={disabled}>
