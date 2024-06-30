@@ -9,9 +9,13 @@ import {styles} from './styles';
 import {PAGE_REFRESH} from '../../../constants/Page';
 import {FALLBACK_DATA} from '../../../data/Main';
 import {QUERY_STATUS} from '../../../constants/Main';
+import {kRATINGS} from '../../../constants/Messages';
+import {IconSize, MaterialIcon} from '../../common/RNIcon';
+import {COLORS} from '../../../constants/Colors';
 import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import ErrorInfoWidget from '../ErrorInfo';
+import EmptyStateWidget from '../EmptyState';
 
 const SelfRatedMoviesWidget = () => {
   const page = 1;
@@ -29,9 +33,20 @@ const SelfRatedMoviesWidget = () => {
     return data?.results || FALLBACK_DATA;
   }, [data?.results, isError]);
   const [isRightCTAEnabled, setRightCTAEnabled] = useState(false);
+  const isEmpty =
+    !isError && status !== QUERY_STATUS.PENDING && _.isEmpty(movies);
 
   const refreshWidget = () => {
     refetch();
+  };
+
+  const exploreMovies = () => {
+    NavigationService.navigate(APP_PAGES_MAP.MOVIE_VIEW_ALL_SCREEN, {
+      queryParams: {
+        screenTitle: 'Now Playing Movies',
+        widgetId: APP_WIDGETS_MAP.NOW_PLAYING,
+      },
+    });
   };
 
   const onViewAllAction = () => {
@@ -71,10 +86,6 @@ const SelfRatedMoviesWidget = () => {
     />
   );
 
-  if (!isError && status !== QUERY_STATUS.PENDING && _.isEmpty(movies)) {
-    return <></>;
-  }
-
   return (
     <View
       style={styles.containerView}
@@ -91,6 +102,21 @@ const SelfRatedMoviesWidget = () => {
           error={error}
           containerStyles={styles.errorContainer}
           retryCTA={refreshWidget}
+        />
+      )}
+      {isEmpty && (
+        <EmptyStateWidget
+          title={kRATINGS.noRatings.title}
+          message={kRATINGS.noRatings.subtitle}
+          containerStyles={styles.errorContainer}
+          action={exploreMovies}
+          icon={
+            <MaterialIcon
+              name={'star'}
+              size={IconSize.large}
+              color={COLORS.fullBlack}
+            />
+          }
         />
       )}
       <FlatList
