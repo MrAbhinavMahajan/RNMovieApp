@@ -1,15 +1,15 @@
 import {StyleSheet} from 'react-native';
-import {STD_HORIZONTAL_SPACING} from '../../../../constants/Styles';
+import {
+  STD_HORIZONTAL_SPACING,
+  STD_VERTICAL_SPACING,
+} from '../../../../constants/Styles';
 import {hpx, vpx} from '../../../../libraries/responsive-pixels';
 import {COLORS} from '../../../../constants/Colors';
-import {SCREEN_HEIGHT} from '../../../../utilities/App';
 
 export const styles = StyleSheet.create({
   containerView: {
     backgroundColor: COLORS.oceanBlue,
-    paddingBottom: vpx(8),
-    borderRadius: vpx(8),
-    minHeight: SCREEN_HEIGHT / 2.1,
+    paddingBottom: 2 * STD_VERTICAL_SPACING,
     justifyContent: 'flex-end',
   },
   scrollableContentView: {

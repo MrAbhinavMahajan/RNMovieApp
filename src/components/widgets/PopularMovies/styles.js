@@ -28,6 +28,10 @@ export const styles = StyleSheet.create({
   },
   moviePoster: {
     width: SCREEN_WIDTH / 3 - STD_HORIZONTAL_SPACING,
+    aspectRatio: 3 / 5,
+    borderRadius: vpx(8),
+    borderWidth: StyleSheet.hairlineWidth,
+    overflow: 'hidden',
   },
   scrollToTopBtn: {
     backgroundColor: COLORS.oceanBlue,
