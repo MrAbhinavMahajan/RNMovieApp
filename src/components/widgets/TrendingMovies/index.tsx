@@ -11,6 +11,7 @@ import {QUERY_STATUS} from '../../../constants/Main';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import ErrorInfoWidget from '../ErrorInfo';
 import {SCREEN_WIDTH} from '../../../utilities/App';
+import {COLORS} from '../../../constants/Colors';
 
 const SLIDER_WIDTH = SCREEN_WIDTH;
 const ITEM_WIDTH = SCREEN_WIDTH * 0.6;
@@ -45,7 +46,11 @@ const TrendingMoviesWidget = () => {
     <View
       style={styles.containerView}
       pointerEvents={isFetching ? 'none' : 'auto'}>
-      {isLoading && <ActivityIndicator />}
+      {isLoading && (
+        <View style={styles.loaderView}>
+          <ActivityIndicator size={'large'} color={COLORS.azureishWhite} />
+        </View>
+      )}
       {isError && (
         <ErrorInfoWidget
           error={error}
