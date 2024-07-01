@@ -77,13 +77,6 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
     );
   };
 
-  const renderVotes = () => {
-    if (!vote_count) {
-      return <></>;
-    }
-    return <RNText style={styles.movieVotesText}>{vote_count}+ votes</RNText>;
-  };
-
   const renderGenres = () => {
     if (_.isEmpty(genres)) {
       return <></>;
@@ -127,18 +120,16 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
           {!_.isEmpty(tagline) && (
             <RNText style={styles.movieTaglineText}>{tagline}</RNText>
           )}
+          {vote_count > 0 && (
+            <RNText style={styles.movieVotesText}>{vote_count}+ votes</RNText>
+          )}
         </View>
       </View>
     );
   };
 
   const renderMovieDetailsFooter = () => {
-    return (
-      <View style={styles.movieDetailsFooterView}>
-        {renderVotes()}
-        {renderGenres()}
-      </View>
-    );
+    return <View style={styles.movieDetailsFooterView}>{renderGenres()}</View>;
   };
 
   return (
