@@ -24,6 +24,10 @@ export const styles = StyleSheet.create({
   },
   moviePoster: {
     width: hpx(80),
+    aspectRatio: 3 / 5,
+    borderRadius: vpx(8),
+    borderWidth: StyleSheet.hairlineWidth,
+    overflow: 'hidden',
   },
   errorContainer: {
     backgroundColor: COLORS.antiFlashWhite,

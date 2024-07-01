@@ -22,6 +22,10 @@ export const styles = StyleSheet.create({
   moviePoster: {
     width: hpx(120),
     marginRight: STD_HORIZONTAL_SPACING,
+    aspectRatio: 3 / 5,
+    borderRadius: vpx(8),
+    borderWidth: StyleSheet.hairlineWidth,
+    overflow: 'hidden',
   },
   movieTitleView: {
     flex: 1,
