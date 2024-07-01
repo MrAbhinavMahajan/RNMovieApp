@@ -577,3 +577,59 @@ export const fetchMovieReviews = async (
   const json = await response.json();
   return json;
 };
+
+export const addMovieRating = async ({
+  movieId,
+  value,
+}: {
+  movieId: number;
+  value: number;
+}) => {
+  const userStorage = Storage.getUserStorageInstance();
+  const accessToken: string | undefined = userStorage?.getString('accessToken');
+  const url = `https://api.themoviedb.org/3/movie/${movieId}/rating`;
+  const options = {
+    method: 'POST',
+    headers: {
+      accept: 'application/json',
+      'Content-Type': 'application/json;charset=utf-8',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({value}),
+  };
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    if (response?.status === 401) {
+      // ! Unauthorized access
+      terminateUserSession();
+      return;
+    }
+    throw new Error('Failed to add Rating, Try Again');
+  }
+  const json = await response.json();
+  return json;
+};
+
+export const deleteMovieRating = async (movieId: string) => {
+  const userStorage = Storage.getUserStorageInstance();
+  const accessToken: string | undefined = userStorage?.getString('accessToken');
+  const url = `https://api.themoviedb.org/3/movie/${movieId}/rating`;
+  const options = {
+    method: 'DELETE',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    if (response?.status === 401) {
+      // ! Unauthorized access
+      terminateUserSession();
+      return;
+    }
+    throw new Error('Failed to delete Rating, Try Again');
+  }
+  const json = await response.json();
+  return json;
+};

@@ -18,17 +18,24 @@ export const styles = StyleSheet.create({
     gap: hpx(8),
     flexGrow: 1,
   },
-  moviePoster: {
+  moviePosterCard: {
     width: hpx(120),
-    marginRight: STD_HORIZONTAL_SPACING,
     aspectRatio: 3 / 5,
+    marginRight: STD_HORIZONTAL_SPACING,
+  },
+  moviePoster: {
+    width: '100%',
     borderRadius: vpx(8),
     borderWidth: StyleSheet.hairlineWidth,
     overflow: 'hidden',
   },
-  movieTitleView: {
+  movieDetails: {
     flex: 1,
-    marginTop: vpx(12),
+    backgroundColor: '#00000040',
+    borderRadius: 8,
+    paddingVertical: STD_VERTICAL_SPACING,
+    paddingHorizontal: STD_HORIZONTAL_SPACING,
+    alignSelf: 'flex-start',
   },
   movieTitleText: {
     fontFamily: FONTS.BebasNeueRegular,
@@ -46,11 +53,11 @@ export const styles = StyleSheet.create({
     textShadowOffset: {width: 1, height: 1},
     textShadowRadius: vpx(3),
   },
-  movieDetailsCardView: {
+  movieDetailsSectionView: {
     marginTop: STD_VERTICAL_SPACING,
     paddingHorizontal: STD_HORIZONTAL_SPACING,
   },
-  movieDetails: {
+  movieDetailsContainer: {
     flexDirection: 'row',
     marginTop: STD_VERTICAL_SPACING,
   },
@@ -71,15 +78,6 @@ export const styles = StyleSheet.create({
     color: COLORS.oliveBlack,
     paddingVertical: vpx(1),
     paddingHorizontal: vpx(4),
-  },
-  movieVotesText: {
-    fontFamily: FONTS.Bold,
-    fontSize: fpx(20),
-    color: COLORS.primary400,
-    marginTop: vpx(8),
-    textShadowColor: COLORS.fullBlack,
-    textShadowOffset: {width: 2, height: 1},
-    textShadowRadius: vpx(3),
   },
   backdropImageView: {
     position: 'absolute',
@@ -103,5 +101,39 @@ export const styles = StyleSheet.create({
     fontFamily: FONTS.SemiBold,
     fontSize: fpx(16),
     color: COLORS.fullBlack,
+  },
+  movieDetailsCardFooter: {
+    marginTop: STD_VERTICAL_SPACING,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  rateCtaView: (enabled = false) => ({
+    backgroundColor: enabled ? COLORS.fullWhite : COLORS.oceanBlue,
+    borderRadius: vpx(20),
+    alignSelf: 'flex-start',
+    paddingHorizontal: STD_HORIZONTAL_SPACING,
+    paddingVertical: vpx(5),
+  }),
+  rateCtaText: (enabled = false) => ({
+    fontFamily: FONTS.SemiBold,
+    fontSize: fpx(16),
+    color: enabled ? COLORS.fullBlack : COLORS.azureishWhite,
+  }),
+  movieVotesText: {
+    fontFamily: FONTS.Bold,
+    fontSize: fpx(14),
+    color: COLORS.primary400,
+    textShadowColor: COLORS.fullBlack,
+    textShadowOffset: {width: 2, height: 1},
+    textShadowRadius: vpx(3),
+    marginTop: vpx(8),
+  },
+  movieDivider: {
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: COLORS.azureishWhite,
+    width: '100%',
+    marginTop: 2 * STD_VERTICAL_SPACING,
+    marginBottom: STD_VERTICAL_SPACING,
   },
 });

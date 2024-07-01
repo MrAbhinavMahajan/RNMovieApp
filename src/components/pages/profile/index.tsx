@@ -29,14 +29,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {STD_VERTICAL_SPACING} from '../../../constants/Styles';
 import {expireAccessTokenV4} from '../../../apis/Main';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
-import {
-  GENERIC_ERROR_MESSAGE,
-  GENERIC_ERROR_TITLE,
-  PRE_SIGN_OUT_MESSAGE,
-  PRE_SIGN_OUT_TITLE,
-  SIGN_OUT_SUCCESS_MESSAGE,
-  SIGN_OUT_SUCCESS_TITLE,
-} from '../../../constants/Messages';
+import {kSIGN_OUT} from '../../../constants/Messages';
 import {SignOutRequestBody} from '../../../constants/AppInterfaces';
 import Storage from '../../../utilities/Storage';
 import {terminateUserSession} from '../../../utilities/App';
@@ -49,15 +42,19 @@ const ProfileScreen = () => {
   const logoutMutation = useMutation({
     mutationFn: expireAccessTokenV4,
     onSuccess: () => {
-      Alert.alert(SIGN_OUT_SUCCESS_TITLE, SIGN_OUT_SUCCESS_MESSAGE, [
-        {
-          text: 'Okay',
-          onPress: () => {
-            queryClient.clear();
-            terminateUserSession();
+      Alert.alert(
+        kSIGN_OUT.afterSignOut.title,
+        kSIGN_OUT.afterSignOut.subtitle,
+        [
+          {
+            text: 'Okay',
+            onPress: () => {
+              queryClient.clear();
+              terminateUserSession();
+            },
           },
-        },
-      ]);
+        ],
+      );
     },
     onError: () => {
       Alert.alert(GENERIC_ERROR_TITLE, GENERIC_ERROR_MESSAGE);
@@ -74,27 +71,31 @@ const ProfileScreen = () => {
   };
 
   const onLogout = () => {
-    Alert.alert(PRE_SIGN_OUT_TITLE, PRE_SIGN_OUT_MESSAGE, [
-      {
-        text: 'Cancel',
-      },
-      {
-        text: 'Confirm',
-        onPress: () => {
-          const userStorage = Storage.getUserStorageInstance();
-          const accessToken: string | undefined =
-            userStorage?.getString('accessToken');
-          if (accessToken) {
-            const body: SignOutRequestBody = {
-              access_token: accessToken,
-            };
-            logoutMutation.mutate(body);
-          } else {
-            throw new Error('Access Token Not Found');
-          }
+    Alert.alert(
+      kSIGN_OUT.beforeSignOut.title,
+      kSIGN_OUT.beforeSignOut.subtitle,
+      [
+        {
+          text: 'Cancel',
         },
-      },
-    ]);
+        {
+          text: 'Confirm',
+          onPress: () => {
+            const userStorage = Storage.getUserStorageInstance();
+            const accessToken: string | undefined =
+              userStorage?.getString('accessToken');
+            if (accessToken) {
+              const body: SignOutRequestBody = {
+                access_token: accessToken,
+              };
+              logoutMutation.mutate(body);
+            } else {
+              throw new Error('Access Token Not Found');
+            }
+          },
+        },
+      ],
+    );
   };
 
   const scrollToTop = () => {

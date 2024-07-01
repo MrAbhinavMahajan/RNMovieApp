@@ -34,7 +34,6 @@ const HomeScreen = () => {
   }, []);
 
   const onPageRefresh = () => {
-    console.log('Home Page Refresh ');
     NativeAppEventEmitter.emit(PAGE_REFRESH.HOME_SCREEN);
   };
 

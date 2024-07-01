@@ -1,12 +1,17 @@
-export const GENERIC_ERROR_TITLE = 'Oops!';
-export const GENERIC_ERROR_MESSAGE = 'Something went wrong, Please Try Again';
-
-export const PRE_SIGN_OUT_TITLE = 'Sign Out!';
-export const PRE_SIGN_OUT_MESSAGE = 'Are you sure you want to sign out now?';
-
-export const SIGN_OUT_SUCCESS_TITLE = 'Sign Out!';
-export const SIGN_OUT_SUCCESS_MESSAGE = 'You are successfully signed out.';
-
+export const kGENERAL = {
+  title: 'Oops!',
+  subtitle: 'Something went wrong, Please Try Again',
+};
+export const kSIGN_OUT = {
+  beforeSignOut: {
+    title: 'Sign Out!',
+    subtitle: 'Are you sure you want to sign out now?',
+  },
+  afterSignOut: {
+    title: 'Sign Out!',
+    subtitle: 'You are successfully signed out.',
+  },
+};
 export const kFAVORITES = {
   noFavorites: {
     title: 'Your Favorites Await',
@@ -21,6 +26,14 @@ export const kWATCHLIST = {
   },
 };
 export const kRATINGS = {
+  addedRating: {
+    title: 'Added',
+    subtitle: 'Rating added successfully.',
+  },
+  deleteRating: {
+    title: 'Removed',
+    subtitle: 'Rating removed successfully.',
+  },
   noRatings: {
     title: 'No Ratings Yet',
     subtitle:

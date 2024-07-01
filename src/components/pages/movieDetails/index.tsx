@@ -24,10 +24,7 @@ import {styles} from './styles';
 import {PAGE_REFRESH} from '../../../constants/Page';
 import {COLORS} from '../../../constants/Colors';
 import {STYLES} from '../../../constants/Styles';
-import {
-  GENERIC_ERROR_MESSAGE,
-  GENERIC_ERROR_TITLE,
-} from '../../../constants/Messages';
+import {kGENERAL} from '../../../constants/Messages';
 import {
   FavoriteRequestBody,
   MovieItem,
@@ -63,7 +60,7 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
       queryClient.invalidateQueries(['favoriteMovies']); // ! Invalidates the favoriteMovies query data and fetch on successful mutation
     },
     onError: () => {
-      Alert.alert(GENERIC_ERROR_TITLE, GENERIC_ERROR_MESSAGE);
+      Alert.alert(kGENERAL.title, kGENERAL.subtitle);
     },
   });
   const watchlistMutation = useMutation({
@@ -72,7 +69,7 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
       queryClient.invalidateQueries(['watchlistMovies']); // ! Invalidates the watchlistMovies query data and fetch on successful mutation
     },
     onError: () => {
-      Alert.alert(GENERIC_ERROR_TITLE, GENERIC_ERROR_MESSAGE);
+      Alert.alert(kGENERAL.title, kGENERAL.subtitle);
     },
   });
   const [isFavorite, setIsFavorite] = useState(false);
