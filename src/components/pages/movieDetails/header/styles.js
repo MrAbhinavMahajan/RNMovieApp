@@ -11,8 +11,7 @@ import {SCREEN_WIDTH} from '../../../../utilities/App';
 export const styles = StyleSheet.create({
   containerView: {
     backgroundColor: COLORS.oceanBlue,
-    paddingTop: vpx(100),
-    paddingHorizontal: STD_HORIZONTAL_SPACING,
+    paddingTop: vpx(120),
     paddingBottom: vpx(36),
   },
   scrollableContentView: {
@@ -48,22 +47,14 @@ export const styles = StyleSheet.create({
     textShadowOffset: {width: 1, height: 1},
     textShadowRadius: vpx(3),
   },
-  movieDetailsView: {
+  movieDetailsCardView: {
     flexDirection: 'row',
     marginTop: vpx(12),
+    paddingHorizontal: STD_HORIZONTAL_SPACING,
   },
-  movieInfoView: {
+  movieDetailsFooterView: {
     flex: 1,
     marginTop: vpx(12),
-  },
-  movieCTAView: {
-    marginTop: vpx(12),
-    flexDirection: 'row',
-  },
-  movieCTA: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: STD_HORIZONTAL_SPACING,
   },
   movieVotesAvgView: {
     borderRadius: vpx(4),
@@ -85,6 +76,7 @@ export const styles = StyleSheet.create({
     fontSize: fpx(20),
     color: COLORS.antiFlashWhite,
     marginTop: STD_VERTICAL_SPACING,
+    paddingHorizontal: STD_HORIZONTAL_SPACING,
     textShadowColor: COLORS.fullBlack,
     textShadowOffset: {width: 2, height: 1},
     textShadowRadius: vpx(3),
@@ -93,5 +85,24 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: -1,
     width: SCREEN_WIDTH,
+  },
+  genresScrollView: {
+    flexDirection: 'row',
+    marginTop: STD_VERTICAL_SPACING,
+    paddingHorizontal: STD_HORIZONTAL_SPACING,
+  },
+  genreItemView: {
+    backgroundColor: COLORS.antiFlashWhite,
+    borderRadius: hpx(24),
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: COLORS.oliveBlack,
+    paddingHorizontal: STD_HORIZONTAL_SPACING,
+    paddingVertical: vpx(8),
+    marginRight: STD_HORIZONTAL_SPACING,
+  },
+  genresText: {
+    fontFamily: FONTS.SemiBold,
+    fontSize: fpx(16),
+    color: COLORS.fullBlack,
   },
 });

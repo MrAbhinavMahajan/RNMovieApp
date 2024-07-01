@@ -191,7 +191,12 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
 
   return (
     <View style={styles.screenView}>
-      <AppHeader title={screenTitle} RightComponent={RightComponent} />
+      <AppHeader
+        title={screenTitle}
+        RightComponent={RightComponent}
+        safePaddingEnabled={true}
+        transparentBackgroundEnabled={false}
+      />
       {isLoading && (
         <View style={styles.loaderView}>
           <ActivityIndicator size={'large'} color={STD_ACTIVITY_COLOR} />

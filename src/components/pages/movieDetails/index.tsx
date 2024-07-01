@@ -1,19 +1,39 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
+import _ from 'lodash';
 import {
+  Alert,
   NativeAppEventEmitter,
   RefreshControl,
   ScrollView,
   View,
 } from 'react-native';
-import {styles} from './styles';
-import {PAGE_REFRESH} from '../../../constants/Page';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import MovieDetailsTab from '../../tabs/movieDetails';
 import MovieDetailsScreenHeader from './header';
 import AppCTA from '../../common/AppCTA';
-import {AppBackIcon} from '../../common/RNIcon';
+import {
+  fetchMovieFavorites,
+  fetchMovieWatchlist,
+  updateMovieFavorites,
+  updateMovieWatchlist,
+} from '../../../apis/Main';
+import {AppBackIcon, IconSize, MaterialIcon} from '../../common/RNIcon';
 import {goBack} from '../../../service/Navigation';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {styles} from './styles';
+import {PAGE_REFRESH} from '../../../constants/Page';
+import {COLORS} from '../../../constants/Colors';
+import {STYLES} from '../../../constants/Styles';
+import {
+  GENERIC_ERROR_MESSAGE,
+  GENERIC_ERROR_TITLE,
+} from '../../../constants/Messages';
+import {
+  FavoriteRequestBody,
+  MovieItem,
+  WatchlistRequestBody,
+} from '../../../constants/AppInterfaces';
+import AppHeader from '../../common/AppHeader';
 
 interface MovieDetailsScreenProps {
   route: {
@@ -27,31 +47,153 @@ interface MovieDetailsScreenProps {
 }
 
 const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
+  const queryClient = useQueryClient();
+  const page = 1;
+  const favoriteMoviesQuery = useQuery({
+    queryKey: ['favoriteMovies'],
+    queryFn: ({signal}) => fetchMovieFavorites(signal, page),
+  });
+  const watchlistMoviesDataQuery = useQuery({
+    queryKey: ['watchlistMovies'],
+    queryFn: ({signal}) => fetchMovieWatchlist(signal, page),
+  });
+  const favoritesMutation = useMutation({
+    mutationFn: updateMovieFavorites,
+    onSuccess: () => {
+      queryClient.invalidateQueries(['favoriteMovies']); // ! Invalidates the favoriteMovies query data and fetch on successful mutation
+    },
+    onError: () => {
+      Alert.alert(GENERIC_ERROR_TITLE, GENERIC_ERROR_MESSAGE);
+    },
+  });
+  const watchlistMutation = useMutation({
+    mutationFn: updateMovieWatchlist,
+    onSuccess: () => {
+      queryClient.invalidateQueries(['watchlistMovies']); // ! Invalidates the watchlistMovies query data and fetch on successful mutation
+    },
+    onError: () => {
+      Alert.alert(GENERIC_ERROR_TITLE, GENERIC_ERROR_MESSAGE);
+    },
+  });
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [isWatchlist, setIsWatchlist] = useState(false);
+
   const scrollRef = useRef(null);
-  const insets = useSafeAreaInsets();
   const {queryParams} = props.route?.params || {};
   const {screenTitle, movieId} = queryParams;
 
+  const initializeData = () => {
+    setIsFavorite(() => {
+      let isMovieFound = false;
+      if (!_.isEmpty(favoriteMoviesQuery?.data?.results)) {
+        isMovieFound =
+          favoriteMoviesQuery?.data?.results.filter(
+            (el: MovieItem) => el.id === movieId,
+          )?.length > 0;
+      }
+      return isMovieFound;
+    });
+
+    setIsWatchlist(() => {
+      let isMovieFound = false;
+      if (!_.isEmpty(watchlistMoviesDataQuery?.data?.results)) {
+        isMovieFound =
+          watchlistMoviesDataQuery?.data?.results.filter(
+            (el: MovieItem) => el?.id === movieId,
+          )?.length > 0;
+      }
+      return isMovieFound;
+    });
+  };
+
   const onPageRefresh = () => {
     NativeAppEventEmitter.emit(PAGE_REFRESH.MOVIE_DETAILS_SCREEN);
+    initializeData();
   };
+
+  useEffect(() => {
+    initializeData();
+  }, []);
+
+  const toggleFavorite = () => {
+    setIsFavorite(val => {
+      const body: FavoriteRequestBody = {
+        media_type: 'movie',
+        media_id: movieId,
+        favorite: !val,
+      };
+      favoritesMutation.mutateAsync(body);
+      return !val;
+    });
+  };
+
+  const toggleWatchlist = () => {
+    setIsWatchlist(val => {
+      const body: WatchlistRequestBody = {
+        media_type: 'movie',
+        media_id: movieId,
+        watchlist: !val,
+      };
+      watchlistMutation.mutateAsync(body);
+      return !val;
+    });
+  };
+
+  const renderLeftHeaderControls = () => (
+    <AppCTA onPress={goBack} style={styles.leftIcon}>
+      <AppBackIcon />
+    </AppCTA>
+  );
+
+  const renderRightHeaderControls = () => (
+    <View style={STYLES.flexRow}>
+      <AppCTA onPress={toggleFavorite} style={styles.rightIcon}>
+        <MaterialIcon
+          name={isFavorite ? 'favorite' : 'favorite-outline'}
+          size={IconSize.large}
+          color={isFavorite ? COLORS.red : COLORS.fullWhite}
+        />
+      </AppCTA>
+      <AppCTA onPress={toggleWatchlist} style={styles.rightIcon}>
+        <MaterialIcon
+          name={isWatchlist ? 'bookmark' : 'bookmark-outline'}
+          size={IconSize.large}
+          color={COLORS.fullWhite}
+        />
+      </AppCTA>
+    </View>
+  );
+
+  const renderPageHeader = () => (
+    <AppHeader
+      LeftComponent={renderLeftHeaderControls()}
+      RightComponent={renderRightHeaderControls()}
+      containerStyles={styles.headerView}
+      transparentBackgroundEnabled={true}
+      safePaddingEnabled={false}
+      gradientEnabled={true}
+      gradientColors={[COLORS.transparent, COLORS.fullBlack]}
+      gradientStyles={styles.headerGradientView}
+    />
+  );
+
+  const renderPageLayout = () => (
+    <ScrollView
+      ref={scrollRef}
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={styles.screenScrollableView}
+      refreshControl={
+        <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
+      }>
+      <MovieDetailsScreenHeader screenTitle={screenTitle} movieId={movieId} />
+      <MovieDetailsTab />
+    </ScrollView>
+  );
 
   return (
     <View style={styles.screenView}>
-      <AppCTA onPress={goBack} style={[styles.headerView, {top: insets.top}]}>
-        <AppBackIcon />
-      </AppCTA>
-
-      <ScrollView
-        ref={scrollRef}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.screenScrollableView}
-        refreshControl={
-          <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
-        }>
-        <MovieDetailsScreenHeader screenTitle={screenTitle} movieId={movieId} />
-        <MovieDetailsTab />
-      </ScrollView>
+      {renderPageHeader()}
+      {renderPageLayout()}
     </View>
   );
 };

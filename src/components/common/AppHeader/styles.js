@@ -8,21 +8,21 @@ import {
 } from '../../../constants/Styles';
 
 export const styles = StyleSheet.create({
-  headerView: {
-    paddingHorizontal: STD_HORIZONTAL_SPACING,
+  headerView: (transparentBackgroundEnabled, safePaddingEnabled) => ({
     flexDirection: 'row',
     alignItems: 'center',
     paddingBottom: vpx(16),
     justifyContent: 'space-between',
-    backgroundColor: STD_SCREEN_COLOR,
-  },
-  headerLeftInfoView: {},
+    backgroundColor: transparentBackgroundEnabled
+      ? COLORS.transparent
+      : STD_SCREEN_COLOR,
+    paddingHorizontal: safePaddingEnabled ? STD_HORIZONTAL_SPACING : 0,
+  }),
   headerCenteredInfoView: {
     flex: 1,
     alignItems: 'center',
     marginHorizontal: STD_HORIZONTAL_SPACING,
   },
-  headerRightInfoView: {},
   headerTitle: {
     marginLeft: hpx(8),
     fontFamily: FONTS.SemiBold,
@@ -33,5 +33,10 @@ export const styles = StyleSheet.create({
     height: StyleSheet.hairlineWidth,
     width: '100%',
     backgroundColor: COLORS.fullBlack,
+  },
+  gradientView: {
+    position: 'absolute',
+    zIndex: -1,
+    bottom: 0,
   },
 });

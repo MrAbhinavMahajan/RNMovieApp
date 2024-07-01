@@ -26,6 +26,9 @@ export const STYLES = StyleSheet.create({
   flexGrow: {
     flexGrow: 1,
   },
+  flexRow: {
+    flexDirection: 'row',
+  },
   flexItemsFullyCenter: {
     alignItems: 'center',
     justifyContent: 'center',
