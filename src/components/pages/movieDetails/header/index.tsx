@@ -11,6 +11,7 @@ import {styles} from './styles';
 import RNText from '../../../common/RNText';
 import MoviePosterWidget from '../../../widgets/MoviePoster';
 import RNImage from '../../../common/RNImage';
+import {STYLES} from '../../../../constants/Styles';
 
 interface MovieDetailsScreenHeaderProps {
   screenTitle: string;
@@ -98,31 +99,33 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
   const renderMovieDetailsCard = () => {
     return (
       <View style={styles.movieDetailsCardView}>
-        <View>
-          <MoviePosterWidget
-            item={item || {}}
-            index={0}
-            containerStyles={styles.moviePoster}
-          />
-          {vote_average > 0 && (
-            <View style={styles.movieVotesAvgView}>
-              <RNText style={styles.movieVotesAvgText}>
-                ✪ {vote_average?.toFixed(1)}
-              </RNText>
-            </View>
-          )}
-        </View>
+        <RNText style={styles.movieTitleText} numberOfLines={1}>
+          {screenTitle}
+        </RNText>
+        <View style={styles.movieDetails}>
+          <View>
+            <MoviePosterWidget
+              item={item || {}}
+              index={0}
+              containerStyles={styles.moviePoster}
+            />
+            {vote_average > 0 && (
+              <View style={styles.movieVotesAvgView}>
+                <RNText style={styles.movieVotesAvgText}>
+                  ✪ {vote_average?.toFixed(1)}
+                </RNText>
+              </View>
+            )}
+          </View>
 
-        <View style={styles.movieTitleView}>
-          <RNText style={styles.movieTitleText} numberOfLines={2}>
-            {screenTitle}
-          </RNText>
-          {!_.isEmpty(tagline) && (
-            <RNText style={styles.movieTaglineText}>{tagline}</RNText>
-          )}
-          {vote_count > 0 && (
-            <RNText style={styles.movieVotesText}>{vote_count}+ votes</RNText>
-          )}
+          <View style={styles.movieTitleView}>
+            {!_.isEmpty(tagline) && (
+              <RNText style={styles.movieTaglineText}>{tagline}</RNText>
+            )}
+            {vote_count > 0 && (
+              <RNText style={styles.movieVotesText}>{vote_count}+ votes</RNText>
+            )}
+          </View>
         </View>
       </View>
     );

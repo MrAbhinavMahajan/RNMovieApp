@@ -40,21 +40,22 @@ export const styles = StyleSheet.create({
   },
   movieTaglineText: {
     fontFamily: FONTS.Medium,
-    fontSize: fpx(18),
+    fontSize: fpx(20),
     color: COLORS.fullWhite,
-    marginTop: vpx(8),
     textShadowColor: COLORS.fullBlack,
     textShadowOffset: {width: 1, height: 1},
     textShadowRadius: vpx(3),
   },
   movieDetailsCardView: {
-    flexDirection: 'row',
-    marginTop: vpx(12),
+    marginTop: STD_VERTICAL_SPACING,
     paddingHorizontal: STD_HORIZONTAL_SPACING,
   },
+  movieDetails: {
+    flexDirection: 'row',
+    marginTop: STD_VERTICAL_SPACING,
+  },
   movieDetailsFooterView: {
-    flex: 1,
-    marginTop: vpx(12),
+    marginTop: 2 * STD_VERTICAL_SPACING,
   },
   movieVotesAvgView: {
     borderRadius: vpx(4),
@@ -72,11 +73,11 @@ export const styles = StyleSheet.create({
     paddingHorizontal: vpx(4),
   },
   movieVotesText: {
-    fontFamily: FONTS.SemiBold,
-    fontSize: fpx(16),
-    color: COLORS.fullBlack,
+    fontFamily: FONTS.Bold,
+    fontSize: fpx(20),
+    color: COLORS.primary400,
     marginTop: vpx(8),
-    textShadowColor: COLORS.fullWhite,
+    textShadowColor: COLORS.fullBlack,
     textShadowOffset: {width: 2, height: 1},
     textShadowRadius: vpx(3),
   },
@@ -87,7 +88,6 @@ export const styles = StyleSheet.create({
   },
   genresScrollView: {
     flexDirection: 'row',
-    marginTop: STD_VERTICAL_SPACING,
     paddingHorizontal: STD_HORIZONTAL_SPACING,
   },
   genreItemView: {
