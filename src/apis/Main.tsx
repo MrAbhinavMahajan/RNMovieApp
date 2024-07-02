@@ -22,19 +22,21 @@ interface RequestOptions {
 }
 
 async function fetchJson(url: string, options: RequestOptions) {
-  const response = await fetch(url, options);
-  const contentType = response.headers.get('content-type');
-  if (!response.ok) {
-    if (response.status === 401) {
-      terminateUserSession();
-      throw new Error('Unauthorized access');
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      let errorMessage = `HTTP error ${response.status} - ${response.statusText}`;
+      if (response.status === 401) {
+        terminateUserSession();
+        errorMessage = 'Unauthorized access';
+      }
+      throw new Error(errorMessage);
     }
-    throw new Error(`HTTP error ${response.status} - ${response.statusText}`);
+    return response.json();
+  } catch (error) {
+    console.error('Error during fetch operation:', error);
+    throw error;
   }
-  if (!contentType?.includes('application/json')) {
-    throw new Error('Invalid response format');
-  }
-  return response.json();
 }
 
 function createRequestOptions(
