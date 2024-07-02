@@ -1,17 +1,26 @@
 import React, {useEffect, useState} from 'react';
 import _ from 'lodash';
-import {useQuery, useQueryClient} from '@tanstack/react-query';
-import {NativeAppEventEmitter, ScrollView, View} from 'react-native';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {
+  ActivityIndicator,
+  Alert,
+  NativeAppEventEmitter,
+  ScrollView,
+  View,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {fetchMovieDetails} from '../../../../apis/Main';
+import {addMovieRating, fetchMovieDetails} from '../../../../apis/Main';
 import {PAGE_REFRESH} from '../../../../constants/Page';
 import {IMAGE_BASEURL} from '../../../../constants/Main';
 import {COLORS} from '../../../../constants/Colors';
 import {styles} from './styles';
+import {AirbnbRating} from 'react-native-ratings';
+import {vpx} from '../../../../libraries/responsive-pixels';
+import {kGENERAL, kRATINGS} from '../../../../constants/Messages';
 import RNText from '../../../common/RNText';
 import MoviePosterWidget from '../../../widgets/MoviePoster';
 import RNImage from '../../../common/RNImage';
-import {STYLES} from '../../../../constants/Styles';
+import AppCTA from '../../../common/AppCTA';
 
 interface MovieDetailsScreenHeaderProps {
   screenTitle: string;
@@ -31,6 +40,16 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
     queryFn: ({signal}) => fetchMovieDetails(signal, movieId),
   });
   console.log(`movieDetails: for ${movieId} \n`, query);
+  const addRatingMutation = useMutation({
+    mutationFn: addMovieRating,
+    onSuccess: () => {
+      queryClient.invalidateQueries(['selfRatedMovies']); // ! Invalidates the selfRatedMovies query data and fetch on successful mutation
+      Alert.alert(kRATINGS.addedRating.title, kRATINGS.addedRating.subtitle);
+    },
+    onError: () => {
+      Alert.alert(kGENERAL.title, kGENERAL.subtitle);
+    },
+  });
 
   const {data: item, refetch} = query;
   const {vote_average, tagline, vote_count, backdrop_path, id, genres} =
@@ -40,6 +59,7 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
     height: 0,
     width: 0,
   });
+  const [ratingsEnabled, setRatingsEnabled] = useState(false);
 
   const refreshWidget = () => {
     refetch();
@@ -56,6 +76,18 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
     queryClient.cancelQueries({queryKey: ['movieDetails', movieId]});
   };
 
+  const toggleRating = () => {
+    setRatingsEnabled(r => !r);
+  };
+
+  const onFinishRating = (value: any) => {
+    if (addRatingMutation.isPending) {
+      return;
+    }
+    addRatingMutation.mutate({movieId: id, value});
+    setRatingsEnabled(false);
+  };
+
   useEffect(() => {
     onPageMount();
     return onPageUnmount;
@@ -65,7 +97,7 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
     setControlsViewLayout(layout);
   };
 
-  const renderMoviesBackdrop = () => {
+  const renderBackdrop = () => {
     return (
       <RNImage
         imageURL={imageURL}
@@ -96,42 +128,81 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
     );
   };
 
+  const renderMoviePosterCard = () => {
+    return (
+      <View style={styles.moviePosterCard}>
+        <MoviePosterWidget
+          item={item || {}}
+          index={0}
+          containerStyles={styles.moviePoster}
+        />
+        {vote_average > 0 && (
+          <View style={styles.movieVotesAvgView}>
+            <RNText style={styles.movieVotesAvgText}>
+              ✪ {vote_average?.toFixed(1)}
+            </RNText>
+          </View>
+        )}
+      </View>
+    );
+  };
+
   const renderMovieDetailsCard = () => {
     return (
-      <View style={styles.movieDetailsCardView}>
+      <View style={styles.movieDetails}>
+        {!_.isEmpty(tagline) && (
+          <RNText style={styles.movieTaglineText}>{tagline}</RNText>
+        )}
+        {vote_count > 0 && (
+          <RNText style={styles.movieVotesText}>{vote_count}+ votes</RNText>
+        )}
+
+        <View style={styles.movieDetailsCardFooter}>
+          <AppCTA
+            style={styles.rateCtaView(ratingsEnabled)}
+            onPress={toggleRating}
+            disabled={addRatingMutation?.isPending}>
+            <RNText style={styles.rateCtaText(ratingsEnabled)}>
+              {ratingsEnabled ? 'Hide' : 'Rate'}
+            </RNText>
+          </AppCTA>
+        </View>
+
+        {ratingsEnabled && (
+          <View>
+            <View style={styles.movieDivider} />
+            {addRatingMutation.isPending ? (
+              <ActivityIndicator size={'large'} />
+            ) : (
+              <AirbnbRating
+                count={5}
+                reviews={['Terrible', 'Bad', 'Good', 'Very Good', 'Amazing']}
+                defaultRating={0}
+                size={vpx(30)}
+                onFinishRating={onFinishRating}
+              />
+            )}
+          </View>
+        )}
+      </View>
+    );
+  };
+
+  const renderDetailsSection = () => {
+    return (
+      <View style={styles.movieDetailsSectionView}>
         <RNText style={styles.movieTitleText} numberOfLines={1}>
           {screenTitle}
         </RNText>
-        <View style={styles.movieDetails}>
-          <View>
-            <MoviePosterWidget
-              item={item || {}}
-              index={0}
-              containerStyles={styles.moviePoster}
-            />
-            {vote_average > 0 && (
-              <View style={styles.movieVotesAvgView}>
-                <RNText style={styles.movieVotesAvgText}>
-                  ✪ {vote_average?.toFixed(1)}
-                </RNText>
-              </View>
-            )}
-          </View>
-
-          <View style={styles.movieTitleView}>
-            {!_.isEmpty(tagline) && (
-              <RNText style={styles.movieTaglineText}>{tagline}</RNText>
-            )}
-            {vote_count > 0 && (
-              <RNText style={styles.movieVotesText}>{vote_count}+ votes</RNText>
-            )}
-          </View>
+        <View style={styles.movieDetailsContainer}>
+          {renderMoviePosterCard()}
+          {renderMovieDetailsCard()}
         </View>
       </View>
     );
   };
 
-  const renderMovieDetailsFooter = () => {
+  const renderDetailsFooter = () => {
     return <View style={styles.movieDetailsFooterView}>{renderGenres()}</View>;
   };
 
@@ -140,9 +211,9 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
       onLayout={onLayout}
       colors={[COLORS.transparent, COLORS.fullBlack]}
       style={styles.containerView}>
-      {renderMoviesBackdrop()}
-      {renderMovieDetailsCard()}
-      {renderMovieDetailsFooter()}
+      {renderBackdrop()}
+      {renderDetailsSection()}
+      {renderDetailsFooter()}
     </LinearGradient>
   );
 };

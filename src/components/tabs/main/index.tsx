@@ -25,6 +25,7 @@ const MainTab = () => {
         tabBarAllowFontScaling: false,
         headerShown: false,
         tabBarShowLabel: false,
+        lazy: false, // * To Lazy Load The Tabs (Preloading)
       }}>
       <Screen
         name={APP_TABS_MAP.HOME_TAB}
