@@ -35,7 +35,6 @@ async function fetchJson(url: string, options: RequestOptions) {
     return response.json();
   } catch (error) {
     console.error('Error during fetch operation:', error);
-    throw error;
   }
 }
 
