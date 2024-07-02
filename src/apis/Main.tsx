@@ -8,24 +8,70 @@ import {terminateUserSession} from '../utilities/App';
 import {SIMILAR_MOVIE_ID} from '../data/Main';
 const ReadAccessToken = process.env.READ_ACCESS_TOKEN;
 
+enum RequestMethod {
+  'GET' = 'GET',
+  'POST' = 'POST',
+  'DELETE' = 'DELETE',
+}
+
+interface RequestOptions {
+  method: string;
+  headers: Record<string, string>;
+  body?: string;
+  signal?: AbortSignal;
+}
+
+async function fetchJson(url: string, options: RequestOptions) {
+  const response = await fetch(url, options);
+  const contentType = response.headers.get('content-type');
+  if (!response.ok) {
+    if (response.status === 401) {
+      terminateUserSession();
+      throw new Error('Unauthorized access');
+    }
+    throw new Error(`HTTP error ${response.status} - ${response.statusText}`);
+  }
+  if (!contentType?.includes('application/json')) {
+    throw new Error('Invalid response format');
+  }
+  return response.json();
+}
+
+function createRequestOptions(
+  method: string,
+  header: any,
+  accessToken?: string,
+  body?: any,
+  signal?: AbortSignal,
+): RequestOptions {
+  const headers: Record<string, string> = {
+    accept: 'application/json',
+    'content-type': 'application/json',
+    ...header,
+  };
+  if (accessToken) {
+    headers['Authorization'] = `Bearer ${accessToken}`;
+  }
+  return {
+    method,
+    headers,
+    body: body ? JSON.stringify(body) : undefined,
+    signal,
+  };
+}
+
 // # v4 apis:-
 export const createRequestTokenV4 = async (signal: AbortSignal) => {
   const url = 'https://api.themoviedb.org/4/auth/request_token';
-  const options = {
-    method: 'POST',
-    headers: {
-      accept: 'application/json',
-      'content-type': 'application/json',
-      Authorization: `Bearer ${ReadAccessToken}`,
-    },
+  const headers = {};
+  const options = createRequestOptions(
+    RequestMethod.POST,
+    headers,
+    ReadAccessToken,
+    null,
     signal,
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    throw new Error('Failed to create Request Token');
-  }
-  const json = await response.json();
-  return json;
+  );
+  return fetchJson(url, options);
 };
 
 export const createAccessTokenV4 = async (
@@ -33,22 +79,16 @@ export const createAccessTokenV4 = async (
   request_token: string,
 ) => {
   const url = 'https://api.themoviedb.org/4/auth/access_token';
-  const options = {
-    method: 'POST',
-    headers: {
-      accept: 'application/json',
-      'content-type': 'application/json',
-      Authorization: `Bearer ${ReadAccessToken}`,
-    },
-    body: JSON.stringify({request_token}),
+  const body = {request_token};
+  const headers = {};
+  const options = createRequestOptions(
+    RequestMethod.POST,
+    headers,
+    ReadAccessToken,
+    body,
     signal,
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    throw new Error('Failed to create Access Token');
-  }
-  const json = await response.json();
-  return json;
+  );
+  return fetchJson(url, options);
 };
 
 export const expireAccessTokenV4 = async (body: SignOutRequestBody) => {
@@ -58,23 +98,15 @@ export const expireAccessTokenV4 = async (body: SignOutRequestBody) => {
     terminateUserSession();
     return;
   }
-
+  const headers = {};
   const url = 'https://api.themoviedb.org/4/auth/access_token';
-  const options = {
-    method: 'DELETE',
-    headers: {
-      accept: 'application/json',
-      'content-type': 'application/json',
-      Authorization: `Bearer ${ReadAccessToken}`,
-    },
-    body: JSON.stringify(body),
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    throw new Error('Failed to expire Access Token');
-  }
-  const json = await response.json();
-  return json;
+  const options = createRequestOptions(
+    RequestMethod.DELETE,
+    headers,
+    ReadAccessToken,
+    body,
+  );
+  return fetchJson(url, options);
 };
 
 export const fetchMovieFavoritesV4 = async (
@@ -90,25 +122,15 @@ export const fetchMovieFavoritesV4 = async (
     return;
   }
   const url = `https://api.themoviedb.org/4/account/${accountId}/movie/favorites?language=en-US&page=${pageParam}&sort_by=created_at.desc`;
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
+  const headers = {};
+  const options = createRequestOptions(
+    RequestMethod.GET,
+    headers,
+    accessToken,
+    null,
     signal,
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    if (response?.status === 401) {
-      // ! Unauthorized access
-      terminateUserSession();
-      return;
-    }
-    throw new Error('Failed to fetch Favorites');
-  }
-  const json = await response.json();
-  return json;
+  );
+  return fetchJson(url, options);
 };
 
 export const fetchMovieWatchlistV4 = async (
@@ -124,25 +146,15 @@ export const fetchMovieWatchlistV4 = async (
     return;
   }
   const url = `https://api.themoviedb.org/4/account/${accountId}/movie/watchlist?language=en-US&page=${pageParam}&sort_by=created_at.desc`;
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
+  const headers = {};
+  const options = createRequestOptions(
+    RequestMethod.GET,
+    headers,
+    accessToken,
+    null,
     signal,
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    if (response?.status === 401) {
-      // ! Unauthorized access
-      terminateUserSession();
-      return;
-    }
-    throw new Error('Failed to fetch Watchlist');
-  }
-  const json = await response.json();
-  return json;
+  );
+  return fetchJson(url, options);
 };
 
 export const fetchRecommendedMoviesV4 = async (
@@ -153,25 +165,15 @@ export const fetchRecommendedMoviesV4 = async (
   const accountId: Object | undefined = userStorage?.getString('accountId');
   const accessToken: string | undefined = userStorage?.getString('accessToken');
   const url = `https://api.themoviedb.org/4/account/${accountId}/movie/recommendations?language=en-US&page=${pageParam}`;
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
+  const headers = {};
+  const options = createRequestOptions(
+    RequestMethod.GET,
+    headers,
+    accessToken,
+    null,
     signal,
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    if (response?.status === 401) {
-      // ! Unauthorized access
-      terminateUserSession();
-      return;
-    }
-    throw new Error('Failed to fetch Recommended Movies');
-  }
-  const json = await response.json();
-  return json;
+  );
+  return fetchJson(url, options);
 };
 
 // # v3 apis:-
@@ -180,20 +182,15 @@ export const fetchPopularMovies = async (
   pageParam: number,
 ) => {
   const url = `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${pageParam}`;
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${ReadAccessToken}`,
-    },
+  const headers = {};
+  const options = createRequestOptions(
+    RequestMethod.GET,
+    headers,
+    ReadAccessToken,
+    null,
     signal,
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    throw new Error('Failed to fetch Popular Movies');
-  }
-  const json = await response.json();
-  return json;
+  );
+  return fetchJson(url, options);
 };
 
 export const fetchSearchedMovieResults = async (
@@ -202,38 +199,28 @@ export const fetchSearchedMovieResults = async (
   pageParam: number,
 ) => {
   const url = `https://api.themoviedb.org/3/search/movie?query=${searchedText}&language=en-US&page=${pageParam}`;
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${ReadAccessToken}`,
-    },
+  const headers = {};
+  const options = createRequestOptions(
+    RequestMethod.GET,
+    headers,
+    ReadAccessToken,
+    null,
     signal,
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    throw new Error(`Failed to fetch Search Results for ${searchedText}`);
-  }
-  const json = await response.json();
-  return json;
+  );
+  return fetchJson(url, options);
 };
 
 export const fetchTrendingMovies = async (signal: AbortSignal) => {
   const url = `https://api.themoviedb.org/3/trending/movie/day?language=en-US`;
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${ReadAccessToken}`,
-    },
+  const headers = {};
+  const options = createRequestOptions(
+    RequestMethod.GET,
+    headers,
+    ReadAccessToken,
+    null,
     signal,
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    throw new Error('Failed to fetch Trending Movies');
-  }
-  const json = await response.json();
-  return json;
+  );
+  return fetchJson(url, options);
 };
 
 export const fetchNowPlayingMovies = async (
@@ -241,20 +228,15 @@ export const fetchNowPlayingMovies = async (
   pageParam: number,
 ) => {
   const url = `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${pageParam}`;
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${ReadAccessToken}`,
-    },
+  const headers = {};
+  const options = createRequestOptions(
+    RequestMethod.GET,
+    headers,
+    ReadAccessToken,
+    null,
     signal,
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    throw new Error('Failed to fetch Now Playing Movies');
-  }
-  const json = await response.json();
-  return json;
+  );
+  return fetchJson(url, options);
 };
 
 export const fetchUpcomingMovies = async (
@@ -262,20 +244,15 @@ export const fetchUpcomingMovies = async (
   pageParam: number,
 ) => {
   const url = `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=${pageParam}`;
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${ReadAccessToken}`,
-    },
+  const headers = {};
+  const options = createRequestOptions(
+    RequestMethod.GET,
+    headers,
+    ReadAccessToken,
+    null,
     signal,
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    throw new Error('Failed to fetch Upcoming Movies');
-  }
-  const json = await response.json();
-  return json;
+  );
+  return fetchJson(url, options);
 };
 
 export const fetchTopRatedMovies = async (
@@ -283,20 +260,15 @@ export const fetchTopRatedMovies = async (
   pageParam: number,
 ) => {
   const url = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${pageParam}`;
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${ReadAccessToken}`,
-    },
+  const headers = {};
+  const options = createRequestOptions(
+    RequestMethod.GET,
+    headers,
+    ReadAccessToken,
+    null,
     signal,
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    throw new Error('Failed to fetch Top Rated Movies');
-  }
-  const json = await response.json();
-  return json;
+  );
+  return fetchJson(url, options);
 };
 
 export const fetchMovieDetails = async (
@@ -304,20 +276,15 @@ export const fetchMovieDetails = async (
   movieId: number,
 ) => {
   const url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${ReadAccessToken}`,
-    },
+  const headers = {};
+  const options = createRequestOptions(
+    RequestMethod.GET,
+    headers,
+    ReadAccessToken,
+    null,
     signal,
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    throw new Error(`Failed to fetch Movie Details for ${movieId}`);
-  }
-  const json = await response.json();
-  return json;
+  );
+  return fetchJson(url, options);
 };
 
 // ? deprecated
@@ -334,25 +301,15 @@ export const fetchMovieFavorites = async (
     return;
   }
   const url = `https://api.themoviedb.org/3/account/${accountId}/favorite/movies?language=en-US&page=${pageParam}&sort_by=created_at.desc`;
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
+  const headers = {};
+  const options = createRequestOptions(
+    RequestMethod.GET,
+    headers,
+    accessToken,
+    null,
     signal,
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    if (response?.status === 401) {
-      // ! Unauthorized access
-      terminateUserSession();
-      return;
-    }
-    throw new Error('Failed to fetch Favorites');
-  }
-  const json = await response.json();
-  return json;
+  );
+  return fetchJson(url, options);
 };
 
 // ? deprecated
@@ -369,25 +326,15 @@ export const fetchMovieWatchlist = async (
     return;
   }
   const url = `https://api.themoviedb.org/3/account/${accountId}/watchlist/movies?language=en-US&page=${pageParam}&sort_by=created_at.desc`;
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
+  const headers = {};
+  const options = createRequestOptions(
+    RequestMethod.GET,
+    headers,
+    accessToken,
+    null,
     signal,
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    if (response?.status === 401) {
-      // ! Unauthorized access
-      terminateUserSession();
-      return;
-    }
-    throw new Error('Failed to fetch Watchlist');
-  }
-  const json = await response.json();
-  return json;
+  );
+  return fetchJson(url, options);
 };
 
 // ? deprecated
@@ -401,26 +348,14 @@ export const updateMovieFavorites = async (body: FavoriteRequestBody) => {
     return;
   }
   const url = `https://api.themoviedb.org/3/account/${accountId}/favorite`;
-  const options = {
-    method: 'POST',
-    headers: {
-      accept: 'application/json',
-      'content-type': 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify(body),
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    if (response?.status === 401) {
-      // ! Unauthorized access
-      terminateUserSession();
-      return;
-    }
-    throw new Error('Failed to update Favorites');
-  }
-  const json = await response.json();
-  return json;
+  const headers = {};
+  const options = createRequestOptions(
+    RequestMethod.POST,
+    headers,
+    accessToken,
+    body,
+  );
+  return fetchJson(url, options);
 };
 
 // ? deprecated
@@ -434,30 +369,18 @@ export const updateMovieWatchlist = async (body: WatchlistRequestBody) => {
     return;
   }
   const url = `https://api.themoviedb.org/3/account/${accountId}/watchlist`;
-  const options = {
-    method: 'POST',
-    headers: {
-      accept: 'application/json',
-      'content-type': 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify(body),
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    if (response?.status === 401) {
-      // ! Unauthorized access
-      terminateUserSession();
-      return;
-    }
-    throw new Error('Failed to update Watchlist');
-  }
-  const json = await response.json();
-  return json;
+  const headers = {};
+  const options = createRequestOptions(
+    RequestMethod.POST,
+    headers,
+    accessToken,
+    body,
+  );
+  return fetchJson(url, options);
 };
 
 // ? deprecated
-export const fetchAccountDetails = async () => {
+export const fetchAccountDetails = async (signal: AbortSignal) => {
   const userStorage = Storage.getUserStorageInstance();
   const accountId: Object | undefined = userStorage?.getString('accountId');
   const accessToken: string | undefined = userStorage?.getString('accessToken');
@@ -467,24 +390,15 @@ export const fetchAccountDetails = async () => {
     return;
   }
   const url = `https://api.themoviedb.org/3/account/${accountId}`;
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    if (response?.status === 401) {
-      // ! Unauthorized access
-      terminateUserSession();
-      return;
-    }
-    throw new Error('Failed to fetch Account Details');
-  }
-  const json = await response.json();
-  return json;
+  const headers = {};
+  const options = createRequestOptions(
+    RequestMethod.GET,
+    headers,
+    accessToken,
+    null,
+    signal,
+  );
+  return fetchJson(url, options);
 };
 
 // ? deprecated
@@ -501,25 +415,15 @@ export const fetchMoviesRated = async (
     return;
   }
   const url = `https://api.themoviedb.org/4/account/${accountId}/movie/rated?page=${pageParam}&language=en-US`;
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
+  const headers = {};
+  const options = createRequestOptions(
+    RequestMethod.GET,
+    headers,
+    accessToken,
+    null,
     signal,
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    if (response?.status === 401) {
-      // ! Unauthorized access
-      terminateUserSession();
-      return;
-    }
-    throw new Error('Failed to fetch Favorites');
-  }
-  const json = await response.json();
-  return json;
+  );
+  return fetchJson(url, options);
 };
 
 export const fetchSimilarMovies = async (
@@ -529,25 +433,15 @@ export const fetchSimilarMovies = async (
   const userStorage = Storage.getUserStorageInstance();
   const accessToken: string | undefined = userStorage?.getString('accessToken');
   const url = `https://api.themoviedb.org/3/movie/${SIMILAR_MOVIE_ID}/similar?language=en-US&page=${pageParam}`;
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
+  const headers = {};
+  const options = createRequestOptions(
+    RequestMethod.GET,
+    headers,
+    accessToken,
+    null,
     signal,
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    if (response?.status === 401) {
-      // ! Unauthorized access
-      terminateUserSession();
-      return;
-    }
-    throw new Error('Failed to fetch Similar Movies');
-  }
-  const json = await response.json();
-  return json;
+  );
+  return fetchJson(url, options);
 };
 
 export const fetchMovieReviews = async (
@@ -557,25 +451,15 @@ export const fetchMovieReviews = async (
   const userStorage = Storage.getUserStorageInstance();
   const accessToken: string | undefined = userStorage?.getString('accessToken');
   const url = `https://api.themoviedb.org/3/movie/${SIMILAR_MOVIE_ID}/reviews?language=en-US&page=${pageParam}`;
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
+  const headers = {};
+  const options = createRequestOptions(
+    RequestMethod.GET,
+    headers,
+    accessToken,
+    null,
     signal,
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    if (response?.status === 401) {
-      // ! Unauthorized access
-      terminateUserSession();
-      return;
-    }
-    throw new Error('Failed to fetch Similar Movies');
-  }
-  const json = await response.json();
-  return json;
+  );
+  return fetchJson(url, options);
 };
 
 export const addMovieRating = async ({
@@ -588,48 +472,29 @@ export const addMovieRating = async ({
   const userStorage = Storage.getUserStorageInstance();
   const accessToken: string | undefined = userStorage?.getString('accessToken');
   const url = `https://api.themoviedb.org/3/movie/${movieId}/rating`;
-  const options = {
-    method: 'POST',
-    headers: {
-      accept: 'application/json',
-      'Content-Type': 'application/json;charset=utf-8',
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify({value}),
+  const body = {value};
+  const headers = {
+    'Content-Type': 'application/json;charset=utf-8',
   };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    if (response?.status === 401) {
-      // ! Unauthorized access
-      terminateUserSession();
-      return;
-    }
-    throw new Error('Failed to add Rating, Try Again');
-  }
-  const json = await response.json();
-  return json;
+  const options = createRequestOptions(
+    RequestMethod.POST,
+    headers,
+    accessToken,
+    body,
+  );
+  return fetchJson(url, options);
 };
 
 export const deleteMovieRating = async (movieId: string) => {
   const userStorage = Storage.getUserStorageInstance();
   const accessToken: string | undefined = userStorage?.getString('accessToken');
   const url = `https://api.themoviedb.org/3/movie/${movieId}/rating`;
-  const options = {
-    method: 'DELETE',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    if (response?.status === 401) {
-      // ! Unauthorized access
-      terminateUserSession();
-      return;
-    }
-    throw new Error('Failed to delete Rating, Try Again');
-  }
-  const json = await response.json();
-  return json;
+  const headers = {};
+  const options = createRequestOptions(
+    RequestMethod.DELETE,
+    headers,
+    accessToken,
+    null,
+  );
+  return fetchJson(url, options);
 };

@@ -12,6 +12,7 @@ import * as NavigationService from '../../../service/Navigation';
 import {
   fetchMovieFavorites,
   fetchMovieWatchlist,
+  fetchMoviesRated,
   fetchNowPlayingMovies,
   fetchRecommendedMoviesV4,
   fetchSimilarMovies,
@@ -67,7 +68,7 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
         return fetchMovieWatchlist(signal, pageParam);
 
       case APP_WIDGETS_MAP.RATED_MOVIES:
-        return fetchMovieWatchlist(signal, pageParam);
+        return fetchMoviesRated(signal, pageParam);
     }
   };
 
