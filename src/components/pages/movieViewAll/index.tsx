@@ -28,8 +28,8 @@ import {APP_QUERY_MAP} from '../../../constants/Api';
 import AppHeader from '../../common/AppHeader';
 import AppCTA from '../../common/AppCTA';
 import MoviePosterWidget, {MoviePosterItem} from '../../widgets/MoviePoster';
-import RNText from '../../common/RNText';
 import ErrorStateWidget from '../../widgets/ErrorState';
+import EmptyStateCreativeCard from '../../common/EmptyStateCard';
 
 interface MovieViewAllScreenProps {
   route: {
@@ -82,6 +82,7 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
     refetch,
     isLoading, // isLoading -> true for Initial Loading
     isFetching, // isFetching -> is true when Data is present & either new or old data being fetched
+    isRefetching,
     isFetchingNextPage,
     isError,
     error,
@@ -169,7 +170,13 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
     if (isError || isLoading || isFetching) {
       return <></>;
     }
-    return <RNText>No Movies Found</RNText>;
+    return (
+      <EmptyStateCreativeCard
+        title={'Oops!'}
+        message={'No Data Found'}
+        retryCTA={refreshPage}
+      />
+    );
   };
 
   const RightComponent = (
@@ -186,7 +193,7 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
         safePaddingEnabled={true}
         transparentBackgroundEnabled={false}
       />
-      {isLoading && (
+      {(isLoading || isRefetching) && (
         <View style={styles.loaderView}>
           <ActivityIndicator size={'large'} color={STD_ACTIVITY_COLOR} />
         </View>

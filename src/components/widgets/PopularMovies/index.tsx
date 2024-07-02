@@ -17,8 +17,8 @@ import {APP_PAGES_MAP} from '../../../constants/Navigation';
 import {APP_QUERY_MAP} from '../../../constants/Api';
 import AppCTA from '../../common/AppCTA';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
-import RNText from '../../common/RNText';
 import ErrorStateWidget from '../ErrorState';
+import EmptyStateCreativeCard from '../../common/EmptyStateCard';
 
 const PopularMoviesWidget = () => {
   const queryClient = useQueryClient();
@@ -39,6 +39,7 @@ const PopularMoviesWidget = () => {
     refetch,
     isLoading, // isLoading -> true for Initial Loading
     isFetching, // isFetching -> is true when Data is present & either new or old data being fetched
+    isRefetching,
     isFetchingNextPage,
     hasNextPage, // ! hasNextPage becomes false when getNextPageParam returns undefined
     fetchNextPage,
@@ -114,12 +115,18 @@ const PopularMoviesWidget = () => {
     if (isError || isLoading || isFetching) {
       return <></>;
     }
-    return <RNText>No Movies Found</RNText>;
+    return (
+      <EmptyStateCreativeCard
+        title={'Oops!'}
+        message={'No Data Found'}
+        retryCTA={refreshWidget}
+      />
+    );
   };
 
   return (
     <View style={styles.containerView}>
-      {isLoading && (
+      {(isLoading || isRefetching) && (
         <View style={styles.loaderView}>
           <ActivityIndicator size={'large'} color={STD_ACTIVITY_COLOR} />
         </View>
