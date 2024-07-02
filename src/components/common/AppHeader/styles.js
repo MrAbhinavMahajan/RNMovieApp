@@ -18,11 +18,11 @@ export const styles = StyleSheet.create({
       : STD_SCREEN_COLOR,
     paddingHorizontal: safePaddingEnabled ? STD_HORIZONTAL_SPACING : 0,
   }),
-  headerCenteredInfoView: {
+  headerCenteredInfoView: (multipleCTAModeEnabled = false) => ({
     flex: 1,
-    alignItems: 'center',
+    alignItems: multipleCTAModeEnabled ? 'flex-start' : 'center',
     marginHorizontal: STD_HORIZONTAL_SPACING,
-  },
+  }),
   headerTitle: {
     marginLeft: hpx(8),
     fontFamily: FONTS.SemiBold,

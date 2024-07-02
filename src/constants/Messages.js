@@ -13,6 +13,14 @@ export const kSIGN_OUT = {
   },
 };
 export const kFAVORITES = {
+  added: {
+    title: 'Added',
+    subtitle: 'Added to favorites.',
+  },
+  deleted: {
+    title: 'Removed',
+    subtitle: 'Removed from favorites.',
+  },
   noFavorites: {
     title: 'Your Favorites Await',
     subtitle:
@@ -20,6 +28,14 @@ export const kFAVORITES = {
   },
 };
 export const kWATCHLIST = {
+  added: {
+    title: 'Added',
+    subtitle: 'Added to watchlist.',
+  },
+  deleted: {
+    title: 'Removed',
+    subtitle: 'Removed from watchlist.',
+  },
   noWatchlist: {
     title: 'Your Watchlist Awaits',
     subtitle: 'Add watchlist to curate your perfect movie lineup effortlessly!',

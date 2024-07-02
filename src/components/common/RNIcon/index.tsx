@@ -65,6 +65,11 @@ export const AppSearchIcon = ({
   size = IconSize.large,
 }) => <IoniIcon name={'search'} size={size} color={color} />;
 
+export const AppEditIcon = ({
+  color = COLORS.fullBlack,
+  size = IconSize.large,
+}) => <MaterialIcon name={'edit'} size={size} color={color} />;
+
 export const AppArrowUpIcon = ({
   color = COLORS.fullWhite,
   size = IconSize.large,
@@ -84,6 +89,11 @@ export const AppCrossIcon = ({
   color = COLORS.fullBlack,
   size = IconSize.large,
 }) => <IoniIcon name={'close-sharp'} size={size} color={color} />;
+
+export const AppTickIcon = ({
+  color = COLORS.fullBlack,
+  size = IconSize.large,
+}) => <MaterialIcon name={'done'} size={size} color={color} />;
 
 export const AppRadioBtnIcon = ({
   color = COLORS.fullBlack,

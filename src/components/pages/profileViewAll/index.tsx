@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
 import {ActivityIndicator, FlatList, RefreshControl, View} from 'react-native';
 import Animated, {
@@ -10,27 +10,27 @@ import Animated, {
 } from 'react-native-reanimated';
 import * as NavigationService from '../../../service/Navigation';
 import {
-  fetchNowPlayingMovies,
-  fetchRecommendedMoviesV4,
-  fetchSimilarMovies,
-  fetchTopRatedMovies,
-  fetchUpcomingMovies,
+  fetchMovieFavorites,
+  fetchMovieWatchlist,
+  fetchMoviesRated,
 } from '../../../apis/Main';
 import {styles} from './styles';
+import {APP_TABS_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
+import {STD_ACTIVITY_COLOR, STYLES} from '../../../constants/Styles';
 import {
-  APP_PAGES_MAP,
-  APP_TABS_MAP,
-  APP_WIDGETS_MAP,
-} from '../../../constants/Navigation';
-import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
-import {AppArrowUpIcon, AppSearchIcon} from '../../common/RNIcon';
+  AppArrowUpIcon,
+  AppTickIcon,
+  AppEditIcon,
+  AppSearchIcon,
+} from '../../common/RNIcon';
 import AppHeader from '../../common/AppHeader';
 import AppCTA from '../../common/AppCTA';
-import MoviePosterWidget, {MoviePosterItem} from '../../widgets/MoviePoster';
+import {MoviePosterItem} from '../../widgets/MoviePoster';
 import RNText from '../../common/RNText';
 import ErrorStateWidget from '../../widgets/ErrorState';
+import MovieCard from './MovieCard';
 
-interface MovieViewAllScreenProps {
+interface ProfileViewAllScreenProps {
   route: {
     params: {
       queryParams: {
@@ -41,32 +41,28 @@ interface MovieViewAllScreenProps {
   };
 }
 
-const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
+const ProfileViewAllScreen = (props: ProfileViewAllScreenProps) => {
   const queryClient = useQueryClient();
   const {queryParams} = props?.route?.params || {};
   const {screenTitle, widgetId} = queryParams;
-  const makeAPICall = async (signal: AbortSignal, pageParam = 1) => {
+  const [editableModeEnabled, setEditableModeEnabled] = useState(false);
+
+  const makePageAPICall = async (signal: AbortSignal, pageParam = 1) => {
     switch (widgetId) {
-      case APP_WIDGETS_MAP.NOW_PLAYING:
-        return fetchNowPlayingMovies(signal, pageParam);
+      case APP_WIDGETS_MAP.FAVORITE_MOVIES:
+        return fetchMovieFavorites(signal, pageParam);
 
-      case APP_WIDGETS_MAP.UPCOMING_MOVIES:
-        return fetchUpcomingMovies(signal, pageParam);
+      case APP_WIDGETS_MAP.WATCHLIST_MOVIES:
+        return fetchMovieWatchlist(signal, pageParam);
 
-      case APP_WIDGETS_MAP.TOP_RATED_MOVIES:
-        return fetchTopRatedMovies(signal, pageParam);
-
-      case APP_WIDGETS_MAP.RECOMMENDED_MOVIES:
-        return fetchRecommendedMoviesV4(signal, pageParam);
-
-      case APP_WIDGETS_MAP.SIMILAR_MOVIES:
-        return fetchSimilarMovies(signal, pageParam);
+      case APP_WIDGETS_MAP.RATED_MOVIES:
+        return fetchMoviesRated(signal, pageParam);
     }
   };
 
   const query = useInfiniteQuery({
-    queryKey: ['viewAllMovies', widgetId],
-    queryFn: ({pageParam, signal}) => makeAPICall(signal, pageParam),
+    queryKey: ['profileViewAllMovies', widgetId],
+    queryFn: ({pageParam, signal}) => makePageAPICall(signal, pageParam),
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
       if (lastPage.page > lastPage.total_pages) {
@@ -75,7 +71,7 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
       return lastPageParam + 1;
     },
   });
-  console.log('viewAllMovies: \n', query);
+  console.log('profileViewAllMovies: \n', query);
   const {
     data,
     refetch,
@@ -89,7 +85,7 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
   } = query;
   const listRef = useAnimatedRef<any>();
   const scrollHandler = useScrollViewOffset(listRef); // * Gives Current offset of ScrollView
-  console.log('ViewAllMovies Data :\n', data);
+  console.log('profileViewAllMovies Data :\n', data);
   const movies = useMemo(() => {
     if (isError) {
       return [];
@@ -115,12 +111,16 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
     NavigationService.navigate(APP_TABS_MAP.SEARCH_TAB);
   };
 
+  const onEditableModeTogglerCTA = () => {
+    setEditableModeEnabled(m => !m);
+  };
+
   const keyExtractor = (item: MoviePosterItem) => `${item?.id}`;
 
   useEffect(() => {
     return () => {
       // ! Cancelling Query Data on unmount
-      queryClient.cancelQueries({queryKey: ['viewAllMovies', widgetId]});
+      queryClient.cancelQueries({queryKey: ['profileViewAllMovies', widgetId]});
     };
   }, []);
 
@@ -163,9 +163,16 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
   };
 
   const RightComponent = (
-    <AppCTA onPress={onSearchCTA}>
-      <AppSearchIcon />
-    </AppCTA>
+    <View style={STYLES.flexRow}>
+      {!editableModeEnabled && (
+        <AppCTA onPress={onSearchCTA} style={styles.rightCta}>
+          <AppSearchIcon />
+        </AppCTA>
+      )}
+      <AppCTA onPress={onEditableModeTogglerCTA} style={styles.rightCta}>
+        {editableModeEnabled ? <AppTickIcon /> : <AppEditIcon />}
+      </AppCTA>
+    </View>
   );
 
   return (
@@ -173,8 +180,10 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
       <AppHeader
         title={screenTitle}
         RightComponent={RightComponent}
-        safePaddingEnabled={true}
+        safePaddingEnabled={false}
         transparentBackgroundEnabled={false}
+        multipleCTAModeEnabled={true}
+        containerStyles={styles.headerContainer}
       />
       {isLoading && (
         <View style={styles.loaderView}>
@@ -185,7 +194,12 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
         ref={listRef}
         data={movies || []}
         renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
-          <MovieCard item={item} index={index} />
+          <MovieCard
+            item={item}
+            index={index}
+            editableModeEnabled={editableModeEnabled}
+            widgetId={widgetId}
+          />
         )}
         keyExtractor={keyExtractor}
         numColumns={3}
@@ -214,21 +228,4 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
   );
 };
 
-const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
-  const {title, id} = item || {};
-  const onCTA = () => {
-    NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
-      queryParams: {screenTitle: title, movieId: id},
-    });
-  };
-  return (
-    <MoviePosterWidget
-      item={item}
-      index={index}
-      containerStyles={styles.moviePoster}
-      action={onCTA}
-    />
-  );
-};
-
-export default MovieViewAllScreen;
+export default ProfileViewAllScreen;

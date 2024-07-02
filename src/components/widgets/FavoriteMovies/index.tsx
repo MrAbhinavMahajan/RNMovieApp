@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef} from 'react';
 import _ from 'lodash';
 import {useQuery} from '@tanstack/react-query';
 import * as NavigationService from '../../../service/Navigation';
@@ -32,7 +32,6 @@ const FavoritesMoviesWidget = () => {
     }
     return data?.results || FALLBACK_DATA;
   }, [data?.results, isError]);
-  const [isRightCTAEnabled, setRightCTAEnabled] = useState(false);
   const isEmpty =
     !isError && status !== QUERY_STATUS.PENDING && _.isEmpty(movies);
 
@@ -50,17 +49,12 @@ const FavoritesMoviesWidget = () => {
   };
 
   const onViewAllAction = () => {
-    NavigationService.navigate(APP_PAGES_MAP.MOVIE_VIEW_ALL_SCREEN, {
+    NavigationService.navigate(APP_PAGES_MAP.PROFILE_VIEW_ALL_SCREEN, {
       queryParams: {
         screenTitle: 'Favorite Movies',
         widgetId: APP_WIDGETS_MAP.FAVORITE_MOVIES,
       },
     });
-  };
-
-  const onScroll = (event: any) => {
-    const listScrollPos = event?.nativeEvent?.contentOffset?.x || 0;
-    setRightCTAEnabled(listScrollPos > 120);
   };
 
   const keyExtractor = (item: MoviePosterItem) => `${item?.id}`;
@@ -80,7 +74,7 @@ const FavoritesMoviesWidget = () => {
         title={'Favorites'}
         containerStyles={styles.headerView}
         rightCTAAction={onViewAllAction}
-        rightCTAEnabled={isRightCTAEnabled}
+        rightCTAEnabled={movies?.length > 0}
         loaderEnabled={isFetching}
       />
       {isError && (
@@ -114,7 +108,6 @@ const FavoritesMoviesWidget = () => {
         keyExtractor={keyExtractor}
         horizontal
         showsHorizontalScrollIndicator={false}
-        onScroll={onScroll}
         contentContainerStyle={styles.scrollableContentView}
         initialNumToRender={6}
         maxToRenderPerBatch={6}

@@ -2,12 +2,13 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {navigationRef} from '../../service/Navigation';
-import LaunchStack from './Launch';
 import {APP_PAGES_MAP, APP_STACKS_MAP} from '../../constants/Navigation';
+import LaunchStack from './Launch';
+import AuthStack from './Auth';
 import MainTab from '../tabs/main';
 import MovieDetailsScreen from '../pages/movieDetails';
 import MovieViewAllScreen from '../pages/movieViewAll';
-import AuthStack from './Auth';
+import ProfileViewAllScreen from '../pages/profileViewAll';
 const {Navigator, Screen} = createNativeStackNavigator();
 
 // * NavigationContainer is a component which manages our navigation tree and contains the navigation state
@@ -45,6 +46,10 @@ const MainStack = () => {
         <Screen
           name={APP_PAGES_MAP.MOVIE_VIEW_ALL_SCREEN}
           component={MovieViewAllScreen}
+        />
+        <Screen
+          name={APP_PAGES_MAP.PROFILE_VIEW_ALL_SCREEN}
+          component={ProfileViewAllScreen}
         />
       </Navigator>
     </NavigationContainer>

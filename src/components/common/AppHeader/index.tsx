@@ -14,7 +14,9 @@ interface AppHeaderProps {
   RightComponent?: any;
   title?: string;
   containerStyles?: any;
+  titleStyles?: any;
   safePaddingEnabled: boolean;
+  multipleCTAModeEnabled?: boolean;
   transparentBackgroundEnabled: boolean;
   gradientEnabled?: boolean;
   gradientStyles?: any;
@@ -29,8 +31,10 @@ const AppHeader = (props: AppHeaderProps) => {
     title,
     safePaddingEnabled = false,
     transparentBackgroundEnabled = false,
+    multipleCTAModeEnabled = false,
     gradientEnabled = false,
     containerStyles = {},
+    titleStyles = {},
     gradientStyles = {},
     gradientColors = [],
   } = props;
@@ -92,10 +96,10 @@ const AppHeader = (props: AppHeaderProps) => {
         )}
       </View>
 
-      <View style={styles.headerCenteredInfoView}>
+      <View style={styles.headerCenteredInfoView(multipleCTAModeEnabled)}>
         {/* Center Component */}
         {!_.isEmpty(title) && (
-          <RNText style={styles.headerTitle}>{title}</RNText>
+          <RNText style={[styles.headerTitle, titleStyles]}>{title}</RNText>
         )}
       </View>
 

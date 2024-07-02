@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef} from 'react';
 import _ from 'lodash';
 import {useQuery} from '@tanstack/react-query';
 import * as NavigationService from '../../../service/Navigation';
@@ -32,7 +32,6 @@ const WatchlistMoviesWidget = () => {
     }
     return data?.results || FALLBACK_DATA;
   }, [data?.results, isError]);
-  const [isRightCTAEnabled, setRightCTAEnabled] = useState<boolean>(false);
   const isEmpty =
     !isError && status !== QUERY_STATUS.PENDING && _.isEmpty(movies);
   const refreshWidget = () => {
@@ -49,17 +48,12 @@ const WatchlistMoviesWidget = () => {
   };
 
   const onViewAllAction = () => {
-    NavigationService.navigate(APP_PAGES_MAP.MOVIE_VIEW_ALL_SCREEN, {
+    NavigationService.navigate(APP_PAGES_MAP.PROFILE_VIEW_ALL_SCREEN, {
       queryParams: {
         screenTitle: 'Watchlist Movies',
         widgetId: APP_WIDGETS_MAP.WATCHLIST_MOVIES,
       },
     });
-  };
-
-  const onScroll = (event: any) => {
-    const listScrollPos = event?.nativeEvent?.contentOffset?.x || 0;
-    setRightCTAEnabled(listScrollPos > 120);
   };
 
   const keyExtractor = (item: MoviePosterItem) => `${item?.id}`;
@@ -79,7 +73,7 @@ const WatchlistMoviesWidget = () => {
         title={'Watchlist'}
         containerStyles={styles.headerView}
         rightCTAAction={onViewAllAction}
-        rightCTAEnabled={isRightCTAEnabled}
+        rightCTAEnabled={movies?.length > 0}
         loaderEnabled={isFetching}
       />
       {isError && (
@@ -113,7 +107,6 @@ const WatchlistMoviesWidget = () => {
         keyExtractor={keyExtractor}
         horizontal
         showsHorizontalScrollIndicator={false}
-        onScroll={onScroll}
         contentContainerStyle={styles.scrollableContentView}
         initialNumToRender={6}
         maxToRenderPerBatch={6}
