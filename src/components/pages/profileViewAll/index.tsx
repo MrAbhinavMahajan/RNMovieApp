@@ -71,6 +71,7 @@ const ProfileViewAllScreen = (props: ProfileViewAllScreenProps) => {
       }
       return lastPageParam + 1;
     },
+    refetchInterval: 5000,
   });
   console.log('profileViewAllMovies: \n', query);
   const {
@@ -78,7 +79,6 @@ const ProfileViewAllScreen = (props: ProfileViewAllScreenProps) => {
     refetch,
     isLoading, // isLoading -> true for Initial Loading
     isFetching, // isFetching -> is true when Data is present & either new or old data being fetched
-    isRefetching,
     isFetchingNextPage,
     isError,
     error,
@@ -203,7 +203,7 @@ const ProfileViewAllScreen = (props: ProfileViewAllScreenProps) => {
         multipleCTAModeEnabled={true}
         containerStyles={styles.headerContainer}
       />
-      {(isLoading || isRefetching) && (
+      {isLoading && (
         <View style={styles.loaderView}>
           <ActivityIndicator size={'large'} color={STD_ACTIVITY_COLOR} />
         </View>

@@ -23,6 +23,7 @@ const SelfRatedMoviesWidget = () => {
   const query = useQuery({
     queryKey: [APP_QUERY_MAP.SELF_RATED_MOVIES],
     queryFn: ({signal}) => fetchMoviesRated(signal, page),
+    refetchInterval: 5000,
   });
   console.log('selfRatedMovies: \n', query);
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
@@ -79,7 +80,7 @@ const SelfRatedMoviesWidget = () => {
         containerStyles={styles.headerView}
         rightCTAAction={onViewAllAction}
         rightCTAEnabled={movies?.length > 0}
-        loaderEnabled={isFetching}
+        loaderEnabled={isLoading}
       />
       {isError && (
         <ErrorStateWidget
