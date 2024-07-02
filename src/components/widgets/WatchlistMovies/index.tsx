@@ -36,6 +36,9 @@ const WatchlistMoviesWidget = () => {
   const isEmpty =
     !isError && status !== QUERY_STATUS.PENDING && _.isEmpty(movies);
   const refreshWidget = () => {
+    if (isFetching) {
+      return;
+    }
     refetch();
   };
 

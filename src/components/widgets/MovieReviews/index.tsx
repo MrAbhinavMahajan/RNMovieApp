@@ -71,6 +71,9 @@ const MoviesReviewsWidget = () => {
     !isError && status !== QUERY_STATUS.PENDING && _.isEmpty(reviewItems);
 
   const refreshWidget = () => {
+    if (isFetching) {
+      return;
+    }
     refetch();
   };
 
@@ -78,6 +81,7 @@ const MoviesReviewsWidget = () => {
 
   useEffect(() => {
     return () => {
+      // ! Cancelling Query in Progress on unmount
       queryClient.cancelQueries({queryKey: [APP_QUERY_MAP.MOVIE_REVIEWS]});
     };
   }, []);

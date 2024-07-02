@@ -31,6 +31,9 @@ const SimilarMoviesWidget = () => {
   const [isRightCTAEnabled, setRightCTAEnabled] = useState(false);
 
   const refreshWidget = () => {
+    if (isFetching) {
+      return;
+    }
     refetch();
   };
 

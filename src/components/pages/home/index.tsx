@@ -33,7 +33,7 @@ const HomeScreen = () => {
     };
   }, []);
 
-  const onPageRefresh = () => {
+  const refreshPage = () => {
     NativeAppEventEmitter.emit(PAGE_REFRESH.HOME_SCREEN);
   };
 
@@ -52,7 +52,7 @@ const HomeScreen = () => {
         contentContainerStyle={styles.screenScrollableView}
         showsVerticalScrollIndicator={false}
         refreshControl={
-          <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
+          <RefreshControl refreshing={false} onRefresh={refreshPage} />
         }>
         <HomeScreenHeader />
         <NowPlayingMoviesWidget />

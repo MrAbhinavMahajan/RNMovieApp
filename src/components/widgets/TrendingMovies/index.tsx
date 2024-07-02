@@ -34,6 +34,9 @@ const TrendingMoviesWidget = () => {
   }, [data?.results, isError]);
 
   const refreshWidget = () => {
+    if (isFetching) {
+      return;
+    }
     refetch();
   };
 

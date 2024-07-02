@@ -99,7 +99,7 @@ const SignInScreen = () => {
     setAccessTokenQueryFilter(Date.now());
   };
 
-  const onPageRefresh = () => {};
+  const refreshPage = () => {};
 
   const scrollToTop = () => {
     scrollRef.current?.scrollTo({x: 0, y: 0, animated: true});
@@ -182,7 +182,7 @@ const SignInScreen = () => {
         contentContainerStyle={styles.screenScrollableView}
         showsVerticalScrollIndicator={false}
         refreshControl={
-          <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
+          <RefreshControl refreshing={false} onRefresh={refreshPage} />
         }>
         {renderSignInWidget()}
         <QuotationWidget

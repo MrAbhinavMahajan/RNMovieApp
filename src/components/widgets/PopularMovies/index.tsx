@@ -57,6 +57,9 @@ const PopularMoviesWidget = () => {
   console.log('PopularMovies :\n', movies);
 
   const refreshWidget = () => {
+    if (isFetching) {
+      return;
+    }
     refetch();
   };
 
@@ -72,6 +75,7 @@ const PopularMoviesWidget = () => {
 
   useEffect(() => {
     return () => {
+      // ! Cancelling Query in Progress on unmount
       queryClient.cancelQueries({queryKey: [APP_QUERY_MAP.POPULAR_MOVIES]});
     };
   }, []);

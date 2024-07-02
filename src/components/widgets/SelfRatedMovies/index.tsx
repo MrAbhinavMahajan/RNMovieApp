@@ -26,7 +26,6 @@ const SelfRatedMoviesWidget = () => {
   });
   console.log('selfRatedMovies: \n', query);
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
-
   const listRef = useRef(null);
   const movies = useMemo(() => {
     if (isError) {
@@ -38,6 +37,9 @@ const SelfRatedMoviesWidget = () => {
     !isError && status !== QUERY_STATUS.PENDING && _.isEmpty(movies);
 
   const refreshWidget = () => {
+    if (isFetching) {
+      return;
+    }
     refetch();
   };
 

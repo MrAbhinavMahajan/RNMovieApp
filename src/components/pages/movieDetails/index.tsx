@@ -58,7 +58,10 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
   const favoritesMutation = useMutation({
     mutationFn: updateMovieFavorites,
     onSuccess: () => {
-      queryClient.invalidateQueries([APP_QUERY_MAP.FAVORITE_MOVIES]); // ! Invalidates the favoriteMovies query data and fetch on successful mutation
+      queryClient.invalidateQueries({
+        queryKey: [APP_QUERY_MAP.FAVORITE_MOVIES],
+        refetchType: 'active',
+      }); // ! Invalidates the favoriteMovies query data and fetch on successful mutation
     },
     onError: () => {
       Alert.alert(kGENERAL.title, kGENERAL.subtitle);
@@ -67,7 +70,10 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
   const watchlistMutation = useMutation({
     mutationFn: updateMovieWatchlist,
     onSuccess: () => {
-      queryClient.invalidateQueries([APP_QUERY_MAP.WATCHLIST_MOVIES]); // ! Invalidates the watchlistMovies query data and fetch on successful mutation
+      queryClient.invalidateQueries({
+        queryKey: [APP_QUERY_MAP.WATCHLIST_MOVIES],
+        refetchType: 'active', // ! Invalidates the watchlistMovies query data and fetch on successful mutation
+      });
     },
     onError: () => {
       Alert.alert(kGENERAL.title, kGENERAL.subtitle);
@@ -80,7 +86,7 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
   const {queryParams} = props.route?.params || {};
   const {screenTitle, movieId} = queryParams;
 
-  const initializeData = () => {
+  const retrieveMoviesRequiredData = () => {
     setIsFavorite(() => {
       let isMovieFound = false;
       if (!_.isEmpty(favoriteMoviesQuery?.data?.results)) {
@@ -104,14 +110,14 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
     });
   };
 
-  const onPageRefresh = () => {
+  const refreshPage = () => {
+    retrieveMoviesRequiredData();
     NativeAppEventEmitter.emit(PAGE_REFRESH.MOVIE_DETAILS_SCREEN);
-    initializeData();
   };
 
   useEffect(() => {
-    initializeData();
-  }, []);
+    refreshPage();
+  }, [movieId]);
 
   const toggleFavorite = () => {
     setIsFavorite(val => {
@@ -181,7 +187,7 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
       showsVerticalScrollIndicator={false}
       contentContainerStyle={styles.screenScrollableView}
       refreshControl={
-        <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
+        <RefreshControl refreshing={false} onRefresh={refreshPage} />
       }>
       <MovieDetailsScreenHeader screenTitle={screenTitle} movieId={movieId} />
       <MovieDetailsTab />

@@ -66,7 +66,7 @@ const ProfileScreen = () => {
     };
   }, []);
 
-  const onPageRefresh = () => {
+  const refreshPage = () => {
     NativeAppEventEmitter.emit(PAGE_REFRESH.PROFILE_SCREEN);
   };
 
@@ -145,7 +145,7 @@ const ProfileScreen = () => {
         contentContainerStyle={styles.screenScrollableView}
         showsVerticalScrollIndicator={false}
         refreshControl={
-          <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
+          <RefreshControl refreshing={false} onRefresh={refreshPage} />
         }>
         {renderProfileCard()}
         <FavoritesMoviesWidget />

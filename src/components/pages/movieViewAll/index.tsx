@@ -107,7 +107,10 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
     listRef.current?.scrollToOffset({animated: true, offset: 0});
   };
 
-  const onPageRefresh = () => {
+  const refreshPage = () => {
+    if (isFetching) {
+      return;
+    }
     // ! Refetch All the Query Data
     refetch();
   };
@@ -120,9 +123,13 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
 
   useEffect(() => {
     return () => {
-      // ! Cancelling Query Data on unmount
+      // ! Cancelling Query in Progress on unmount
       queryClient.cancelQueries({
         queryKey: [APP_QUERY_MAP.VIEW_ALL_MOVIES, widgetId],
+      });
+      // ! Removing Query Data on unmount
+      queryClient.removeQueries({
+        queryKey: [APP_QUERY_MAP.VIEW_ALL_MOVIES],
       });
     };
   }, []);
@@ -144,7 +151,7 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
         <ErrorStateWidget
           error={error}
           containerStyles={styles.errorContainer}
-          retryCTA={onPageRefresh}
+          retryCTA={refreshPage}
         />
       );
     }
@@ -204,7 +211,7 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
         extraData={movies} // tells FlatList to render whenever the chosen variable updates
         windowSize={1} // the number of "pages" of items rendered in either direction from the visible content
         refreshControl={
-          <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
+          <RefreshControl refreshing={false} onRefresh={refreshPage} />
         }
       />
       <Animated.View

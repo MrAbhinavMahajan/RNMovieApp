@@ -103,7 +103,10 @@ const ProfileViewAllScreen = (props: ProfileViewAllScreenProps) => {
     listRef.current?.scrollToOffset({animated: true, offset: 0});
   };
 
-  const onPageRefresh = () => {
+  const refreshPage = () => {
+    if (isFetching) {
+      return;
+    }
     // ! Refetch All the Query Data
     refetch();
   };
@@ -120,9 +123,14 @@ const ProfileViewAllScreen = (props: ProfileViewAllScreenProps) => {
 
   useEffect(() => {
     return () => {
-      // ! Cancelling Query Data on unmount
+      // ! Cancelling Query in Progress on unmount
       queryClient.cancelQueries({
         queryKey: [APP_QUERY_MAP.PROFILE_VIEW_ALL_MOVIES, widgetId],
+      });
+      // ! Invalidating Query Data on unmount
+      queryClient.invalidateQueries({
+        queryKey: [APP_QUERY_MAP.PROFILE_VIEW_ALL_MOVIES],
+        refetchType: 'active',
       });
     };
   }, []);
@@ -144,7 +152,7 @@ const ProfileViewAllScreen = (props: ProfileViewAllScreenProps) => {
         <ErrorStateWidget
           error={error}
           containerStyles={styles.errorContainer}
-          retryCTA={onPageRefresh}
+          retryCTA={refreshPage}
         />
       );
     }
@@ -218,7 +226,7 @@ const ProfileViewAllScreen = (props: ProfileViewAllScreenProps) => {
         extraData={movies} // tells FlatList to render whenever the chosen variable updates
         windowSize={1} // the number of "pages" of items rendered in either direction from the visible content
         refreshControl={
-          <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
+          <RefreshControl refreshing={false} onRefresh={refreshPage} />
         }
       />
       <Animated.View

@@ -36,6 +36,9 @@ const RecommendedMoviesWidget = (props: RecommendedMoviesWidgetProps) => {
   const [isRightCTAEnabled, setRightCTAEnabled] = useState(false);
 
   const refreshWidget = () => {
+    if (isFetching) {
+      return;
+    }
     refetch();
   };
 

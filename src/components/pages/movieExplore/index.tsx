@@ -15,12 +15,12 @@ import RecommendedMoviesWidget from '../../widgets/RecommendedMovies';
 const MovieExploreScreen = (props: any) => {
   const scrollRef = useRef(null);
 
-  const onPageRefresh = () => {};
+  const refreshPage = () => {};
 
   useEffect(() => {
     NativeAppEventEmitter.addListener(
       PAGE_REFRESH.MOVIE_DETAILS_SCREEN,
-      onPageRefresh,
+      refreshPage,
     );
   }, []);
 
@@ -31,7 +31,7 @@ const MovieExploreScreen = (props: any) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.screenScrollableView}
         refreshControl={
-          <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
+          <RefreshControl refreshing={false} onRefresh={refreshPage} />
         }>
         <SimilarMoviesWidget />
         <RecommendedMoviesWidget widgetTitle={'Blockbuster Buzz'} />

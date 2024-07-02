@@ -43,7 +43,14 @@ const MovieCard = ({
     mutationFn: updateMovieFavorites,
     onSuccess: () => {
       Alert.alert(kFAVORITES.deleted.title, kFAVORITES.deleted.subtitle);
-      queryClient.invalidateQueries([APP_QUERY_MAP.FAVORITE_MOVIES]); // ! Invalidates the favoriteMovies query data and fetch on successful mutation
+      queryClient.invalidateQueries({
+        queryKey: [APP_QUERY_MAP.PROFILE_VIEW_ALL_MOVIES],
+        refetchType: 'active',
+      });
+      queryClient.invalidateQueries({
+        queryKey: [APP_QUERY_MAP.FAVORITE_MOVIES],
+        refetchType: 'active',
+      });
     },
     onError: () => {
       Alert.alert(kGENERAL.title, kGENERAL.subtitle);
@@ -54,7 +61,14 @@ const MovieCard = ({
     mutationFn: updateMovieWatchlist,
     onSuccess: () => {
       Alert.alert(kWATCHLIST.deleted.title, kWATCHLIST.deleted.subtitle);
-      queryClient.invalidateQueries([APP_QUERY_MAP.WATCHLIST_MOVIES]); // ! Invalidates the favoriteMovies query data and fetch on successful mutation
+      queryClient.invalidateQueries({
+        queryKey: [APP_QUERY_MAP.PROFILE_VIEW_ALL_MOVIES],
+        refetchType: 'active',
+      });
+      queryClient.invalidateQueries({
+        queryKey: [APP_QUERY_MAP.WATCHLIST_MOVIES],
+        refetchType: 'active',
+      });
     },
     onError: () => {
       Alert.alert(kGENERAL.title, kGENERAL.subtitle);
@@ -65,7 +79,14 @@ const MovieCard = ({
     mutationFn: deleteMovieRating,
     onSuccess: () => {
       Alert.alert(kRATINGS.deleteRating.title, kRATINGS.deleteRating.subtitle);
-      queryClient.invalidateQueries([APP_QUERY_MAP.SELF_RATED_MOVIES]); // ! Invalidates the favoriteMovies query data and fetch on successful mutation
+      queryClient.invalidateQueries({
+        queryKey: [APP_QUERY_MAP.SELF_RATED_MOVIES],
+        refetchType: 'active',
+      });
+      queryClient.invalidateQueries({
+        queryKey: [APP_QUERY_MAP.PROFILE_VIEW_ALL_MOVIES],
+        refetchType: 'all',
+      });
     },
     onError: () => {
       Alert.alert(kGENERAL.title, kGENERAL.subtitle);

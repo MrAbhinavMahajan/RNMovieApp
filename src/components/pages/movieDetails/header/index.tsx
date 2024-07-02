@@ -44,7 +44,10 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
   const addRatingMutation = useMutation({
     mutationFn: addMovieRating,
     onSuccess: () => {
-      queryClient.invalidateQueries([APP_QUERY_MAP.SELF_RATED_MOVIES]); // ! Invalidates the selfRatedMovies query data and fetch on successful mutation
+      queryClient.invalidateQueries({
+        queryKey: [APP_QUERY_MAP.SELF_RATED_MOVIES],
+        refetchType: 'active',
+      });
       Alert.alert(kRATINGS.addedRating.title, kRATINGS.addedRating.subtitle);
     },
     onError: () => {
@@ -74,6 +77,7 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
   };
 
   const onPageUnmount = () => {
+    // ! Cancelling Query in Progress on unmount
     queryClient.cancelQueries({
       queryKey: [APP_QUERY_MAP.MOVIE_DETAILS, movieId],
     });

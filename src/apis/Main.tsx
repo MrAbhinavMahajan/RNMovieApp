@@ -415,7 +415,7 @@ export const fetchMoviesRated = async (
     terminateUserSession();
     return;
   }
-  const url = `https://api.themoviedb.org/4/account/${accountId}/movie/rated?page=${pageParam}&language=en-US`;
+  const url = `https://api.themoviedb.org/4/account/${accountId}/movie/rated?page=${pageParam}&language=en-US&sort_by=created_at.desc`;
   const headers = {};
   const options = createRequestOptions(
     RequestMethod.GET,

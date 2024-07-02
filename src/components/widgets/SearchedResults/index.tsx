@@ -74,6 +74,9 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
   }, [searchedText]);
 
   const refreshWidget = () => {
+    if (isFetching) {
+      return;
+    }
     refetch();
   };
 

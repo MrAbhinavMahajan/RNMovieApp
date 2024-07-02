@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useRef} from 'react';
+import {useQueryClient} from '@tanstack/react-query';
 import {
   NativeAppEventEmitter,
   RefreshControl,
@@ -8,20 +9,26 @@ import {
 } from 'react-native';
 import {styles} from './styles';
 import {PAGE_REFRESH} from '../../../constants/Page';
+import {APP_QUERY_MAP} from '../../../constants/Api';
 import QuotationWidget from '../../widgets/Quotation';
 import MoviesReviewsWidget from '../../widgets/MovieReviews';
 
 interface MovieReviewsScreenProps {}
 
 const MovieReviewsScreen = (props: MovieReviewsScreenProps) => {
+  const queryClient = useQueryClient();
   const scrollRef = useRef(null);
-
-  const onPageRefresh = () => {};
+  const refreshPage = () => {
+    queryClient.refetchQueries({
+      queryKey: [APP_QUERY_MAP.MOVIE_REVIEWS],
+      type: 'all',
+    });
+  };
 
   useEffect(() => {
     NativeAppEventEmitter.addListener(
       PAGE_REFRESH.MOVIE_DETAILS_SCREEN,
-      onPageRefresh,
+      refreshPage,
     );
   }, []);
 
@@ -32,7 +39,7 @@ const MovieReviewsScreen = (props: MovieReviewsScreenProps) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.screenScrollableView}
         refreshControl={
-          <RefreshControl refreshing={false} onRefresh={onPageRefresh} />
+          <RefreshControl refreshing={false} onRefresh={refreshPage} />
         }>
         <MoviesReviewsWidget />
         <QuotationWidget

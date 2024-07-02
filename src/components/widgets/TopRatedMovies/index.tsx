@@ -32,6 +32,9 @@ const TopRatedMoviesWidget = () => {
   const [isRightCTAEnabled, setRightCTAEnabled] = useState(false);
 
   const refreshWidget = () => {
+    if (isFetching) {
+      return;
+    }
     refetch();
   };
 
