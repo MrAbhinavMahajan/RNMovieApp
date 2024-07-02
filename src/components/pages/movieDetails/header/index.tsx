@@ -17,6 +17,7 @@ import {styles} from './styles';
 import {AirbnbRating} from 'react-native-ratings';
 import {vpx} from '../../../../libraries/responsive-pixels';
 import {kGENERAL, kRATINGS} from '../../../../constants/Messages';
+import {APP_QUERY_MAP} from '../../../../constants/Api';
 import RNText from '../../../common/RNText';
 import MoviePosterWidget from '../../../widgets/MoviePoster';
 import RNImage from '../../../common/RNImage';
@@ -36,14 +37,14 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
   const queryClient = useQueryClient();
   const {screenTitle, movieId} = props;
   const query = useQuery({
-    queryKey: ['movieDetails', movieId],
+    queryKey: [APP_QUERY_MAP.MOVIE_DETAILS, movieId],
     queryFn: ({signal}) => fetchMovieDetails(signal, movieId),
   });
   console.log(`movieDetails: for ${movieId} \n`, query);
   const addRatingMutation = useMutation({
     mutationFn: addMovieRating,
     onSuccess: () => {
-      queryClient.invalidateQueries(['selfRatedMovies']); // ! Invalidates the selfRatedMovies query data and fetch on successful mutation
+      queryClient.invalidateQueries([APP_QUERY_MAP.SELF_RATED_MOVIES]); // ! Invalidates the selfRatedMovies query data and fetch on successful mutation
       Alert.alert(kRATINGS.addedRating.title, kRATINGS.addedRating.subtitle);
     },
     onError: () => {
@@ -73,7 +74,9 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
   };
 
   const onPageUnmount = () => {
-    queryClient.cancelQueries({queryKey: ['movieDetails', movieId]});
+    queryClient.cancelQueries({
+      queryKey: [APP_QUERY_MAP.MOVIE_DETAILS, movieId],
+    });
   };
 
   const toggleRating = () => {

@@ -9,6 +9,7 @@ import {styles} from './styles';
 import {PAGE_REFRESH} from '../../../constants/Page';
 import {FALLBACK_DATA, SIMILAR_MOVIE_ID} from '../../../data/Main';
 import {QUERY_STATUS} from '../../../constants/Main';
+import {APP_QUERY_MAP} from '../../../constants/Api';
 import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
@@ -16,7 +17,7 @@ import ErrorStateWidget from '../ErrorState';
 const SimilarMoviesWidget = () => {
   const page = 1;
   const query = useQuery({
-    queryKey: ['similarMovies', SIMILAR_MOVIE_ID],
+    queryKey: [APP_QUERY_MAP.SIMILAR_MOVIES, SIMILAR_MOVIE_ID],
     queryFn: ({signal}) => fetchSimilarMovies(signal, page),
   });
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;

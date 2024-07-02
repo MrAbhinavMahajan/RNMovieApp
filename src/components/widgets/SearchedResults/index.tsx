@@ -25,6 +25,7 @@ import AppCTA from '../../common/AppCTA';
 import RNText from '../../common/RNText';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
+import {APP_QUERY_MAP} from '../../../constants/Api';
 
 interface SearchedResultsWidgetProps {
   searchedText: string;
@@ -33,7 +34,7 @@ interface SearchedResultsWidgetProps {
 const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
   const {searchedText} = props;
   const query = useInfiniteQuery({
-    queryKey: ['searchedMovies'],
+    queryKey: [APP_QUERY_MAP.SEARCHED_RESULTS],
     queryFn: ({signal, pageParam}) =>
       fetchSearchedMovieResults(signal, searchedText, pageParam),
     initialPageParam: 1,

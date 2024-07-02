@@ -12,6 +12,7 @@ import {QUERY_STATUS} from '../../../constants/Main';
 import {kFAVORITES} from '../../../constants/Messages';
 import {IconSize, MaterialIcon} from '../../common/RNIcon';
 import {COLORS} from '../../../constants/Colors';
+import {APP_QUERY_MAP} from '../../../constants/Api';
 import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
@@ -20,7 +21,7 @@ import EmptyStateWidget from '../EmptyState';
 const FavoritesMoviesWidget = () => {
   const page = 1;
   const query = useQuery({
-    queryKey: ['favoriteMovies'],
+    queryKey: [APP_QUERY_MAP.FAVORITE_MOVIES],
     queryFn: ({signal}) => fetchMovieFavorites(signal, page),
   });
   console.log('favoriteMovies: \n', query);

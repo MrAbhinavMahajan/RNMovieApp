@@ -9,6 +9,7 @@ import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
 import {styles} from './styles';
 import {kRATINGS} from '../../../constants/Messages';
 import {COLORS} from '../../../constants/Colors';
+import {APP_QUERY_MAP} from '../../../constants/Api';
 import {QUERY_STATUS} from '../../../constants/Main';
 import ErrorStateWidget from '../ErrorState';
 import EmptyStateWidget from '../EmptyState';
@@ -34,7 +35,7 @@ interface MovieReview {
 const MoviesReviewsWidget = () => {
   const queryClient = useQueryClient();
   const query = useInfiniteQuery({
-    queryKey: ['movieReviews'],
+    queryKey: [APP_QUERY_MAP.MOVIE_REVIEWS],
     queryFn: ({signal, pageParam}) => fetchMovieReviews(signal, pageParam),
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
@@ -77,7 +78,7 @@ const MoviesReviewsWidget = () => {
 
   useEffect(() => {
     return () => {
-      queryClient.cancelQueries({queryKey: ['popularMovies']});
+      queryClient.cancelQueries({queryKey: [APP_QUERY_MAP.MOVIE_REVIEWS]});
     };
   }, []);
 

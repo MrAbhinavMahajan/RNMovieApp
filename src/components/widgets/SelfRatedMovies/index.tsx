@@ -12,6 +12,7 @@ import {QUERY_STATUS} from '../../../constants/Main';
 import {kRATINGS} from '../../../constants/Messages';
 import {IconSize, MaterialIcon} from '../../common/RNIcon';
 import {COLORS} from '../../../constants/Colors';
+import {APP_QUERY_MAP} from '../../../constants/Api';
 import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
@@ -20,7 +21,7 @@ import EmptyStateWidget from '../EmptyState';
 const SelfRatedMoviesWidget = () => {
   const page = 1;
   const query = useQuery({
-    queryKey: ['selfRatedMovies'],
+    queryKey: [APP_QUERY_MAP.SELF_RATED_MOVIES],
     queryFn: ({signal}) => fetchMoviesRated(signal, page),
   });
   console.log('selfRatedMovies: \n', query);

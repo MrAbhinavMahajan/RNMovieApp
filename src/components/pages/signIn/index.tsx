@@ -17,6 +17,7 @@ import {createAccessTokenV4, createRequestTokenV4} from '../../../apis/Main';
 import {startUserSession} from '../../../utilities/App';
 import {COLORS} from '../../../constants/Colors';
 import {styles} from './styles';
+import {APP_QUERY_MAP} from '../../../constants/Api';
 import Storage from '../../../utilities/Storage';
 import RNText from '../../common/RNText';
 import AppCTA from '../../common/AppCTA';
@@ -35,12 +36,12 @@ const SignInScreen = () => {
   >(null);
   const [requestToken, setRequestToken] = useState('');
   const requestTokenQuery = useQuery({
-    queryKey: ['requestToken', requestTokenQueryFilter],
+    queryKey: [APP_QUERY_MAP.REFRESH_TOKEN, requestTokenQueryFilter],
     queryFn: ({signal}) => createRequestTokenV4(signal),
     enabled: !!requestTokenQueryFilter,
   });
   const accessTokenQuery = useQuery({
-    queryKey: ['accessToken', accessTokenQueryFilter],
+    queryKey: [APP_QUERY_MAP.ACCESS_TOKEN, accessTokenQueryFilter],
     queryFn: ({signal}) => createAccessTokenV4(signal, requestToken),
     enabled: !!accessTokenQueryFilter,
   });

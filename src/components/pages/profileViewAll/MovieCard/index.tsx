@@ -25,6 +25,7 @@ import {
 } from '../../../../constants/Messages';
 import MoviePosterWidget, {MoviePosterItem} from '../../../widgets/MoviePoster';
 import AppCTA from '../../../common/AppCTA';
+import {APP_QUERY_MAP} from '../../../../constants/Api';
 
 const MovieCard = ({
   item,
@@ -42,7 +43,7 @@ const MovieCard = ({
     mutationFn: updateMovieFavorites,
     onSuccess: () => {
       Alert.alert(kFAVORITES.deleted.title, kFAVORITES.deleted.subtitle);
-      queryClient.invalidateQueries(['favoriteMovies']); // ! Invalidates the favoriteMovies query data and fetch on successful mutation
+      queryClient.invalidateQueries([APP_QUERY_MAP.FAVORITE_MOVIES]); // ! Invalidates the favoriteMovies query data and fetch on successful mutation
     },
     onError: () => {
       Alert.alert(kGENERAL.title, kGENERAL.subtitle);
@@ -53,7 +54,7 @@ const MovieCard = ({
     mutationFn: updateMovieWatchlist,
     onSuccess: () => {
       Alert.alert(kWATCHLIST.deleted.title, kWATCHLIST.deleted.subtitle);
-      queryClient.invalidateQueries(['watchlistMovies']); // ! Invalidates the favoriteMovies query data and fetch on successful mutation
+      queryClient.invalidateQueries([APP_QUERY_MAP.WATCHLIST_MOVIES]); // ! Invalidates the favoriteMovies query data and fetch on successful mutation
     },
     onError: () => {
       Alert.alert(kGENERAL.title, kGENERAL.subtitle);
@@ -64,7 +65,7 @@ const MovieCard = ({
     mutationFn: deleteMovieRating,
     onSuccess: () => {
       Alert.alert(kRATINGS.deleteRating.title, kRATINGS.deleteRating.subtitle);
-      queryClient.invalidateQueries(['selfRatedMovies']); // ! Invalidates the favoriteMovies query data and fetch on successful mutation
+      queryClient.invalidateQueries([APP_QUERY_MAP.SELF_RATED_MOVIES]); // ! Invalidates the favoriteMovies query data and fetch on successful mutation
     },
     onError: () => {
       Alert.alert(kGENERAL.title, kGENERAL.subtitle);

@@ -9,6 +9,7 @@ import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
 import {styles} from './styles';
 import {FALLBACK_DATA} from '../../../data/Main';
 import {QUERY_STATUS} from '../../../constants/Main';
+import {APP_QUERY_MAP} from '../../../constants/Api';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import HeaderTitleWidget from '../HeaderTitle';
 import ErrorStateWidget from '../ErrorState';
@@ -16,7 +17,7 @@ import ErrorStateWidget from '../ErrorState';
 const TopRatedMoviesWidget = () => {
   const page = 1;
   const query = useQuery({
-    queryKey: ['topRatedMovies'],
+    queryKey: [APP_QUERY_MAP.TOP_RATED_MOVIES],
     queryFn: ({signal}) => fetchTopRatedMovies(signal, page),
   });
   console.log('topRatedMovies: \n', query);

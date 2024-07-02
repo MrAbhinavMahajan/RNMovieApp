@@ -12,6 +12,7 @@ import {QUERY_STATUS} from '../../../constants/Main';
 import {SCREEN_WIDTH} from '../../../utilities/App';
 import {COLORS} from '../../../constants/Colors';
 import {APP_PAGES_MAP} from '../../../constants/Navigation';
+import {APP_QUERY_MAP} from '../../../constants/Api';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
 
@@ -19,7 +20,7 @@ const SLIDER_WIDTH = SCREEN_WIDTH;
 const ITEM_WIDTH = SCREEN_WIDTH * 0.6;
 const TrendingMoviesWidget = () => {
   const query = useQuery({
-    queryKey: ['trendingMovies'],
+    queryKey: [APP_QUERY_MAP.TRENDING_MOVIES],
     queryFn: ({signal}) => fetchTrendingMovies(signal),
   });
   console.log('trendingMovies:\n', query);

@@ -12,6 +12,7 @@ import {QUERY_STATUS} from '../../../constants/Main';
 import {kWATCHLIST} from '../../../constants/Messages';
 import {IconSize, MaterialIcon} from '../../common/RNIcon';
 import {COLORS} from '../../../constants/Colors';
+import {APP_QUERY_MAP} from '../../../constants/Api';
 import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
@@ -20,7 +21,7 @@ import EmptyStateWidget from '../EmptyState';
 const WatchlistMoviesWidget = () => {
   const page = 1;
   const query = useQuery({
-    queryKey: ['watchlistMovies'],
+    queryKey: [APP_QUERY_MAP.WATCHLIST_MOVIES],
     queryFn: ({signal}) => fetchMovieWatchlist(signal, page),
   });
   console.log('watchlistMovies: \n', query);

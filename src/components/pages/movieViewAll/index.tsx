@@ -24,6 +24,7 @@ import {
 } from '../../../constants/Navigation';
 import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
 import {AppArrowUpIcon, AppSearchIcon} from '../../common/RNIcon';
+import {APP_QUERY_MAP} from '../../../constants/Api';
 import AppHeader from '../../common/AppHeader';
 import AppCTA from '../../common/AppCTA';
 import MoviePosterWidget, {MoviePosterItem} from '../../widgets/MoviePoster';
@@ -65,7 +66,7 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
   };
 
   const query = useInfiniteQuery({
-    queryKey: ['viewAllMovies', widgetId],
+    queryKey: [APP_QUERY_MAP.VIEW_ALL_MOVIES, widgetId],
     queryFn: ({pageParam, signal}) => makeAPICall(signal, pageParam),
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
@@ -120,7 +121,9 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
   useEffect(() => {
     return () => {
       // ! Cancelling Query Data on unmount
-      queryClient.cancelQueries({queryKey: ['viewAllMovies', widgetId]});
+      queryClient.cancelQueries({
+        queryKey: [APP_QUERY_MAP.VIEW_ALL_MOVIES, widgetId],
+      });
     };
   }, []);
 

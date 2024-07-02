@@ -14,6 +14,7 @@ import {FALLBACK_DATA} from '../../../data/Main';
 import {styles} from './styles';
 import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
 import {APP_PAGES_MAP} from '../../../constants/Navigation';
+import {APP_QUERY_MAP} from '../../../constants/Api';
 import AppCTA from '../../common/AppCTA';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import RNText from '../../common/RNText';
@@ -22,7 +23,7 @@ import ErrorStateWidget from '../ErrorState';
 const PopularMoviesWidget = () => {
   const queryClient = useQueryClient();
   const query = useInfiniteQuery({
-    queryKey: ['popularMovies'],
+    queryKey: [APP_QUERY_MAP.POPULAR_MOVIES],
     queryFn: ({signal, pageParam}) => fetchPopularMovies(signal, pageParam),
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
@@ -71,7 +72,7 @@ const PopularMoviesWidget = () => {
 
   useEffect(() => {
     return () => {
-      queryClient.cancelQueries({queryKey: ['popularMovies']});
+      queryClient.cancelQueries({queryKey: [APP_QUERY_MAP.POPULAR_MOVIES]});
     };
   }, []);
 

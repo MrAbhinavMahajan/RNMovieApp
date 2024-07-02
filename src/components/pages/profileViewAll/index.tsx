@@ -23,10 +23,11 @@ import {
   AppEditIcon,
   AppSearchIcon,
 } from '../../common/RNIcon';
+import {MoviePosterItem} from '../../widgets/MoviePoster';
+import {APP_QUERY_MAP} from '../../../constants/Api';
+import RNText from '../../common/RNText';
 import AppHeader from '../../common/AppHeader';
 import AppCTA from '../../common/AppCTA';
-import {MoviePosterItem} from '../../widgets/MoviePoster';
-import RNText from '../../common/RNText';
 import ErrorStateWidget from '../../widgets/ErrorState';
 import MovieCard from './MovieCard';
 
@@ -61,7 +62,7 @@ const ProfileViewAllScreen = (props: ProfileViewAllScreenProps) => {
   };
 
   const query = useInfiniteQuery({
-    queryKey: ['profileViewAllMovies', widgetId],
+    queryKey: [APP_QUERY_MAP.PROFILE_VIEW_ALL_MOVIES, widgetId],
     queryFn: ({pageParam, signal}) => makePageAPICall(signal, pageParam),
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
@@ -120,7 +121,9 @@ const ProfileViewAllScreen = (props: ProfileViewAllScreenProps) => {
   useEffect(() => {
     return () => {
       // ! Cancelling Query Data on unmount
-      queryClient.cancelQueries({queryKey: ['profileViewAllMovies', widgetId]});
+      queryClient.cancelQueries({
+        queryKey: [APP_QUERY_MAP.PROFILE_VIEW_ALL_MOVIES, widgetId],
+      });
     };
   }, []);
 

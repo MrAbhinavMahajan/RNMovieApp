@@ -25,6 +25,7 @@ import {PAGE_REFRESH} from '../../../constants/Page';
 import {COLORS} from '../../../constants/Colors';
 import {STYLES} from '../../../constants/Styles';
 import {kGENERAL} from '../../../constants/Messages';
+import {APP_QUERY_MAP} from '../../../constants/Api';
 import {
   FavoriteRequestBody,
   MovieItem,
@@ -47,17 +48,17 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
   const queryClient = useQueryClient();
   const page = 1;
   const favoriteMoviesQuery = useQuery({
-    queryKey: ['favoriteMovies'],
+    queryKey: [APP_QUERY_MAP.FAVORITE_MOVIES],
     queryFn: ({signal}) => fetchMovieFavorites(signal, page),
   });
   const watchlistMoviesDataQuery = useQuery({
-    queryKey: ['watchlistMovies'],
+    queryKey: [APP_QUERY_MAP.WATCHLIST_MOVIES],
     queryFn: ({signal}) => fetchMovieWatchlist(signal, page),
   });
   const favoritesMutation = useMutation({
     mutationFn: updateMovieFavorites,
     onSuccess: () => {
-      queryClient.invalidateQueries(['favoriteMovies']); // ! Invalidates the favoriteMovies query data and fetch on successful mutation
+      queryClient.invalidateQueries([APP_QUERY_MAP.FAVORITE_MOVIES]); // ! Invalidates the favoriteMovies query data and fetch on successful mutation
     },
     onError: () => {
       Alert.alert(kGENERAL.title, kGENERAL.subtitle);
@@ -66,7 +67,7 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
   const watchlistMutation = useMutation({
     mutationFn: updateMovieWatchlist,
     onSuccess: () => {
-      queryClient.invalidateQueries(['watchlistMovies']); // ! Invalidates the watchlistMovies query data and fetch on successful mutation
+      queryClient.invalidateQueries([APP_QUERY_MAP.WATCHLIST_MOVIES]); // ! Invalidates the watchlistMovies query data and fetch on successful mutation
     },
     onError: () => {
       Alert.alert(kGENERAL.title, kGENERAL.subtitle);
