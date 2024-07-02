@@ -14,7 +14,7 @@ import {IconSize, MaterialIcon} from '../../common/RNIcon';
 import {COLORS} from '../../../constants/Colors';
 import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
-import ErrorInfoWidget from '../ErrorInfo';
+import ErrorStateWidget from '../ErrorState';
 import EmptyStateWidget from '../EmptyState';
 
 const FavoritesMoviesWidget = () => {
@@ -72,20 +72,6 @@ const FavoritesMoviesWidget = () => {
     );
   }, []);
 
-  const renderItem = ({
-    item,
-    index,
-  }: {
-    item: MoviePosterItem;
-    index: number;
-  }) => (
-    <MoviePosterWidget
-      item={item}
-      index={index}
-      containerStyles={styles.moviePoster}
-    />
-  );
-
   return (
     <View
       style={styles.containerView}
@@ -98,7 +84,7 @@ const FavoritesMoviesWidget = () => {
         loaderEnabled={isFetching}
       />
       {isError && (
-        <ErrorInfoWidget
+        <ErrorStateWidget
           error={error}
           containerStyles={styles.errorContainer}
           retryCTA={refreshWidget}
@@ -122,7 +108,9 @@ const FavoritesMoviesWidget = () => {
       <FlatList
         ref={listRef}
         data={movies}
-        renderItem={renderItem}
+        renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
+          <MovieCard item={item} index={index} />
+        )}
         keyExtractor={keyExtractor}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -136,4 +124,20 @@ const FavoritesMoviesWidget = () => {
   );
 };
 
+const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
+  const {title, id} = item || {};
+  const onCTA = () => {
+    NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
+      queryParams: {screenTitle: title, movieId: id},
+    });
+  };
+  return (
+    <MoviePosterWidget
+      item={item}
+      index={index}
+      containerStyles={styles.moviePoster}
+      action={onCTA}
+    />
+  );
+};
 export default FavoritesMoviesWidget;

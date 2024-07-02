@@ -1,6 +1,7 @@
 import React, {useEffect, useMemo, useRef} from 'react';
 import _ from 'lodash';
 import {useQuery} from '@tanstack/react-query';
+import * as NavigationService from '../../../service/Navigation';
 import Carousel from 'react-native-snap-carousel';
 import {ActivityIndicator, NativeAppEventEmitter, View} from 'react-native';
 import {PAGE_REFRESH} from '../../../constants/Page';
@@ -8,10 +9,11 @@ import {fetchTrendingMovies} from '../../../apis/Main';
 import {styles} from './styles';
 import {FALLBACK_DATA} from '../../../data/Main';
 import {QUERY_STATUS} from '../../../constants/Main';
-import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
-import ErrorInfoWidget from '../ErrorInfo';
 import {SCREEN_WIDTH} from '../../../utilities/App';
 import {COLORS} from '../../../constants/Colors';
+import {APP_PAGES_MAP} from '../../../constants/Navigation';
+import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
+import ErrorStateWidget from '../ErrorState';
 
 const SLIDER_WIDTH = SCREEN_WIDTH;
 const ITEM_WIDTH = SCREEN_WIDTH * 0.6;
@@ -52,7 +54,7 @@ const TrendingMoviesWidget = () => {
         </View>
       )}
       {isError && (
-        <ErrorInfoWidget
+        <ErrorStateWidget
           error={error}
           containerStyles={styles.errorContainer}
           retryCTA={refreshWidget}
@@ -76,12 +78,21 @@ const TrendingMoviesWidget = () => {
   );
 };
 
-const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => (
-  <MoviePosterWidget
-    item={item}
-    index={index}
-    containerStyles={styles.moviePoster}
-  />
-);
+const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
+  const {title, id} = item || {};
+  const onCTA = () => {
+    NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
+      queryParams: {screenTitle: title, movieId: id},
+    });
+  };
+  return (
+    <MoviePosterWidget
+      item={item}
+      index={index}
+      containerStyles={styles.moviePoster}
+      action={onCTA}
+    />
+  );
+};
 
 export default TrendingMoviesWidget;

@@ -24,7 +24,7 @@ import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
 import AppCTA from '../../common/AppCTA';
 import RNText from '../../common/RNText';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
-import ErrorInfoWidget from '../ErrorInfo';
+import ErrorStateWidget from '../ErrorState';
 
 interface SearchedResultsWidgetProps {
   searchedText: string;
@@ -84,46 +84,6 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
     listRef.current?.scrollToOffset({animated: true, offset: 0});
   };
 
-  const renderItem = ({
-    item,
-    index,
-  }: {
-    item: MoviePosterItem;
-    index: number;
-  }) => {
-    const {title, id, vote_average, overview} = item || {};
-    return (
-      <TouchableOpacity
-        style={styles.itemContainerView}
-        onPress={() => {
-          NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
-            queryParams: {screenTitle: title, movieId: id},
-          });
-        }}>
-        <MoviePosterWidget
-          item={item}
-          index={index}
-          containerStyles={styles.moviePoster}
-        />
-        <View style={styles.itemInfoView}>
-          <RNText numberOfLines={1} style={styles.itemTitleText}>
-            {title}
-          </RNText>
-          {!_.isEmpty(overview) && (
-            <RNText numberOfLines={3} style={styles.itemInfoText}>
-              {overview}
-            </RNText>
-          )}
-          {vote_average > 0 && (
-            <RNText style={styles.itemVoteText}>
-              ✪ {vote_average?.toFixed(1)}
-            </RNText>
-          )}
-        </View>
-      </TouchableOpacity>
-    );
-  };
-
   const onEndReached = () => {
     if (isFetching) {
       // ! Throttle unnecessary API Calls
@@ -138,7 +98,7 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
   const renderListHeader = () => {
     if (isError) {
       return (
-        <ErrorInfoWidget
+        <ErrorStateWidget
           error={error}
           containerStyles={styles.errorContainer}
           retryCTA={refreshWidget}
@@ -177,7 +137,9 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
       <FlatList
         ref={listRef}
         data={movies}
-        renderItem={renderItem}
+        renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
+          <MovieCard item={item} index={index} />
+        )}
         keyExtractor={keyExtractor}
         contentInsetAdjustmentBehavior={'automatic'}
         keyboardDismissMode="on-drag"
@@ -208,4 +170,37 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
 
 const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
 
+const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
+  const {title, id, vote_average, overview} = item || {};
+  const onCTA = () => {
+    NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
+      queryParams: {screenTitle: title, movieId: id},
+    });
+  };
+  return (
+    <TouchableOpacity style={styles.itemContainerView} onPress={onCTA}>
+      <MoviePosterWidget
+        item={item}
+        index={index}
+        containerStyles={styles.moviePoster}
+        action={onCTA}
+      />
+      <View style={styles.itemInfoView}>
+        <RNText numberOfLines={1} style={styles.itemTitleText}>
+          {title}
+        </RNText>
+        {!_.isEmpty(overview) && (
+          <RNText numberOfLines={3} style={styles.itemInfoText}>
+            {overview}
+          </RNText>
+        )}
+        {vote_average > 0 && (
+          <RNText style={styles.itemVoteText}>
+            ✪ {vote_average?.toFixed(1)}
+          </RNText>
+        )}
+      </View>
+    </TouchableOpacity>
+  );
+};
 export default SearchedResultsWidget;

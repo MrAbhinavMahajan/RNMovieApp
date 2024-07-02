@@ -20,14 +20,18 @@ import {
   fetchUpcomingMovies,
 } from '../../../apis/Main';
 import {styles} from './styles';
-import {APP_TABS_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
+import {
+  APP_PAGES_MAP,
+  APP_TABS_MAP,
+  APP_WIDGETS_MAP,
+} from '../../../constants/Navigation';
 import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
 import {AppArrowUpIcon, AppSearchIcon} from '../../common/RNIcon';
 import AppHeader from '../../common/AppHeader';
 import AppCTA from '../../common/AppCTA';
 import MoviePosterWidget, {MoviePosterItem} from '../../widgets/MoviePoster';
 import RNText from '../../common/RNText';
-import ErrorInfoWidget from '../../widgets/ErrorInfo';
+import ErrorStateWidget from '../../widgets/ErrorState';
 
 interface MovieViewAllScreenProps {
   route: {
@@ -143,24 +147,10 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
     }
   };
 
-  const renderItem = ({
-    item,
-    index,
-  }: {
-    item: MoviePosterItem;
-    index: number;
-  }) => (
-    <MoviePosterWidget
-      item={item}
-      index={index}
-      containerStyles={styles.moviePoster}
-    />
-  );
-
   const renderListHeader = () => {
     if (isError) {
       return (
-        <ErrorInfoWidget
+        <ErrorStateWidget
           error={error}
           containerStyles={styles.errorContainer}
           retryCTA={onPageRefresh}
@@ -206,7 +196,9 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
       <FlatList
         ref={listRef}
         data={movies || []}
-        renderItem={renderItem}
+        renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
+          <MovieCard item={item} index={index} />
+        )}
         keyExtractor={keyExtractor}
         numColumns={3}
         columnWrapperStyle={styles.columnWrapperView}
@@ -231,6 +223,23 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
         </AppCTA>
       </Animated.View>
     </View>
+  );
+};
+
+const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
+  const {title, id} = item || {};
+  const onCTA = () => {
+    NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
+      queryParams: {screenTitle: title, movieId: id},
+    });
+  };
+  return (
+    <MoviePosterWidget
+      item={item}
+      index={index}
+      containerStyles={styles.moviePoster}
+      action={onCTA}
+    />
   );
 };
 

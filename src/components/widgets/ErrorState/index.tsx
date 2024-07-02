@@ -10,7 +10,7 @@ interface ErrorInfoWidgetProps {
   retryCTA: () => void;
 }
 
-const ErrorInfoWidget = (props: ErrorInfoWidgetProps) => {
+const ErrorStateWidget = (props: ErrorInfoWidgetProps) => {
   const {error, containerStyles, retryCTA} = props;
 
   return (
@@ -22,4 +22,4 @@ const ErrorInfoWidget = (props: ErrorInfoWidgetProps) => {
   );
 };
 
-export default ErrorInfoWidget;
+export default ErrorStateWidget;

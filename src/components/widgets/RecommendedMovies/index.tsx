@@ -11,7 +11,7 @@ import {FALLBACK_DATA} from '../../../data/Main';
 import {QUERY_STATUS} from '../../../constants/Main';
 import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
-import ErrorInfoWidget from '../ErrorInfo';
+import ErrorStateWidget from '../ErrorState';
 
 interface RecommendedMoviesWidgetProps {
   widgetTitle?: string;
@@ -58,20 +58,6 @@ const RecommendedMoviesWidget = (props: RecommendedMoviesWidgetProps) => {
     NativeAppEventEmitter.addListener(PAGE_REFRESH.HOME_SCREEN, refreshWidget);
   }, []);
 
-  const renderItem = ({
-    item,
-    index,
-  }: {
-    item: MoviePosterItem;
-    index: number;
-  }) => (
-    <MoviePosterWidget
-      item={item}
-      index={index}
-      containerStyles={styles.moviePoster}
-    />
-  );
-
   if (!isError && status !== QUERY_STATUS.PENDING && _.isEmpty(movies)) {
     return <></>;
   }
@@ -88,7 +74,7 @@ const RecommendedMoviesWidget = (props: RecommendedMoviesWidgetProps) => {
         loaderEnabled={isFetching}
       />
       {isError && (
-        <ErrorInfoWidget
+        <ErrorStateWidget
           error={error}
           containerStyles={styles.errorContainer}
           retryCTA={refreshWidget}
@@ -97,7 +83,9 @@ const RecommendedMoviesWidget = (props: RecommendedMoviesWidgetProps) => {
       <FlatList
         ref={listRef}
         data={movies}
-        renderItem={renderItem}
+        renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
+          <MovieCard item={item} index={index} />
+        )}
         keyExtractor={keyExtractor}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -108,6 +96,23 @@ const RecommendedMoviesWidget = (props: RecommendedMoviesWidgetProps) => {
         extraData={movies}
       />
     </View>
+  );
+};
+
+const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
+  const {title, id} = item || {};
+  const onCTA = () => {
+    NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
+      queryParams: {screenTitle: title, movieId: id},
+    });
+  };
+  return (
+    <MoviePosterWidget
+      item={item}
+      index={index}
+      containerStyles={styles.moviePoster}
+      action={onCTA}
+    />
   );
 };
 

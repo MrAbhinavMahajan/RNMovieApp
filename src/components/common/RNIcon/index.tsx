@@ -26,6 +26,10 @@ const IconSizes = {
   mediumSemi: vpx(40),
   largeSemi: vpx(44),
   extraLargeSemi: vpx(48),
+  smallBold: vpx(40),
+  mediumBold: vpx(44),
+  largeBold: vpx(48),
+  extraLargeBold: vpx(54),
 };
 
 export enum IconSize {
@@ -37,6 +41,10 @@ export enum IconSize {
   mediumSemi = 'mediumSemi',
   largeSemi = 'largeSemi',
   extraLargeSemi = 'extraLargeSemi',
+  smallBold = 'smallBold',
+  mediumBold = 'mediumBold',
+  largeBold = 'largeBold',
+  extraLargeBold = 'extraLargeBold',
 }
 
 export const IoniIcon = ({size, name, color}: IconProps) => (
@@ -105,3 +113,8 @@ export const AppRetryIcon = ({
   color = COLORS.fullBlack,
   size = IconSize.largeSemi,
 }) => <MaterialIcon name={'replay-circle-filled'} size={size} color={color} />;
+
+export const AppDeleteIcon = ({
+  color = COLORS.fullWhite,
+  size = IconSize.large,
+}) => <MaterialIcon name={'delete-forever'} size={size} color={color} />;

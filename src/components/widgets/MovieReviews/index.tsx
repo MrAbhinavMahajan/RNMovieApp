@@ -10,7 +10,7 @@ import {styles} from './styles';
 import {kRATINGS} from '../../../constants/Messages';
 import {COLORS} from '../../../constants/Colors';
 import {QUERY_STATUS} from '../../../constants/Main';
-import ErrorInfoWidget from '../ErrorInfo';
+import ErrorStateWidget from '../ErrorState';
 import EmptyStateWidget from '../EmptyState';
 import RNText from '../../common/RNText';
 
@@ -100,7 +100,7 @@ const MoviesReviewsWidget = () => {
 
   if (isError) {
     return (
-      <ErrorInfoWidget
+      <ErrorStateWidget
         error={error}
         containerStyles={styles.utilsContainer}
         retryCTA={refreshWidget}

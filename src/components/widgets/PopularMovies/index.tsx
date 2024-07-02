@@ -1,6 +1,7 @@
 import React, {useEffect, useMemo} from 'react';
 import {useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
 import {ActivityIndicator, FlatList, RefreshControl, View} from 'react-native';
+import * as NavigationService from '../../../service/Navigation';
 import Animated, {
   useAnimatedRef,
   useAnimatedStyle,
@@ -11,11 +12,12 @@ import {fetchPopularMovies} from '../../../apis/Main';
 import {AppArrowUpIcon} from '../../common/RNIcon';
 import {FALLBACK_DATA} from '../../../data/Main';
 import {styles} from './styles';
+import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
+import {APP_PAGES_MAP} from '../../../constants/Navigation';
 import AppCTA from '../../common/AppCTA';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
-import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
 import RNText from '../../common/RNText';
-import ErrorInfoWidget from '../ErrorInfo';
+import ErrorStateWidget from '../ErrorState';
 
 const PopularMoviesWidget = () => {
   const queryClient = useQueryClient();
@@ -83,24 +85,10 @@ const PopularMoviesWidget = () => {
     }
   };
 
-  const renderItem = ({
-    item,
-    index,
-  }: {
-    item: MoviePosterItem;
-    index: number;
-  }) => (
-    <MoviePosterWidget
-      item={item}
-      index={index}
-      containerStyles={styles.moviePoster}
-    />
-  );
-
   const renderListHeader = () => {
     if (isError) {
       return (
-        <ErrorInfoWidget
+        <ErrorStateWidget
           error={error}
           containerStyles={styles.errorContainer}
           retryCTA={refreshWidget}
@@ -135,7 +123,9 @@ const PopularMoviesWidget = () => {
       <FlatList
         ref={listRef}
         data={movies}
-        renderItem={renderItem}
+        renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
+          <MovieCard item={item} index={index} />
+        )}
         keyExtractor={keyExtractor}
         contentInsetAdjustmentBehavior={'automatic'}
         keyboardDismissMode="on-drag"
@@ -165,4 +155,20 @@ const PopularMoviesWidget = () => {
   );
 };
 
+const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
+  const {title, id} = item || {};
+  const onCTA = () => {
+    NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
+      queryParams: {screenTitle: title, movieId: id},
+    });
+  };
+  return (
+    <MoviePosterWidget
+      item={item}
+      index={index}
+      containerStyles={styles.moviePoster}
+      action={onCTA}
+    />
+  );
+};
 export default PopularMoviesWidget;

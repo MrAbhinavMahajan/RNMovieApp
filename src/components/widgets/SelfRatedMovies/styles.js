@@ -22,12 +22,26 @@ export const styles = StyleSheet.create({
     flexGrow: 1,
     marginTop: vpx(10),
   },
-  moviePoster: {
+  moviePosterContainer: {
     width: hpx(80),
     aspectRatio: 3 / 5,
     borderRadius: vpx(8),
-    borderWidth: StyleSheet.hairlineWidth,
     overflow: 'hidden',
+    borderWidth: StyleSheet.hairlineWidth,
+  },
+  moviePoster: {
+    height: '100%',
+    width: '100%',
+  },
+  moviePosterGradient: {
+    opacity: 1,
+    position: 'absolute',
+    zIndex: 1,
+    bottom: 0,
+    height: '100%',
+    aspectRatio: 3 / 5,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   errorContainer: {
     backgroundColor: COLORS.antiFlashWhite,

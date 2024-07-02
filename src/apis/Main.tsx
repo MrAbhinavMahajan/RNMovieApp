@@ -486,7 +486,7 @@ export const addMovieRating = async ({
   return fetchJson(url, options);
 };
 
-export const deleteMovieRating = async (movieId: string) => {
+export const deleteMovieRating = async (movieId: number) => {
   const userStorage = Storage.getUserStorageInstance();
   const accessToken: string | undefined = userStorage?.getString('accessToken');
   const url = `https://api.themoviedb.org/3/movie/${movieId}/rating`;

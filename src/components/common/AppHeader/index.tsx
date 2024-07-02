@@ -8,7 +8,6 @@ import {styles} from './styles';
 import {goBack} from '../../../service/Navigation';
 import AppCTA from '../AppCTA';
 import LinearGradient from 'react-native-linear-gradient';
-import {COLORS} from '../../../constants/Colors';
 
 interface AppHeaderProps {
   LeftComponent?: any;

@@ -11,7 +11,7 @@ import {FALLBACK_DATA} from '../../../data/Main';
 import {QUERY_STATUS} from '../../../constants/Main';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import HeaderTitleWidget from '../HeaderTitle';
-import ErrorInfoWidget from '../ErrorInfo';
+import ErrorStateWidget from '../ErrorState';
 
 const NowPlayingMoviesWidget = () => {
   const page = 1;
@@ -54,20 +54,6 @@ const NowPlayingMoviesWidget = () => {
     NativeAppEventEmitter.addListener(PAGE_REFRESH.HOME_SCREEN, refreshWidget);
   }, []);
 
-  const renderItem = ({
-    item,
-    index,
-  }: {
-    item: MoviePosterItem;
-    index: number;
-  }) => (
-    <MoviePosterWidget
-      item={item}
-      index={index}
-      containerStyles={styles.moviePoster}
-    />
-  );
-
   if (!isError && status !== QUERY_STATUS.PENDING && _.isEmpty(movies)) {
     return <></>;
   }
@@ -84,7 +70,7 @@ const NowPlayingMoviesWidget = () => {
         loaderEnabled={isFetching}
       />
       {isError && (
-        <ErrorInfoWidget
+        <ErrorStateWidget
           error={error}
           containerStyles={styles.errorContainer}
           retryCTA={refreshWidget}
@@ -93,7 +79,9 @@ const NowPlayingMoviesWidget = () => {
       <FlatList
         ref={listRef}
         data={movies}
-        renderItem={renderItem}
+        renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
+          <MovieCard item={item} index={index} />
+        )}
         keyExtractor={keyExtractor}
         horizontal
         onScroll={onScroll}
@@ -104,6 +92,23 @@ const NowPlayingMoviesWidget = () => {
         extraData={movies}
       />
     </View>
+  );
+};
+
+const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
+  const {title, id} = item || {};
+  const onCTA = () => {
+    NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
+      queryParams: {screenTitle: title, movieId: id},
+    });
+  };
+  return (
+    <MoviePosterWidget
+      item={item}
+      index={index}
+      containerStyles={styles.moviePoster}
+      action={onCTA}
+    />
   );
 };
 

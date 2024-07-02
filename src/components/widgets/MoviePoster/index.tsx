@@ -27,23 +27,22 @@ const MoviePosterWidget = ({
   item,
   index,
   containerStyles = {},
+  action,
 }: {
   item: MoviePosterItem;
   index: number;
   containerStyles: any;
+  action?: () => void;
 }) => {
-  const {poster_path, title, id} = item || {};
+  const {poster_path} = item || {};
   const imageURL = `${IMAGE_BASEURL}${poster_path}`;
 
   return (
     <TouchableOpacity
       key={index}
       style={[styles.movieCardView, containerStyles]}
-      onPress={() => {
-        NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
-          queryParams: {screenTitle: title, movieId: id},
-        });
-      }}>
+      disabled={!action}
+      onPress={action}>
       <RNImage imageURL={imageURL} />
     </TouchableOpacity>
   );
