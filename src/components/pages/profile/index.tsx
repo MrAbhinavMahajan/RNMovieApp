@@ -39,10 +39,10 @@ import HeaderTitleWidget from '../../widgets/HeaderTitle';
 
 const ProfileScreen = () => {
   const insets = useSafeAreaInsets();
-  const {accountDetails, setAccountDetails} = useAppStore();
+  const {accountDetails, setAccountDetails, logout} = useAppStore();
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollHandler = useScrollViewOffset(scrollRef); // * Gives Current offset of ScrollView
-  const {isLoading, data, isSuccess} = useQuery({
+  const {data, isSuccess} = useQuery({
     queryKey: [APP_QUERY_MAP.PROFILE],
     queryFn: ({signal}) => fetchAccountDetails(signal),
     refetchInterval: 10000,
@@ -58,7 +58,7 @@ const ProfileScreen = () => {
           {
             text: 'Okay',
             onPress: () => {
-              store.logout();
+              logout();
             },
           },
         ],
@@ -122,7 +122,8 @@ const ProfileScreen = () => {
   }));
 
   const renderProfileCard = () => {
-    const username = accountDetails?.username || 'Loading..';
+    const username =
+      accountDetails?.name || accountDetails?.username || 'Loading..';
     const imageFallbackCharacter = accountDetails
       ? accountDetails?.username[0]
       : '';

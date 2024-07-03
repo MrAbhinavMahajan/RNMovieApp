@@ -8,6 +8,7 @@ export interface Avatar {
 
 export interface AccountDetails {
   id: number;
+  name: string;
   username: string;
   avatar: Avatar;
   include_adult: boolean;
