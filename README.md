@@ -71,5 +71,6 @@ MMKV is a Memory Map Key Value Storage.
 - Encryption
   - Keychain on iOS
   - Keystore on android (API 23 and above)
+- Synchronous
 - Faster performance
 - Lesser Memory size
