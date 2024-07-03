@@ -34,9 +34,10 @@ A Singleton class maintaining following instances:-
 
 ## User Engagement
 
-1. Favorites
-2. Watchlist
-3. Rating
+1. Favorites & Watchlist
+3. Add or Remove Rating
+4. Recommended Movies
+5. Similar Movies
 
 ## Miscellaneous
 
@@ -57,6 +58,10 @@ TanStack Query provides a high advantage in data fetching, caching, background u
 - End users are protected with token validation
 - End users approve the application request token
 - Encryption can be AES with a 256 bits key (token is HS256 signed with a 256 bit key).
+
+### Zustand (State Management)
+
+Zustand is a small, fast and scaleable state-management solution for React applications with minimal boilerplate.
 
 ### MMKV Storage
 
