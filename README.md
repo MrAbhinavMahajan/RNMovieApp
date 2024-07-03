@@ -59,7 +59,7 @@ TanStack Query provides a high advantage in data fetching, caching, background u
 - End users approve the application request token
 - Encryption can be AES with a 256 bits key (token is HS256 signed with a 256 bit key).
 
-### Zustand (State Management)
+### Zustand (State Management + MMKV Storage)
 
 Zustand is a small, fast and scaleable state-management solution for React applications with minimal boilerplate.
 
