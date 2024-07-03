@@ -7,17 +7,19 @@ import {FlatList, NativeAppEventEmitter, View} from 'react-native';
 import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
 import {styles} from './styles';
 import {PAGE_REFRESH} from '../../../constants/Page';
-import {FALLBACK_DATA, SIMILAR_MOVIE_ID} from '../../../data/Main';
+import {FALLBACK_DATA} from '../../../data/Main';
 import {QUERY_STATUS} from '../../../constants/Main';
 import {APP_QUERY_MAP} from '../../../constants/Api';
 import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
+import useAppStore from '../../../store/useAppStore';
 
 const SimilarMoviesWidget = () => {
   const page = 1;
+  const {lastWatchedMovieId} = useAppStore();
   const query = useQuery({
-    queryKey: [APP_QUERY_MAP.SIMILAR_MOVIES, SIMILAR_MOVIE_ID],
+    queryKey: [APP_QUERY_MAP.SIMILAR_MOVIES, lastWatchedMovieId],
     queryFn: ({signal}) => fetchSimilarMovies(signal, page),
   });
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;

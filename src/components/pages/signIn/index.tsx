@@ -14,18 +14,18 @@ import {STD_VERTICAL_SPACING} from '../../../constants/Styles';
 import {AppArrowUpIcon} from '../../common/RNIcon';
 import {AUTH_STEPS} from '../../../data/Main';
 import {createAccessTokenV4, createRequestTokenV4} from '../../../apis/Main';
-import {startUserSession} from '../../../utilities/App';
 import {COLORS} from '../../../constants/Colors';
 import {styles} from './styles';
 import {APP_QUERY_MAP} from '../../../constants/Api';
-import Storage from '../../../utilities/Storage';
 import RNText from '../../common/RNText';
 import AppCTA from '../../common/AppCTA';
 import QuotationWidget from '../../widgets/Quotation';
 import HeaderTitleWidget from '../../widgets/HeaderTitle';
+import useAppStore from '../../../store/useAppStore';
 
 const SignInScreen = () => {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
+  const store = useAppStore(state => state);
   const scrollHandler = useScrollViewOffset(scrollRef); // * Gives Current offset of ScrollView
   const insets = useSafeAreaInsets();
   const [requestTokenQueryFilter, setRequestTokenQueryFilter] = useState<
@@ -74,10 +74,7 @@ const SignInScreen = () => {
     }
     if (!!accessTokenQueryFilter && data?.access_token) {
       const {access_token, account_id: id} = data;
-      Storage.setUserStorageInstance(id);
-      Storage.saveToUserStorage('accountId', id);
-      Storage.saveToUserStorage('accessToken', access_token);
-      startUserSession();
+      store.login(id, access_token);
     }
   }, [accessTokenQuery]);
 

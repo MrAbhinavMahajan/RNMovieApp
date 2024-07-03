@@ -32,6 +32,7 @@ import {
   WatchlistRequestBody,
 } from '../../../constants/AppInterfaces';
 import AppHeader from '../../common/AppHeader';
+import useAppStore from '../../../store/useAppStore';
 
 interface MovieDetailsScreenProps {
   route: {
@@ -46,6 +47,7 @@ interface MovieDetailsScreenProps {
 
 const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
   const queryClient = useQueryClient();
+  const {setLastWatchedMovieId} = useAppStore();
   const page = 1;
   const favoriteMoviesQuery = useQuery({
     queryKey: [APP_QUERY_MAP.FAVORITE_MOVIES],
@@ -86,7 +88,9 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
   const {queryParams} = props.route?.params || {};
   const {screenTitle, movieId} = queryParams;
 
-  const retrieveMoviesRequiredData = () => {
+  const setMoviesDataRequired = () => {
+    setLastWatchedMovieId(movieId);
+
     setIsFavorite(() => {
       let isMovieFound = false;
       if (!_.isEmpty(favoriteMoviesQuery?.data?.results)) {
@@ -111,7 +115,7 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
   };
 
   const refreshPage = () => {
-    retrieveMoviesRequiredData();
+    setMoviesDataRequired();
     NativeAppEventEmitter.emit(PAGE_REFRESH.MOVIE_DETAILS_SCREEN);
   };
 

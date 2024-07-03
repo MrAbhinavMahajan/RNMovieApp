@@ -76,6 +76,27 @@ class Storage {
     console.log('App storage::', this.appStorageInstance);
     return this.appStorageInstance;
   }
+
+  public clearAppStorage(): void {
+    if (this.appStorageInstance) {
+      this.appStorageInstance.clearAll();
+    }
+  }
+
+  public clearUserStorage(): void {
+    if (this.userStorageInstance) {
+      this.userStorageInstance.clearAll();
+    }
+  }
+
+  public clearAll(): void {
+    if (this.appStorageInstance) {
+      this.appStorageInstance.clearAll();
+    }
+    if (this.userStorageInstance) {
+      this.userStorageInstance.clearAll();
+    }
+  }
 }
 
 const encryptionKey = process.env.STORAGE_ENCRYPTION_KEY || 'STORAGE';

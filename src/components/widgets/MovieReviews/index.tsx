@@ -7,7 +7,7 @@ import {IconSize, MaterialIcon} from '../../common/RNIcon';
 import {FALLBACK_DATA} from '../../../data/Main';
 import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
 import {styles} from './styles';
-import {kRATINGS} from '../../../constants/Messages';
+import {kREVIEWS} from '../../../constants/Messages';
 import {COLORS} from '../../../constants/Colors';
 import {APP_QUERY_MAP} from '../../../constants/Api';
 import {QUERY_STATUS} from '../../../constants/Main';
@@ -113,15 +113,15 @@ const MoviesReviewsWidget = () => {
     );
   }
 
-  if (isEmpty) {
+  if (true || isEmpty) {
     return (
       <EmptyStateWidget
-        title={kRATINGS.noRatings.title}
-        message={kRATINGS.noRatings.subtitle}
+        title={kREVIEWS.noReviews?.title}
+        message={kREVIEWS.noReviews?.subtitle}
         containerStyles={styles.utilsContainer}
         icon={
           <MaterialIcon
-            name={'star'}
+            name={'reviews'}
             size={IconSize.large}
             color={COLORS.fullBlack}
           />

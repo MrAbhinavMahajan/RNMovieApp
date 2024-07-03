@@ -1,3 +1,19 @@
+export interface Tmdb {
+  avatar_path: null;
+}
+
+export interface Avatar {
+  tmdb: Tmdb;
+}
+
+export interface AccountDetails {
+  id: number;
+  name: string;
+  username: string;
+  avatar: Avatar;
+  include_adult: boolean;
+}
+
 export interface QueryClientProps {
   data: any; // Api Response
   dataUpdatedAt: number;

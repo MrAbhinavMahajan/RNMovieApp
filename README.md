@@ -61,7 +61,7 @@ TanStack Query provides a high advantage in data fetching, caching, background u
 ### MMKV Storage
 
 MMKV is a Memory Map Key Value Storage.
-(developed by WeChat)
+(30% faster than AsyncStorage, and is developed by WeChat)
 
 - Encryption
   - Keychain on iOS

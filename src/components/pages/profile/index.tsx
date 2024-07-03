@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect} from 'react';
+import _ from 'lodash';
 import {
   Alert,
   NativeAppEventEmitter,
@@ -17,28 +18,36 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import {AppArrowUpIcon, AppLogoutIcon} from '../../common/RNIcon';
+import {COLORS} from '../../../constants/Colors';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {STD_VERTICAL_SPACING} from '../../../constants/Styles';
+import {expireAccessTokenV4, fetchAccountDetails} from '../../../apis/Main';
+import {useMutation, useQuery} from '@tanstack/react-query';
+import {kGENERAL, kSIGN_OUT} from '../../../constants/Messages';
+import {SignOutRequestBody} from '../../../constants/AppInterfaces';
+import {APP_QUERY_MAP} from '../../../constants/Api';
+import {IMAGE_BASEURL} from '../../../constants/Main';
+import Storage from '../../../utilities/Storage';
+import useAppStore from '../../../store/useAppStore';
 import AppCTA from '../../common/AppCTA';
+import RNImage from '../../common/RNImage';
+import RNText from '../../common/RNText';
 import WatchlistMoviesWidget from '../../widgets/WatchlistMovies';
 import FavoritesMoviesWidget from '../../widgets/FavoriteMovies';
 import SelfRatedMoviesWidget from '../../widgets/SelfRatedMovies';
 import HeaderTitleWidget from '../../widgets/HeaderTitle';
-import {COLORS} from '../../../constants/Colors';
-import RNImage from '../../common/RNImage';
-import RNText from '../../common/RNText';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {STD_VERTICAL_SPACING} from '../../../constants/Styles';
-import {expireAccessTokenV4} from '../../../apis/Main';
-import {useMutation, useQueryClient} from '@tanstack/react-query';
-import {kSIGN_OUT} from '../../../constants/Messages';
-import {SignOutRequestBody} from '../../../constants/AppInterfaces';
-import Storage from '../../../utilities/Storage';
-import {terminateUserSession} from '../../../utilities/App';
 
 const ProfileScreen = () => {
-  const queryClient = useQueryClient();
   const insets = useSafeAreaInsets();
+  const {accountDetails, setAccountDetails, logout} = useAppStore();
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollHandler = useScrollViewOffset(scrollRef); // * Gives Current offset of ScrollView
+  const {data, isSuccess} = useQuery({
+    queryKey: [APP_QUERY_MAP.PROFILE],
+    queryFn: ({signal}) => fetchAccountDetails(signal),
+    refetchInterval: 10000,
+  });
+  console.log('Account Details::: ', data);
   const logoutMutation = useMutation({
     mutationFn: expireAccessTokenV4,
     onSuccess: () => {
@@ -49,17 +58,23 @@ const ProfileScreen = () => {
           {
             text: 'Okay',
             onPress: () => {
-              queryClient.clear();
-              terminateUserSession();
+              logout();
             },
           },
         ],
       );
     },
     onError: () => {
-      Alert.alert(GENERIC_ERROR_TITLE, GENERIC_ERROR_MESSAGE);
+      Alert.alert(kGENERAL.title, kGENERAL.subtitle);
     },
   });
+
+  useEffect(() => {
+    if (!_.isEmpty(data)) {
+      setAccountDetails(data);
+    }
+  }, [isSuccess]);
+
   useEffect(() => {
     return () => {
       NativeAppEventEmitter.removeAllListeners(PAGE_REFRESH.PROFILE_SCREEN);
@@ -106,25 +121,32 @@ const ProfileScreen = () => {
     opacity: withTiming(scrollHandler.value > 600 ? 1 : 0),
   }));
 
-  const renderProfileCard = () => (
-    <View
-      style={[
-        styles.profileCardView,
-        {paddingTop: insets.top + STD_VERTICAL_SPACING},
-      ]}>
-      <RNImage
-        imageURL={
-          'https://media.themoviedb.org/t/p/w440_and_h660_face/geAWZUshBg4hS8TIeLOEhJbglpo.jpg'
-        }
-        imageStyles={styles.profileImage}
-        imageViewStyles={styles.profileImageView}
-      />
-
-      <RNText style={styles.usernameText} numberOfLines={1}>
-        Abhinav Mahajan
-      </RNText>
-    </View>
-  );
+  const renderProfileCard = () => {
+    const username =
+      accountDetails?.name || accountDetails?.username || 'Loading..';
+    const imageFallbackCharacter = accountDetails
+      ? accountDetails?.username[0]
+      : '';
+    return (
+      <View
+        style={[
+          styles.profileCardView,
+          {paddingTop: insets.top + STD_VERTICAL_SPACING},
+        ]}>
+        <RNImage
+          imageURL={
+            IMAGE_BASEURL + `${accountDetails?.avatar?.tmdb?.avatar_path}` ?? ''
+          }
+          imageStyles={styles.profileImage}
+          imageViewStyles={styles.profileImageView}
+          fallbackCharacter={imageFallbackCharacter}
+        />
+        <RNText style={styles.usernameText} numberOfLines={1}>
+          {username}
+        </RNText>
+      </View>
+    );
+  };
 
   const renderSignOutCTA = () => (
     <HeaderTitleWidget
