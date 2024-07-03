@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
     borderRadius: 1000,
     overflow: 'hidden',
     borderWidth: 2,
-    borderColor: COLORS.fullWhite,
+    borderColor: COLORS.azureishWhite,
   },
   usernameText: {
     flex: 1,

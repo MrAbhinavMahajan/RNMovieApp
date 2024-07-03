@@ -3,8 +3,6 @@ import {TouchableOpacity} from 'react-native';
 import {styles} from './styles';
 import RNImage from '../../common/RNImage';
 import {IMAGE_BASEURL} from '../../../constants/Main';
-import * as NavigationService from '../../../service/Navigation';
-import {APP_PAGES_MAP} from '../../../constants/Navigation';
 
 export interface MoviePosterItem {
   adult: boolean;
@@ -36,6 +34,7 @@ const MoviePosterWidget = ({
 }) => {
   const {poster_path} = item || {};
   const imageURL = `${IMAGE_BASEURL}${poster_path}`;
+  const fallbackCharacter = item?.title ? item?.title[0] : '';
 
   return (
     <TouchableOpacity
@@ -43,7 +42,7 @@ const MoviePosterWidget = ({
       style={[styles.movieCardView, containerStyles]}
       disabled={!action}
       onPress={action}>
-      <RNImage imageURL={imageURL} />
+      <RNImage imageURL={imageURL} fallbackCharacter={fallbackCharacter} />
     </TouchableOpacity>
   );
 };

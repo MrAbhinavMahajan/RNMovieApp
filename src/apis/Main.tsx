@@ -4,9 +4,9 @@ import {
   WatchlistRequestBody,
 } from '../constants/AppInterfaces';
 import Storage from '../utilities/Storage';
-import {terminateUserSession} from '../utilities/App';
-import {SIMILAR_MOVIE_ID} from '../data/Main';
+import {getAppStoreState} from '../store/useAppStore';
 const ReadAccessToken = process.env.READ_ACCESS_TOKEN;
+const {logout} = getAppStoreState();
 
 enum RequestMethod {
   'GET' = 'GET',
@@ -27,14 +27,18 @@ async function fetchJson(url: string, options: RequestOptions) {
     if (!response.ok) {
       let errorMessage = `HTTP error ${response.status} - ${response.statusText}`;
       if (response.status === 401) {
-        terminateUserSession();
+        logout();
         errorMessage = 'Unauthorized access';
       }
       throw new Error(errorMessage);
     }
     return response.json();
-  } catch (error) {
+  } catch (error: Error | any) {
     console.error('Error during fetch operation:', error);
+    if (error?.title === 'AbortError') {
+      return;
+    }
+    throw new Error(error);
   }
 }
 
@@ -96,7 +100,7 @@ export const expireAccessTokenV4 = async (body: SignOutRequestBody) => {
   const accessToken: string | undefined = body.access_token;
   if (!accessToken) {
     // ! Unauthorized access
-    terminateUserSession();
+    logout();
     return;
   }
   const headers = {};
@@ -119,7 +123,7 @@ export const fetchMovieFavoritesV4 = async (
   const accessToken: string | undefined = userStorage?.getString('accessToken');
   if (!accountId || !accessToken) {
     // ! Unauthorized access
-    terminateUserSession();
+    logout();
     return;
   }
   const url = `https://api.themoviedb.org/4/account/${accountId}/movie/favorites?language=en-US&page=${pageParam}&sort_by=created_at.desc`;
@@ -143,7 +147,7 @@ export const fetchMovieWatchlistV4 = async (
   const accessToken: string | undefined = userStorage?.getString('accessToken');
   if (!accountId || !accessToken) {
     // ! Unauthorized access
-    terminateUserSession();
+    logout();
     return;
   }
   const url = `https://api.themoviedb.org/4/account/${accountId}/movie/watchlist?language=en-US&page=${pageParam}&sort_by=created_at.desc`;
@@ -298,7 +302,7 @@ export const fetchMovieFavorites = async (
   const accessToken: string | undefined = userStorage?.getString('accessToken');
   if (!accountId || !accessToken) {
     // ! Unauthorized access
-    terminateUserSession();
+    logout();
     return;
   }
   const url = `https://api.themoviedb.org/3/account/${accountId}/favorite/movies?language=en-US&page=${pageParam}&sort_by=created_at.desc`;
@@ -323,7 +327,7 @@ export const fetchMovieWatchlist = async (
   const accessToken: string | undefined = userStorage?.getString('accessToken');
   if (!accountId || !accessToken) {
     // ! Unauthorized access
-    terminateUserSession();
+    logout();
     return;
   }
   const url = `https://api.themoviedb.org/3/account/${accountId}/watchlist/movies?language=en-US&page=${pageParam}&sort_by=created_at.desc`;
@@ -345,7 +349,7 @@ export const updateMovieFavorites = async (body: FavoriteRequestBody) => {
   const accessToken: string | undefined = userStorage?.getString('accessToken');
   if (!accountId || !accessToken) {
     // ! Unauthorized access
-    terminateUserSession();
+    logout();
     return;
   }
   const url = `https://api.themoviedb.org/3/account/${accountId}/favorite`;
@@ -366,7 +370,7 @@ export const updateMovieWatchlist = async (body: WatchlistRequestBody) => {
   const accessToken: string | undefined = userStorage?.getString('accessToken');
   if (!accountId || !accessToken) {
     // ! Unauthorized access
-    terminateUserSession();
+    logout();
     return;
   }
   const url = `https://api.themoviedb.org/3/account/${accountId}/watchlist`;
@@ -387,7 +391,7 @@ export const fetchAccountDetails = async (signal: AbortSignal) => {
   const accessToken: string | undefined = userStorage?.getString('accessToken');
   if (!accountId || !accessToken) {
     // ! Unauthorized access
-    terminateUserSession();
+    logout();
     return;
   }
   const url = `https://api.themoviedb.org/3/account/${accountId}`;
@@ -412,7 +416,7 @@ export const fetchMoviesRated = async (
   const accessToken: string | undefined = userStorage?.getString('accessToken');
   if (!accountId || !accessToken) {
     // ! Unauthorized access
-    terminateUserSession();
+    logout();
     return;
   }
   const url = `https://api.themoviedb.org/4/account/${accountId}/movie/rated?page=${pageParam}&language=en-US&sort_by=created_at.desc`;
@@ -431,9 +435,10 @@ export const fetchSimilarMovies = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
+  const {lastWatchedMovieId} = getAppStoreState();
   const userStorage = Storage.getUserStorageInstance();
   const accessToken: string | undefined = userStorage?.getString('accessToken');
-  const url = `https://api.themoviedb.org/3/movie/${SIMILAR_MOVIE_ID}/similar?language=en-US&page=${pageParam}`;
+  const url = `https://api.themoviedb.org/3/movie/${lastWatchedMovieId}/similar?language=en-US&page=${pageParam}`;
   const headers = {};
   const options = createRequestOptions(
     RequestMethod.GET,
@@ -449,9 +454,10 @@ export const fetchMovieReviews = async (
   signal: AbortSignal,
   pageParam: number,
 ) => {
+  const {lastWatchedMovieId} = getAppStoreState();
   const userStorage = Storage.getUserStorageInstance();
   const accessToken: string | undefined = userStorage?.getString('accessToken');
-  const url = `https://api.themoviedb.org/3/movie/${SIMILAR_MOVIE_ID}/reviews?language=en-US&page=${pageParam}`;
+  const url = `https://api.themoviedb.org/3/movie/${lastWatchedMovieId}/reviews?language=en-US&page=${pageParam}`;
   const headers = {};
   const options = createRequestOptions(
     RequestMethod.GET,

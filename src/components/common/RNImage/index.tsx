@@ -2,12 +2,14 @@ import React, {useState} from 'react';
 import {ActivityIndicator, Image, View} from 'react-native';
 import {styles} from './styles';
 import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
+import RNText from '../RNText';
 
 interface RNImageProps {
   imageURL: string;
   imageViewStyles?: any;
   imageStyles?: any;
   blurRadius?: number;
+  fallbackCharacter: string;
 }
 
 const RNImage = (props: RNImageProps) => {
@@ -15,11 +17,16 @@ const RNImage = (props: RNImageProps) => {
     imageURL,
     imageViewStyles = {},
     imageStyles = {},
+    fallbackCharacter = 'T',
     ...imageData
   } = props;
   const [loading, setLoading] = useState(false);
+  const [errorFallback, setErrorFallback] = useState(false);
 
-  const startLoading = () => setLoading(true);
+  const startLoading = () => {
+    setLoading(true);
+    setErrorFallback(false);
+  };
 
   const stopLoading = () => setLoading(false);
 
@@ -39,6 +46,7 @@ const RNImage = (props: RNImageProps) => {
     console.log('onError: ', nativeEvent);
     // ! Set Error Source
     stopLoading();
+    setErrorFallback(true);
   };
 
   return (
@@ -58,6 +66,11 @@ const RNImage = (props: RNImageProps) => {
         onLoadEnd={onLoadEnd}
         {...imageData}
       />
+      {errorFallback && (
+        <View style={[styles.errorFallback, imageStyles]}>
+          <RNText style={styles.errorFallbackText}>{fallbackCharacter}</RNText>
+        </View>
+      )}
     </View>
   );
 };
