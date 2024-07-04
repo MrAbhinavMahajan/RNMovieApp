@@ -35,15 +35,25 @@ A Singleton class maintaining following instances:-
 ## User Engagement
 
 1. Favorites & Watchlist
-3. Add or Remove Rating
-4. Recommended Movies
-5. Similar Movies
+2. Add or Remove Rating
+3. Recommended Movies
+4. Similar Movies
 
 ## Miscellaneous
 
 ### TMDB
 
 - A movie database (TMDB) API
+
+### JSX
+
+JSX is the syntax extension for JavaScript that lets you write HTML-like markup inside a JavaScript file.
+The root element returned by a component, should be a single element.
+Using curly brackets { } we can create a portal from JSX to Javascript.
+
+### Fragment
+
+If we don’t want to add an extra View in our hierarchy we can use an empty tag <> </> , which is also called a Fragment.
 
 ### TanStack Query
 
