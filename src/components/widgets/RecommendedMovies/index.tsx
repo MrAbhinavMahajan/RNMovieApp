@@ -13,16 +13,18 @@ import {APP_QUERY_MAP} from '../../../constants/Api';
 import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
+import useAppStore from '../../../store/useAppStore';
 
 interface RecommendedMoviesWidgetProps {
   widgetTitle?: string;
 }
 
 const RecommendedMoviesWidget = (props: RecommendedMoviesWidgetProps) => {
+  const {lastWatchedMovieId} = useAppStore();
   const {widgetTitle} = props || {};
   const page = 1;
   const query = useQuery({
-    queryKey: [APP_QUERY_MAP.RECOMMENDED_MOVIES],
+    queryKey: [APP_QUERY_MAP.RECOMMENDED_MOVIES, lastWatchedMovieId],
     queryFn: ({signal}) => fetchRecommendedMoviesV4(signal, page),
   });
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
