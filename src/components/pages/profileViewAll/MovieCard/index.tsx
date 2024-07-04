@@ -51,6 +51,10 @@ const MovieCard = ({
         queryKey: [APP_QUERY_MAP.FAVORITE_MOVIES],
         refetchType: 'active',
       });
+      queryClient.invalidateQueries({
+        queryKey: [APP_QUERY_MAP.PROFILE_VIEW_ALL_MOVIES],
+        refetchType: 'active',
+      });
     },
     onError: () => {
       Alert.alert(kGENERAL.title, kGENERAL.subtitle);
@@ -69,6 +73,10 @@ const MovieCard = ({
         queryKey: [APP_QUERY_MAP.WATCHLIST_MOVIES],
         refetchType: 'active',
       });
+      queryClient.invalidateQueries({
+        queryKey: [APP_QUERY_MAP.PROFILE_VIEW_ALL_MOVIES],
+        refetchType: 'active',
+      });
     },
     onError: () => {
       Alert.alert(kGENERAL.title, kGENERAL.subtitle);
@@ -85,7 +93,7 @@ const MovieCard = ({
       });
       queryClient.invalidateQueries({
         queryKey: [APP_QUERY_MAP.PROFILE_VIEW_ALL_MOVIES],
-        refetchType: 'all',
+        refetchType: 'active',
       });
     },
     onError: () => {

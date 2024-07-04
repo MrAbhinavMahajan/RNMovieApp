@@ -49,7 +49,7 @@ A Singleton class maintaining following instances:-
 
 JSX is the syntax extension for JavaScript that lets you write HTML-like markup inside a JavaScript file.
 The root element returned by a component, should be a single element.
-Using curly brackets { } we can create a portal from JSX to Javascript.
+Using curly brackets { } we can create a portal from JSX to Javascript Expression.
 
 ### Fragment
 

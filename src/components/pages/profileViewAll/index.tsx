@@ -128,11 +128,6 @@ const ProfileViewAllScreen = (props: ProfileViewAllScreenProps) => {
       queryClient.cancelQueries({
         queryKey: [APP_QUERY_MAP.PROFILE_VIEW_ALL_MOVIES, widgetId],
       });
-      // ! Invalidating Query Data on unmount
-      queryClient.invalidateQueries({
-        queryKey: [APP_QUERY_MAP.PROFILE_VIEW_ALL_MOVIES],
-        refetchType: 'active',
-      });
     };
   }, []);
 
