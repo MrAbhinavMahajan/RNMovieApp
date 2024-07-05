@@ -19,21 +19,21 @@ const fontScaleFactor = () => {
   return Math.max(widthScaleFactor(), heightScaleFactor());
 };
 
-const scaledHorizontalPixels = pixels => {
+const scaledHorizontalPixels = (pixels: number) => {
   const scaledPixels = PixelRatio.roundToNearestPixel(
     widthScaleFactor() * pixels,
   );
   return scaledPixels;
 };
 
-const scaledVerticalPixels = pixels => {
+const scaledVerticalPixels = (pixels: number) => {
   const scaledPixels = PixelRatio.roundToNearestPixel(
     heightScaleFactor() * pixels,
   );
   return scaledPixels;
 };
 
-const scaledFontSize = pixels => {
+const scaledFontSize = (pixels: number) => {
   const scaledPixels = PixelRatio.roundToNearestPixel(
     fontScaleFactor() * pixels,
   );
