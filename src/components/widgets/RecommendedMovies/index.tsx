@@ -10,8 +10,9 @@ import {PAGE_REFRESH} from '../../../constants/Page';
 import {FALLBACK_DATA} from '../../../data/Main';
 import {QUERY_STATUS} from '../../../constants/Main';
 import {APP_QUERY_MAP} from '../../../constants/Api';
+import {MoviePosterItem} from '../../../constants/AppInterfaces';
 import HeaderTitleWidget from '../HeaderTitle';
-import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
+import MoviePosterWidget from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
 import useAppStore from '../../../store/useAppStore';
 

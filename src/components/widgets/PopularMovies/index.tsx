@@ -15,8 +15,9 @@ import {styles} from './styles';
 import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
 import {APP_PAGES_MAP} from '../../../constants/Navigation';
 import {APP_QUERY_MAP} from '../../../constants/Api';
+import {MoviePosterItem} from '../../../constants/AppInterfaces';
 import AppCTA from '../../common/AppCTA';
-import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
+import MoviePosterWidget from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
 import EmptyStateCreativeCard from '../../common/EmptyStateCard';
 

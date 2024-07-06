@@ -23,7 +23,7 @@ import {
   AppEditIcon,
   AppSearchIcon,
 } from '../../common/RNIcon';
-import {MoviePosterItem} from '../../widgets/MoviePoster';
+import {MoviePosterItem} from '../../../constants/AppInterfaces';
 import {APP_QUERY_MAP} from '../../../constants/Api';
 import AppHeader from '../../common/AppHeader';
 import AppCTA from '../../common/AppCTA';

@@ -21,11 +21,12 @@ import {fetchSearchedMovieResults} from '../../../apis/Main';
 import {AppArrowUpIcon} from '../../common/RNIcon';
 import {styles} from './styles';
 import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
+import {MoviePosterItem} from '../../../constants/AppInterfaces';
+import {APP_QUERY_MAP} from '../../../constants/Api';
 import AppCTA from '../../common/AppCTA';
 import RNText from '../../common/RNText';
-import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
+import MoviePosterWidget from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
-import {APP_QUERY_MAP} from '../../../constants/Api';
 
 interface SearchedResultsWidgetProps {
   searchedText: string;

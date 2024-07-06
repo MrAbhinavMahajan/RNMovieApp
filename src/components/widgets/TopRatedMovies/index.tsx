@@ -10,7 +10,8 @@ import {styles} from './styles';
 import {FALLBACK_DATA} from '../../../data/Main';
 import {QUERY_STATUS} from '../../../constants/Main';
 import {APP_QUERY_MAP} from '../../../constants/Api';
-import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
+import {MoviePosterItem} from '../../../constants/AppInterfaces';
+import MoviePosterWidget from '../MoviePoster';
 import HeaderTitleWidget from '../HeaderTitle';
 import ErrorStateWidget from '../ErrorState';
 

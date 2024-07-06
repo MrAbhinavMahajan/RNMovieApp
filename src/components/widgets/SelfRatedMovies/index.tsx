@@ -13,8 +13,9 @@ import {kRATINGS} from '../../../constants/Messages';
 import {IconSize, MaterialIcon} from '../../common/RNIcon';
 import {COLORS} from '../../../constants/Colors';
 import {APP_QUERY_MAP} from '../../../constants/Api';
+import {MoviePosterItem} from '../../../constants/AppInterfaces';
 import HeaderTitleWidget from '../HeaderTitle';
-import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
+import MoviePosterWidget from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
 import EmptyStateWidget from '../EmptyState';
 

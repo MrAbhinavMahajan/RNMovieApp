@@ -73,3 +73,8 @@ export interface MovieItem {
   vote_average: number;
   vote_count: number;
 }
+
+export interface MoviePosterItem {
+  poster_path: string;
+  title: string;
+}

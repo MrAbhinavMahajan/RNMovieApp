@@ -23,9 +23,10 @@ import {
   kRATINGS,
   kWATCHLIST,
 } from '../../../../constants/Messages';
-import MoviePosterWidget, {MoviePosterItem} from '../../../widgets/MoviePoster';
-import AppCTA from '../../../common/AppCTA';
 import {APP_QUERY_MAP} from '../../../../constants/Api';
+import {MoviePosterItem} from '../../../../constants/AppInterfaces';
+import MoviePosterWidget from '../../../widgets/MoviePoster';
+import AppCTA from '../../../common/AppCTA';
 
 const MovieCard = ({
   item,

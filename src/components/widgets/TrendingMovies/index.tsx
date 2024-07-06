@@ -13,7 +13,8 @@ import {SCREEN_WIDTH} from '../../../utilities/App';
 import {COLORS} from '../../../constants/Colors';
 import {APP_PAGES_MAP} from '../../../constants/Navigation';
 import {APP_QUERY_MAP} from '../../../constants/Api';
-import MoviePosterWidget, {MoviePosterItem} from '../MoviePoster';
+import {MoviePosterItem} from '../../../constants/AppInterfaces';
+import MoviePosterWidget from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
 
 const SLIDER_WIDTH = SCREEN_WIDTH;

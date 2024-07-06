@@ -25,9 +25,10 @@ import {
 import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
 import {AppArrowUpIcon, AppSearchIcon} from '../../common/RNIcon';
 import {APP_QUERY_MAP} from '../../../constants/Api';
+import {MoviePosterItem} from '../../../constants/AppInterfaces';
 import AppHeader from '../../common/AppHeader';
 import AppCTA from '../../common/AppCTA';
-import MoviePosterWidget, {MoviePosterItem} from '../../widgets/MoviePoster';
+import MoviePosterWidget from '../../widgets/MoviePoster';
 import ErrorStateWidget from '../../widgets/ErrorState';
 import EmptyStateCreativeCard from '../../common/EmptyStateCard';
 
