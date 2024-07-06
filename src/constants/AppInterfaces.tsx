@@ -77,4 +77,5 @@ export interface MovieItem {
 export interface MoviePosterItem {
   poster_path: string;
   title: string;
+  id: number;
 }

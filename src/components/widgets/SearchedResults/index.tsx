@@ -27,6 +27,7 @@ import AppCTA from '../../common/AppCTA';
 import RNText from '../../common/RNText';
 import MoviePosterWidget from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
+import EmptyStateCreativeCard from '../../common/EmptyStateCard';
 
 interface SearchedResultsWidgetProps {
   searchedText: string;
@@ -124,7 +125,13 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
     if (isError || isLoading || isFetching) {
       return <></>;
     }
-    return <RNText>No Results Found</RNText>;
+    return (
+      <EmptyStateCreativeCard
+        title={'Oops!'}
+        message={'No Data Found'}
+        retryCTA={refreshWidget}
+      />
+    );
   };
 
   const keyExtractor = (item: MoviePosterItem) => `${item?.id}`;
