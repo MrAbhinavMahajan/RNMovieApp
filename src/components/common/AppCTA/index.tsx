@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropsWithChildren} from 'react';
 import {TouchableOpacity} from 'react-native';
 
 interface HitSlopProps {
@@ -10,12 +10,11 @@ interface HitSlopProps {
 interface AppCTAProps {
   onPress: () => void;
   disabled?: boolean;
-  children: any;
   style?: any;
   hitSlop?: HitSlopProps;
 }
 
-const AppCTA = (props: AppCTAProps) => {
+const AppCTA = (props: PropsWithChildren<AppCTAProps>) => {
   const {children, ...remainingProps} = props;
   return <TouchableOpacity {...remainingProps}>{children}</TouchableOpacity>;
 };

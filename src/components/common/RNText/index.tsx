@@ -1,15 +1,14 @@
-import React from 'react';
+import React, {PropsWithChildren} from 'react';
 import {Text} from 'react-native';
 import {FONTS} from '../../../constants/Fonts';
 
 interface RNTextProps {
   style: any;
-  children: any;
   numberOfLines?: number;
   onPress?: () => void;
 }
 
-const RNText = (props: RNTextProps) => {
+const RNText = (props: PropsWithChildren<RNTextProps>) => {
   const {children, style, ...textProps} = props;
   return (
     <Text
