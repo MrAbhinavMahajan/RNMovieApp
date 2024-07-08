@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {ActivityIndicator, Image, View} from 'react-native';
 import {styles} from './styles';
-import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
+import {STD_ACTIVITY_COLOR} from '@constants/Styles';
 import RNText from '../RNText';
 
 interface RNImageProps {

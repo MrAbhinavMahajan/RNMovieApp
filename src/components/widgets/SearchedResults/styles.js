@@ -1,12 +1,9 @@
 import {StyleSheet} from 'react-native';
-import {
-  STD_HORIZONTAL_SPACING,
-  STD_VERTICAL_SPACING,
-} from '../../../constants/Styles';
-import {fpx, hpx, vpx} from '../../../libraries/responsive-pixels';
-import {COLORS} from '../../../constants/Colors';
-import {FONTS} from '../../../constants/Fonts';
-import {SCREEN_HEIGHT} from '../../../utilities/App';
+import {STD_HORIZONTAL_SPACING, STD_VERTICAL_SPACING} from '@constants/Styles';
+import {fpx, hpx, vpx} from '@libraries/responsive-pixels';
+import {COLORS} from '@constants/Colors';
+import {FONTS} from '@constants/Fonts';
+import {SCREEN_HEIGHT} from '@utilities/App';
 
 export const styles = StyleSheet.create({
   containerView: {

@@ -3,10 +3,10 @@ import {
   STD_HORIZONTAL_SPACING,
   STD_SCREEN_COLOR,
   STYLES,
-} from '../../../constants/Styles';
-import {vpx} from '../../../libraries/responsive-pixels';
-import {COLORS} from '../../../constants/Colors';
-import {SCREEN_WIDTH} from '../../../utilities/App';
+} from '@constants/Styles';
+import {vpx} from '@libraries/responsive-pixels';
+import {COLORS} from '@constants/Colors';
+import {SCREEN_WIDTH} from '@utilities/App';
 
 export const styles = StyleSheet.create({
   headerGradientView: {

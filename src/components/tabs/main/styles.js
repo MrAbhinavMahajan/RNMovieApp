@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {hpx, vpx} from '../../../libraries/responsive-pixels';
+import {hpx, vpx} from '@libraries/responsive-pixels';
 
 export const styles = StyleSheet.create({
   tabBar: {

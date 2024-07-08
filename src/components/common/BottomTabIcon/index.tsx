@@ -1,6 +1,6 @@
 import React from 'react';
 import {View} from 'react-native';
-import {TabInfo} from '../../../utilities/Tabs';
+import {TabInfo} from '@utilities/Tabs';
 import {IconSize, MaterialIcon} from '../RNIcon';
 import {styles} from './styles';
 

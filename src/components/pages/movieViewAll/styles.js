@@ -3,10 +3,10 @@ import {
   STD_HORIZONTAL_SPACING,
   STD_SCREEN_COLOR,
   STYLES,
-} from '../../../constants/Styles';
-import {hpx, vpx} from '../../../libraries/responsive-pixels';
-import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../utilities/App';
-import {COLORS} from '../../../constants/Colors';
+} from '@constants/Styles';
+import {hpx, vpx} from '@libraries/responsive-pixels';
+import {SCREEN_HEIGHT, SCREEN_WIDTH} from '@utilities/App';
+import {COLORS} from '@constants/Colors';
 
 export const styles = StyleSheet.create({
   screenView: {

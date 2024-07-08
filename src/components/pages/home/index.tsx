@@ -11,7 +11,7 @@ import UpcomingMoviesWidget from '../../widgets/UpcomingMovies';
 import TopRatedMoviesWidget from '../../widgets/TopRatedMovies';
 import NowPlayingMoviesWidget from '../../widgets/NowPlaying';
 import QuotationWidget from '../../widgets/Quotation';
-import {PAGE_REFRESH} from '../../../constants/Page';
+import {PAGE_REFRESH} from '@constants/Page';
 import RecommendedMoviesWidget from '../../widgets/RecommendedMovies';
 import Animated, {
   useAnimatedRef,

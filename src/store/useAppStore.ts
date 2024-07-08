@@ -1,11 +1,11 @@
 import {create} from 'zustand';
-import {AccountDetails} from '../constants/AppInterfaces';
+import {AccountDetails} from '@constants/AppInterfaces';
 import {createJSONStorage, devtools, persist} from 'zustand/middleware';
-import {APP_STACKS_MAP, APP_TABS_MAP} from '../constants/Navigation';
-import {QUERY_CLIENT} from '../constants/Main';
-import * as NavigationService from '../service/Navigation';
+import {APP_STACKS_MAP, APP_TABS_MAP} from '@constants/Navigation';
+import {QUERY_CLIENT} from '@constants/Main';
+import * as NavigationService from '@service/Navigation';
 import zustandStorage from './storage';
-import storageInstance from '../utilities/Storage';
+import storageInstance from '@utilities/Storage';
 
 interface AppStateProps {
   isSignedIn: boolean;

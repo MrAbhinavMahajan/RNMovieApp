@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import {ActivityIndicator, Alert} from 'react-native';
-import * as NavigationService from '../../../../service/Navigation';
+import * as NavigationService from '@service/Navigation';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import LinearGradient from 'react-native-linear-gradient';
 import {
@@ -10,21 +10,16 @@ import {
   updateMovieWatchlist,
 } from '@apis/Main';
 import {styles} from './styles';
-import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '../../../../constants/Navigation';
+import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '@constants/Navigation';
 import {AppDeleteIcon, IconSize} from '../../../common/RNIcon';
-import {COLORS} from '../../../../constants/Colors';
+import {COLORS} from '@constants/Colors';
 import {
   FavoriteRequestBody,
   WatchlistRequestBody,
-} from '../../../../constants/AppInterfaces';
-import {
-  kFAVORITES,
-  kGENERAL,
-  kRATINGS,
-  kWATCHLIST,
-} from '../../../../constants/Messages';
-import {APP_QUERY_MAP} from '../../../../constants/Api';
-import {MoviePosterItem} from '../../../../constants/AppInterfaces';
+} from '@constants/AppInterfaces';
+import {kFAVORITES, kGENERAL, kRATINGS, kWATCHLIST} from '@constants/Messages';
+import {APP_QUERY_MAP} from '@constants/Api';
+import {MoviePosterItem} from '@constants/AppInterfaces';
 import MoviePosterWidget from '../../../widgets/MoviePoster';
 import AppCTA from '../../../common/AppCTA';
 

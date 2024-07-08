@@ -2,8 +2,8 @@ import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import {styles} from './styles';
 import RNImage from '../../common/RNImage';
-import {IMAGE_BASEURL} from '../../../constants/Main';
-import {MoviePosterItem} from '../../../constants/AppInterfaces';
+import {IMAGE_BASEURL} from '@constants/Main';
+import {MoviePosterItem} from '@constants/AppInterfaces';
 
 interface MoviePosterWidgetProps {
   item: MoviePosterItem;

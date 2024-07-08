@@ -1,11 +1,8 @@
 import {StyleSheet} from 'react-native';
-import {FONTS} from '../../../constants/Fonts';
-import {fpx, vpx} from '../../../libraries/responsive-pixels';
-import {COLORS} from '../../../constants/Colors';
-import {
-  STD_HORIZONTAL_SPACING,
-  STD_VERTICAL_SPACING,
-} from '../../../constants/Styles';
+import {FONTS} from '@constants/Fonts';
+import {fpx, vpx} from '@libraries/responsive-pixels';
+import {COLORS} from '@constants/Colors';
+import {STD_HORIZONTAL_SPACING, STD_VERTICAL_SPACING} from '@constants/Styles';
 
 export const styles = StyleSheet.create({
   contentView: {

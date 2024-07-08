@@ -2,8 +2,8 @@ import React from 'react';
 import _ from 'lodash';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {STD_VERTICAL_SPACING} from '../../../../constants/Styles';
-import {COLORS} from '../../../../constants/Colors';
+import {STD_VERTICAL_SPACING} from '@constants/Styles';
+import {COLORS} from '@constants/Colors';
 import {styles} from './styles';
 import TrendingMoviesWidget from '../../../widgets/TrendingMovies';
 

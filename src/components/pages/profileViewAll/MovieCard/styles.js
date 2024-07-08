@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
-import {SCREEN_WIDTH} from '../../../../utilities/App';
-import {STD_HORIZONTAL_SPACING} from '../../../../constants/Styles';
-import {vpx} from '../../../../libraries/responsive-pixels';
+import {SCREEN_WIDTH} from '@utilities/App';
+import {STD_HORIZONTAL_SPACING} from '@constants/Styles';
+import {vpx} from '@libraries/responsive-pixels';
 
 export const styles = StyleSheet.create({
   moviePosterContainer: {

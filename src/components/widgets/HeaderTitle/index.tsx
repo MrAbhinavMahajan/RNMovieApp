@@ -3,8 +3,8 @@ import {ActivityIndicator, TouchableOpacity} from 'react-native';
 import RNText from '../../common/RNText';
 import {styles} from './styles';
 import {AppNextIcon} from '../../common/RNIcon';
-import {COLORS} from '../../../constants/Colors';
-import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
+import {COLORS} from '@constants/Colors';
+import {STD_ACTIVITY_COLOR} from '@constants/Styles';
 
 interface HeaderTitleWidgetProps {
   title: string;

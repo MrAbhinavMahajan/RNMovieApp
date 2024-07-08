@@ -1,13 +1,13 @@
 import {StyleSheet} from 'react-native';
-import {fpx, vpx} from '../../../libraries/responsive-pixels';
-import {COLORS} from '../../../constants/Colors';
+import {fpx, vpx} from '@libraries/responsive-pixels';
+import {COLORS} from '@constants/Colors';
 import {
   STD_HORIZONTAL_SPACING,
   STD_SCREEN_COLOR,
   STD_VERTICAL_SPACING,
   STYLES,
-} from '../../../constants/Styles';
-import {FONTS} from '../../../constants/Fonts';
+} from '@constants/Styles';
+import {FONTS} from '@constants/Fonts';
 
 export const styles = StyleSheet.create({
   profileCardView: {

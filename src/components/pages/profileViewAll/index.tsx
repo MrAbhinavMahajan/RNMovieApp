@@ -8,23 +8,23 @@ import Animated, {
   useScrollViewOffset,
   withTiming,
 } from 'react-native-reanimated';
-import * as NavigationService from '../../../service/Navigation';
+import * as NavigationService from '@service/Navigation';
 import {
   fetchMovieFavorites,
   fetchMovieWatchlist,
   fetchMoviesRated,
 } from '@apis/Main';
 import {styles} from './styles';
-import {APP_TABS_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
-import {STD_ACTIVITY_COLOR, STYLES} from '../../../constants/Styles';
+import {APP_TABS_MAP, APP_WIDGETS_MAP} from '@constants/Navigation';
+import {STD_ACTIVITY_COLOR, STYLES} from '@constants/Styles';
 import {
   AppArrowUpIcon,
   AppTickIcon,
   AppEditIcon,
   AppSearchIcon,
 } from '../../common/RNIcon';
-import {MoviePosterItem} from '../../../constants/AppInterfaces';
-import {APP_QUERY_MAP} from '../../../constants/Api';
+import {MoviePosterItem} from '@constants/AppInterfaces';
+import {APP_QUERY_MAP} from '@constants/Api';
 import AppHeader from '../../common/AppHeader';
 import AppCTA from '../../common/AppCTA';
 import ErrorStateWidget from '../../widgets/ErrorState';

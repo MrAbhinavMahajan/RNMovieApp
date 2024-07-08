@@ -1,6 +1,6 @@
 import React, {PropsWithChildren} from 'react';
 import {Text} from 'react-native';
-import {FONTS} from '../../../constants/Fonts';
+import {FONTS} from '@constants/Fonts';
 
 interface RNTextProps {
   style: any;

@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
-import {FONTS} from '../../../constants/Fonts';
-import {fpx, vpx} from '../../../libraries/responsive-pixels';
-import {COLORS} from '../../../constants/Colors';
+import {FONTS} from '@constants/Fonts';
+import {fpx, vpx} from '@libraries/responsive-pixels';
+import {COLORS} from '@constants/Colors';
 
 export const styles = StyleSheet.create({
   contentView: {

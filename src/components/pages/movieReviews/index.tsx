@@ -8,8 +8,8 @@ import {
   View,
 } from 'react-native';
 import {styles} from './styles';
-import {PAGE_REFRESH} from '../../../constants/Page';
-import {APP_QUERY_MAP} from '../../../constants/Api';
+import {PAGE_REFRESH} from '@constants/Page';
+import {APP_QUERY_MAP} from '@constants/Api';
 import QuotationWidget from '../../widgets/Quotation';
 import MoviesReviewsWidget from '../../widgets/MovieReviews';
 

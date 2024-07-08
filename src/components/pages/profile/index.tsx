@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {styles} from './styles';
 import QuotationWidget from '../../widgets/Quotation';
-import {PAGE_REFRESH} from '../../../constants/Page';
+import {PAGE_REFRESH} from '@constants/Page';
 import Animated, {
   useAnimatedRef,
   useAnimatedStyle,
@@ -18,17 +18,17 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import {AppArrowUpIcon, AppLogoutIcon} from '../../common/RNIcon';
-import {COLORS} from '../../../constants/Colors';
+import {COLORS} from '@constants/Colors';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {STD_VERTICAL_SPACING} from '../../../constants/Styles';
+import {STD_VERTICAL_SPACING} from '@constants/Styles';
 import {expireAccessTokenV4, fetchAccountDetails} from '@apis/Main';
 import {useMutation, useQuery} from '@tanstack/react-query';
-import {kGENERAL, kSIGN_OUT} from '../../../constants/Messages';
-import {SignOutRequestBody} from '../../../constants/AppInterfaces';
-import {APP_QUERY_MAP} from '../../../constants/Api';
-import {IMAGE_BASEURL} from '../../../constants/Main';
-import Storage from '../../../utilities/Storage';
-import useAppStore from '../../../store/useAppStore';
+import {kGENERAL, kSIGN_OUT} from '@constants/Messages';
+import {SignOutRequestBody} from '@constants/AppInterfaces';
+import {APP_QUERY_MAP} from '@constants/Api';
+import {IMAGE_BASEURL} from '@constants/Main';
+import Storage from '@utilities/Storage';
+import useAppStore from '@store/useAppStore';
 import AppCTA from '../../common/AppCTA';
 import RNImage from '../../common/RNImage';
 import RNText from '../../common/RNText';

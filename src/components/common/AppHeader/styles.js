@@ -1,11 +1,8 @@
 import {StyleSheet} from 'react-native';
-import {fpx, hpx, vpx} from '../../../libraries/responsive-pixels';
-import {FONTS} from '../../../constants/Fonts';
-import {COLORS} from '../../../constants/Colors';
-import {
-  STD_HORIZONTAL_SPACING,
-  STD_SCREEN_COLOR,
-} from '../../../constants/Styles';
+import {fpx, hpx, vpx} from '@libraries/responsive-pixels';
+import {FONTS} from '@constants/Fonts';
+import {COLORS} from '@constants/Colors';
+import {STD_HORIZONTAL_SPACING, STD_SCREEN_COLOR} from '@constants/Styles';
 
 export const styles = StyleSheet.create({
   headerView: (transparentBackgroundEnabled, safePaddingEnabled) => ({

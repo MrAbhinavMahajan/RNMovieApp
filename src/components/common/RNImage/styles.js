@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
-import {COLORS} from '../../../constants/Colors';
-import {fpx} from '../../../libraries/responsive-pixels';
-import {FONTS} from '../../../constants/Fonts';
+import {COLORS} from '@constants/Colors';
+import {fpx} from '@libraries/responsive-pixels';
+import {FONTS} from '@constants/Fonts';
 
 export const styles = StyleSheet.create({
   imageView: {

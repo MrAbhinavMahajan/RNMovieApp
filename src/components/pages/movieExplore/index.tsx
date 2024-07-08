@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {styles} from './styles';
 import QuotationWidget from '../../widgets/Quotation';
-import {PAGE_REFRESH} from '../../../constants/Page';
+import {PAGE_REFRESH} from '@constants/Page';
 import SimilarMoviesWidget from '../../widgets/SimilarMovies';
 import RecommendedMoviesWidget from '../../widgets/RecommendedMovies';
 

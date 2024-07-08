@@ -1,7 +1,7 @@
 import React from 'react';
 import {QueryClientProvider} from '@tanstack/react-query';
 import {ErrorBoundary} from '../common/ErrorBoundary';
-import {QUERY_CLIENT} from '../../constants/Main';
+import {QUERY_CLIENT} from '@constants/Main';
 import AppFallback from '../common/AppFallback';
 import MainStack from '../stacks/Main';
 const Main = () => {

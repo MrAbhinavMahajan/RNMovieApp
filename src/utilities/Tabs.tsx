@@ -1,5 +1,5 @@
 import React from 'react';
-import {APP_TABS_MAP} from '../constants/Navigation';
+import {APP_TABS_MAP} from '@constants/Navigation';
 import BottomTabIcon from '../components/common/BottomTabIcon';
 
 export interface TabInfo {

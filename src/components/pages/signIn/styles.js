@@ -1,13 +1,13 @@
 import {StyleSheet} from 'react-native';
-import {fpx, vpx} from '../../../libraries/responsive-pixels';
+import {fpx, vpx} from '@libraries/responsive-pixels';
 import {
   STD_HORIZONTAL_SPACING,
   STD_SCREEN_COLOR,
   STD_VERTICAL_SPACING,
   STYLES,
-} from '../../../constants/Styles';
-import {FONTS} from '../../../constants/Fonts';
-import {COLORS} from '../../../constants/Colors';
+} from '@constants/Styles';
+import {FONTS} from '@constants/Fonts';
+import {COLORS} from '@constants/Colors';
 
 export const styles = StyleSheet.create({
   screenView: {

@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo} from 'react';
 import {useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
 import {ActivityIndicator, FlatList, RefreshControl, View} from 'react-native';
-import * as NavigationService from '../../../service/Navigation';
+import * as NavigationService from '@service/Navigation';
 import Animated, {
   useAnimatedRef,
   useAnimatedStyle,
@@ -12,10 +12,10 @@ import {fetchPopularMovies} from '@apis/Main';
 import {AppArrowUpIcon} from '../../common/RNIcon';
 import {FALLBACK_DATA} from '../../../data/Main';
 import {styles} from './styles';
-import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
-import {APP_PAGES_MAP} from '../../../constants/Navigation';
-import {APP_QUERY_MAP} from '../../../constants/Api';
-import {MoviePosterItem} from '../../../constants/AppInterfaces';
+import {STD_ACTIVITY_COLOR} from '@constants/Styles';
+import {APP_PAGES_MAP} from '@constants/Navigation';
+import {APP_QUERY_MAP} from '@constants/Api';
+import {MoviePosterItem} from '@constants/AppInterfaces';
 import AppCTA from '../../common/AppCTA';
 import MoviePosterWidget from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';

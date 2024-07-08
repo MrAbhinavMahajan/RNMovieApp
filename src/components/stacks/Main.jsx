@@ -1,8 +1,8 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {navigationRef} from '../../service/Navigation';
-import {APP_PAGES_MAP, APP_STACKS_MAP} from '../../constants/Navigation';
+import {navigationRef} from '@service/Navigation';
+import {APP_PAGES_MAP, APP_STACKS_MAP} from '@constants/Navigation';
 import LaunchStack from './Launch';
 import AuthStack from './Auth';
 import MainTab from '../tabs/main';

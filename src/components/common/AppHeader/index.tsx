@@ -5,7 +5,7 @@ import RNText from '../RNText';
 import {AppBackIcon} from '../RNIcon';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {styles} from './styles';
-import {goBack} from '../../../service/Navigation';
+import {goBack} from '@service/Navigation';
 import AppCTA from '../AppCTA';
 import LinearGradient from 'react-native-linear-gradient';
 

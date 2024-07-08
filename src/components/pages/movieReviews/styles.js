@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
-import {STD_SCREEN_COLOR, STYLES} from '../../../constants/Styles';
-import {vpx} from '../../../libraries/responsive-pixels';
+import {STD_SCREEN_COLOR, STYLES} from '@constants/Styles';
+import {vpx} from '@libraries/responsive-pixels';
 
 export const styles = StyleSheet.create({
   screenView: {

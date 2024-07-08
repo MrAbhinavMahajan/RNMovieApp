@@ -2,9 +2,9 @@ import {
   FavoriteRequestBody,
   SignOutRequestBody,
   WatchlistRequestBody,
-} from '../constants/AppInterfaces';
-import Storage from '../utilities/Storage';
-import {getAppStoreState} from '../store/useAppStore';
+} from '@constants/AppInterfaces';
+import Storage from '@utilities/Storage';
+import {getAppStoreState} from '@store/useAppStore';
 const ReadAccessToken = process.env.READ_ACCESS_TOKEN;
 const {logout} = getAppStoreState();
 

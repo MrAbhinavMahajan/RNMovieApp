@@ -1,19 +1,19 @@
 import React, {useEffect, useMemo, useRef} from 'react';
 import _ from 'lodash';
 import {useQuery} from '@tanstack/react-query';
-import * as NavigationService from '../../../service/Navigation';
+import * as NavigationService from '@service/Navigation';
 import Carousel from 'react-native-snap-carousel';
 import {ActivityIndicator, NativeAppEventEmitter, View} from 'react-native';
-import {PAGE_REFRESH} from '../../../constants/Page';
+import {PAGE_REFRESH} from '@constants/Page';
 import {fetchTrendingMovies} from '@apis/Main';
 import {styles} from './styles';
 import {FALLBACK_DATA} from '../../../data/Main';
-import {QUERY_STATUS} from '../../../constants/Main';
-import {SCREEN_WIDTH} from '../../../utilities/App';
-import {COLORS} from '../../../constants/Colors';
-import {APP_PAGES_MAP} from '../../../constants/Navigation';
-import {APP_QUERY_MAP} from '../../../constants/Api';
-import {MoviePosterItem} from '../../../constants/AppInterfaces';
+import {QUERY_STATUS} from '@constants/Main';
+import {SCREEN_WIDTH} from '@utilities/App';
+import {COLORS} from '@constants/Colors';
+import {APP_PAGES_MAP} from '@constants/Navigation';
+import {APP_QUERY_MAP} from '@constants/Api';
+import {MoviePosterItem} from '@constants/AppInterfaces';
 import MoviePosterWidget from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
 

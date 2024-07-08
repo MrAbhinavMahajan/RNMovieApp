@@ -2,7 +2,7 @@
 import React, {useEffect, useMemo} from 'react';
 import _ from 'lodash';
 import {useInfiniteQuery} from '@tanstack/react-query';
-import * as NavigationService from '../../../service/Navigation';
+import * as NavigationService from '@service/Navigation';
 import {
   ActivityIndicator,
   FlatList,
@@ -16,13 +16,13 @@ import Animated, {
   useScrollViewOffset,
   withTiming,
 } from 'react-native-reanimated';
-import {APP_PAGES_MAP} from '../../../constants/Navigation';
+import {APP_PAGES_MAP} from '@constants/Navigation';
 import {fetchSearchedMovieResults} from '@apis/Main';
 import {AppArrowUpIcon} from '../../common/RNIcon';
 import {styles} from './styles';
-import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';
-import {MoviePosterItem} from '../../../constants/AppInterfaces';
-import {APP_QUERY_MAP} from '../../../constants/Api';
+import {STD_ACTIVITY_COLOR} from '@constants/Styles';
+import {MoviePosterItem} from '@constants/AppInterfaces';
+import {APP_QUERY_MAP} from '@constants/Api';
 import AppCTA from '../../common/AppCTA';
 import RNText from '../../common/RNText';
 import MoviePosterWidget from '../MoviePoster';

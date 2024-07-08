@@ -1,20 +1,20 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import _ from 'lodash';
 import {useQuery} from '@tanstack/react-query';
-import * as NavigationService from '../../../service/Navigation';
+import * as NavigationService from '@service/Navigation';
 import {fetchSimilarMovies} from '@apis/Main';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
-import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
+import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '@constants/Navigation';
 import {styles} from './styles';
-import {PAGE_REFRESH} from '../../../constants/Page';
+import {PAGE_REFRESH} from '@constants/Page';
 import {FALLBACK_DATA} from '../../../data/Main';
-import {QUERY_STATUS} from '../../../constants/Main';
-import {APP_QUERY_MAP} from '../../../constants/Api';
-import {MoviePosterItem} from '../../../constants/AppInterfaces';
+import {QUERY_STATUS} from '@constants/Main';
+import {APP_QUERY_MAP} from '@constants/Api';
+import {MoviePosterItem} from '@constants/AppInterfaces';
 import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
-import useAppStore from '../../../store/useAppStore';
+import useAppStore from '@store/useAppStore';
 
 const SimilarMoviesWidget = () => {
   const page = 1;

@@ -19,20 +19,20 @@ import {
   updateMovieWatchlist,
 } from '@apis/Main';
 import {AppBackIcon, IconSize, MaterialIcon} from '../../common/RNIcon';
-import {goBack} from '../../../service/Navigation';
+import {goBack} from '@service/Navigation';
 import {styles} from './styles';
-import {PAGE_REFRESH} from '../../../constants/Page';
-import {COLORS} from '../../../constants/Colors';
-import {STYLES} from '../../../constants/Styles';
-import {kGENERAL} from '../../../constants/Messages';
-import {APP_QUERY_MAP} from '../../../constants/Api';
+import {PAGE_REFRESH} from '@constants/Page';
+import {COLORS} from '@constants/Colors';
+import {STYLES} from '@constants/Styles';
+import {kGENERAL} from '@constants/Messages';
+import {APP_QUERY_MAP} from '@constants/Api';
 import {
   FavoriteRequestBody,
   MovieItem,
   WatchlistRequestBody,
-} from '../../../constants/AppInterfaces';
+} from '@constants/AppInterfaces';
 import AppHeader from '../../common/AppHeader';
-import useAppStore from '../../../store/useAppStore';
+import useAppStore from '@store/useAppStore';
 
 interface MovieDetailsScreenProps {
   route: {

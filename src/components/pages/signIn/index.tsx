@@ -10,18 +10,18 @@ import Animated, {
 } from 'react-native-reanimated';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {STD_VERTICAL_SPACING} from '../../../constants/Styles';
+import {STD_VERTICAL_SPACING} from '@constants/Styles';
 import {AppArrowUpIcon} from '../../common/RNIcon';
 import {AUTH_STEPS} from '../../../data/Main';
 import {createAccessTokenV4, createRequestTokenV4} from '@apis/Main';
-import {COLORS} from '../../../constants/Colors';
+import {COLORS} from '@constants/Colors';
 import {styles} from './styles';
-import {APP_QUERY_MAP} from '../../../constants/Api';
+import {APP_QUERY_MAP} from '@constants/Api';
 import RNText from '../../common/RNText';
 import AppCTA from '../../common/AppCTA';
 import QuotationWidget from '../../widgets/Quotation';
 import HeaderTitleWidget from '../../widgets/HeaderTitle';
-import useAppStore from '../../../store/useAppStore';
+import useAppStore from '@store/useAppStore';
 
 const SignInScreen = () => {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();

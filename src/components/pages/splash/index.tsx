@@ -1,10 +1,10 @@
 import React, {useEffect, useRef} from 'react';
 import RNLottie from '../../common/RNLottie';
-import {HAPPY_SPACEMAN_ANIM} from '../../../constants/Assets';
+import {HAPPY_SPACEMAN_ANIM} from '@constants/Assets';
 import {styles} from './styles';
-import {APP_STACKS_MAP, APP_TABS_MAP} from '../../../constants/Navigation';
-import * as NavigationService from '../../../service/Navigation';
-import useAppStore from '../../../store/useAppStore';
+import {APP_STACKS_MAP, APP_TABS_MAP} from '@constants/Navigation';
+import * as NavigationService from '@service/Navigation';
+import useAppStore from '@store/useAppStore';
 
 const SplashScreen = () => {
   const {isSignedIn} = useAppStore();
