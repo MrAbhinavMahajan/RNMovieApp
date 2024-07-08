@@ -5,7 +5,7 @@ import * as NavigationService from '../../../service/Navigation';
 import Carousel from 'react-native-snap-carousel';
 import {ActivityIndicator, NativeAppEventEmitter, View} from 'react-native';
 import {PAGE_REFRESH} from '../../../constants/Page';
-import {fetchTrendingMovies} from '../../../apis/Main';
+import {fetchTrendingMovies} from '@apis/Main';
 import {styles} from './styles';
 import {FALLBACK_DATA} from '../../../data/Main';
 import {QUERY_STATUS} from '../../../constants/Main';

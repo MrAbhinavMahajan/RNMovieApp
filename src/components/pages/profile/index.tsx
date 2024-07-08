@@ -21,7 +21,7 @@ import {AppArrowUpIcon, AppLogoutIcon} from '../../common/RNIcon';
 import {COLORS} from '../../../constants/Colors';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {STD_VERTICAL_SPACING} from '../../../constants/Styles';
-import {expireAccessTokenV4, fetchAccountDetails} from '../../../apis/Main';
+import {expireAccessTokenV4, fetchAccountDetails} from '@apis/Main';
 import {useMutation, useQuery} from '@tanstack/react-query';
 import {kGENERAL, kSIGN_OUT} from '../../../constants/Messages';
 import {SignOutRequestBody} from '../../../constants/AppInterfaces';

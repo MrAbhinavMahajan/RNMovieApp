@@ -3,7 +3,7 @@ import _ from 'lodash';
 import {useQuery} from '@tanstack/react-query';
 import * as NavigationService from '../../../service/Navigation';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
-import {fetchMovieFavorites} from '../../../apis/Main';
+import {fetchMovieFavorites} from '@apis/Main';
 import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
 import {styles} from './styles';
 import {PAGE_REFRESH} from '../../../constants/Page';

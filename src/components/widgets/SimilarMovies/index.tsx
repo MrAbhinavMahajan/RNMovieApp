@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 import _ from 'lodash';
 import {useQuery} from '@tanstack/react-query';
 import * as NavigationService from '../../../service/Navigation';
-import {fetchSimilarMovies} from '../../../apis/Main';
+import {fetchSimilarMovies} from '@apis/Main';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
 import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
 import {styles} from './styles';

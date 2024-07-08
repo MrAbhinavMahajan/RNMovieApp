@@ -13,7 +13,7 @@ import {
   fetchMovieFavorites,
   fetchMovieWatchlist,
   fetchMoviesRated,
-} from '../../../apis/Main';
+} from '@apis/Main';
 import {styles} from './styles';
 import {APP_TABS_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
 import {STD_ACTIVITY_COLOR, STYLES} from '../../../constants/Styles';

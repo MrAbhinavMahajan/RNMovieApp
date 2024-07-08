@@ -13,7 +13,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {STD_VERTICAL_SPACING} from '../../../constants/Styles';
 import {AppArrowUpIcon} from '../../common/RNIcon';
 import {AUTH_STEPS} from '../../../data/Main';
-import {createAccessTokenV4, createRequestTokenV4} from '../../../apis/Main';
+import {createAccessTokenV4, createRequestTokenV4} from '@apis/Main';
 import {COLORS} from '../../../constants/Colors';
 import {styles} from './styles';
 import {APP_QUERY_MAP} from '../../../constants/Api';

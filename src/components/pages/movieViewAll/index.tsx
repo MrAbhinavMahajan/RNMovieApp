@@ -15,7 +15,7 @@ import {
   fetchSimilarMovies,
   fetchTopRatedMovies,
   fetchUpcomingMovies,
-} from '../../../apis/Main';
+} from '@apis/Main';
 import {styles} from './styles';
 import {
   APP_PAGES_MAP,

@@ -8,7 +8,7 @@ import Animated, {
   useScrollViewOffset,
   withTiming,
 } from 'react-native-reanimated';
-import {fetchPopularMovies} from '../../../apis/Main';
+import {fetchPopularMovies} from '@apis/Main';
 import {AppArrowUpIcon} from '../../common/RNIcon';
 import {FALLBACK_DATA} from '../../../data/Main';
 import {styles} from './styles';

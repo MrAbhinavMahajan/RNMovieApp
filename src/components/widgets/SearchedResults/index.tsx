@@ -17,7 +17,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import {APP_PAGES_MAP} from '../../../constants/Navigation';
-import {fetchSearchedMovieResults} from '../../../apis/Main';
+import {fetchSearchedMovieResults} from '@apis/Main';
 import {AppArrowUpIcon} from '../../common/RNIcon';
 import {styles} from './styles';
 import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';

@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {addMovieRating, fetchMovieDetails} from '../../../../apis/Main';
+import {addMovieRating, fetchMovieDetails} from '@apis/Main';
 import {PAGE_REFRESH} from '../../../../constants/Page';
 import {IMAGE_BASEURL} from '../../../../constants/Main';
 import {COLORS} from '../../../../constants/Colors';

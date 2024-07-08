@@ -17,7 +17,7 @@ import {
   fetchMovieWatchlist,
   updateMovieFavorites,
   updateMovieWatchlist,
-} from '../../../apis/Main';
+} from '@apis/Main';
 import {AppBackIcon, IconSize, MaterialIcon} from '../../common/RNIcon';
 import {goBack} from '../../../service/Navigation';
 import {styles} from './styles';

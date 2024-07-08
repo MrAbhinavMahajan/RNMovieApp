@@ -4,7 +4,7 @@ import {useQuery} from '@tanstack/react-query';
 import * as NavigationService from '../../../service/Navigation';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
 import {PAGE_REFRESH} from '../../../constants/Page';
-import {fetchUpcomingMovies} from '../../../apis/Main';
+import {fetchUpcomingMovies} from '@apis/Main';
 import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '../../../constants/Navigation';
 import {styles} from './styles';
 import {FALLBACK_DATA} from '../../../data/Main';

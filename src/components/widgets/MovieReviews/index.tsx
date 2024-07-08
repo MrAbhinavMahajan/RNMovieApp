@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 import _ from 'lodash';
 import {useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
 import {ActivityIndicator, FlatList, RefreshControl, View} from 'react-native';
-import {fetchMovieReviews} from '../../../apis/Main';
+import {fetchMovieReviews} from '@apis/Main';
 import {IconSize, MaterialIcon} from '../../common/RNIcon';
 import {FALLBACK_DATA} from '../../../data/Main';
 import {STD_ACTIVITY_COLOR} from '../../../constants/Styles';

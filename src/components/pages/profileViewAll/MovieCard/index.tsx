@@ -8,7 +8,7 @@ import {
   deleteMovieRating,
   updateMovieFavorites,
   updateMovieWatchlist,
-} from '../../../../apis/Main';
+} from '@apis/Main';
 import {styles} from './styles';
 import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '../../../../constants/Navigation';
 import {AppDeleteIcon, IconSize} from '../../../common/RNIcon';
