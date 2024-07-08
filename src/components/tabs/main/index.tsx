@@ -2,11 +2,11 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {styles} from './styles';
 import {APP_TABS_MAP} from '@constants/Navigation';
-import HomeStack from '../../stacks/Home';
+import HomeStack from '../@components/stacks/Home';
 import {tabOptions} from '@utilities/Tabs';
 import {COLORS} from '@constants/Colors';
-import SearchStack from '../../stacks/Search';
-import ProfileStack from '../../stacks/Profile';
+import SearchStack from '../@components/stacks/Search';
+import ProfileStack from '../@components/stacks/Profile';
 import {BlurView} from '@react-native-community/blur';
 
 const {Navigator, Screen} = createBottomTabNavigator();
