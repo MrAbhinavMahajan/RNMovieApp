@@ -1,7 +1,7 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {APP_PAGES_MAP} from '@constants/Navigation';
-import SplashScreen from '../pages/splash';
+import SplashScreen from '@components/pages/splash';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 

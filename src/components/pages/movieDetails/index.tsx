@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
-import MovieDetailsTab from '../../tabs/movieDetails';
+import MovieDetailsTab from '@components/tabs/movieDetails';
 import MovieDetailsScreenHeader from './header';
 import AppCTA from '@components/common/AppCTA';
 import {

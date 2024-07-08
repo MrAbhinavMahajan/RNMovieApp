@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {APP_PAGES_MAP} from '@constants/Navigation';
-import MovieSearchScreen from '../pages/movieSearch';
+import MovieSearchScreen from '@components/pages/movieSearch';
 import {STD_SCREEN_COLOR} from '@constants/Styles';
 
 const {Navigator, Screen} = createNativeStackNavigator();

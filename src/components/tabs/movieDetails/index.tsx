@@ -1,11 +1,11 @@
 import React from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import MovieReviewsScreen from '@components/pages/movieReviews';
+import MovieExploreScreen from '@components/pages/movieExplore';
 import {APP_PAGES_MAP} from '@constants/Navigation';
-import MovieReviewsScreen from '../../pages/movieReviews';
-import MovieExploreScreen from '../../pages/movieExplore';
 import {STYLES} from '@constants/Styles';
-import {styles} from './styles';
 import {COLORS} from '@constants/Colors';
+import {styles} from './styles';
 
 const {Navigator, Screen} = createMaterialTopTabNavigator();
 

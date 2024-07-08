@@ -6,9 +6,9 @@ import {APP_PAGES_MAP, APP_STACKS_MAP} from '@constants/Navigation';
 import LaunchStack from './Launch';
 import AuthStack from './Auth';
 import MainTab from '../tabs/main';
-import MovieDetailsScreen from '../pages/movieDetails';
-import MovieViewAllScreen from '../pages/movieViewAll';
-import ProfileViewAllScreen from '../pages/profileViewAll';
+import MovieDetailsScreen from '@components/pages/movieDetails';
+import MovieViewAllScreen from '@components/pages/movieViewAll';
+import ProfileViewAllScreen from '@components/pages/profileViewAll';
 const {Navigator, Screen} = createNativeStackNavigator();
 
 // * NavigationContainer is a component which manages our navigation tree and contains the navigation state

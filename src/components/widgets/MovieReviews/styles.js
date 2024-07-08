@@ -1,7 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {STD_HORIZONTAL_SPACING, STD_VERTICAL_SPACING} from '@constants/Styles';
 import {fpx, hpx, vpx} from '@libraries/responsive-pixels';
-import {SCREEN_HEIGHT, SCREEN_WIDTH} from '@utilities/App';
 import {COLORS} from '@constants/Colors';
 import {FONTS} from '@constants/Fonts';
 

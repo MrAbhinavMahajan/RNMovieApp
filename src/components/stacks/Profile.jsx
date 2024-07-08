@@ -1,7 +1,7 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {APP_PAGES_MAP} from '@constants/Navigation';
-import ProfileScreen from '../pages/profile';
+import ProfileScreen from '@components/pages/profile';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 

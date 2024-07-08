@@ -1,7 +1,7 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {APP_PAGES_MAP} from '@constants/Navigation';
-import SignInScreen from '../pages/signIn';
+import SignInScreen from '@components/pages/signIn';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 
