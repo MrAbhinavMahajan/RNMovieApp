@@ -1,5 +1,5 @@
 import React from 'react';
-import RNText from '../../common/RNText';
+import RNText from '@components/common/RNText';
 import {styles} from './styles';
 import {View} from 'react-native';
 

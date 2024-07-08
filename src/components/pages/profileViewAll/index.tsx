@@ -22,14 +22,14 @@ import {
   AppTickIcon,
   AppEditIcon,
   AppSearchIcon,
-} from '../../common/RNIcon';
+} from '@components/common/RNIcon';
 import {MoviePosterItem} from '@constants/AppInterfaces';
 import {APP_QUERY_MAP} from '@constants/Api';
-import AppHeader from '../../common/AppHeader';
-import AppCTA from '../../common/AppCTA';
-import ErrorStateWidget from '../../widgets/ErrorState';
+import AppHeader from '@components/common/AppHeader';
+import AppCTA from '@components/common/AppCTA';
+import ErrorStateWidget from '@components/widgets/ErrorState';
 import MovieCard from './MovieCard';
-import EmptyStateCreativeCard from '../../common/EmptyStateCard';
+import EmptyStateCreativeCard from '@components/common/EmptyStateCard';
 
 interface ProfileViewAllScreenProps {
   route: {

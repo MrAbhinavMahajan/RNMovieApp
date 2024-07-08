@@ -11,14 +11,14 @@ import {
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import MovieDetailsTab from '../../tabs/movieDetails';
 import MovieDetailsScreenHeader from './header';
-import AppCTA from '../../common/AppCTA';
+import AppCTA from '@components/common/AppCTA';
 import {
   fetchMovieFavorites,
   fetchMovieWatchlist,
   updateMovieFavorites,
   updateMovieWatchlist,
 } from '@apis/Main';
-import {AppBackIcon, IconSize, MaterialIcon} from '../../common/RNIcon';
+import {AppBackIcon, IconSize, MaterialIcon} from '@components/common/RNIcon';
 import {goBack} from '@service/Navigation';
 import {styles} from './styles';
 import {PAGE_REFRESH} from '@constants/Page';
@@ -31,7 +31,7 @@ import {
   MovieItem,
   WatchlistRequestBody,
 } from '@constants/AppInterfaces';
-import AppHeader from '../../common/AppHeader';
+import AppHeader from '@components/common/AppHeader';
 import useAppStore from '@store/useAppStore';
 
 interface MovieDetailsScreenProps {

@@ -18,16 +18,16 @@ import Animated, {
 } from 'react-native-reanimated';
 import {APP_PAGES_MAP} from '@constants/Navigation';
 import {fetchSearchedMovieResults} from '@apis/Main';
-import {AppArrowUpIcon} from '../../common/RNIcon';
+import {AppArrowUpIcon} from '@components/common/RNIcon';
 import {styles} from './styles';
 import {STD_ACTIVITY_COLOR} from '@constants/Styles';
 import {MoviePosterItem} from '@constants/AppInterfaces';
 import {APP_QUERY_MAP} from '@constants/Api';
-import AppCTA from '../../common/AppCTA';
-import RNText from '../../common/RNText';
+import AppCTA from '@components/common/AppCTA';
+import RNText from '@components/common/RNText';
 import MoviePosterWidget from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
-import EmptyStateCreativeCard from '../../common/EmptyStateCard';
+import EmptyStateCreativeCard from '@components/common/EmptyStateCard';
 
 interface SearchedResultsWidgetProps {
   searchedText: string;

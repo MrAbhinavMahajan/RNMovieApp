@@ -1,8 +1,8 @@
 import React from 'react';
 import {ActivityIndicator, TouchableOpacity} from 'react-native';
-import RNText from '../../common/RNText';
+import RNText from '@components/common/RNText';
 import {styles} from './styles';
-import {AppNextIcon} from '../../common/RNIcon';
+import {AppNextIcon} from '@components/common/RNIcon';
 import {COLORS} from '@constants/Colors';
 import {STD_ACTIVITY_COLOR} from '@constants/Styles';
 

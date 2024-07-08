@@ -23,14 +23,14 @@ import {
   APP_WIDGETS_MAP,
 } from '@constants/Navigation';
 import {STD_ACTIVITY_COLOR} from '@constants/Styles';
-import {AppArrowUpIcon, AppSearchIcon} from '../../common/RNIcon';
+import {AppArrowUpIcon, AppSearchIcon} from '@components/common/RNIcon';
 import {APP_QUERY_MAP} from '@constants/Api';
 import {MoviePosterItem} from '@constants/AppInterfaces';
-import AppHeader from '../../common/AppHeader';
-import AppCTA from '../../common/AppCTA';
-import MoviePosterWidget from '../../widgets/MoviePoster';
-import ErrorStateWidget from '../../widgets/ErrorState';
-import EmptyStateCreativeCard from '../../common/EmptyStateCard';
+import AppHeader from '@components/common/AppHeader';
+import AppCTA from '@components/common/AppCTA';
+import MoviePosterWidget from '@components/widgets/MoviePoster';
+import ErrorStateWidget from '@components/widgets/ErrorState';
+import EmptyStateCreativeCard from '@components/common/EmptyStateCard';
 
 interface MovieViewAllScreenProps {
   route: {

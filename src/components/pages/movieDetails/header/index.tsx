@@ -18,10 +18,10 @@ import {AirbnbRating} from 'react-native-ratings';
 import {vpx} from '@libraries/responsive-pixels';
 import {kGENERAL, kRATINGS} from '@constants/Messages';
 import {APP_QUERY_MAP} from '@constants/Api';
-import RNText from '../../../common/RNText';
-import MoviePosterWidget from '../../../widgets/MoviePoster';
-import RNImage from '../../../common/RNImage';
-import AppCTA from '../../../common/AppCTA';
+import RNText from '@components/common/RNText';
+import MoviePosterWidget from '@components/widgets/MoviePoster';
+import RNImage from '@components/common/RNImage';
+import AppCTA from '@components/common/AppCTA';
 
 interface MovieDetailsScreenHeaderProps {
   screenTitle: string;

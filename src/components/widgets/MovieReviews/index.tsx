@@ -3,7 +3,7 @@ import _ from 'lodash';
 import {useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
 import {ActivityIndicator, FlatList, RefreshControl, View} from 'react-native';
 import {fetchMovieReviews} from '@apis/Main';
-import {IconSize, MaterialIcon} from '../../common/RNIcon';
+import {IconSize, MaterialIcon} from '@components/common/RNIcon';
 import {FALLBACK_DATA} from '../../../data/Main';
 import {STD_ACTIVITY_COLOR} from '@constants/Styles';
 import {styles} from './styles';
@@ -13,7 +13,7 @@ import {APP_QUERY_MAP} from '@constants/Api';
 import {QUERY_STATUS} from '@constants/Main';
 import ErrorStateWidget from '../ErrorState';
 import EmptyStateWidget from '../EmptyState';
-import RNText from '../../common/RNText';
+import RNText from '@components/common/RNText';
 
 export interface AuthorDetails {
   name: string;

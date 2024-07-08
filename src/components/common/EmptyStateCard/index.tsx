@@ -1,7 +1,7 @@
 import React from 'react';
 import {styles} from './styles';
 import {AppRetryIcon} from '../RNIcon';
-import RNText from '../../common/RNText';
+import RNText from '@components/common/RNText';
 import AppCTA from '../AppCTA';
 
 interface EmptyStateCreativeCardProps {

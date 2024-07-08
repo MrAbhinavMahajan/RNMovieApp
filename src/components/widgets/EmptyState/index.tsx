@@ -1,7 +1,7 @@
 import React from 'react';
-import RNText from '../../common/RNText';
+import RNText from '@components/common/RNText';
 import {styles} from './styles';
-import AppCTA from '../../common/AppCTA';
+import AppCTA from '@components/common/AppCTA';
 
 interface EmptyStateWidgetProps {
   containerStyles: any;

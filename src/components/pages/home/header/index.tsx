@@ -5,7 +5,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {STD_VERTICAL_SPACING} from '@constants/Styles';
 import {COLORS} from '@constants/Colors';
 import {styles} from './styles';
-import TrendingMoviesWidget from '../../../widgets/TrendingMovies';
+import TrendingMoviesWidget from '@components/widgets/TrendingMovies';
 
 const HomeScreenHeader = () => {
   const insets = useSafeAreaInsets();

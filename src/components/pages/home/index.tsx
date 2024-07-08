@@ -7,20 +7,20 @@ import {
   View,
 } from 'react-native';
 import {styles} from './styles';
-import UpcomingMoviesWidget from '../../widgets/UpcomingMovies';
-import TopRatedMoviesWidget from '../../widgets/TopRatedMovies';
-import NowPlayingMoviesWidget from '../../widgets/NowPlaying';
-import QuotationWidget from '../../widgets/Quotation';
+import UpcomingMoviesWidget from '@components/widgets/UpcomingMovies';
+import TopRatedMoviesWidget from '@components/widgets/TopRatedMovies';
+import NowPlayingMoviesWidget from '@components/widgets/NowPlaying';
+import QuotationWidget from '@components/widgets/Quotation';
 import {PAGE_REFRESH} from '@constants/Page';
-import RecommendedMoviesWidget from '../../widgets/RecommendedMovies';
+import RecommendedMoviesWidget from '@components/widgets/RecommendedMovies';
 import Animated, {
   useAnimatedRef,
   useAnimatedStyle,
   useScrollViewOffset,
   withTiming,
 } from 'react-native-reanimated';
-import {AppArrowUpIcon} from '../../common/RNIcon';
-import AppCTA from '../../common/AppCTA';
+import {AppArrowUpIcon} from '@components/common/RNIcon';
+import AppCTA from '@components/common/AppCTA';
 import HomeScreenHeader from './header';
 
 const HomeScreen = () => {

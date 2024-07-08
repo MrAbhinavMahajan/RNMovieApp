@@ -10,7 +10,7 @@ import {PAGE_REFRESH} from '@constants/Page';
 import {FALLBACK_DATA} from '../../../data/Main';
 import {QUERY_STATUS} from '@constants/Main';
 import {kWATCHLIST} from '@constants/Messages';
-import {IconSize, MaterialIcon} from '../../common/RNIcon';
+import {IconSize, MaterialIcon} from '@components/common/RNIcon';
 import {COLORS} from '@constants/Colors';
 import {APP_QUERY_MAP} from '@constants/Api';
 import {MoviePosterItem} from '@constants/AppInterfaces';

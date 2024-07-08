@@ -10,8 +10,8 @@ import {
 import {styles} from './styles';
 import {PAGE_REFRESH} from '@constants/Page';
 import {APP_QUERY_MAP} from '@constants/Api';
-import QuotationWidget from '../../widgets/Quotation';
-import MoviesReviewsWidget from '../../widgets/MovieReviews';
+import QuotationWidget from '@components/widgets/Quotation';
+import MoviesReviewsWidget from '@components/widgets/MovieReviews';
 
 interface MovieReviewsScreenProps {}
 

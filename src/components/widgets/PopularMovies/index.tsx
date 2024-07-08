@@ -9,17 +9,17 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import {fetchPopularMovies} from '@apis/Main';
-import {AppArrowUpIcon} from '../../common/RNIcon';
+import {AppArrowUpIcon} from '@components/common/RNIcon';
 import {FALLBACK_DATA} from '../../../data/Main';
 import {styles} from './styles';
 import {STD_ACTIVITY_COLOR} from '@constants/Styles';
 import {APP_PAGES_MAP} from '@constants/Navigation';
 import {APP_QUERY_MAP} from '@constants/Api';
 import {MoviePosterItem} from '@constants/AppInterfaces';
-import AppCTA from '../../common/AppCTA';
+import AppCTA from '@components/common/AppCTA';
 import MoviePosterWidget from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
-import EmptyStateCreativeCard from '../../common/EmptyStateCard';
+import EmptyStateCreativeCard from '@components/common/EmptyStateCard';
 
 const PopularMoviesWidget = () => {
   const queryClient = useQueryClient();

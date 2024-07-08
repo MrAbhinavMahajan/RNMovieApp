@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import {styles} from './styles';
-import QuotationWidget from '../../widgets/Quotation';
+import QuotationWidget from '@components/widgets/Quotation';
 import {PAGE_REFRESH} from '@constants/Page';
 import Animated, {
   useAnimatedRef,
@@ -17,7 +17,7 @@ import Animated, {
   useScrollViewOffset,
   withTiming,
 } from 'react-native-reanimated';
-import {AppArrowUpIcon, AppLogoutIcon} from '../../common/RNIcon';
+import {AppArrowUpIcon, AppLogoutIcon} from '@components/common/RNIcon';
 import {COLORS} from '@constants/Colors';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {STD_VERTICAL_SPACING} from '@constants/Styles';
@@ -29,13 +29,13 @@ import {APP_QUERY_MAP} from '@constants/Api';
 import {IMAGE_BASEURL} from '@constants/Main';
 import Storage from '@utilities/Storage';
 import useAppStore from '@store/useAppStore';
-import AppCTA from '../../common/AppCTA';
-import RNImage from '../../common/RNImage';
-import RNText from '../../common/RNText';
-import WatchlistMoviesWidget from '../../widgets/WatchlistMovies';
-import FavoritesMoviesWidget from '../../widgets/FavoriteMovies';
-import SelfRatedMoviesWidget from '../../widgets/SelfRatedMovies';
-import HeaderTitleWidget from '../../widgets/HeaderTitle';
+import AppCTA from '@components/common/AppCTA';
+import RNImage from '@components/common/RNImage';
+import RNText from '@components/common/RNText';
+import WatchlistMoviesWidget from '@components/widgets/WatchlistMovies';
+import FavoritesMoviesWidget from '@components/widgets/FavoriteMovies';
+import SelfRatedMoviesWidget from '@components/widgets/SelfRatedMovies';
+import HeaderTitleWidget from '@components/widgets/HeaderTitle';
 
 const ProfileScreen = () => {
   const insets = useSafeAreaInsets();

@@ -11,7 +11,7 @@ import {
 } from '@apis/Main';
 import {styles} from './styles';
 import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '@constants/Navigation';
-import {AppDeleteIcon, IconSize} from '../../../common/RNIcon';
+import {AppDeleteIcon, IconSize} from '@components/common/RNIcon';
 import {COLORS} from '@constants/Colors';
 import {
   FavoriteRequestBody,
@@ -20,8 +20,8 @@ import {
 import {kFAVORITES, kGENERAL, kRATINGS, kWATCHLIST} from '@constants/Messages';
 import {APP_QUERY_MAP} from '@constants/Api';
 import {MoviePosterItem} from '@constants/AppInterfaces';
-import MoviePosterWidget from '../../../widgets/MoviePoster';
-import AppCTA from '../../../common/AppCTA';
+import MoviePosterWidget from '@components/widgets/MoviePoster';
+import AppCTA from '@components/common/AppCTA';
 
 const MovieCard = ({
   item,
