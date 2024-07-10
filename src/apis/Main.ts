@@ -348,8 +348,6 @@ export const fetchSimilarMovies = async (
   pageParam: number,
 ) => {
   const {lastWatchedMovieId} = getAppStoreState();
-  const userStorage = Storage.getUserStorageInstance();
-  const accessToken: string | undefined = userStorage?.getString('accessToken');
   const url = `https://api.themoviedb.org/3/movie/${lastWatchedMovieId}/similar?language=en-US&page=${pageParam}`;
   const method = RequestMethod.GET;
   return fetchJsonWithAuth(url, method, null, signal);
