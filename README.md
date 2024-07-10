@@ -10,18 +10,6 @@
   <img height="400em" src="https://github.com/MrAbhinavMahajan/RNMovieApp/assets/98639822/377801ed-4d2d-431a-b23a-074469afb50f">
 </div>
 
-## Authentication & Authorization (JWT Token)
-
-1. Generate & approve Request Token
-2. Generate Access Token
-
-## Storage (MMKV Storage)
-
-A Singleton class maintaining following instances:-
-
-1. App Storage
-2. User Storage ( Secured )
-
 ## Screens
 
 1. SignIn Page
@@ -38,6 +26,20 @@ A Singleton class maintaining following instances:-
 2. Add or Remove Rating
 3. Recommended Movies
 4. Similar Movies
+
+## Authentication & Authorization (JWT Tokens)
+
+- JWT tokens are signed so TMDB services are protected from token alteration
+- End users are protected with token validation
+- End users approve the application request token
+- Encryption can be AES with a 256 bits key (token is HS256 signed with a 256 bit key).
+
+## Storage (MMKV Storage)
+
+A Singleton class maintaining following instances:-
+
+1. App Storage
+2. User Storage ( Secured )
 
 ## Miscellaneous
 
@@ -64,10 +66,19 @@ TanStack Query provides a high advantage in data fetching, caching, background u
 
 ### JWT Token ( Javascript Web Token )
 
-- JWT tokens are signed so TMDB services are protected from token alteration
-- End users are protected with token validation
-- End users approve the application request token
-- Encryption can be AES with a 256 bits key (token is HS256 signed with a 256 bit key).
+JWT represents claim mechanism between two parties.
+
+- JWT is built with three components:
+  `<Component1>.<Component2>.<Component3>`
+
+* <Component1> signifies the encryption being used.
+* <Component2> determines the information.
+* <Component3> determines the signature.
+
+- Follows security mechanism - Public/ Private cryptography.
+  (means 2 keys are generated 1 is public and 1 is private.)
+- It's a Stateless Mechanism ( It's state is not stored in Database ).
+- It's valid for short time durations only.
 
 ### Zustand (State Management + MMKV Storage)
 
