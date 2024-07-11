@@ -5,6 +5,7 @@ import {
 } from '@constants/AppInterfaces';
 import Storage from '@utilities/Storage';
 import {getAppStoreState} from '@store/useAppStore';
+import {MMKV} from 'react-native-mmkv';
 const ReadAccessToken = process.env.READ_ACCESS_TOKEN;
 
 enum RequestMethod {
@@ -20,7 +21,7 @@ interface RequestOptions {
   signal?: AbortSignal;
 }
 
-function expireSession() {
+function expireSession(): void {
   const {isSignedIn, logout} = getAppStoreState();
   if (isSignedIn) {
     logout();
@@ -52,14 +53,14 @@ function createRequestOptions(
   };
 }
 
-function getUserStorageAndToken() {
-  const userStorage = Storage.getUserStorageInstance();
-  const accountId: Object | undefined = userStorage?.getString('accountId');
+function getUserStorageData() {
+  const userStorage: MMKV | null = Storage.getUserStorageInstance();
+  const accountId: string | undefined = userStorage?.getString('accountId');
   const accessToken: string | undefined = userStorage?.getString('accessToken');
-  return {userStorage, accountId, accessToken};
+  return {accountId, accessToken};
 }
 
-async function fetchJson(url: string, options: RequestOptions) {
+async function fetchJson(url: string, options: RequestOptions): Promise<any> {
   try {
     const response = await fetch(url, options);
     if (!response.ok) {
@@ -85,7 +86,7 @@ async function fetchJsonWithoutAuth(
   method: RequestMethod,
   body?: any,
   signal?: AbortSignal,
-) {
+): Promise<any> {
   const headers = {};
   const options = createRequestOptions(
     method,
@@ -102,8 +103,8 @@ async function fetchJsonWithAuth(
   method: RequestMethod,
   body?: any,
   signal?: AbortSignal,
-) {
-  const {accessToken} = getUserStorageAndToken();
+): Promise<any> {
+  const {accessToken} = getUserStorageData();
   if (!accessToken) {
     // ! Unauthorized access
     expireSession();
@@ -121,7 +122,9 @@ async function fetchJsonWithAuth(
 }
 
 // # v4 apis:-
-export const createRequestTokenV4 = async (signal: AbortSignal) => {
+export const createRequestTokenV4 = async (
+  signal: AbortSignal,
+): Promise<any> => {
   const url = 'https://api.themoviedb.org/4/auth/request_token';
   const method = RequestMethod.POST;
   return fetchJsonWithoutAuth(url, method, null, signal);
@@ -130,14 +133,16 @@ export const createRequestTokenV4 = async (signal: AbortSignal) => {
 export const createAccessTokenV4 = async (
   signal: AbortSignal,
   request_token: string,
-) => {
+): Promise<any> => {
   const url = 'https://api.themoviedb.org/4/auth/access_token';
   const body = {request_token};
   const method = RequestMethod.POST;
   return fetchJsonWithoutAuth(url, method, body, signal);
 };
 
-export const expireAccessTokenV4 = async (body: SignOutRequestBody) => {
+export const expireAccessTokenV4 = async (
+  body: SignOutRequestBody,
+): Promise<any> => {
   const accessToken: string | undefined = body.access_token;
   if (!accessToken) {
     // ! Unauthorized access
@@ -152,8 +157,8 @@ export const expireAccessTokenV4 = async (body: SignOutRequestBody) => {
 export const fetchMovieFavoritesV4 = async (
   signal: AbortSignal,
   pageParam: number,
-) => {
-  const {accountId} = getUserStorageAndToken();
+): Promise<any> => {
+  const {accountId} = getUserStorageData();
   if (!accountId) {
     // ! Unauthorized access
     expireSession();
@@ -167,8 +172,8 @@ export const fetchMovieFavoritesV4 = async (
 export const fetchMovieWatchlistV4 = async (
   signal: AbortSignal,
   pageParam: number,
-) => {
-  const {accountId} = getUserStorageAndToken();
+): Promise<any> => {
+  const {accountId} = getUserStorageData();
   if (!accountId) {
     // ! Unauthorized access
     expireSession();
@@ -182,8 +187,8 @@ export const fetchMovieWatchlistV4 = async (
 export const fetchRecommendedMoviesV4 = async (
   signal: AbortSignal,
   pageParam: number,
-) => {
-  const {accountId} = getUserStorageAndToken();
+): Promise<any> => {
+  const {accountId} = getUserStorageData();
   if (!accountId) {
     // ! Unauthorized access
     expireSession();
@@ -198,7 +203,7 @@ export const fetchRecommendedMoviesV4 = async (
 export const fetchPopularMovies = async (
   signal: AbortSignal,
   pageParam: number,
-) => {
+): Promise<any> => {
   const url = `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${pageParam}`;
   const method = RequestMethod.GET;
   return fetchJsonWithoutAuth(url, method, null, signal);
@@ -208,13 +213,15 @@ export const fetchSearchedMovieResults = async (
   signal: AbortSignal,
   searchedText: string,
   pageParam: number,
-) => {
+): Promise<any> => {
   const url = `https://api.themoviedb.org/3/search/movie?query=${searchedText}&language=en-US&page=${pageParam}`;
   const method = RequestMethod.GET;
   return fetchJsonWithoutAuth(url, method, null, signal);
 };
 
-export const fetchTrendingMovies = async (signal: AbortSignal) => {
+export const fetchTrendingMovies = async (
+  signal: AbortSignal,
+): Promise<any> => {
   const url = `https://api.themoviedb.org/3/trending/movie/day?language=en-US`;
   const method = RequestMethod.GET;
   return fetchJsonWithoutAuth(url, method, null, signal);
@@ -223,7 +230,7 @@ export const fetchTrendingMovies = async (signal: AbortSignal) => {
 export const fetchNowPlayingMovies = async (
   signal: AbortSignal,
   pageParam: number,
-) => {
+): Promise<any> => {
   const url = `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${pageParam}`;
   const method = RequestMethod.GET;
   return fetchJsonWithoutAuth(url, method, null, signal);
@@ -232,7 +239,7 @@ export const fetchNowPlayingMovies = async (
 export const fetchUpcomingMovies = async (
   signal: AbortSignal,
   pageParam: number,
-) => {
+): Promise<any> => {
   const url = `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=${pageParam}`;
   const method = RequestMethod.GET;
   return fetchJsonWithoutAuth(url, method, null, signal);
@@ -241,7 +248,7 @@ export const fetchUpcomingMovies = async (
 export const fetchTopRatedMovies = async (
   signal: AbortSignal,
   pageParam: number,
-) => {
+): Promise<any> => {
   const url = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${pageParam}`;
   const method = RequestMethod.GET;
   return fetchJsonWithoutAuth(url, method, null, signal);
@@ -250,7 +257,7 @@ export const fetchTopRatedMovies = async (
 export const fetchMovieDetails = async (
   signal: AbortSignal,
   movieId: number,
-) => {
+): Promise<any> => {
   const url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
   const method = RequestMethod.GET;
   return fetchJsonWithoutAuth(url, method, null, signal);
@@ -260,8 +267,8 @@ export const fetchMovieDetails = async (
 export const fetchMovieFavorites = async (
   signal: AbortSignal,
   pageParam: number,
-) => {
-  const {accountId} = getUserStorageAndToken();
+): Promise<any> => {
+  const {accountId} = getUserStorageData();
   if (!accountId) {
     // ! Unauthorized access
     expireSession();
@@ -276,8 +283,8 @@ export const fetchMovieFavorites = async (
 export const fetchMovieWatchlist = async (
   signal: AbortSignal,
   pageParam: number,
-) => {
-  const {accountId} = getUserStorageAndToken();
+): Promise<any> => {
+  const {accountId} = getUserStorageData();
   if (!accountId) {
     // ! Unauthorized access
     expireSession();
@@ -289,8 +296,10 @@ export const fetchMovieWatchlist = async (
 };
 
 // ? deprecated
-export const updateMovieFavorites = async (body: FavoriteRequestBody) => {
-  const {accountId} = getUserStorageAndToken();
+export const updateMovieFavorites = async (
+  body: FavoriteRequestBody,
+): Promise<any> => {
+  const {accountId} = getUserStorageData();
   if (!accountId) {
     // ! Unauthorized access
     expireSession();
@@ -302,8 +311,10 @@ export const updateMovieFavorites = async (body: FavoriteRequestBody) => {
 };
 
 // ? deprecated
-export const updateMovieWatchlist = async (body: WatchlistRequestBody) => {
-  const {accountId} = getUserStorageAndToken();
+export const updateMovieWatchlist = async (
+  body: WatchlistRequestBody,
+): Promise<any> => {
+  const {accountId} = getUserStorageData();
   if (!accountId) {
     // ! Unauthorized access
     expireSession();
@@ -315,8 +326,10 @@ export const updateMovieWatchlist = async (body: WatchlistRequestBody) => {
 };
 
 // ? deprecated
-export const fetchAccountDetails = async (signal: AbortSignal) => {
-  const {accountId} = getUserStorageAndToken();
+export const fetchAccountDetails = async (
+  signal: AbortSignal,
+): Promise<any> => {
+  const {accountId} = getUserStorageData();
   if (!accountId) {
     // ! Unauthorized access
     expireSession();
@@ -331,8 +344,8 @@ export const fetchAccountDetails = async (signal: AbortSignal) => {
 export const fetchMoviesRated = async (
   signal: AbortSignal,
   pageParam: number,
-) => {
-  const {accountId} = getUserStorageAndToken();
+): Promise<any> => {
+  const {accountId} = getUserStorageData();
   if (!accountId) {
     // ! Unauthorized access
     expireSession();
@@ -346,7 +359,7 @@ export const fetchMoviesRated = async (
 export const fetchSimilarMovies = async (
   signal: AbortSignal,
   pageParam: number,
-) => {
+): Promise<any> => {
   const {lastWatchedMovieId} = getAppStoreState();
   const url = `https://api.themoviedb.org/3/movie/${lastWatchedMovieId}/similar?language=en-US&page=${pageParam}`;
   const method = RequestMethod.GET;
@@ -356,7 +369,7 @@ export const fetchSimilarMovies = async (
 export const fetchMovieReviews = async (
   signal: AbortSignal,
   pageParam: number,
-) => {
+): Promise<any> => {
   const {lastWatchedMovieId} = getAppStoreState();
   const url = `https://api.themoviedb.org/3/movie/${lastWatchedMovieId}/reviews?language=en-US&page=${pageParam}`;
   const method = RequestMethod.GET;
@@ -369,14 +382,14 @@ export const addMovieRating = async ({
 }: {
   movieId: number;
   value: number;
-}) => {
+}): Promise<any> => {
   const url = `https://api.themoviedb.org/3/movie/${movieId}/rating`;
   const body = {value};
   const method = RequestMethod.POST;
   return fetchJsonWithAuth(url, method, body);
 };
 
-export const deleteMovieRating = async (movieId: number) => {
+export const deleteMovieRating = async (movieId: number): Promise<any> => {
   const url = `https://api.themoviedb.org/3/movie/${movieId}/rating`;
   const method = RequestMethod.DELETE;
   return fetchJsonWithAuth(url, method, null);

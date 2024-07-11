@@ -9,13 +9,13 @@ import storageInstance from '@utilities/Storage';
 
 interface AppStateProps {
   isSignedIn: boolean;
-  accountId: Object | null;
+  accountId: string | null;
   lastWatchedMovieId: number | null;
   accountDetails: AccountDetails | null;
 }
 
 interface AppStoreProps extends AppStateProps {
-  login: (accountId: Object, accessToken: string) => void;
+  login: (accountId: string, accessToken: string) => void;
   logout: () => void;
   setAccountDetails: (accountDetails: AccountDetails) => void;
   setLastWatchedMovieId: (lastWatchedMovieId: number) => void;
@@ -31,7 +31,7 @@ const useAppStore = create<AppStoreProps>()(
         accountDetails: null,
         lastWatchedMovieId: null,
 
-        login: (accountId: Object, accessToken: string) => {
+        login: (accountId: string, accessToken: string) => {
           set({
             isSignedIn: true,
             accountId,
