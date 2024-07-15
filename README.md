@@ -71,9 +71,9 @@ JWT represents claim mechanism between two parties.
 - JWT is built with three components:
   `<Component1>.<Component2>.<Component3>`
 
-* "<Component1>" signifies the encryption being used.
-* "<Component2>" determines the information.
-* "<Component3>" determines the signature.
+* Component1 signifies the encryption being used.
+* Component2 determines the information.
+* Component3 determines the signature.
 
 - Follows security mechanism - Public/ Private cryptography.
   (means 2 keys are generated 1 is public and 1 is private.)
