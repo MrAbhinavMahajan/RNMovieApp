@@ -1,4 +1,5 @@
 import React from 'react';
+import {logError} from '~/src/analytics';
 
 interface Props {
   fallback: any;
@@ -25,8 +26,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
         hasError: true,
       },
       () => {
-        console.error('stackTrace:::', stackTrace);
-        // sendErrorEvent({ error, stackTrace });
+        logError(`StackTrace: ${stackTrace}`);
       },
     );
   }

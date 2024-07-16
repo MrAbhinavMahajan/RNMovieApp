@@ -3,6 +3,7 @@ import {ActivityIndicator, Image, View} from 'react-native';
 import {styles} from './styles';
 import {STD_ACTIVITY_COLOR} from '@constants/Styles';
 import RNText from '../RNText';
+import {logError} from '~/src/analytics';
 
 interface RNImageProps {
   imageURL: string;
@@ -43,7 +44,7 @@ const RNImage = (props: RNImageProps) => {
   const onError = (errorProps: any) => {
     // Invoked on load error.
     const {nativeEvent} = errorProps;
-    console.error('onError: ', nativeEvent);
+    logError(`RNImage: ${JSON.stringify(nativeEvent)}`);
     // ! Set Error Source
     stopLoading();
     setErrorFallback(true);

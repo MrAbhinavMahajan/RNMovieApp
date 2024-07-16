@@ -1,4 +1,5 @@
 import {MMKV} from 'react-native-mmkv';
+import {logDebug, logError} from '../analytics';
 
 class Storage {
   private static instance: Storage;
@@ -27,7 +28,7 @@ class Storage {
         id: 'app-storage',
         encryptionKey: Storage.encryptionKey,
       });
-      console.log('App Storage | Init', this.appStorageInstance);
+      logDebug(`App Storage | INIT - ${this.appStorageInstance}`);
     }
     if (!this.userStorageInstance) {
       // User Storage init
@@ -35,7 +36,7 @@ class Storage {
       if (id) {
         this.setUserStorageInstance(id);
       }
-      console.log('User Storage | Init', this.userStorageInstance);
+      logDebug(`User Storage | INIT - ${this.userStorageInstance}`);
     }
   }
 
@@ -53,15 +54,17 @@ class Storage {
     value: string | number | boolean,
   ): void {
     this.userStorageInstance?.set(key, value);
+    logDebug(`User Storage | SET - key: ${key} | value: ${value}`);
   }
 
   public saveToAppStorage(key: string, value: string | number | boolean): void {
     this.appStorageInstance?.set(key, value);
+    logDebug(`App Storage | SET - key: ${key} | value: ${value}`);
   }
 
   public getUserStorageInstance(): MMKV | null {
     if (!this.userStorageInstance) {
-      console.error('User storage not initialized');
+      logError('User storage not initialized');
       return null;
     }
     return this.userStorageInstance;
@@ -69,7 +72,7 @@ class Storage {
 
   public getAppStorageInstance(): MMKV | null {
     if (!this.appStorageInstance) {
-      console.error('App storage not initialized');
+      logError('App storage not initialized');
       return null;
     }
     return this.appStorageInstance;
@@ -78,21 +81,25 @@ class Storage {
   public clearAppStorage(): void {
     if (this.appStorageInstance) {
       this.appStorageInstance.clearAll();
+      logDebug('App storage | CLEAR');
     }
   }
 
   public clearUserStorage(): void {
     if (this.userStorageInstance) {
       this.userStorageInstance.clearAll();
+      logDebug('User storage | CLEAR');
     }
   }
 
   public clearAll(): void {
     if (this.appStorageInstance) {
       this.appStorageInstance.clearAll();
+      logDebug('App storage | CLEAR_ALL');
     }
     if (this.userStorageInstance) {
       this.userStorageInstance.clearAll();
+      logDebug('User storage | CLEAR_ALL');
     }
   }
 }

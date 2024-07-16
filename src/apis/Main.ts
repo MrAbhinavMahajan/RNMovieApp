@@ -6,6 +6,7 @@ import {
 import Storage from '@utilities/Storage';
 import {getAppStoreState} from '@store/useAppStore';
 import {MMKV} from 'react-native-mmkv';
+import {logError} from '../analytics';
 const ReadAccessToken = process.env.READ_ACCESS_TOKEN;
 
 enum RequestMethod {
@@ -72,11 +73,11 @@ async function fetchJson(url: string, options: RequestOptions): Promise<any> {
       throw new Error(errorMessage);
     }
     return response.json();
-  } catch (error: Error | any) {
-    console.error('Error during fetch operation:', error);
+  } catch (error: any) {
     if (error?.title === 'AbortError') {
       return;
     }
+    logError(`Fetch API: ${JSON.stringify(error)}`);
     throw new Error(error);
   }
 }
