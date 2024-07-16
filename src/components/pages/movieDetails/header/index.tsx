@@ -40,7 +40,6 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
     queryKey: [APP_QUERY_MAP.MOVIE_DETAILS, movieId],
     queryFn: ({signal}) => fetchMovieDetails(signal, movieId),
   });
-  console.log(`movieDetails: for ${movieId} \n`, query);
   const addRatingMutation = useMutation({
     mutationFn: addMovieRating,
     onSuccess: () => {

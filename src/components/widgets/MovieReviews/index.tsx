@@ -45,7 +45,6 @@ const MoviesReviewsWidget = () => {
       return lastPageParam + 1;
     },
   });
-  console.log('movieReviews:\n', query);
   const {
     data,
     refetch,
@@ -59,14 +58,12 @@ const MoviesReviewsWidget = () => {
     status,
   } = query;
   const listRef = useRef(null);
-  console.log('Review Data :\n', data);
   const reviewItems = useMemo(() => {
     if (isError) {
       return [];
     }
     return data?.pages.flatMap(page => page.results) || FALLBACK_DATA;
   }, [data, isError]);
-  console.log('Review :\n', reviewItems);
   const isEmpty =
     !isError && status !== QUERY_STATUS.PENDING && _.isEmpty(reviewItems);
 

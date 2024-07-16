@@ -21,7 +21,6 @@ const TopRatedMoviesWidget = () => {
     queryKey: [APP_QUERY_MAP.TOP_RATED_MOVIES],
     queryFn: ({signal}) => fetchTopRatedMovies(signal, page),
   });
-  console.log('topRatedMovies: \n', query);
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
   const listRef = useRef(null);
   const movies = useMemo(() => {

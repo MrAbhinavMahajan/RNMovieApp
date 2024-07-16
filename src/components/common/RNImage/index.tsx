@@ -43,7 +43,7 @@ const RNImage = (props: RNImageProps) => {
   const onError = (errorProps: any) => {
     // Invoked on load error.
     const {nativeEvent} = errorProps;
-    console.log('onError: ', nativeEvent);
+    console.error('onError: ', nativeEvent);
     // ! Set Error Source
     stopLoading();
     setErrorFallback(true);

@@ -60,14 +60,12 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
   } = query;
   const listRef = useAnimatedRef<any>();
   const scrollHandler = useScrollViewOffset(listRef); // * Gives Current offset of ScrollView
-  console.log('Search Data :\n', data);
   const movies = useMemo(() => {
     if (isError) {
       return <></>;
     }
     return data?.pages.flatMap(page => page.results) || [];
   }, [data, isError]);
-  console.log('Search Movies::::', movies);
 
   useEffect(() => {
     if (searchedText) {

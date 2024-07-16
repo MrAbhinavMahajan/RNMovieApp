@@ -24,7 +24,6 @@ const TrendingMoviesWidget = () => {
     queryKey: [APP_QUERY_MAP.TRENDING_MOVIES],
     queryFn: ({signal}) => fetchTrendingMovies(signal),
   });
-  console.log('trendingMovies:\n', query);
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
   const carouselRef = useRef(null);
   const movies = useMemo(() => {

@@ -73,7 +73,6 @@ const ProfileViewAllScreen = (props: ProfileViewAllScreenProps) => {
     },
     refetchInterval: 5000,
   });
-  console.log('profileViewAllMovies: \n', query);
   const {
     data,
     refetch,
@@ -87,14 +86,12 @@ const ProfileViewAllScreen = (props: ProfileViewAllScreenProps) => {
   } = query;
   const listRef = useAnimatedRef<any>();
   const scrollHandler = useScrollViewOffset(listRef); // * Gives Current offset of ScrollView
-  console.log('profileViewAllMovies Data :\n', data);
   const movies = useMemo(() => {
     if (isError) {
       return [];
     }
     return data?.pages.flatMap(page => page.results) || [];
   }, [data?.pages, isError]);
-  console.log('View-All Movies :', movies);
 
   const scrollToTopCTAFadeAnimationStyles = useAnimatedStyle(() => ({
     opacity: withTiming(scrollHandler.value > 600 ? 1 : 0),

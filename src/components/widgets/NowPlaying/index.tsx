@@ -21,7 +21,6 @@ const NowPlayingMoviesWidget = () => {
     queryKey: [APP_QUERY_MAP.NOW_PLAYING_MOVIES],
     queryFn: ({signal}) => fetchNowPlayingMovies(signal, page),
   });
-  console.log('nowPlayingMovies:\n', query);
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
   const listRef = useRef(null);
   const movies = useMemo(() => {

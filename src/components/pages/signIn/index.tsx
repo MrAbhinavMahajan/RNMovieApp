@@ -48,10 +48,6 @@ const SignInScreen = () => {
 
   useEffect(() => {
     const {data, isError, error} = requestTokenQuery;
-    console.log(
-      'requestTokenQuery::::',
-      JSON.stringify(requestTokenQuery, null, 4),
-    );
     if (isError) {
       Alert.alert(error.name, error?.message);
       return;
@@ -64,10 +60,6 @@ const SignInScreen = () => {
 
   useEffect(() => {
     const {data, isError, error} = accessTokenQuery;
-    console.log(
-      'accessTokenQuery::::',
-      JSON.stringify(accessTokenQuery, null, 4),
-    );
     if (isError) {
       Alert.alert(error.name, error?.message);
       return;

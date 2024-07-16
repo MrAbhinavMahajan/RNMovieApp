@@ -47,7 +47,6 @@ const ProfileScreen = () => {
     queryFn: ({signal}) => fetchAccountDetails(signal),
     refetchInterval: 10000,
   });
-  console.log('Account Details::: ', data);
   const logoutMutation = useMutation({
     mutationFn: expireAccessTokenV4,
     onSuccess: () => {

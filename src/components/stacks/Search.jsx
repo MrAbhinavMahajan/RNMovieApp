@@ -9,7 +9,6 @@ const {Navigator, Screen} = createNativeStackNavigator();
 
 const SearchStack = () => {
   const debouncedSearch = _.debounce(function (navigation, searchedText) {
-    console.log('searchedText:::: ', searchedText);
     navigation.setParams({
       queryParams: {searchedText},
     });

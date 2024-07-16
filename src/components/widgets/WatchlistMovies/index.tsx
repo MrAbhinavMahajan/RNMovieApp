@@ -25,7 +25,6 @@ const WatchlistMoviesWidget = () => {
     queryKey: [APP_QUERY_MAP.WATCHLIST_MOVIES],
     queryFn: ({signal}) => fetchMovieWatchlist(signal, page),
   });
-  console.log('watchlistMovies: \n', query);
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
   const listRef = useRef(null);
   const movies = useMemo(() => {

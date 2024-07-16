@@ -25,7 +25,6 @@ const FavoritesMoviesWidget = () => {
     queryKey: [APP_QUERY_MAP.FAVORITE_MOVIES],
     queryFn: ({signal}) => fetchMovieFavorites(signal, page),
   });
-  console.log('favoriteMovies: \n', query);
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
   const listRef = useRef(null);
   const movies = useMemo(() => {

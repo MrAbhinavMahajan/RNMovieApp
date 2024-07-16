@@ -64,7 +64,6 @@ class Storage {
       console.error('User storage not initialized');
       return null;
     }
-    console.log('User storage::', this.userStorageInstance);
     return this.userStorageInstance;
   }
 
@@ -73,7 +72,6 @@ class Storage {
       console.error('App storage not initialized');
       return null;
     }
-    console.log('App storage::', this.appStorageInstance);
     return this.appStorageInstance;
   }
 

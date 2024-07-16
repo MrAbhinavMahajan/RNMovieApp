@@ -21,7 +21,6 @@ const UpcomingMoviesWidget = () => {
     queryKey: [APP_QUERY_MAP.UPCOMING_MOVIES],
     queryFn: ({signal}) => fetchUpcomingMovies(signal, page),
   });
-  console.log('upcomingMovies: \n', query);
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
   const listRef = useRef(null);
   const movies = useMemo(() => {

@@ -34,7 +34,6 @@ const PopularMoviesWidget = () => {
       return lastPageParam + 1;
     },
   });
-  console.log('popularMovies:\n', query);
   const {
     data,
     refetch,
@@ -49,14 +48,12 @@ const PopularMoviesWidget = () => {
   } = query;
   const listRef = useAnimatedRef<any>();
   const scrollHandler = useScrollViewOffset(listRef); // * Gives Current offset of ScrollView
-  console.log('PopularMovies Data :\n', data);
   const movies = useMemo(() => {
     if (isError) {
       return [];
     }
     return data?.pages.flatMap(page => page.results) || FALLBACK_DATA;
   }, [data, isError]);
-  console.log('PopularMovies :\n', movies);
 
   const refreshWidget = () => {
     if (isFetching) {

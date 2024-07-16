@@ -25,7 +25,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
         hasError: true,
       },
       () => {
-        console.log('stackTrace:::', stackTrace);
+        console.error('stackTrace:::', stackTrace);
         // sendErrorEvent({ error, stackTrace });
       },
     );
