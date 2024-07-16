@@ -1,4 +1,4 @@
-import {ILogger} from '../ILoggerFactory.ts';
+import {ILogger} from '@constants/AppInterfaces';
 
 class DebugLogger implements ILogger {
   log(message: string) {
