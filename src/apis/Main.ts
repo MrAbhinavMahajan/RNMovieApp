@@ -6,7 +6,7 @@ import {
 import Storage from '@utilities/Storage';
 import {getAppStoreState} from '@store/useAppStore';
 import {MMKV} from 'react-native-mmkv';
-import {logError} from '../analytics';
+import {logDebug, logError} from '../analytics';
 const ReadAccessToken = process.env.READ_ACCESS_TOKEN;
 
 enum RequestMethod {
@@ -63,6 +63,7 @@ function getUserStorageData() {
 
 async function fetchJson(url: string, options: RequestOptions): Promise<any> {
   try {
+    logDebug(`[API_REQUEST] ${JSON.stringify({url, options})}`);
     const response = await fetch(url, options);
     if (!response.ok) {
       let errorMessage = `HTTP error ${response.status} - ${response.statusText}`;
@@ -72,12 +73,15 @@ async function fetchJson(url: string, options: RequestOptions): Promise<any> {
       }
       throw new Error(errorMessage);
     }
-    return response.json();
+
+    const responseJson = await response.json();
+    logDebug(`[API_RESPONSE] ${JSON.stringify({url, responseJson})}`);
+    return responseJson;
   } catch (error: any) {
     if (error?.title === 'AbortError') {
       return;
     }
-    logError(`Fetch API: ${JSON.stringify(error)}`);
+    logError(`FETCH FAILED: ${JSON.stringify(error)}`);
     throw new Error(error);
   }
 }
