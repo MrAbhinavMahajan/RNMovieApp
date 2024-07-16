@@ -1,9 +1,14 @@
-import ILoggerFactory, {ILogger} from '..';
+import {ILogger, ILoggerFactory} from '@constants/AppInterfaces';
 import DebugLogger from './Logger';
 
 class DebugLoggerFactory implements ILoggerFactory {
+  private static instance: ILogger;
+
   createLogger(): ILogger {
-    return new DebugLogger();
+    if (!DebugLoggerFactory.instance) {
+      DebugLoggerFactory.instance = new DebugLogger();
+    }
+    return DebugLoggerFactory.instance;
   }
 }
 

@@ -1,3 +1,11 @@
+export interface ILogger {
+  log: (message: string) => void;
+}
+
+export interface ILoggerFactory {
+  createLogger: () => ILogger;
+}
+
 export interface Tmdb {
   avatar_path: null;
 }

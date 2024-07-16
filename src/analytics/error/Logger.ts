@@ -1,8 +1,10 @@
-import {ILogger} from '..';
+import {ILogger} from '../ILoggerFactory.ts';
 
 class ErrorLogger implements ILogger {
   log(message: string) {
-    console.log('ERROR: ', message);
+    if (__DEV__) {
+      console.error('ERROR: ', message);
+    }
   }
 }
 
