@@ -7,6 +7,7 @@ import Storage from '@utilities/Storage';
 import {getAppStoreState} from '@store/useAppStore';
 import {MMKV} from 'react-native-mmkv';
 import {logDebug, logError} from '../analytics';
+import {APP_BASE_URL} from '../constants/Api';
 const ReadAccessToken = process.env.READ_ACCESS_TOKEN;
 
 enum RequestMethod {
@@ -130,7 +131,7 @@ async function fetchJsonWithAuth(
 export const createRequestTokenV4 = async (
   signal: AbortSignal,
 ): Promise<any> => {
-  const url = 'https://api.themoviedb.org/4/auth/request_token';
+  const url = `${APP_BASE_URL}/4/auth/request_token`;
   const method = RequestMethod.POST;
   return fetchJsonWithoutAuth(url, method, null, signal);
 };
@@ -139,7 +140,7 @@ export const createAccessTokenV4 = async (
   signal: AbortSignal,
   request_token: string,
 ): Promise<any> => {
-  const url = 'https://api.themoviedb.org/4/auth/access_token';
+  const url = `${APP_BASE_URL}/4/auth/access_token`;
   const body = {request_token};
   const method = RequestMethod.POST;
   return fetchJsonWithoutAuth(url, method, body, signal);
@@ -154,7 +155,7 @@ export const expireAccessTokenV4 = async (
     expireSession();
     return;
   }
-  const url = 'https://api.themoviedb.org/4/auth/access_token';
+  const url = `${APP_BASE_URL}/4/auth/access_token`;
   const method = RequestMethod.DELETE;
   return fetchJsonWithoutAuth(url, method, null);
 };
@@ -169,7 +170,7 @@ export const fetchMovieFavoritesV4 = async (
     expireSession();
     return;
   }
-  const url = `https://api.themoviedb.org/4/account/${accountId}/movie/favorites?language=en-US&page=${pageParam}&sort_by=created_at.desc`;
+  const url = `${APP_BASE_URL}/4/account/${accountId}/movie/favorites?language=en-US&page=${pageParam}&sort_by=created_at.desc`;
   const method = RequestMethod.GET;
   return fetchJsonWithAuth(url, method, null, signal);
 };
@@ -184,7 +185,7 @@ export const fetchMovieWatchlistV4 = async (
     expireSession();
     return;
   }
-  const url = `https://api.themoviedb.org/4/account/${accountId}/movie/watchlist?language=en-US&page=${pageParam}&sort_by=created_at.desc`;
+  const url = `${APP_BASE_URL}/4/account/${accountId}/movie/watchlist?language=en-US&page=${pageParam}&sort_by=created_at.desc`;
   const method = RequestMethod.GET;
   return fetchJsonWithAuth(url, method, null, signal);
 };
@@ -199,7 +200,7 @@ export const fetchRecommendedMoviesV4 = async (
     expireSession();
     return;
   }
-  const url = `https://api.themoviedb.org/4/account/${accountId}/movie/recommendations?language=en-US&page=${pageParam}`;
+  const url = `${APP_BASE_URL}/4/account/${accountId}/movie/recommendations?language=en-US&page=${pageParam}`;
   const method = RequestMethod.GET;
   return fetchJsonWithAuth(url, method, null, signal);
 };
@@ -209,7 +210,7 @@ export const fetchPopularMovies = async (
   signal: AbortSignal,
   pageParam: number,
 ): Promise<any> => {
-  const url = `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${pageParam}`;
+  const url = `${APP_BASE_URL}/3/movie/popular?language=en-US&page=${pageParam}`;
   const method = RequestMethod.GET;
   return fetchJsonWithoutAuth(url, method, null, signal);
 };
@@ -219,7 +220,7 @@ export const fetchSearchedMovieResults = async (
   searchedText: string,
   pageParam: number,
 ): Promise<any> => {
-  const url = `https://api.themoviedb.org/3/search/movie?query=${searchedText}&language=en-US&page=${pageParam}`;
+  const url = `${APP_BASE_URL}/3/search/movie?query=${searchedText}&language=en-US&page=${pageParam}`;
   const method = RequestMethod.GET;
   return fetchJsonWithoutAuth(url, method, null, signal);
 };
@@ -227,7 +228,7 @@ export const fetchSearchedMovieResults = async (
 export const fetchTrendingMovies = async (
   signal: AbortSignal,
 ): Promise<any> => {
-  const url = `https://api.themoviedb.org/3/trending/movie/day?language=en-US`;
+  const url = `${APP_BASE_URL}/3/trending/movie/day?language=en-US`;
   const method = RequestMethod.GET;
   return fetchJsonWithoutAuth(url, method, null, signal);
 };
@@ -236,7 +237,7 @@ export const fetchNowPlayingMovies = async (
   signal: AbortSignal,
   pageParam: number,
 ): Promise<any> => {
-  const url = `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${pageParam}`;
+  const url = `${APP_BASE_URL}/3/movie/now_playing?language=en-US&page=${pageParam}`;
   const method = RequestMethod.GET;
   return fetchJsonWithoutAuth(url, method, null, signal);
 };
@@ -245,7 +246,7 @@ export const fetchUpcomingMovies = async (
   signal: AbortSignal,
   pageParam: number,
 ): Promise<any> => {
-  const url = `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=${pageParam}`;
+  const url = `${APP_BASE_URL}/3/movie/upcoming?language=en-US&page=${pageParam}`;
   const method = RequestMethod.GET;
   return fetchJsonWithoutAuth(url, method, null, signal);
 };
@@ -254,7 +255,7 @@ export const fetchTopRatedMovies = async (
   signal: AbortSignal,
   pageParam: number,
 ): Promise<any> => {
-  const url = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${pageParam}`;
+  const url = `${APP_BASE_URL}/3/movie/top_rated?language=en-US&page=${pageParam}`;
   const method = RequestMethod.GET;
   return fetchJsonWithoutAuth(url, method, null, signal);
 };
@@ -263,7 +264,7 @@ export const fetchMovieDetails = async (
   signal: AbortSignal,
   movieId: number,
 ): Promise<any> => {
-  const url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
+  const url = `${APP_BASE_URL}/3/movie/${movieId}?language=en-US`;
   const method = RequestMethod.GET;
   return fetchJsonWithoutAuth(url, method, null, signal);
 };
@@ -279,7 +280,7 @@ export const fetchMovieFavorites = async (
     expireSession();
     return;
   }
-  const url = `https://api.themoviedb.org/3/account/${accountId}/favorite/movies?language=en-US&page=${pageParam}&sort_by=created_at.desc`;
+  const url = `${APP_BASE_URL}/3/account/${accountId}/favorite/movies?language=en-US&page=${pageParam}&sort_by=created_at.desc`;
   const method = RequestMethod.GET;
   return fetchJsonWithAuth(url, method, null, signal);
 };
@@ -295,7 +296,7 @@ export const fetchMovieWatchlist = async (
     expireSession();
     return;
   }
-  const url = `https://api.themoviedb.org/3/account/${accountId}/watchlist/movies?language=en-US&page=${pageParam}&sort_by=created_at.desc`;
+  const url = `${APP_BASE_URL}/3/account/${accountId}/watchlist/movies?language=en-US&page=${pageParam}&sort_by=created_at.desc`;
   const method = RequestMethod.GET;
   return fetchJsonWithAuth(url, method, null, signal);
 };
@@ -310,7 +311,7 @@ export const updateMovieFavorites = async (
     expireSession();
     return;
   }
-  const url = `https://api.themoviedb.org/3/account/${accountId}/favorite`;
+  const url = `${APP_BASE_URL}/3/account/${accountId}/favorite`;
   const method = RequestMethod.POST;
   return fetchJsonWithAuth(url, method, body);
 };
@@ -325,7 +326,7 @@ export const updateMovieWatchlist = async (
     expireSession();
     return;
   }
-  const url = `https://api.themoviedb.org/3/account/${accountId}/watchlist`;
+  const url = `${APP_BASE_URL}/3/account/${accountId}/watchlist`;
   const method = RequestMethod.POST;
   return fetchJsonWithAuth(url, method, body);
 };
@@ -340,7 +341,7 @@ export const fetchAccountDetails = async (
     expireSession();
     return;
   }
-  const url = `https://api.themoviedb.org/3/account/${accountId}`;
+  const url = `${APP_BASE_URL}/3/account/${accountId}`;
   const method = RequestMethod.GET;
   return fetchJsonWithAuth(url, method, null, signal);
 };
@@ -356,7 +357,7 @@ export const fetchMoviesRated = async (
     expireSession();
     return;
   }
-  const url = `https://api.themoviedb.org/4/account/${accountId}/movie/rated?page=${pageParam}&language=en-US&sort_by=created_at.desc`;
+  const url = `${APP_BASE_URL}/4/account/${accountId}/movie/rated?page=${pageParam}&language=en-US&sort_by=created_at.desc`;
   const method = RequestMethod.GET;
   return fetchJsonWithAuth(url, method, null, signal);
 };
@@ -366,7 +367,7 @@ export const fetchSimilarMovies = async (
   pageParam: number,
 ): Promise<any> => {
   const {lastWatchedMovieId} = getAppStoreState();
-  const url = `https://api.themoviedb.org/3/movie/${lastWatchedMovieId}/similar?language=en-US&page=${pageParam}`;
+  const url = `${APP_BASE_URL}/3/movie/${lastWatchedMovieId}/similar?language=en-US&page=${pageParam}`;
   const method = RequestMethod.GET;
   return fetchJsonWithAuth(url, method, null, signal);
 };
@@ -376,7 +377,7 @@ export const fetchMovieReviews = async (
   pageParam: number,
 ): Promise<any> => {
   const {lastWatchedMovieId} = getAppStoreState();
-  const url = `https://api.themoviedb.org/3/movie/${lastWatchedMovieId}/reviews?language=en-US&page=${pageParam}`;
+  const url = `${APP_BASE_URL}/3/movie/${lastWatchedMovieId}/reviews?language=en-US&page=${pageParam}`;
   const method = RequestMethod.GET;
   return fetchJsonWithAuth(url, method, null, signal);
 };
@@ -388,14 +389,14 @@ export const addMovieRating = async ({
   movieId: number;
   value: number;
 }): Promise<any> => {
-  const url = `https://api.themoviedb.org/3/movie/${movieId}/rating`;
+  const url = `${APP_BASE_URL}/3/movie/${movieId}/rating`;
   const body = {value};
   const method = RequestMethod.POST;
   return fetchJsonWithAuth(url, method, body);
 };
 
 export const deleteMovieRating = async (movieId: number): Promise<any> => {
-  const url = `https://api.themoviedb.org/3/movie/${movieId}/rating`;
+  const url = `${APP_BASE_URL}/3/movie/${movieId}/rating`;
   const method = RequestMethod.DELETE;
   return fetchJsonWithAuth(url, method, null);
 };

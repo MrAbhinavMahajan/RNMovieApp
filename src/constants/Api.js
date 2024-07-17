@@ -1,3 +1,5 @@
+export const APP_BASE_URL = 'https://api.themoviedb.org';
+
 export const APP_QUERY_MAP = {
   // Screens
   PROFILE: 'PROFILE',
