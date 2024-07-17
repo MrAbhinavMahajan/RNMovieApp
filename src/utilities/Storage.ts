@@ -104,7 +104,7 @@ class Storage {
   }
 }
 
-const encryptionKey = process.env.STORAGE_ENCRYPTION_KEY || 'STORAGE';
+const encryptionKey = process.env.MMKV_STORAGE_ENCRYPTION_KEY || 'STORAGE';
 const storageInstance = Storage.getInstance(encryptionKey);
 export default storageInstance;
 export const getAppStorage = () => storageInstance.getAppStorageInstance();

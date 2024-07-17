@@ -8,7 +8,7 @@ import {getAppStoreState} from '@store/useAppStore';
 import {MMKV} from 'react-native-mmkv';
 import {logDebug, logError} from '../analytics';
 import {APP_BASE_URL} from '../constants/Api';
-const ReadAccessToken = process.env.READ_ACCESS_TOKEN;
+const ReadAccessToken = process.env.TMDB_READ_ACCESS_TOKEN;
 
 enum RequestMethod {
   'GET' = 'GET',
