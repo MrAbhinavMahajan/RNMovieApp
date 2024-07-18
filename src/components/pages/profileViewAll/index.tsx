@@ -93,7 +93,7 @@ const ProfileViewAllScreen = (props: ProfileViewAllScreenProps) => {
     return data?.pages.flatMap(page => page.results) || [];
   }, [data?.pages, isError]);
 
-  const scrollToTopCTAFadeAnimationStyles = useAnimatedStyle(() => ({
+  const scrollToTopCTAAnimationStyles = useAnimatedStyle(() => ({
     opacity: withTiming(scrollHandler.value > 600 ? 1 : 0),
   }));
 
@@ -229,7 +229,7 @@ const ProfileViewAllScreen = (props: ProfileViewAllScreenProps) => {
         }
       />
       <Animated.View
-        style={[styles.scrollToTopBtn, scrollToTopCTAFadeAnimationStyles]}>
+        style={[styles.scrollToTopBtn, scrollToTopCTAAnimationStyles]}>
         <AppCTA hitSlop={styles.scrollToTopBtnHitSlop} onPress={scrollToTop}>
           <AppArrowUpIcon />
         </AppCTA>
