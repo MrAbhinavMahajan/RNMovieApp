@@ -110,7 +110,7 @@ const MoviesReviewsWidget = () => {
     );
   }
 
-  if (true || isEmpty) {
+  if (isEmpty) {
     return (
       <EmptyStateWidget
         title={kREVIEWS.noReviews?.title}
