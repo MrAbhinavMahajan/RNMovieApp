@@ -3,6 +3,7 @@ import _ from 'lodash';
 import {useQuery} from '@tanstack/react-query';
 import * as NavigationService from '@service/Navigation';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
+import Animated, {FadeInLeft} from 'react-native-reanimated';
 import {fetchMoviesRated} from '@apis/Main';
 import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '@constants/Navigation';
 import {styles} from './styles';
@@ -130,12 +131,14 @@ const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
     });
   };
   return (
-    <MoviePosterWidget
-      item={item}
-      index={index}
-      containerStyles={styles.moviePoster}
-      action={onCTA}
-    />
+    <Animated.View entering={FadeInLeft}>
+      <MoviePosterWidget
+        item={item}
+        index={index}
+        containerStyles={styles.moviePoster}
+        action={onCTA}
+      />
+    </Animated.View>
   );
 };
 export default SelfRatedMoviesWidget;

@@ -4,6 +4,7 @@ import {useQuery} from '@tanstack/react-query';
 import * as NavigationService from '@service/Navigation';
 import {fetchRecommendedMoviesV4} from '@apis/Main';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
+import Animated, {FadeInRight} from 'react-native-reanimated';
 import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '@constants/Navigation';
 import {styles} from './styles';
 import {PAGE_REFRESH} from '@constants/Page';
@@ -114,12 +115,14 @@ const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
     });
   };
   return (
-    <MoviePosterWidget
-      item={item}
-      index={index}
-      containerStyles={styles.moviePoster}
-      action={onCTA}
-    />
+    <Animated.View entering={FadeInRight}>
+      <MoviePosterWidget
+        item={item}
+        index={index}
+        containerStyles={styles.moviePoster}
+        action={onCTA}
+      />
+    </Animated.View>
   );
 };
 

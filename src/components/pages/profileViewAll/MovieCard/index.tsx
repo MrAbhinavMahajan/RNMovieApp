@@ -2,6 +2,7 @@
 import React from 'react';
 import {ActivityIndicator, Alert} from 'react-native';
 import * as NavigationService from '@service/Navigation';
+import Animated, {FadeInUp, FadeOut} from 'react-native-reanimated';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import LinearGradient from 'react-native-linear-gradient';
 import {
@@ -157,28 +158,30 @@ const MovieCard = ({
     }
   };
   return (
-    <AppCTA style={styles.moviePosterContainer} onPress={onCTA}>
-      <MoviePosterWidget
-        item={item}
-        index={index}
-        containerStyles={styles.moviePoster}
-      />
+    <Animated.View entering={FadeInUp} exiting={FadeOut}>
+      <AppCTA style={styles.moviePosterContainer} onPress={onCTA}>
+        <MoviePosterWidget
+          item={item}
+          index={index}
+          containerStyles={styles.moviePoster}
+        />
 
-      {editableModeEnabled && (
-        <LinearGradient
-          colors={[COLORS.transparent, COLORS.fullBlack]}
-          style={[styles.moviePosterGradient]}>
-          {isPending ? (
-            <ActivityIndicator size={'large'} color={COLORS.azureishWhite} />
-          ) : (
-            <AppDeleteIcon
-              size={IconSize.extraLargeBold}
-              color={COLORS.fullWhite}
-            />
-          )}
-        </LinearGradient>
-      )}
-    </AppCTA>
+        {editableModeEnabled && (
+          <LinearGradient
+            colors={[COLORS.transparent, COLORS.fullBlack]}
+            style={[styles.moviePosterGradient]}>
+            {isPending ? (
+              <ActivityIndicator size={'large'} color={COLORS.azureishWhite} />
+            ) : (
+              <AppDeleteIcon
+                size={IconSize.extraLargeBold}
+                color={COLORS.fullWhite}
+              />
+            )}
+          </LinearGradient>
+        )}
+      </AppCTA>
+    </Animated.View>
   );
 };
 

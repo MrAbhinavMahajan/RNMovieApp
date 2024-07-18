@@ -7,6 +7,8 @@ import Animated, {
   useAnimatedStyle,
   useScrollViewOffset,
   withTiming,
+  FadeInRight,
+  FadeOut,
 } from 'react-native-reanimated';
 import * as NavigationService from '@service/Navigation';
 import {
@@ -237,12 +239,14 @@ const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
     });
   };
   return (
-    <MoviePosterWidget
-      item={item}
-      index={index}
-      containerStyles={styles.moviePoster}
-      action={onCTA}
-    />
+    <Animated.View entering={FadeInRight} exiting={FadeOut}>
+      <MoviePosterWidget
+        item={item}
+        index={index}
+        containerStyles={styles.moviePoster}
+        action={onCTA}
+      />
+    </Animated.View>
   );
 };
 

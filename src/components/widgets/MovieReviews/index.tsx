@@ -2,6 +2,7 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 import _ from 'lodash';
 import {useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
 import {ActivityIndicator, FlatList, RefreshControl, View} from 'react-native';
+import Animated, {FadeIn, FadeOut} from 'react-native-reanimated';
 import {fetchMovieReviews} from '@apis/Main';
 import {IconSize, MaterialIcon} from '@components/common/RNIcon';
 import {FALLBACK_DATA} from '../../../data/Main';
@@ -64,6 +65,7 @@ const MoviesReviewsWidget = () => {
     }
     return data?.pages.flatMap(page => page.results) || FALLBACK_DATA;
   }, [data, isError]);
+
   const isEmpty =
     !isError && status !== QUERY_STATUS.PENDING && _.isEmpty(reviewItems);
 
@@ -110,7 +112,7 @@ const MoviesReviewsWidget = () => {
     );
   }
 
-  if (true || isEmpty) {
+  if (isEmpty) {
     return (
       <EmptyStateWidget
         title={kREVIEWS.noReviews?.title}
@@ -162,7 +164,11 @@ const MovieReviewItem = ({item, index}: {item: MovieReview; index: number}) => {
   };
 
   return (
-    <View key={index} style={styles.reviewCardView}>
+    <Animated.View
+      key={index}
+      entering={FadeIn}
+      exiting={FadeOut}
+      style={styles.reviewCardView}>
       <RNText style={styles.reviewTitleText}>{author}</RNText>
       <View>
         <RNText style={styles.reviewText} numberOfLines={isExpanded ? 0 : 3}>
@@ -172,7 +178,7 @@ const MovieReviewItem = ({item, index}: {item: MovieReview; index: number}) => {
           {isExpanded ? 'hide' : 'view more'}
         </RNText>
       </View>
-    </View>
+    </Animated.View>
   );
 };
 
