@@ -9,6 +9,8 @@ import Animated, {
   withTiming,
   FadeInRight,
   FadeOut,
+  withRepeat,
+  withSequence,
 } from 'react-native-reanimated';
 import * as NavigationService from '@service/Navigation';
 import {
@@ -102,6 +104,15 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
 
   const scrollToTopCTAAnimationStyles = useAnimatedStyle(() => ({
     opacity: withTiming(scrollHandler.value > 600 ? 1 : 0),
+    transform: [
+      {
+        translateY: withRepeat(
+          withSequence(withTiming(-15), withTiming(0)),
+          -1,
+          true,
+        ),
+      },
+    ],
   }));
 
   const scrollToTop = () => {

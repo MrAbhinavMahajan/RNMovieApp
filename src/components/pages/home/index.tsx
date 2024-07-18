@@ -17,6 +17,8 @@ import Animated, {
   useAnimatedRef,
   useAnimatedStyle,
   useScrollViewOffset,
+  withRepeat,
+  withSequence,
   withTiming,
 } from 'react-native-reanimated';
 import {AppArrowUpIcon} from '@components/common/RNIcon';
@@ -43,6 +45,15 @@ const HomeScreen = () => {
 
   const scrollToTopCTAAnimationStyles = useAnimatedStyle(() => ({
     opacity: withTiming(scrollHandler.value > 600 ? 1 : 0),
+    transform: [
+      {
+        translateY: withRepeat(
+          withSequence(withTiming(-15), withTiming(0)),
+          -1,
+          true,
+        ),
+      },
+    ],
   }));
 
   return (

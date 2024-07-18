@@ -15,7 +15,9 @@ import Animated, {
   useAnimatedStyle,
   useScrollViewOffset,
   withTiming,
-  BounceInLeft,
+  SlideInLeft,
+  withRepeat,
+  withSequence,
 } from 'react-native-reanimated';
 import {APP_PAGES_MAP} from '@constants/Navigation';
 import {fetchSearchedMovieResults} from '@apis/Main';
@@ -84,6 +86,15 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
 
   const scrollToTopCTAAnimationStyles = useAnimatedStyle(() => ({
     opacity: withTiming(scrollHandler.value > 600 ? 1 : 0),
+    transform: [
+      {
+        translateY: withRepeat(
+          withSequence(withTiming(-15), withTiming(0)),
+          -1,
+          true,
+        ),
+      },
+    ],
   }));
 
   const scrollToTop = () => {
@@ -191,7 +202,7 @@ const MovieCard = ({item, index}: {item: MovieItem; index: number}) => {
   };
   return (
     <AnimatedCTA
-      entering={BounceInLeft}
+      entering={SlideInLeft}
       style={styles.itemContainerView}
       onPress={onCTA}>
       <MoviePosterWidget
