@@ -6,6 +6,8 @@ import Animated, {
   useAnimatedRef,
   useAnimatedStyle,
   useScrollViewOffset,
+  withRepeat,
+  withSequence,
   withTiming,
 } from 'react-native-reanimated';
 import LinearGradient from 'react-native-linear-gradient';
@@ -94,8 +96,17 @@ const SignInScreen = () => {
     scrollRef.current?.scrollTo({x: 0, y: 0, animated: true});
   };
 
-  const scrollToTopCTAFadeAnimationStyles = useAnimatedStyle(() => ({
+  const scrollToTopCTAAnimationStyles = useAnimatedStyle(() => ({
     opacity: withTiming(scrollHandler.value > 100 ? 1 : 0),
+    transform: [
+      {
+        translateY: withRepeat(
+          withSequence(withTiming(-15), withTiming(0)),
+          -1,
+          true,
+        ),
+      },
+    ],
   }));
 
   useEffect(() => {
@@ -180,7 +191,7 @@ const SignInScreen = () => {
         />
       </ScrollView>
       <Animated.View
-        style={[styles.scrollToTopBtn, scrollToTopCTAFadeAnimationStyles]}>
+        style={[styles.scrollToTopBtn, scrollToTopCTAAnimationStyles]}>
         <AppCTA hitSlop={styles.scrollToTopBtnHitSlop} onPress={scrollToTop}>
           <AppArrowUpIcon />
         </AppCTA>

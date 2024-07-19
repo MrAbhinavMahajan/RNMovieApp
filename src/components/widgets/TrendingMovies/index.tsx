@@ -2,6 +2,7 @@ import React, {useEffect, useMemo, useRef} from 'react';
 import _ from 'lodash';
 import {useQuery} from '@tanstack/react-query';
 import * as NavigationService from '@service/Navigation';
+import Animated, {FadeInRight} from 'react-native-reanimated';
 import Carousel from 'react-native-snap-carousel';
 import {ActivityIndicator, NativeAppEventEmitter, View} from 'react-native';
 import {PAGE_REFRESH} from '@constants/Page';
@@ -90,12 +91,14 @@ const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
     });
   };
   return (
-    <MoviePosterWidget
-      item={item}
-      index={index}
-      containerStyles={styles.moviePoster}
-      action={onCTA}
-    />
+    <Animated.View entering={FadeInRight}>
+      <MoviePosterWidget
+        item={item}
+        index={index}
+        containerStyles={styles.moviePoster}
+        action={onCTA}
+      />
+    </Animated.View>
   );
 };
 

@@ -15,19 +15,23 @@ import Animated, {
   useAnimatedStyle,
   useScrollViewOffset,
   withTiming,
+  SlideInLeft,
+  withRepeat,
+  withSequence,
 } from 'react-native-reanimated';
 import {APP_PAGES_MAP} from '@constants/Navigation';
 import {fetchSearchedMovieResults} from '@apis/Main';
 import {AppArrowUpIcon} from '@components/common/RNIcon';
 import {styles} from './styles';
 import {STD_ACTIVITY_COLOR} from '@constants/Styles';
-import {MoviePosterItem} from '@constants/AppInterfaces';
+import {MovieItem} from '@constants/AppInterfaces';
 import {APP_QUERY_MAP} from '@constants/Api';
 import AppCTA from '@components/common/AppCTA';
 import RNText from '@components/common/RNText';
 import MoviePosterWidget from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
 import EmptyStateCreativeCard from '@components/common/EmptyStateCard';
+const AnimatedCTA = Animated.createAnimatedComponent(TouchableOpacity);
 
 interface SearchedResultsWidgetProps {
   searchedText: string;
@@ -80,8 +84,17 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
     refetch();
   };
 
-  const scrollToTopCTAFadeAnimationStyles = useAnimatedStyle(() => ({
+  const scrollToTopCTAAnimationStyles = useAnimatedStyle(() => ({
     opacity: withTiming(scrollHandler.value > 600 ? 1 : 0),
+    transform: [
+      {
+        translateY: withRepeat(
+          withSequence(withTiming(-15), withTiming(0)),
+          -1,
+          true,
+        ),
+      },
+    ],
   }));
 
   const scrollToTop = () => {
@@ -132,7 +145,7 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
     );
   };
 
-  const keyExtractor = (item: MoviePosterItem) => `${item?.id}`;
+  const keyExtractor = (item: MovieItem) => `${item?.id}`;
 
   return (
     <View
@@ -147,7 +160,7 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
       <FlatList
         ref={listRef}
         data={movies}
-        renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
+        renderItem={({item, index}: {item: MovieItem; index: number}) => (
           <MovieCard item={item} index={index} />
         )}
         keyExtractor={keyExtractor}
@@ -169,7 +182,7 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
         }
       />
       <Animated.View
-        style={[styles.scrollToTopBtn, scrollToTopCTAFadeAnimationStyles]}>
+        style={[styles.scrollToTopBtn, scrollToTopCTAAnimationStyles]}>
         <AppCTA hitSlop={styles.scrollToTopBtnHitSlop} onPress={scrollToTop}>
           <AppArrowUpIcon />
         </AppCTA>
@@ -180,7 +193,7 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
 
 const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
 
-const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
+const MovieCard = ({item, index}: {item: MovieItem; index: number}) => {
   const {title, id, vote_average, overview} = item || {};
   const onCTA = () => {
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
@@ -188,7 +201,10 @@ const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
     });
   };
   return (
-    <TouchableOpacity style={styles.itemContainerView} onPress={onCTA}>
+    <AnimatedCTA
+      entering={SlideInLeft}
+      style={styles.itemContainerView}
+      onPress={onCTA}>
       <MoviePosterWidget
         item={item}
         index={index}
@@ -210,7 +226,7 @@ const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
           </RNText>
         )}
       </View>
-    </TouchableOpacity>
+    </AnimatedCTA>
   );
 };
 export default SearchedResultsWidget;

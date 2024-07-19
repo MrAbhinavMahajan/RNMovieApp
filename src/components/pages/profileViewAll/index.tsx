@@ -6,6 +6,8 @@ import Animated, {
   useAnimatedRef,
   useAnimatedStyle,
   useScrollViewOffset,
+  withRepeat,
+  withSequence,
   withTiming,
 } from 'react-native-reanimated';
 import * as NavigationService from '@service/Navigation';
@@ -93,8 +95,17 @@ const ProfileViewAllScreen = (props: ProfileViewAllScreenProps) => {
     return data?.pages.flatMap(page => page.results) || [];
   }, [data?.pages, isError]);
 
-  const scrollToTopCTAFadeAnimationStyles = useAnimatedStyle(() => ({
+  const scrollToTopCTAAnimationStyles = useAnimatedStyle(() => ({
     opacity: withTiming(scrollHandler.value > 600 ? 1 : 0),
+    transform: [
+      {
+        translateY: withRepeat(
+          withSequence(withTiming(-15), withTiming(0)),
+          -1,
+          true,
+        ),
+      },
+    ],
   }));
 
   const scrollToTop = () => {
@@ -229,7 +240,7 @@ const ProfileViewAllScreen = (props: ProfileViewAllScreenProps) => {
         }
       />
       <Animated.View
-        style={[styles.scrollToTopBtn, scrollToTopCTAFadeAnimationStyles]}>
+        style={[styles.scrollToTopBtn, scrollToTopCTAAnimationStyles]}>
         <AppCTA hitSlop={styles.scrollToTopBtnHitSlop} onPress={scrollToTop}>
           <AppArrowUpIcon />
         </AppCTA>

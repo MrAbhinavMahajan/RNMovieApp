@@ -3,9 +3,12 @@ import {useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
 import {ActivityIndicator, FlatList, RefreshControl, View} from 'react-native';
 import * as NavigationService from '@service/Navigation';
 import Animated, {
+  FadeInRight,
   useAnimatedRef,
   useAnimatedStyle,
   useScrollViewOffset,
+  withRepeat,
+  withSequence,
   withTiming,
 } from 'react-native-reanimated';
 import {fetchPopularMovies} from '@apis/Main';
@@ -62,8 +65,17 @@ const PopularMoviesWidget = () => {
     refetch();
   };
 
-  const scrollToTopCTAFadeAnimationStyles = useAnimatedStyle(() => ({
+  const scrollToTopCTAAnimationStyles = useAnimatedStyle(() => ({
     opacity: withTiming(scrollHandler.value > 600 ? 1 : 0),
+    transform: [
+      {
+        translateY: withRepeat(
+          withSequence(withTiming(-15), withTiming(0)),
+          -1,
+          true,
+        ),
+      },
+    ],
   }));
 
   const scrollToTop = () => {
@@ -156,7 +168,7 @@ const PopularMoviesWidget = () => {
         }
       />
       <Animated.View
-        style={[styles.scrollToTopBtn, scrollToTopCTAFadeAnimationStyles]}>
+        style={[styles.scrollToTopBtn, scrollToTopCTAAnimationStyles]}>
         <AppCTA hitSlop={styles.scrollToTopBtnHitSlop} onPress={scrollToTop}>
           <AppArrowUpIcon />
         </AppCTA>
@@ -173,12 +185,14 @@ const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
     });
   };
   return (
-    <MoviePosterWidget
-      item={item}
-      index={index}
-      containerStyles={styles.moviePoster}
-      action={onCTA}
-    />
+    <Animated.View entering={FadeInRight}>
+      <MoviePosterWidget
+        item={item}
+        index={index}
+        containerStyles={styles.moviePoster}
+        action={onCTA}
+      />
+    </Animated.View>
   );
 };
 export default PopularMoviesWidget;

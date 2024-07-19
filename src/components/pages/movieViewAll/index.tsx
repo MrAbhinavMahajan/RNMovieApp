@@ -7,6 +7,10 @@ import Animated, {
   useAnimatedStyle,
   useScrollViewOffset,
   withTiming,
+  FadeInRight,
+  FadeOut,
+  withRepeat,
+  withSequence,
 } from 'react-native-reanimated';
 import * as NavigationService from '@service/Navigation';
 import {
@@ -98,8 +102,17 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
     return data?.pages.flatMap(page => page.results) || [];
   }, [data?.pages, isError]);
 
-  const scrollToTopCTAFadeAnimationStyles = useAnimatedStyle(() => ({
+  const scrollToTopCTAAnimationStyles = useAnimatedStyle(() => ({
     opacity: withTiming(scrollHandler.value > 600 ? 1 : 0),
+    transform: [
+      {
+        translateY: withRepeat(
+          withSequence(withTiming(-15), withTiming(0)),
+          -1,
+          true,
+        ),
+      },
+    ],
   }));
 
   const scrollToTop = () => {
@@ -220,7 +233,7 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
         }
       />
       <Animated.View
-        style={[styles.scrollToTopBtn, scrollToTopCTAFadeAnimationStyles]}>
+        style={[styles.scrollToTopBtn, scrollToTopCTAAnimationStyles]}>
         <AppCTA hitSlop={styles.scrollToTopBtnHitSlop} onPress={scrollToTop}>
           <AppArrowUpIcon />
         </AppCTA>
@@ -237,12 +250,14 @@ const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
     });
   };
   return (
-    <MoviePosterWidget
-      item={item}
-      index={index}
-      containerStyles={styles.moviePoster}
-      action={onCTA}
-    />
+    <Animated.View entering={FadeInRight} exiting={FadeOut}>
+      <MoviePosterWidget
+        item={item}
+        index={index}
+        containerStyles={styles.moviePoster}
+        action={onCTA}
+      />
+    </Animated.View>
   );
 };
 
