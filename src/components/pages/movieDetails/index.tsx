@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import MovieDetailsTab from '@components/tabs/movieDetails';
-import MovieDetailsScreenHeader from './header';
 import AppCTA from '@components/common/AppCTA';
 import {
   fetchMovieFavorites,
@@ -193,8 +192,7 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
       refreshControl={
         <RefreshControl refreshing={false} onRefresh={refreshPage} />
       }>
-      <MovieDetailsScreenHeader screenTitle={screenTitle} movieId={movieId} />
-      <MovieDetailsTab />
+      {/* <MovieDetailsTab /> */}
     </ScrollView>
   );
 
