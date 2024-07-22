@@ -3,22 +3,21 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {ActivityIndicator, FlatList, RefreshControl, View} from 'react-native';
 import {styles} from './styles';
 import {useAnimatedRef} from 'react-native-reanimated';
-import EmptyStateCreativeCard from '../../common/EmptyStateCard';
 import {useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
 import {APP_QUERY_MAP} from '~/src/constants/Api';
 import {fetchDiscoverMovies} from '~/src/apis/Main';
-import AppHeader from '../../common/AppHeader';
 import {
   DiscoverQueryParams,
   MoviePosterItem,
 } from '~/src/constants/AppInterfaces';
 import {STD_ACTIVITY_COLOR} from '~/src/constants/Styles';
-import ErrorStateWidget from '../../widgets/ErrorState';
 import MovieCard from './MovieCard';
+import EmptyStateCreativeCard from '../../common/EmptyStateCard';
+import ErrorStateWidget from '../../widgets/ErrorState';
 
 const MovieExploreScreen = () => {
   const queryClient = useQueryClient();
-  const [filters, setFilters] = useState<DiscoverQueryParams>();
+  const [filters, setFilters] = useState<DiscoverQueryParams>({});
   const {
     data,
     refetch,
@@ -34,8 +33,8 @@ const MovieExploreScreen = () => {
     queryKey: [APP_QUERY_MAP.EXPLORE_MOVIES],
     queryFn: ({pageParam, signal}) =>
       fetchDiscoverMovies(signal, {
-        page: pageParam,
         ...filters,
+        page: pageParam,
       }),
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
@@ -122,11 +121,6 @@ const MovieExploreScreen = () => {
 
   return (
     <View style={styles.screenView}>
-      <AppHeader
-        safePaddingEnabled={true}
-        transparentBackgroundEnabled={true}
-        floatingEnabled={true}
-      />
       {(isLoading || isRefetching) && (
         <View style={styles.loaderView}>
           <ActivityIndicator size={'large'} color={STD_ACTIVITY_COLOR} />
@@ -138,6 +132,8 @@ const MovieExploreScreen = () => {
         renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
           <MovieCard item={item} index={index} />
         )}
+        horizontal
+        pagingEnabled
         keyExtractor={keyExtractor}
         contentContainerStyle={styles.scrollableContentView}
         onEndReached={onEndReached}

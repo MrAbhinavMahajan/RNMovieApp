@@ -2,8 +2,8 @@ import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import {styles} from './styles';
 import RNImage from '@components/common/RNImage';
-import {IMAGE_BASEURL} from '@constants/Main';
 import {MoviePosterItem} from '@constants/AppInterfaces';
+import {getImageURL} from '~/src/utilities/App';
 
 interface MoviePosterWidgetProps {
   item: MoviePosterItem;
@@ -19,7 +19,7 @@ const MoviePosterWidget = ({
   action,
 }: MoviePosterWidgetProps) => {
   const {poster_path, title = ''} = item || {};
-  const imageURL = `${IMAGE_BASEURL}${poster_path}`;
+  const imageURL = getImageURL(poster_path ?? '');
   const fallbackCharacter = title ? title[0] : '';
 
   return (

@@ -11,7 +11,6 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import {addMovieRating, fetchMovieDetails} from '@apis/Main';
 import {PAGE_REFRESH} from '@constants/Page';
-import {IMAGE_BASEURL} from '@constants/Main';
 import {COLORS} from '@constants/Colors';
 import {styles} from './styles';
 import {AirbnbRating} from 'react-native-ratings';
@@ -22,6 +21,7 @@ import RNText from '@components/common/RNText';
 import MoviePosterWidget from '@components/widgets/MoviePoster';
 import RNImage from '@components/common/RNImage';
 import AppCTA from '@components/common/AppCTA';
+import {getImageURL} from '~/src/utilities/App';
 
 interface MovieDetailsScreenHeaderProps {
   screenTitle: string;
@@ -57,7 +57,7 @@ const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
   const {data: item, refetch} = query;
   const {vote_average, tagline, vote_count, backdrop_path, id, genres} =
     item || {};
-  const imageURL = `${IMAGE_BASEURL}${backdrop_path}`;
+  const imageURL = getImageURL(backdrop_path);
   const [controlsViewLayout, setControlsViewLayout] = useState({
     height: 0,
     width: 0,

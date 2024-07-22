@@ -1,17 +1,17 @@
 import React, {useState} from 'react';
-import {ActivityIndicator, Image, View} from 'react-native';
+import {ActivityIndicator, Image, ImageProps, View} from 'react-native';
 import {styles} from './styles';
 import {STD_ACTIVITY_COLOR} from '@constants/Styles';
 import RNText from '../RNText';
 import {logError} from '~/src/analytics';
 
-interface RNImageProps {
+type RNImageProps = {
   imageURL: string;
   imageViewStyles?: any;
   imageStyles?: any;
   blurRadius?: number;
   fallbackCharacter: string;
-}
+} & ImageProps;
 
 const RNImage = (props: RNImageProps) => {
   const {

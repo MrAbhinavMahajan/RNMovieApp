@@ -1,5 +1,5 @@
 import React from 'react';
-import Animated, {FadeInRight, FadeOut} from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import * as NavigationService from '@service/Navigation';
 import MoviePosterWidget from '@components/widgets/MoviePoster';
 import {APP_PAGES_MAP} from '@constants/Navigation';
@@ -14,7 +14,7 @@ const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
     });
   };
   return (
-    <Animated.View entering={FadeInRight} exiting={FadeOut}>
+    <Animated.View style={styles.container}>
       <MoviePosterWidget
         item={item}
         index={index}
