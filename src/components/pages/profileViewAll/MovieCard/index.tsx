@@ -32,8 +32,8 @@ const MovieCard = ({
 }: {
   item: MoviePosterItem;
   index: number;
-  editableModeEnabled: boolean;
-  widgetId: string;
+  editableModeEnabled?: boolean;
+  widgetId?: string;
 }) => {
   const queryClient = useQueryClient();
   const favoritesMutation = useMutation({
@@ -157,6 +157,7 @@ const MovieCard = ({
       });
     }
   };
+
   return (
     <Animated.View entering={FadeInUp} exiting={FadeOut}>
       <AppCTA style={styles.moviePosterContainer} onPress={onCTA}>

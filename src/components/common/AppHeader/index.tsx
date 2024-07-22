@@ -18,6 +18,7 @@ interface AppHeaderProps {
   safePaddingEnabled: boolean;
   multipleCTAModeEnabled?: boolean;
   transparentBackgroundEnabled: boolean;
+  floatingEnabled?: boolean;
   gradientEnabled?: boolean;
   gradientStyles?: any;
   gradientColors?: string[];
@@ -31,6 +32,7 @@ const AppHeader = (props: AppHeaderProps) => {
     title,
     safePaddingEnabled = false,
     transparentBackgroundEnabled = false,
+    floatingEnabled = false,
     multipleCTAModeEnabled = false,
     gradientEnabled = false,
     containerStyles = {},
@@ -78,7 +80,11 @@ const AppHeader = (props: AppHeaderProps) => {
         onLayout('HEADER_VIEW', e);
       }}
       style={[
-        styles.headerView(transparentBackgroundEnabled, safePaddingEnabled),
+        styles.headerView(
+          transparentBackgroundEnabled,
+          safePaddingEnabled,
+          floatingEnabled,
+        ),
         {paddingTop: insets.top},
         containerStyles,
       ]}>
