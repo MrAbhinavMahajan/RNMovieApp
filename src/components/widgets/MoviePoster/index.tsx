@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import {Pressable} from 'react-native';
 import {styles} from './styles';
 import RNImage from '@components/common/RNImage';
 import {MoviePosterItem} from '@constants/AppInterfaces';
@@ -23,13 +23,13 @@ const MoviePosterWidget = ({
   const fallbackCharacter = title ? title[0] : '';
 
   return (
-    <TouchableOpacity
+    <Pressable
       key={index}
       style={[styles.movieCardView, containerStyles]}
       disabled={!action}
       onPress={action}>
       <RNImage imageURL={imageURL} fallbackCharacter={fallbackCharacter} />
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 
