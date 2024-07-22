@@ -31,6 +31,7 @@ import RNText from '@components/common/RNText';
 import MoviePosterWidget from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
 import EmptyStateCreativeCard from '@components/common/EmptyStateCard';
+import {useIsFocused} from '@react-navigation/native';
 const AnimatedCTA = Animated.createAnimatedComponent(TouchableOpacity);
 
 interface SearchedResultsWidgetProps {
@@ -39,6 +40,7 @@ interface SearchedResultsWidgetProps {
 
 const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
   const {searchedText} = props;
+  const isFocussed = useIsFocused();
   const query = useInfiniteQuery({
     queryKey: [APP_QUERY_MAP.SEARCHED_RESULTS],
     queryFn: ({signal, pageParam}) =>
@@ -50,6 +52,7 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
       }
       return lastPageParam + 1;
     },
+    enabled: isFocussed,
   });
   const {
     data,

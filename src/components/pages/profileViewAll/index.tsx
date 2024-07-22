@@ -32,6 +32,7 @@ import AppCTA from '@components/common/AppCTA';
 import ErrorStateWidget from '@components/widgets/ErrorState';
 import MovieCard from './MovieCard';
 import EmptyStateCreativeCard from '@components/common/EmptyStateCard';
+import {useIsFocused} from '@react-navigation/native';
 
 interface ProfileViewAllScreenProps {
   route: {
@@ -46,6 +47,7 @@ interface ProfileViewAllScreenProps {
 
 const ProfileViewAllScreen = (props: ProfileViewAllScreenProps) => {
   const queryClient = useQueryClient();
+  const isFocussed = useIsFocused();
   const {queryParams} = props?.route?.params || {};
   const {screenTitle, widgetId} = queryParams;
   const [editableModeEnabled, setEditableModeEnabled] = useState(false);
@@ -74,6 +76,7 @@ const ProfileViewAllScreen = (props: ProfileViewAllScreenProps) => {
       return lastPageParam + 1;
     },
     refetchInterval: 5000,
+    enabled: isFocussed,
   });
   const {
     data,

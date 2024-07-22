@@ -14,9 +14,11 @@ import {STD_ACTIVITY_COLOR} from '~/src/constants/Styles';
 import MovieCard from './MovieCard';
 import EmptyStateCreativeCard from '../../common/EmptyStateCard';
 import ErrorStateWidget from '../../widgets/ErrorState';
+import {useIsFocused} from '@react-navigation/native';
 
 const MovieExploreScreen = () => {
   const queryClient = useQueryClient();
+  const isFocussed = useIsFocused();
   const [filters, setFilters] = useState<DiscoverQueryParams>({});
   const {
     data,
@@ -43,6 +45,7 @@ const MovieExploreScreen = () => {
       }
       return lastPageParam + 1;
     },
+    enabled: isFocussed,
   });
   const listRef = useAnimatedRef<any>();
   const movies = useMemo(() => {

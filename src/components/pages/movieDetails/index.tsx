@@ -32,6 +32,7 @@ import {
 } from '@constants/AppInterfaces';
 import AppHeader from '@components/common/AppHeader';
 import useAppStore from '@store/useAppStore';
+import {useIsFocused} from '@react-navigation/native';
 
 interface MovieDetailsScreenProps {
   route: {
@@ -46,15 +47,18 @@ interface MovieDetailsScreenProps {
 
 const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
   const queryClient = useQueryClient();
+  const isFocussed = useIsFocused();
   const {setLastWatchedMovieId} = useAppStore();
   const page = 1;
   const favoriteMoviesQuery = useQuery({
     queryKey: [APP_QUERY_MAP.FAVORITE_MOVIES],
     queryFn: ({signal}) => fetchMovieFavorites(signal, page),
+    enabled: isFocussed,
   });
   const watchlistMoviesDataQuery = useQuery({
     queryKey: [APP_QUERY_MAP.WATCHLIST_MOVIES],
     queryFn: ({signal}) => fetchMovieWatchlist(signal, page),
+    enabled: isFocussed,
   });
   const favoritesMutation = useMutation({
     mutationFn: updateMovieFavorites,

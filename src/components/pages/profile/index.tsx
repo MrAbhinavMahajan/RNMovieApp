@@ -38,9 +38,11 @@ import FavoritesMoviesWidget from '@components/widgets/FavoriteMovies';
 import SelfRatedMoviesWidget from '@components/widgets/SelfRatedMovies';
 import HeaderTitleWidget from '@components/widgets/HeaderTitle';
 import {getImageURL} from '~/src/utilities/App';
+import {useIsFocused} from '@react-navigation/native';
 
 const ProfileScreen = () => {
   const insets = useSafeAreaInsets();
+  const isFocussed = useIsFocused();
   const {accountDetails, setAccountDetails, logout} = useAppStore();
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollHandler = useScrollViewOffset(scrollRef); // * Gives Current offset of ScrollView
@@ -48,6 +50,7 @@ const ProfileScreen = () => {
     queryKey: [APP_QUERY_MAP.PROFILE],
     queryFn: ({signal}) => fetchAccountDetails(signal),
     refetchInterval: 10000,
+    enabled: isFocussed,
   });
   const logoutMutation = useMutation({
     mutationFn: expireAccessTokenV4,

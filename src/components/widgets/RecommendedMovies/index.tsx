@@ -16,18 +16,21 @@ import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
 import useAppStore from '@store/useAppStore';
+import {useIsFocused} from '@react-navigation/native';
 
 interface RecommendedMoviesWidgetProps {
   widgetTitle?: string;
 }
 
 const RecommendedMoviesWidget = (props: RecommendedMoviesWidgetProps) => {
+  const isFocussed = useIsFocused();
   const {lastWatchedMovieId} = useAppStore();
   const {widgetTitle} = props || {};
   const page = 1;
   const query = useQuery({
     queryKey: [APP_QUERY_MAP.RECOMMENDED_MOVIES, lastWatchedMovieId],
     queryFn: ({signal}) => fetchRecommendedMoviesV4(signal, page),
+    enabled: isFocussed,
   });
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
   const listRef = useRef(null);

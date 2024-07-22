@@ -35,6 +35,7 @@ import AppCTA from '@components/common/AppCTA';
 import MoviePosterWidget from '@components/widgets/MoviePoster';
 import ErrorStateWidget from '@components/widgets/ErrorState';
 import EmptyStateCreativeCard from '@components/common/EmptyStateCard';
+import {useIsFocused} from '@react-navigation/native';
 
 interface MovieViewAllScreenProps {
   route: {
@@ -49,6 +50,7 @@ interface MovieViewAllScreenProps {
 
 const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
   const queryClient = useQueryClient();
+  const isFocussed = useIsFocused();
   const {queryParams} = props?.route?.params || {};
   const {screenTitle, widgetId} = queryParams;
   const makeAPICall = async (signal: AbortSignal, pageParam = 1) => {
@@ -80,6 +82,7 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
       }
       return lastPageParam + 1;
     },
+    enabled: isFocussed,
   });
   const {
     data,

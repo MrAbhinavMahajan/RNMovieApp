@@ -17,13 +17,16 @@ import {APP_QUERY_MAP} from '@constants/Api';
 import {MoviePosterItem} from '@constants/AppInterfaces';
 import MoviePosterWidget from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
+import {useIsFocused} from '@react-navigation/native';
 
 const SLIDER_WIDTH = SCREEN_WIDTH;
 const ITEM_WIDTH = SCREEN_WIDTH * 0.6;
 const TrendingMoviesWidget = () => {
+  const isFocussed = useIsFocused();
   const query = useQuery({
     queryKey: [APP_QUERY_MAP.TRENDING_MOVIES],
     queryFn: ({signal}) => fetchTrendingMovies(signal),
+    enabled: isFocussed,
   });
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
   const carouselRef = useRef(null);

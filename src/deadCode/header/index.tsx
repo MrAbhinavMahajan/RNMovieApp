@@ -22,6 +22,7 @@ import MoviePosterWidget from '@components/widgets/MoviePoster';
 import RNImage from '@components/common/RNImage';
 import AppCTA from '@components/common/AppCTA';
 import {getImageURL} from '~/src/utilities/App';
+import {useIsFocused} from '@react-navigation/native';
 
 interface MovieDetailsScreenHeaderProps {
   screenTitle: string;
@@ -35,10 +36,12 @@ interface MovieGenres {
 
 const MovieDetailsScreenHeader = (props: MovieDetailsScreenHeaderProps) => {
   const queryClient = useQueryClient();
+  const isFocussed = useIsFocused();
   const {screenTitle, movieId} = props;
   const query = useQuery({
     queryKey: [APP_QUERY_MAP.MOVIE_DETAILS, movieId],
     queryFn: ({signal}) => fetchMovieDetails(signal, movieId),
+    enabled: isFocussed,
   });
   const addRatingMutation = useMutation({
     mutationFn: addMovieRating,
