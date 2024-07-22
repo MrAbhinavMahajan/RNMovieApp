@@ -1,7 +1,6 @@
 import React from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import MovieReviewsScreen from '@components/pages/movieReviews';
-import MovieExploreScreen from '@components/pages/movieExplore';
 import {APP_PAGES_MAP} from '@constants/Navigation';
 import {STYLES} from '@constants/Styles';
 import {COLORS} from '@constants/Colors';
@@ -26,11 +25,6 @@ const MovieDetailsTab = () => {
         name={'Reviews'}
         key={APP_PAGES_MAP.MOVIE_REVIEWS_SCREEN}
         component={MovieReviewsScreen}
-      />
-      <Screen
-        name={'Explore'}
-        key={APP_PAGES_MAP.MOVIE_EXPLORE_SCREEN}
-        component={MovieExploreScreen}
       />
     </Navigator>
   );
