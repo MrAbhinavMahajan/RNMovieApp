@@ -1,27 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {ActivityIndicator, FlatList, RefreshControl, View} from 'react-native';
-import * as NavigationService from '@service/Navigation';
 import {styles} from './styles';
-import Animated, {
-  FadeInRight,
-  FadeOut,
-  useAnimatedRef,
-} from 'react-native-reanimated';
-import AppCTA from '../../common/AppCTA';
+import {useAnimatedRef} from 'react-native-reanimated';
 import EmptyStateCreativeCard from '../../common/EmptyStateCard';
 import {useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
 import {APP_QUERY_MAP} from '~/src/constants/Api';
-import {fetchRecommendedMoviesV4} from '~/src/apis/Main';
+import {fetchDiscoverMovies} from '~/src/apis/Main';
 import AppHeader from '../../common/AppHeader';
-import {MoviePosterItem} from '~/src/constants/AppInterfaces';
+import {
+  DiscoverQueryParams,
+  MoviePosterItem,
+} from '~/src/constants/AppInterfaces';
 import {STD_ACTIVITY_COLOR} from '~/src/constants/Styles';
 import ErrorStateWidget from '../../widgets/ErrorState';
-import MoviePosterWidget from '../../widgets/MoviePoster';
-import {APP_PAGES_MAP} from '~/src/constants/Navigation';
+import MovieCard from './MovieCard';
 
 const MovieExploreScreen = () => {
   const queryClient = useQueryClient();
+  const [filters, setFilters] = useState<DiscoverQueryParams>();
   const {
     data,
     refetch,
@@ -36,7 +33,10 @@ const MovieExploreScreen = () => {
   } = useInfiniteQuery({
     queryKey: [APP_QUERY_MAP.EXPLORE_MOVIES],
     queryFn: ({pageParam, signal}) =>
-      fetchRecommendedMoviesV4(signal, pageParam),
+      fetchDiscoverMovies(signal, {
+        page: pageParam,
+        ...filters,
+      }),
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
       if (lastPage.page > lastPage.total_pages) {
@@ -120,12 +120,9 @@ const MovieExploreScreen = () => {
     );
   };
 
-  const RightComponent = <AppCTA onPress={{}}></AppCTA>;
-
   return (
     <View style={styles.screenView}>
       <AppHeader
-        RightComponent={RightComponent}
         safePaddingEnabled={true}
         transparentBackgroundEnabled={true}
         floatingEnabled={true}
@@ -144,38 +141,19 @@ const MovieExploreScreen = () => {
         keyExtractor={keyExtractor}
         contentContainerStyle={styles.scrollableContentView}
         onEndReached={onEndReached}
-        onEndReachedThreshold={5} // tells FlatList to trigger onEndReached earlier
+        onEndReachedThreshold={5}
         ListHeaderComponent={renderListHeader}
         ListFooterComponent={renderListFooter}
         ListEmptyComponent={renderListEmptyCard}
-        initialNumToRender={10} // items to render in initial render batch
-        maxToRenderPerBatch={10} // limits the number of items rendered per incremental batch
-        extraData={movies} // tells FlatList to render whenever the chosen variable updates
-        windowSize={1} // the number of "pages" of items rendered in either direction from the visible content
+        initialNumToRender={10}
+        maxToRenderPerBatch={10}
+        extraData={movies}
+        windowSize={1}
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={refreshPage} />
         }
       />
     </View>
-  );
-};
-
-const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
-  const {title, id} = item || {};
-  const onCTA = () => {
-    NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
-      queryParams: {screenTitle: title, movieId: id},
-    });
-  };
-  return (
-    <Animated.View entering={FadeInRight} exiting={FadeOut}>
-      <MoviePosterWidget
-        item={item}
-        index={index}
-        containerStyles={styles.moviePoster}
-        action={onCTA}
-      />
-    </Animated.View>
   );
 };
 

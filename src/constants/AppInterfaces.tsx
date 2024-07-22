@@ -87,3 +87,24 @@ export interface MoviePosterItem {
   title: string;
   id: number;
 }
+
+export interface DiscoverMoviePayload {
+  page: number;
+  results: MovieItem[];
+  total_pages: number;
+  total_results: number;
+}
+
+export interface QueryParams {
+  page?: number;
+  year?: number;
+  include_adult?: boolean;
+  include_video?: boolean;
+  language?: string;
+  sort_by?: string;
+}
+
+export interface DiscoverQueryParams extends QueryParams {
+  with_genres: string;
+  region?: string;
+}

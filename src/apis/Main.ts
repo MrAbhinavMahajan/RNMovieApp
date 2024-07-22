@@ -1,4 +1,5 @@
 import {
+  DiscoverQueryParams,
   FavoriteRequestBody,
   SignOutRequestBody,
   WatchlistRequestBody,
@@ -28,6 +29,24 @@ function expireSession(): void {
   if (isSignedIn) {
     logout();
   }
+}
+
+function generateQueryParams(params: any): string {
+  const queryString = Object.keys(params)
+    .map(key => {
+      const value = params[key];
+      if (Array.isArray(value)) {
+        return value
+          .map(val => `${encodeURIComponent(key)}=${encodeURIComponent(val)}`)
+          .join('&');
+      } else if (typeof value === 'object' && value !== null) {
+        return generateQueryParams(value);
+      } else {
+        return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+      }
+    })
+    .join('&');
+  return '?' + queryString;
 }
 
 function createRequestOptions(
@@ -399,4 +418,22 @@ export const deleteMovieRating = async (movieId: number): Promise<any> => {
   const url = `${APP_BASE_URL}/3/movie/${movieId}/rating`;
   const method = RequestMethod.DELETE;
   return fetchJsonWithAuth(url, method, null);
+};
+
+export const fetchDiscoverMovies = async (
+  signal: AbortSignal,
+  params: DiscoverQueryParams,
+): Promise<any> => {
+  const defaultParams = {
+    include_adult: false,
+    include_video: false,
+    language: 'en-US',
+    sort_by: 'popularity.desc',
+  };
+  const queryParams = generateQueryParams(
+    Object.assign({}, params, defaultParams),
+  );
+  const url = `${APP_BASE_URL}/3/discover/movie${queryParams}`;
+  const method = RequestMethod.GET;
+  return fetchJsonWithAuth(url, method, null, signal);
 };

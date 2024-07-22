@@ -1,11 +1,7 @@
 import {StyleSheet} from 'react-native';
-import {
-  STD_HORIZONTAL_SPACING,
-  STD_SCREEN_COLOR,
-  STYLES,
-} from '@constants/Styles';
+import {STD_SCREEN_COLOR, STYLES} from '@constants/Styles';
 import {hpx, vpx} from '@libraries/responsive-pixels';
-import {SCREEN_HEIGHT, SCREEN_WIDTH} from '@utilities/App';
+import {SCREEN_HEIGHT} from '@utilities/App';
 import {COLORS} from '@constants/Colors';
 
 export const styles = StyleSheet.create({
@@ -14,20 +10,11 @@ export const styles = StyleSheet.create({
     backgroundColor: STD_SCREEN_COLOR,
   },
   scrollableContentView: {
-    paddingHorizontal: STD_HORIZONTAL_SPACING,
-    gap: hpx(8),
     paddingBottom: vpx(200),
     flexGrow: 1,
   },
   columnWrapperView: {
     gap: hpx(8),
-  },
-  moviePoster: {
-    width: SCREEN_WIDTH / 3 - STD_HORIZONTAL_SPACING,
-    aspectRatio: 3 / 5,
-    borderRadius: vpx(8),
-    borderWidth: StyleSheet.hairlineWidth,
-    overflow: 'hidden',
   },
   loaderView: {
     height: '100%',
