@@ -69,6 +69,7 @@ export const COLORS = {
   antiFlashWhite: '#f3f4f6',
   oceanBlue: '#4338ca',
   lightGray: '#d4d4d4',
+  lightGray08: '#d4d4d8',
   quickSilver: '#a3a3a3',
   oliveBlack: '#404040',
   lotionWhite60: '#fafafa60',

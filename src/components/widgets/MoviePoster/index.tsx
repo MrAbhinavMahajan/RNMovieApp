@@ -3,7 +3,7 @@ import {Pressable} from 'react-native';
 import {styles} from './styles';
 import RNImage from '@components/common/RNImage';
 import {MoviePosterItem} from '@constants/AppInterfaces';
-import {getImageURL} from '~/src/utilities/App';
+import {getImageURL} from '@utilities/App';
 
 interface MoviePosterWidgetProps {
   item: MoviePosterItem;

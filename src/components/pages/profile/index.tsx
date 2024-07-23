@@ -37,7 +37,7 @@ import WatchlistMoviesWidget from '@components/widgets/WatchlistMovies';
 import FavoritesMoviesWidget from '@components/widgets/FavoriteMovies';
 import SelfRatedMoviesWidget from '@components/widgets/SelfRatedMovies';
 import HeaderTitleWidget from '@components/widgets/HeaderTitle';
-import {getImageURL} from '~/src/utilities/App';
+import {getImageURL} from '@utilities/App';
 import {useIsFocused} from '@react-navigation/native';
 
 const ProfileScreen = () => {

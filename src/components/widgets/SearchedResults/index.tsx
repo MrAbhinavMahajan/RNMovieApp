@@ -148,7 +148,8 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
     );
   };
 
-  const keyExtractor = (item: MovieItem) => `${item?.id}`;
+  const keyExtractor = (item: MovieItem, index: number) =>
+    `${item?.id}${index}`;
 
   return (
     <View

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {ActivityIndicator, View} from 'react-native';
 import {styles} from './styles';
-import {logError} from '~/src/analytics';
+import {logError} from '@analytics';
 import {STD_ACTIVITY_COLOR} from '@constants/Styles';
 import RNText from '../RNText';
 import Image, {FastImageProps} from 'react-native-fast-image';

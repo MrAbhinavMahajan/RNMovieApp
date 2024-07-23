@@ -1,16 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useMemo, useState} from 'react';
-import {ActivityIndicator, FlatList, RefreshControl, View} from 'react-native';
+import {ActivityIndicator, FlatList, View} from 'react-native';
 import {styles} from './styles';
 import {useAnimatedRef} from 'react-native-reanimated';
 import {useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
-import {APP_QUERY_MAP} from '~/src/constants/Api';
-import {fetchDiscoverMovies} from '~/src/apis/Main';
-import {
-  DiscoverQueryParams,
-  MoviePosterItem,
-} from '~/src/constants/AppInterfaces';
-import {STD_ACTIVITY_COLOR} from '~/src/constants/Styles';
+import {APP_QUERY_MAP} from '@constants/Api';
+import {fetchDiscoverMovies} from '@apis/Main';
+import {DiscoverQueryParams, MovieItem} from '@constants/AppInterfaces';
+import {STD_ACTIVITY_COLOR} from '@constants/Styles';
 import MovieCard from './MovieCard';
 import EmptyStateCreativeCard from '../../common/EmptyStateCard';
 import ErrorStateWidget from '../../widgets/ErrorState';
@@ -60,7 +57,8 @@ const MovieExploreScreen = () => {
     refetch();
   };
 
-  const keyExtractor = (item: MoviePosterItem) => `${item?.id}`;
+  const keyExtractor = (item: MovieItem, index: number) =>
+    `${item?.id}${index}`;
 
   useEffect(() => {
     return () => {
@@ -129,11 +127,9 @@ const MovieExploreScreen = () => {
       <FlatList
         ref={listRef}
         data={movies || []}
-        renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
-          <MovieCard item={item} index={index} />
+        renderItem={({item, index}: {item: MovieItem; index: number}) => (
+          <MovieCard item={item} index={index} size={movies?.length} />
         )}
-        horizontal
-        pagingEnabled
         keyExtractor={keyExtractor}
         contentContainerStyle={styles.scrollableContentView}
         onEndReached={onEndReached}
@@ -141,13 +137,10 @@ const MovieExploreScreen = () => {
         ListHeaderComponent={renderListHeader}
         ListFooterComponent={renderListFooter}
         ListEmptyComponent={renderListEmptyCard}
-        initialNumToRender={10}
-        maxToRenderPerBatch={10}
+        horizontal
+        pagingEnabled
+        bounces={false}
         extraData={movies}
-        windowSize={1}
-        refreshControl={
-          <RefreshControl refreshing={false} onRefresh={refreshPage} />
-        }
       />
     </View>
   );

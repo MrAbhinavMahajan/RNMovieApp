@@ -13,9 +13,7 @@ import {APP_QUERY_MAP} from '@constants/Api';
 import QuotationWidget from '@components/widgets/Quotation';
 import MoviesReviewsWidget from '@components/widgets/MovieReviews';
 
-interface MovieReviewsScreenProps {}
-
-const MovieReviewsScreen = (props: MovieReviewsScreenProps) => {
+const MovieReviewsScreen = () => {
   const queryClient = useQueryClient();
   const scrollRef = useRef(null);
   const refreshPage = () => {

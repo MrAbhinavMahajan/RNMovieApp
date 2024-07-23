@@ -21,7 +21,7 @@ import RNText from '@components/common/RNText';
 import MoviePosterWidget from '@components/widgets/MoviePoster';
 import RNImage from '@components/common/RNImage';
 import AppCTA from '@components/common/AppCTA';
-import {getImageURL} from '~/src/utilities/App';
+import {getImageURL} from '@utilities/App';
 import {useIsFocused} from '@react-navigation/native';
 
 interface MovieDetailsScreenHeaderProps {

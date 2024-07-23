@@ -17,5 +17,5 @@ export const QUERY_CLIENT = new QueryClient({
   },
 });
 
-export const IMAGE_BASEURL = 'https://image.tmdb.org/t/p/w500';
+export const IMAGE_BASEURL = 'https://image.tmdb.org/t/p/original';
 // * Config File

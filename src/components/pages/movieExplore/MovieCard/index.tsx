@@ -1,12 +1,21 @@
 import React from 'react';
-import Animated from 'react-native-reanimated';
+import {View} from 'react-native';
 import * as NavigationService from '@service/Navigation';
-import MoviePosterWidget from '@components/widgets/MoviePoster';
 import {APP_PAGES_MAP} from '@constants/Navigation';
-import {MoviePosterItem} from '@constants/AppInterfaces';
+import {MovieItem} from '@constants/AppInterfaces';
 import {styles} from './styles';
+import MoviePosterWidget from '@components/widgets/MoviePoster';
+import MovieDetails from '../MovieDetails';
 
-const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
+const MovieCard = ({
+  item,
+  index,
+  size,
+}: {
+  item: MovieItem;
+  index: number;
+  size: number;
+}) => {
   const {title, id} = item || {};
   const onCTA = () => {
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
@@ -14,14 +23,15 @@ const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
     });
   };
   return (
-    <Animated.View style={styles.container}>
+    <View style={styles.container}>
       <MoviePosterWidget
         item={item}
         index={index}
         containerStyles={styles.moviePoster}
         action={onCTA}
       />
-    </Animated.View>
+      <MovieDetails item={item} index={index} size={size} />
+    </View>
   );
 };
 

@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {SCREEN_HEIGHT, SCREEN_WIDTH} from '~/src/utilities/App';
+import {SCREEN_HEIGHT, SCREEN_WIDTH} from '@utilities/App';
 
 export const styles = StyleSheet.create({
   container: {
@@ -9,5 +9,6 @@ export const styles = StyleSheet.create({
   },
   moviePoster: {
     width: SCREEN_WIDTH,
+    opacity: 0.5,
   },
 });
