@@ -6,7 +6,7 @@ import {MovieItem} from '@constants/AppInterfaces';
 import {AppStarIcon, IconSize} from '@components/common/RNIcon';
 import {COLORS} from '@constants/Colors';
 import {genres} from '~/src/data/Main';
-import Animated, {FadeIn, FadeOut} from 'react-native-reanimated';
+import Animated, {FadeIn, FadeInLeft, FadeOut} from 'react-native-reanimated';
 import RNText from '@components/common/RNText';
 
 const MovieDetails = ({item, index}: {item: MovieItem; index: number}) => {
@@ -27,7 +27,12 @@ const MovieDetails = ({item, index}: {item: MovieItem; index: number}) => {
           {genre_ids.map(genreId => genresById(genreId)).join(', ')}
         </RNText>
       )}
-      <RNText style={styles.titleText}>{title}</RNText>
+      <Animated.Text
+        entering={FadeInLeft}
+        exiting={FadeOut}
+        style={styles.titleText}>
+        {title}
+      </Animated.Text>
       <View style={styles.metaContainer}>
         {!!release_date && (
           <RNText style={styles.metaText}>{release_date}</RNText>
@@ -57,7 +62,7 @@ const MovieOverview = ({overview}: {overview: string}) => {
       exiting={FadeOut}
       style={styles.infoContainer}>
       <View>
-        <RNText style={styles.infoText} numberOfLines={isExpanded ? 0 : 3}>
+        <RNText style={styles.infoText} numberOfLines={isExpanded ? 0 : 2}>
           {overview}
         </RNText>
         <RNText style={styles.infoCTAText} onPress={toggleViewMore}>
