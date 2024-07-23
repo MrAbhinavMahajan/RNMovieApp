@@ -1,7 +1,7 @@
 import React from 'react';
 import {View} from 'react-native';
 import {styles} from './styles';
-import Animated, {FadeInDown, FadeOut} from 'react-native-reanimated';
+import Animated, {FadeInDown, FadeInUp} from 'react-native-reanimated';
 import RNText from '~/src/components/common/RNText';
 
 type Pagination = {
@@ -15,8 +15,8 @@ const Pagination = ({totalPages, currentPage}: Pagination) => {
       <Animated.Text
         key={`currentPage-${currentPage}`}
         style={styles.currentPageText}
-        entering={FadeInDown}
-        exiting={FadeOut}>
+        entering={FadeInUp}
+        exiting={FadeInDown}>
         {currentPage}
       </Animated.Text>
       <RNText style={styles.totalPageText}> {totalPages}</RNText>

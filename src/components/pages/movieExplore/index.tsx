@@ -139,8 +139,9 @@ const MovieExploreScreen = () => {
         ListEmptyComponent={renderListEmptyCard}
         horizontal
         pagingEnabled
-        bounces={false}
+        initialNumToRender={1}
         extraData={movies}
+        windowSize={1}
       />
     </View>
   );
