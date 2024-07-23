@@ -23,11 +23,9 @@ import AppCTA from '@components/common/AppCTA';
 import MoviePosterWidget from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
 import EmptyStateCreativeCard from '@components/common/EmptyStateCard';
-import {useIsFocused} from '@react-navigation/native';
 
 const PopularMoviesWidget = () => {
   const queryClient = useQueryClient();
-  const isFocussed = useIsFocused();
   const query = useInfiniteQuery({
     queryKey: [APP_QUERY_MAP.POPULAR_MOVIES],
     queryFn: ({signal, pageParam}) => fetchPopularMovies(signal, pageParam),
@@ -38,7 +36,6 @@ const PopularMoviesWidget = () => {
       }
       return lastPageParam + 1;
     },
-    enabled: isFocussed,
   });
   const {
     data,
