@@ -1,7 +1,12 @@
 import {StyleSheet} from 'react-native';
-import {STD_SCREEN_COLOR, STYLES} from '@constants/Styles';
+import {
+  STD_HORIZONTAL_SPACING,
+  STD_SCREEN_COLOR,
+  STD_VERTICAL_SPACING,
+  STYLES,
+} from '@constants/Styles';
 import {hpx, vpx} from '@libraries/responsive-pixels';
-import {SCREEN_HEIGHT} from '@utilities/App';
+import {SCREEN_HEIGHT, SCREEN_WIDTH} from '@utilities/App';
 import {COLORS} from '@constants/Colors';
 
 export const styles = StyleSheet.create({
@@ -44,5 +49,12 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     height: SCREEN_HEIGHT / 2,
     justifyContent: 'center',
+  },
+  floatingContentView: {
+    position: 'absolute',
+    zIndex: 1,
+    paddingHorizontal: STD_HORIZONTAL_SPACING,
+    paddingVertical: STD_VERTICAL_SPACING,
+    width: SCREEN_WIDTH,
   },
 });

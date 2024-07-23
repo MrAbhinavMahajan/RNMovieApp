@@ -1,7 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useMemo, useState} from 'react';
 import {ActivityIndicator, FlatList, View} from 'react-native';
+import _ from 'lodash';
 import {styles} from './styles';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import {useAnimatedRef} from 'react-native-reanimated';
 import {useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
 import {APP_QUERY_MAP} from '@constants/Api';
@@ -11,9 +13,13 @@ import {STD_ACTIVITY_COLOR} from '@constants/Styles';
 import MovieCard from './MovieCard';
 import EmptyStateCreativeCard from '../../common/EmptyStateCard';
 import ErrorStateWidget from '../../widgets/ErrorState';
+import MovieDetails from './MovieDetails';
+import Pagination from './Pagination';
 
 const MovieExploreScreen = () => {
   const queryClient = useQueryClient();
+  const tabBarHeight = useBottomTabBarHeight();
+  const [activeMovieIndex, setActiveMovieIndex] = useState(0);
   const [filters, setFilters] = useState<DiscoverQueryParams>({});
   const {
     data,
@@ -128,7 +134,7 @@ const MovieExploreScreen = () => {
         ref={listRef}
         data={movies || []}
         renderItem={({item, index}: {item: MovieItem; index: number}) => (
-          <MovieCard item={item} index={index} size={movies?.length} />
+          <MovieCard item={item} index={index} />
         )}
         keyExtractor={keyExtractor}
         contentContainerStyle={styles.scrollableContentView}
@@ -139,10 +145,28 @@ const MovieExploreScreen = () => {
         ListEmptyComponent={renderListEmptyCard}
         horizontal
         pagingEnabled
-        initialNumToRender={1}
         extraData={movies}
         windowSize={1}
+        onMomentumScrollEnd={e => {
+          const idx = Math.floor(
+            e.nativeEvent.contentOffset.x /
+              e.nativeEvent.layoutMeasurement.width,
+          );
+          setActiveMovieIndex(idx);
+        }}
       />
+      <View style={[styles.floatingContentView, {bottom: tabBarHeight}]}>
+        <Pagination
+          totalPages={movies?.length}
+          currentPage={activeMovieIndex + 1}
+        />
+        {!_.isEmpty(movies) && (
+          <MovieDetails
+            item={movies[activeMovieIndex]}
+            index={activeMovieIndex}
+          />
+        )}
+      </View>
     </View>
   );
 };

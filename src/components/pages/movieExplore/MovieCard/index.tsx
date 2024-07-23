@@ -5,17 +5,8 @@ import {APP_PAGES_MAP} from '@constants/Navigation';
 import {MovieItem} from '@constants/AppInterfaces';
 import {styles} from './styles';
 import MoviePosterWidget from '@components/widgets/MoviePoster';
-import MovieDetails from '../MovieDetails';
 
-const MovieCard = ({
-  item,
-  index,
-  size,
-}: {
-  item: MovieItem;
-  index: number;
-  size: number;
-}) => {
+const MovieCard = ({item, index}: {item: MovieItem; index: number}) => {
   const {title, id} = item || {};
   const onCTA = () => {
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
@@ -30,7 +21,6 @@ const MovieCard = ({
         containerStyles={styles.moviePoster}
         action={onCTA}
       />
-      <MovieDetails item={item} index={index} size={size} />
     </View>
   );
 };

@@ -1,18 +1,12 @@
 import {StyleSheet} from 'react-native';
 import {COLORS} from '@constants/Colors';
 import {FONTS} from '@constants/Fonts';
-import {STD_HORIZONTAL_SPACING, STD_VERTICAL_SPACING} from '@constants/Styles';
+import {STD_VERTICAL_SPACING} from '@constants/Styles';
 import {fpx, hpx, vpx} from '@libraries/responsive-pixels';
-import {SCREEN_WIDTH} from '@utilities/App';
 
 export const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    zIndex: 1,
-    paddingHorizontal: STD_HORIZONTAL_SPACING,
-    paddingVertical: STD_VERTICAL_SPACING,
     flex: 1,
-    width: SCREEN_WIDTH,
   },
   titleText: {
     fontSize: fpx(18),

@@ -1,25 +1,15 @@
 import React, {useState} from 'react';
 import {View} from 'react-native';
+import _ from 'lodash';
 import {styles} from './styles';
-import RNText from '@components/common/RNText';
-import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import {MovieItem} from '@constants/AppInterfaces';
 import {AppStarIcon, IconSize} from '@components/common/RNIcon';
 import {COLORS} from '@constants/Colors';
-import Animated, {FadeInLeft, FadeOut} from 'react-native-reanimated';
-import Pagination from '../Pagination';
 import {genres} from '~/src/data/Main';
+import Animated, {FadeIn, FadeOut} from 'react-native-reanimated';
+import RNText from '@components/common/RNText';
 
-const MovieDetails = ({
-  item,
-  index,
-  size,
-}: {
-  item: MovieItem;
-  index: number;
-  size: number;
-}) => {
-  const tabBarHeight = useBottomTabBarHeight();
+const MovieDetails = ({item, index}: {item: MovieItem; index: number}) => {
   const {title, vote_average, genre_ids, overview, release_date} = item || {};
 
   const genresById = (genreId: number) => {
@@ -28,23 +18,26 @@ const MovieDetails = ({
 
   return (
     <Animated.View
-      entering={FadeInLeft}
+      key={`${title}${index}`}
+      entering={FadeIn}
       exiting={FadeOut}
-      style={[styles.container, {bottom: tabBarHeight}]}>
-      <Pagination totalPages={size} currentPage={index + 1} />
-      <RNText style={styles.metaText}>
-        {genre_ids.map(genreId => genresById(genreId)).join(', ')}
-      </RNText>
+      style={styles.container}>
+      {!_.isEmpty(genre_ids) && (
+        <RNText style={styles.metaText}>
+          {genre_ids.map(genreId => genresById(genreId)).join(', ')}
+        </RNText>
+      )}
       <RNText style={styles.titleText}>{title}</RNText>
       <View style={styles.metaContainer}>
-        <RNText style={styles.metaText}>{release_date}</RNText>
-        <View style={styles.dot} />
-        <RNText style={styles.metaText}>1h 51m</RNText>
-        <View style={styles.dot} />
-        <View style={styles.starContainer}>
-          <AppStarIcon size={IconSize.small} color={COLORS.lightGray08} />
-          <RNText style={styles.metaText}> {vote_average.toFixed(1)}</RNText>
-        </View>
+        {!!release_date && (
+          <RNText style={styles.metaText}>{release_date}</RNText>
+        )}
+        {!!vote_average && (
+          <View style={styles.starContainer}>
+            <AppStarIcon size={IconSize.small} color={COLORS.lightGray08} />
+            <RNText style={styles.metaText}> {vote_average.toFixed(1)}</RNText>
+          </View>
+        )}
       </View>
       <MovieOverview overview={overview} />
     </Animated.View>
@@ -60,7 +53,7 @@ const MovieOverview = ({overview}: {overview: string}) => {
 
   return (
     <Animated.View
-      entering={FadeInLeft}
+      entering={FadeIn}
       exiting={FadeOut}
       style={styles.infoContainer}>
       <View>
