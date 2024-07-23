@@ -43,7 +43,11 @@ import {useIsFocused} from '@react-navigation/native';
 const ProfileScreen = () => {
   const insets = useSafeAreaInsets();
   const isFocussed = useIsFocused();
-  const {accountDetails, setAccountDetails, logout} = useAppStore();
+  const [accountDetails, setAccountDetails, logout] = useAppStore(state => [
+    state.accountDetails,
+    state.setAccountDetails,
+    state.logout,
+  ]);
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollHandler = useScrollViewOffset(scrollRef); // * Gives Current offset of ScrollView
   const {data, isSuccess} = useQuery({

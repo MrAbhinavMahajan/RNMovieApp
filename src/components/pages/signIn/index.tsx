@@ -27,7 +27,7 @@ import useAppStore from '@store/useAppStore';
 
 const SignInScreen = () => {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
-  const store = useAppStore(state => state);
+  const [login] = useAppStore(state => [state.login]);
   const scrollHandler = useScrollViewOffset(scrollRef); // * Gives Current offset of ScrollView
   const insets = useSafeAreaInsets();
   const [requestTokenQueryFilter, setRequestTokenQueryFilter] = useState<
@@ -68,7 +68,7 @@ const SignInScreen = () => {
     }
     if (!!accessTokenQueryFilter && data?.access_token) {
       const {access_token, account_id: id} = data;
-      store.login(id, access_token);
+      login(id, access_token);
     }
   }, [accessTokenQuery]);
 

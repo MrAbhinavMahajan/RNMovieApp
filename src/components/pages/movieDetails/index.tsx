@@ -48,7 +48,9 @@ interface MovieDetailsScreenProps {
 const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
   const queryClient = useQueryClient();
   const isFocussed = useIsFocused();
-  const {setLastWatchedMovieId} = useAppStore();
+  const [setLastWatchedMovieId] = useAppStore(state => [
+    state.setLastWatchedMovieId,
+  ]);
   const page = 1;
   const favoriteMoviesQuery = useQuery({
     queryKey: [APP_QUERY_MAP.FAVORITE_MOVIES],
