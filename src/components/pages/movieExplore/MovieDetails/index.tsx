@@ -6,7 +6,7 @@ import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import {MovieItem} from '@constants/AppInterfaces';
 import {AppStarIcon, IconSize} from '@components/common/RNIcon';
 import {COLORS} from '@constants/Colors';
-import Animated, {FadeIn, FadeOut} from 'react-native-reanimated';
+import Animated, {FadeInLeft, FadeOut} from 'react-native-reanimated';
 import Pagination from '../Pagination';
 import {genres} from '~/src/data/Main';
 
@@ -27,7 +27,10 @@ const MovieDetails = ({
   };
 
   return (
-    <View style={[styles.container, {bottom: tabBarHeight}]}>
+    <Animated.View
+      entering={FadeInLeft}
+      exiting={FadeOut}
+      style={[styles.container, {bottom: tabBarHeight}]}>
       <Pagination totalPages={size} currentPage={index + 1} />
       <RNText style={styles.metaText}>
         {genre_ids.map(genreId => genresById(genreId)).join(', ')}
@@ -44,7 +47,7 @@ const MovieDetails = ({
         </View>
       </View>
       <MovieOverview overview={overview} />
-    </View>
+    </Animated.View>
   );
 };
 
@@ -57,7 +60,7 @@ const MovieOverview = ({overview}: {overview: string}) => {
 
   return (
     <Animated.View
-      entering={FadeIn}
+      entering={FadeInLeft}
       exiting={FadeOut}
       style={styles.infoContainer}>
       <View>
