@@ -4,8 +4,10 @@ import {useQuery} from '@tanstack/react-query';
 import {fetchMovieGenres} from '~/src/apis/Main';
 import {APP_QUERY_MAP} from '~/src/constants/Api';
 import {logError} from '~/src/analytics';
+import useMovieStore from '~/src/store/useMovieStore';
 
 const MovieGenres = () => {
+  const [setGenres] = useMovieStore(state => [state.setGenres]);
   const {data, isFetched, error, isError} = useQuery({
     queryKey: [APP_QUERY_MAP.MOVIE_GENRES],
     queryFn: ({signal}) => fetchMovieGenres(signal),
@@ -14,7 +16,9 @@ const MovieGenres = () => {
   useEffect(() => {
     if (isError) {
       logError(error?.message);
-    } else if (isFetched) {
+    }
+    if (isFetched && data?.genres) {
+      setGenres(data?.genres);
     }
   }, [isFetched, isError]);
 

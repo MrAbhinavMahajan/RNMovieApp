@@ -21,7 +21,6 @@ module.exports = {
         alias: {
           '~': '.',
           '@apis': './src/apis',
-          '@analytics': './src/analytics',
           '@store': './src/store',
           '@service': './src/service',
           '@assets': './src/assets',

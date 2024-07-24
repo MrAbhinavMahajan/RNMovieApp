@@ -9,6 +9,7 @@ import {getAppStoreState} from '@store/useAppStore';
 import {MMKV} from 'react-native-mmkv';
 import {logDebug, logError} from '../analytics';
 import {APP_BASE_URL} from '../constants/Api';
+import {getMovieStoreState} from '../store/useMovieStore';
 const ReadAccessToken = process.env.TMDB_READ_ACCESS_TOKEN;
 
 enum RequestMethod {
@@ -385,7 +386,7 @@ export const fetchSimilarMovies = async (
   signal: AbortSignal,
   pageParam: number,
 ): Promise<any> => {
-  const {lastWatchedMovieId} = getAppStoreState();
+  const {lastWatchedMovieId} = getMovieStoreState();
   const url = `${APP_BASE_URL}/3/movie/${lastWatchedMovieId}/similar?language=en-US&page=${pageParam}`;
   const method = RequestMethod.GET;
   return fetchJsonWithAuth(url, method, null, signal);
@@ -395,7 +396,7 @@ export const fetchMovieReviews = async (
   signal: AbortSignal,
   pageParam: number,
 ): Promise<any> => {
-  const {lastWatchedMovieId} = getAppStoreState();
+  const {lastWatchedMovieId} = getMovieStoreState();
   const url = `${APP_BASE_URL}/3/movie/${lastWatchedMovieId}/reviews?language=en-US&page=${pageParam}`;
   const method = RequestMethod.GET;
   return fetchJsonWithAuth(url, method, null, signal);

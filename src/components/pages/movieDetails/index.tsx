@@ -9,6 +9,8 @@ import {
   View,
 } from 'react-native';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {useIsFocused} from '@react-navigation/native';
+import useMovieStore from '~/src/store/useMovieStore';
 import MovieDetailsTab from '@components/tabs/movieDetails';
 import AppCTA from '@components/common/AppCTA';
 import {
@@ -21,18 +23,16 @@ import {AppBackIcon, IconSize, MaterialIcon} from '@components/common/RNIcon';
 import {goBack} from '@service/Navigation';
 import {styles} from './styles';
 import {PAGE_REFRESH} from '@constants/Page';
-import {COLORS} from '@constants/Colors';
-import {STYLES} from '@constants/Styles';
 import {kGENERAL} from '@constants/Messages';
 import {APP_QUERY_MAP} from '@constants/Api';
+import {COLORS} from '@constants/Colors';
+import {STYLES} from '@constants/Styles';
 import {
   FavoriteRequestBody,
   MovieItem,
   WatchlistRequestBody,
 } from '@constants/AppInterfaces';
 import AppHeader from '@components/common/AppHeader';
-import useAppStore from '@store/useAppStore';
-import {useIsFocused} from '@react-navigation/native';
 
 interface MovieDetailsScreenProps {
   route: {
@@ -48,7 +48,7 @@ interface MovieDetailsScreenProps {
 const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
   const queryClient = useQueryClient();
   const isFocussed = useIsFocused();
-  const [setLastWatchedMovieId] = useAppStore(state => [
+  const [setLastWatchedMovieId] = useMovieStore(state => [
     state.setLastWatchedMovieId,
   ]);
   const page = 1;

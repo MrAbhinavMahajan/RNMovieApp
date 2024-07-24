@@ -1,5 +1,5 @@
 import React from 'react';
-import {logError} from '@analytics';
+import {logError} from '~/src/analytics';
 
 interface Props {
   fallback: any;
