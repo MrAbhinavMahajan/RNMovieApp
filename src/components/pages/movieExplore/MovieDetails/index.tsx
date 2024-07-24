@@ -56,6 +56,9 @@ const MovieOverview = ({overview}: {overview: string}) => {
     setExpanded(f => !f);
   };
 
+  if (!overview) {
+    return <></>;
+  }
   return (
     <Animated.View
       entering={FadeIn}
