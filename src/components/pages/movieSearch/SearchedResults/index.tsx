@@ -15,9 +15,9 @@ import Animated, {
   useAnimatedStyle,
   useScrollViewOffset,
   withTiming,
-  SlideInLeft,
   withRepeat,
   withSequence,
+  SlideInLeft,
 } from 'react-native-reanimated';
 import {useIsFocused} from '@react-navigation/native';
 import {APP_PAGES_MAP} from '@constants/Navigation';
@@ -32,11 +32,19 @@ import RNText from '@components/common/RNText';
 import MoviePosterWidget from '@components/widgets/MoviePoster';
 import ErrorStateWidget from '@components/widgets/ErrorState';
 import EmptyStateCreativeCard from '@components/common/EmptyStateCard';
+import {vpx} from '~/src/libraries/responsive-pixels';
 const AnimatedCTA = Animated.createAnimatedComponent(TouchableOpacity);
 
 interface SearchedResultsWidgetProps {
   searchedText: string;
 }
+
+interface MovieCardProps {
+  item: MovieItem;
+  index: number;
+}
+
+const ITEM_SIZE = vpx(140);
 
 const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
   const {searchedText} = props;
@@ -57,19 +65,19 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
   const {
     data,
     refetch,
-    isLoading, // isLoading -> true for Initial Loading
-    isFetching, // isFetching -> is true when Data is present & either new or old data being fetched
+    isLoading,
+    isFetching,
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
     isError,
     error,
   } = query;
-  const listRef = useAnimatedRef<any>();
-  const scrollHandler = useScrollViewOffset(listRef); // * Gives Current offset of ScrollView
+  const scrollRef = useAnimatedRef<any>();
+  const scrollHandler = useScrollViewOffset(scrollRef);
   const movies = useMemo(() => {
     if (isError) {
-      return <></>;
+      return [];
     }
     return data?.pages.flatMap(page => page.results) || [];
   }, [data, isError]);
@@ -101,7 +109,7 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
   }));
 
   const scrollToTop = () => {
-    listRef.current?.scrollToOffset({animated: true, offset: 0});
+    scrollRef.current?.scrollToOffset({animated: true, offset: 0});
   };
 
   const onEndReached = () => {
@@ -125,19 +133,19 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
         />
       );
     }
-    return <></>;
+    return null;
   };
 
   const renderListFooter = () => {
     if (isFetchingNextPage) {
       return <ActivityIndicator color={STD_ACTIVITY_COLOR} />;
     }
-    return <></>;
+    return null;
   };
 
   const renderListEmptyCard = () => {
     if (isError || isLoading || isFetching) {
-      return <></>;
+      return null;
     }
     return (
       <EmptyStateCreativeCard
@@ -162,11 +170,9 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
       )}
 
       <FlatList
-        ref={listRef}
-        data={movies ?? []}
-        renderItem={({item, index}: {item: MovieItem; index: number}) => (
-          <MovieCard item={item} index={index} />
-        )}
+        ref={scrollRef}
+        data={movies}
+        renderItem={({item, index}) => <MovieCard item={item} index={index} />}
         keyExtractor={keyExtractor}
         contentInsetAdjustmentBehavior={'automatic'}
         keyboardDismissMode="on-drag"
@@ -197,17 +203,19 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
 
 const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
 
-const MovieCard = ({item, index}: {item: MovieItem; index: number}) => {
-  const {title, id, vote_average, overview} = item || {};
+const MovieCard = ({item, index}: MovieCardProps) => {
+  const {title, vote_average, overview, id} = item || {};
+
   const onCTA = () => {
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
       queryParams: {screenTitle: title, movieId: id},
     });
   };
+
   return (
     <AnimatedCTA
       entering={SlideInLeft}
-      style={styles.itemContainerView}
+      style={[styles.itemContainerView, {height: ITEM_SIZE}]}
       onPress={onCTA}>
       <MoviePosterWidget
         item={item}
@@ -233,4 +241,5 @@ const MovieCard = ({item, index}: {item: MovieItem; index: number}) => {
     </AnimatedCTA>
   );
 };
+
 export default SearchedResultsWidget;

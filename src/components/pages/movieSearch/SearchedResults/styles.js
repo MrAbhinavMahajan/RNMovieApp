@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {STD_HORIZONTAL_SPACING, STD_VERTICAL_SPACING} from '@constants/Styles';
-import {fpx, hpx, vpx} from '@libraries/responsive-pixels';
+import {fpx, vpx} from '@libraries/responsive-pixels';
 import {COLORS} from '@constants/Colors';
 import {FONTS} from '@constants/Fonts';
 import {SCREEN_HEIGHT} from '@utilities/App';
@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     flexGrow: 1,
   },
   moviePoster: {
-    width: hpx(80),
+    height: '100%',
     aspectRatio: 3 / 5,
     borderRadius: vpx(8),
     borderWidth: StyleSheet.hairlineWidth,
@@ -32,6 +32,7 @@ export const styles = StyleSheet.create({
   },
   itemContainerView: {
     flexDirection: 'row',
+    overflow: 'hidden',
   },
   itemInfoView: {
     flex: 1,
