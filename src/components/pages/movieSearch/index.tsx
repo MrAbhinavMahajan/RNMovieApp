@@ -2,9 +2,9 @@
 import React from 'react';
 import {View} from 'react-native';
 import {styles} from './styles';
-import PopularMoviesWidget from '@components/widgets/PopularMovies';
+import PopularMoviesWidget from './PopularMovies';
 import {useHeaderHeight} from '@react-navigation/elements';
-import SearchedResultsWidget from '@components/widgets/SearchedResults';
+import SearchedResultsWidget from './SearchedResults';
 
 interface MovieSearchScreenProps {
   route: {

@@ -19,19 +19,19 @@ import Animated, {
   withRepeat,
   withSequence,
 } from 'react-native-reanimated';
+import {useIsFocused} from '@react-navigation/native';
 import {APP_PAGES_MAP} from '@constants/Navigation';
 import {fetchSearchedMovieResults} from '@apis/Main';
 import {AppArrowUpIcon} from '@components/common/RNIcon';
-import {styles} from './styles';
 import {STD_ACTIVITY_COLOR} from '@constants/Styles';
 import {MovieItem} from '@constants/AppInterfaces';
 import {APP_QUERY_MAP} from '@constants/Api';
+import {styles} from './styles';
 import AppCTA from '@components/common/AppCTA';
 import RNText from '@components/common/RNText';
-import MoviePosterWidget from '../MoviePoster';
-import ErrorStateWidget from '../ErrorState';
+import MoviePosterWidget from '@components/widgets/MoviePoster';
+import ErrorStateWidget from '@components/widgets/ErrorState';
 import EmptyStateCreativeCard from '@components/common/EmptyStateCard';
-import {useIsFocused} from '@react-navigation/native';
 const AnimatedCTA = Animated.createAnimatedComponent(TouchableOpacity);
 
 interface SearchedResultsWidgetProps {
@@ -163,7 +163,7 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
 
       <FlatList
         ref={listRef}
-        data={movies}
+        data={movies ?? []}
         renderItem={({item, index}: {item: MovieItem; index: number}) => (
           <MovieCard item={item} index={index} />
         )}
