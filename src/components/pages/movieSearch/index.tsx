@@ -25,7 +25,9 @@ const MovieSearchScreen = (props: MovieSearchScreenProps) => {
       {searchedText?.length > 0 && (
         <SearchedResultsWidget searchedText={searchedText} />
       )}
-      <View style={{display: searchedText?.length > 0 ? 'none' : 'flex'}}>
+      <View
+        style={{display: searchedText?.length > 0 ? 'none' : 'flex'}}
+        pointerEvents={searchedText?.length > 0 ? 'none' : 'auto'}>
         <PopularMoviesWidget />
       </View>
     </View>
