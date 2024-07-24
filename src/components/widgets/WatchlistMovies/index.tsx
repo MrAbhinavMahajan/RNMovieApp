@@ -19,12 +19,15 @@ import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
 import EmptyStateWidget from '../EmptyState';
+import {useIsFocused} from '@react-navigation/native';
 
 const WatchlistMoviesWidget = () => {
+  const isFocussed = useIsFocused();
   const page = 1;
   const query = useQuery({
     queryKey: [APP_QUERY_MAP.WATCHLIST_MOVIES],
     queryFn: ({signal}) => fetchMovieWatchlist(signal, page),
+    enabled: isFocussed,
   });
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
   const listRef = useRef(null);

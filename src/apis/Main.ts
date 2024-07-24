@@ -1,4 +1,5 @@
 import {
+  DiscoverQueryParams,
   FavoriteRequestBody,
   SignOutRequestBody,
   WatchlistRequestBody,
@@ -8,6 +9,7 @@ import {getAppStoreState} from '@store/useAppStore';
 import {MMKV} from 'react-native-mmkv';
 import {logDebug, logError} from '../analytics';
 import {APP_BASE_URL} from '../constants/Api';
+import {getMovieStoreState} from '../store/useMovieStore';
 const ReadAccessToken = process.env.TMDB_READ_ACCESS_TOKEN;
 
 enum RequestMethod {
@@ -28,6 +30,24 @@ function expireSession(): void {
   if (isSignedIn) {
     logout();
   }
+}
+
+function generateQueryParams(params: any): string {
+  const queryString = Object.keys(params)
+    .map(key => {
+      const value = params[key];
+      if (Array.isArray(value)) {
+        return value
+          .map(val => `${encodeURIComponent(key)}=${encodeURIComponent(val)}`)
+          .join('&');
+      } else if (typeof value === 'object' && value !== null) {
+        return generateQueryParams(value);
+      } else {
+        return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+      }
+    })
+    .join('&');
+  return '?' + queryString;
 }
 
 function createRequestOptions(
@@ -82,7 +102,7 @@ async function fetchJson(url: string, options: RequestOptions): Promise<any> {
     if (error?.title === 'AbortError') {
       return;
     }
-    logError(`FETCH FAILED: ${JSON.stringify(error)}`);
+    logError(`FETCH FAILED: ${error}`);
     throw new Error(error);
   }
 }
@@ -366,7 +386,7 @@ export const fetchSimilarMovies = async (
   signal: AbortSignal,
   pageParam: number,
 ): Promise<any> => {
-  const {lastWatchedMovieId} = getAppStoreState();
+  const {lastWatchedMovieId} = getMovieStoreState();
   const url = `${APP_BASE_URL}/3/movie/${lastWatchedMovieId}/similar?language=en-US&page=${pageParam}`;
   const method = RequestMethod.GET;
   return fetchJsonWithAuth(url, method, null, signal);
@@ -376,7 +396,7 @@ export const fetchMovieReviews = async (
   signal: AbortSignal,
   pageParam: number,
 ): Promise<any> => {
-  const {lastWatchedMovieId} = getAppStoreState();
+  const {lastWatchedMovieId} = getMovieStoreState();
   const url = `${APP_BASE_URL}/3/movie/${lastWatchedMovieId}/reviews?language=en-US&page=${pageParam}`;
   const method = RequestMethod.GET;
   return fetchJsonWithAuth(url, method, null, signal);
@@ -399,4 +419,28 @@ export const deleteMovieRating = async (movieId: number): Promise<any> => {
   const url = `${APP_BASE_URL}/3/movie/${movieId}/rating`;
   const method = RequestMethod.DELETE;
   return fetchJsonWithAuth(url, method, null);
+};
+
+export const fetchDiscoverMovies = async (
+  signal: AbortSignal,
+  params: DiscoverQueryParams,
+): Promise<any> => {
+  const defaultParams = {
+    include_adult: false,
+    include_video: false,
+    language: 'en-US',
+    sort_by: 'popularity.desc',
+  };
+  const queryParams = generateQueryParams(
+    Object.assign({}, params, defaultParams),
+  );
+  const url = `${APP_BASE_URL}/3/discover/movie${queryParams}`;
+  const method = RequestMethod.GET;
+  return fetchJsonWithAuth(url, method, null, signal);
+};
+
+export const fetchMovieGenres = async (signal: AbortSignal): Promise<any> => {
+  const url = `${APP_BASE_URL}/3/genre/movie/list?language=en-US`;
+  const method = RequestMethod.GET;
+  return fetchJsonWithAuth(url, method, null, signal);
 };

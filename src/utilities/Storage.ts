@@ -1,16 +1,19 @@
 import {MMKV} from 'react-native-mmkv';
 import {logDebug, logError} from '../analytics';
+import {StateStorage} from 'zustand/middleware';
 
 class Storage {
   private static instance: Storage;
   private static encryptionKey: string;
   private appStorageInstance: MMKV | null;
   private userStorageInstance: MMKV | null;
+  private zustandStorageInstance: MMKV | null;
 
   private constructor(encryptionKey: string) {
     Storage.encryptionKey = encryptionKey;
     this.appStorageInstance = null;
     this.userStorageInstance = null;
+    this.zustandStorageInstance = null;
     this.initializeStorage();
   }
 
@@ -29,6 +32,14 @@ class Storage {
         encryptionKey: Storage.encryptionKey,
       });
       logDebug(`App Storage | INIT - ${this.appStorageInstance}`);
+    }
+    if (!this.zustandStorageInstance) {
+      // App Storage init
+      this.zustandStorageInstance = new MMKV({
+        id: 'zustand-storage',
+        encryptionKey: Storage.encryptionKey,
+      });
+      logDebug(`Zustand Storage | INIT - ${this.zustandStorageInstance}`);
     }
     if (!this.userStorageInstance) {
       // User Storage init
@@ -78,10 +89,25 @@ class Storage {
     return this.appStorageInstance;
   }
 
+  public getZustandStorageInstance(): MMKV | null {
+    if (!this.zustandStorageInstance) {
+      logError('Zustand storage not initialized');
+      return null;
+    }
+    return this.appStorageInstance;
+  }
+
   public clearAppStorage(): void {
     if (this.appStorageInstance) {
       this.appStorageInstance.clearAll();
       logDebug('App storage | CLEAR');
+    }
+  }
+
+  public clearZustandStorage(): void {
+    if (this.zustandStorageInstance) {
+      this.zustandStorageInstance.clearAll();
+      logDebug('Zustand storage | CLEAR');
     }
   }
 
@@ -101,6 +127,10 @@ class Storage {
       this.userStorageInstance.clearAll();
       logDebug('User storage | CLEAR_ALL');
     }
+    if (this.zustandStorageInstance) {
+      this.zustandStorageInstance.clearAll();
+      logDebug('Zustand storage | CLEAR_ALL');
+    }
   }
 }
 
@@ -109,3 +139,18 @@ const storageInstance = Storage.getInstance(encryptionKey);
 export default storageInstance;
 export const getAppStorage = () => storageInstance.getAppStorageInstance();
 export const getUserStorage = () => storageInstance.getUserStorageInstance();
+export const getZustandStateStorage = (): StateStorage => {
+  const storage = storageInstance.getZustandStorageInstance();
+  return {
+    setItem: (name: string, value: string) => {
+      return storage?.set(name, value);
+    },
+    getItem: (name: string) => {
+      const value = storage?.getString(name);
+      return value ?? '';
+    },
+    removeItem: (name: string) => {
+      return storage?.delete(name);
+    },
+  };
+};

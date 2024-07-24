@@ -16,18 +16,16 @@ import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
 import useAppStore from '@store/useAppStore';
+import {useIsFocused} from '@react-navigation/native';
 
-interface RecommendedMoviesWidgetProps {
-  widgetTitle?: string;
-}
-
-const RecommendedMoviesWidget = (props: RecommendedMoviesWidgetProps) => {
-  const {lastWatchedMovieId} = useAppStore();
-  const {widgetTitle} = props || {};
+const RecommendedMoviesWidget = () => {
+  const isFocussed = useIsFocused();
+  const [lastWatchedMovieId] = useAppStore(state => [state.lastWatchedMovieId]);
   const page = 1;
   const query = useQuery({
     queryKey: [APP_QUERY_MAP.RECOMMENDED_MOVIES, lastWatchedMovieId],
     queryFn: ({signal}) => fetchRecommendedMoviesV4(signal, page),
+    enabled: isFocussed,
   });
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
   const listRef = useRef(null);
@@ -49,7 +47,7 @@ const RecommendedMoviesWidget = (props: RecommendedMoviesWidgetProps) => {
   const onViewAllAction = () => {
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_VIEW_ALL_SCREEN, {
       queryParams: {
-        screenTitle: widgetTitle || 'Recommended Movies',
+        screenTitle: 'Recommended Movies',
         widgetId: APP_WIDGETS_MAP.RECOMMENDED_MOVIES,
       },
     });
@@ -75,7 +73,7 @@ const RecommendedMoviesWidget = (props: RecommendedMoviesWidgetProps) => {
       style={styles.containerView}
       pointerEvents={isLoading ? 'none' : 'auto'}>
       <HeaderTitleWidget
-        title={widgetTitle || 'Recommended'}
+        title={'Recommended'}
         containerStyles={styles.headerView}
         rightCTAAction={onViewAllAction}
         rightCTAEnabled={isRightCTAEnabled}

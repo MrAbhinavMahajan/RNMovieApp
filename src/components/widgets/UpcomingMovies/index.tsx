@@ -15,12 +15,15 @@ import {MoviePosterItem} from '@constants/AppInterfaces';
 import MoviePosterWidget from '../MoviePoster';
 import HeaderTitleWidget from '../HeaderTitle';
 import ErrorStateWidget from '../ErrorState';
+import {useIsFocused} from '@react-navigation/native';
 
 const UpcomingMoviesWidget = () => {
+  const isFocussed = useIsFocused();
   const page = 1;
   const query = useQuery({
     queryKey: [APP_QUERY_MAP.UPCOMING_MOVIES],
     queryFn: ({signal}) => fetchUpcomingMovies(signal, page),
+    enabled: isFocussed,
   });
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
   const listRef = useRef(null);

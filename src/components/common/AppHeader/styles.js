@@ -5,7 +5,11 @@ import {COLORS} from '@constants/Colors';
 import {STD_HORIZONTAL_SPACING, STD_SCREEN_COLOR} from '@constants/Styles';
 
 export const styles = StyleSheet.create({
-  headerView: (transparentBackgroundEnabled, safePaddingEnabled) => ({
+  headerView: (
+    transparentBackgroundEnabled,
+    safePaddingEnabled,
+    floatingEnabled,
+  ) => ({
     flexDirection: 'row',
     alignItems: 'center',
     paddingBottom: vpx(16),
@@ -14,6 +18,8 @@ export const styles = StyleSheet.create({
       ? COLORS.transparent
       : STD_SCREEN_COLOR,
     paddingHorizontal: safePaddingEnabled ? STD_HORIZONTAL_SPACING : 0,
+    zIndex: 1,
+    position: floatingEnabled ? 'absolute' : 'relative',
   }),
   headerCenteredInfoView: (multipleCTAModeEnabled = false) => ({
     flex: 1,

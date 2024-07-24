@@ -1,17 +1,18 @@
 import React, {useState} from 'react';
-import {ActivityIndicator, Image, View} from 'react-native';
+import {ActivityIndicator, View} from 'react-native';
 import {styles} from './styles';
 import {STD_ACTIVITY_COLOR} from '@constants/Styles';
 import RNText from '../RNText';
+import Image, {FastImageProps} from 'react-native-fast-image';
 import {logError} from '~/src/analytics';
 
-interface RNImageProps {
+type RNImageProps = {
   imageURL: string;
   imageViewStyles?: any;
   imageStyles?: any;
   blurRadius?: number;
   fallbackCharacter: string;
-}
+} & FastImageProps;
 
 const RNImage = (props: RNImageProps) => {
   const {

@@ -70,6 +70,11 @@ export const AppEditIcon = ({
   size = IconSize.large,
 }) => <MaterialIcon name={'edit'} size={size} color={color} />;
 
+export const AppStarIcon = ({
+  color = COLORS.fullWhite,
+  size = IconSize.large,
+}) => <MaterialIcon name={'star'} size={size} color={color} />;
+
 export const AppArrowUpIcon = ({
   color = COLORS.fullWhite,
   size = IconSize.large,

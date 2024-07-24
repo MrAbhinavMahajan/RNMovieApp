@@ -75,7 +75,7 @@ export interface MovieItem {
   overview: string;
   popularity: number;
   poster_path: string;
-  release_date: Date;
+  release_date: string;
   title: string;
   video: boolean;
   vote_average: number;
@@ -84,6 +84,33 @@ export interface MovieItem {
 
 export interface MoviePosterItem {
   poster_path: string;
+  backdrop_path: string;
   title: string;
   id: number;
+}
+
+export interface DiscoverMoviePayload {
+  page: number;
+  results: MovieItem[];
+  total_pages: number;
+  total_results: number;
+}
+
+export interface QueryParams {
+  page?: number;
+  year?: number;
+  include_adult?: boolean;
+  include_video?: boolean;
+  language?: string;
+  sort_by?: string;
+}
+
+export interface DiscoverQueryParams extends QueryParams {
+  with_genres: string;
+  region?: string;
+}
+
+export interface Genres {
+  id: number;
+  name: string;
 }

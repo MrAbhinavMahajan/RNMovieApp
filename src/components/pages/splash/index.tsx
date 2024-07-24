@@ -7,7 +7,7 @@ import * as NavigationService from '@service/Navigation';
 import useAppStore from '@store/useAppStore';
 
 const SplashScreen = () => {
-  const {isSignedIn} = useAppStore();
+  const [isSignedIn] = useAppStore(state => [state.isSignedIn]);
   const launchApp = () => {
     if (isSignedIn) {
       NavigationService.navigateReplace(APP_TABS_MAP.MAIN_TAB);

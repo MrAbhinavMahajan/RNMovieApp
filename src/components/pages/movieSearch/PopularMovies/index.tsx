@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useMemo} from 'react';
 import {useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
 import {ActivityIndicator, FlatList, RefreshControl, View} from 'react-native';
@@ -13,16 +14,16 @@ import Animated, {
 } from 'react-native-reanimated';
 import {fetchPopularMovies} from '@apis/Main';
 import {AppArrowUpIcon} from '@components/common/RNIcon';
-import {FALLBACK_DATA} from '../../../data/Main';
 import {styles} from './styles';
 import {STD_ACTIVITY_COLOR} from '@constants/Styles';
 import {APP_PAGES_MAP} from '@constants/Navigation';
 import {APP_QUERY_MAP} from '@constants/Api';
 import {MoviePosterItem} from '@constants/AppInterfaces';
 import AppCTA from '@components/common/AppCTA';
-import MoviePosterWidget from '../MoviePoster';
-import ErrorStateWidget from '../ErrorState';
+import MoviePosterWidget from '@components/widgets/MoviePoster';
+import ErrorStateWidget from '@components/widgets/ErrorState';
 import EmptyStateCreativeCard from '@components/common/EmptyStateCard';
+import {FALLBACK_DATA} from '~/src/data/Main';
 
 const PopularMoviesWidget = () => {
   const queryClient = useQueryClient();

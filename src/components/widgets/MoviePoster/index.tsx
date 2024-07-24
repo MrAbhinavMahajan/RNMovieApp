@@ -1,35 +1,46 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import {Pressable} from 'react-native';
 import {styles} from './styles';
 import RNImage from '@components/common/RNImage';
-import {IMAGE_BASEURL} from '@constants/Main';
 import {MoviePosterItem} from '@constants/AppInterfaces';
+import {getImageURL} from '@utilities/App';
+import {FastImageProps} from 'react-native-fast-image';
 
-interface MoviePosterWidgetProps {
+type MoviePosterWidgetProps = {
   item: MoviePosterItem;
   index: number;
+  isBackdrop?: boolean;
   containerStyles: any;
+  imageStyles?: any;
   action?: () => void;
-}
+} & FastImageProps;
 
 const MoviePosterWidget = ({
   item,
   index,
   containerStyles = {},
+  imageStyles = {},
   action,
+  isBackdrop,
+  ...imageData
 }: MoviePosterWidgetProps) => {
-  const {poster_path, title = ''} = item || {};
-  const imageURL = `${IMAGE_BASEURL}${poster_path}`;
+  const {poster_path, backdrop_path, title = ''} = item || {};
+  const imageURL = getImageURL(isBackdrop ? backdrop_path : poster_path ?? '');
   const fallbackCharacter = title ? title[0] : '';
 
   return (
-    <TouchableOpacity
+    <Pressable
       key={index}
       style={[styles.movieCardView, containerStyles]}
       disabled={!action}
       onPress={action}>
-      <RNImage imageURL={imageURL} fallbackCharacter={fallbackCharacter} />
-    </TouchableOpacity>
+      <RNImage
+        imageURL={imageURL}
+        fallbackCharacter={fallbackCharacter}
+        imageStyles={imageStyles}
+        {...imageData}
+      />
+    </Pressable>
   );
 };
 

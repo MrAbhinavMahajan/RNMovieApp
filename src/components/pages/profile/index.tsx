@@ -28,7 +28,6 @@ import {useMutation, useQuery} from '@tanstack/react-query';
 import {kGENERAL, kSIGN_OUT} from '@constants/Messages';
 import {SignOutRequestBody} from '@constants/AppInterfaces';
 import {APP_QUERY_MAP} from '@constants/Api';
-import {IMAGE_BASEURL} from '@constants/Main';
 import Storage from '@utilities/Storage';
 import useAppStore from '@store/useAppStore';
 import AppCTA from '@components/common/AppCTA';
@@ -38,16 +37,24 @@ import WatchlistMoviesWidget from '@components/widgets/WatchlistMovies';
 import FavoritesMoviesWidget from '@components/widgets/FavoriteMovies';
 import SelfRatedMoviesWidget from '@components/widgets/SelfRatedMovies';
 import HeaderTitleWidget from '@components/widgets/HeaderTitle';
+import {getImageURL} from '@utilities/App';
+import {useIsFocused} from '@react-navigation/native';
 
 const ProfileScreen = () => {
   const insets = useSafeAreaInsets();
-  const {accountDetails, setAccountDetails, logout} = useAppStore();
+  const isFocussed = useIsFocused();
+  const [accountDetails, setAccountDetails, logout] = useAppStore(state => [
+    state.accountDetails,
+    state.setAccountDetails,
+    state.logout,
+  ]);
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollHandler = useScrollViewOffset(scrollRef); // * Gives Current offset of ScrollView
   const {data, isSuccess} = useQuery({
     queryKey: [APP_QUERY_MAP.PROFILE],
     queryFn: ({signal}) => fetchAccountDetails(signal),
     refetchInterval: 10000,
+    enabled: isFocussed,
   });
   const logoutMutation = useMutation({
     mutationFn: expireAccessTokenV4,
@@ -137,6 +144,9 @@ const ProfileScreen = () => {
     const imageFallbackCharacter = accountDetails
       ? accountDetails?.username[0]
       : '';
+    const imageURL = getImageURL(
+      accountDetails?.avatar?.tmdb?.avatar_path ?? '',
+    );
     return (
       <View
         style={[
@@ -144,9 +154,7 @@ const ProfileScreen = () => {
           {paddingTop: insets.top + STD_VERTICAL_SPACING},
         ]}>
         <RNImage
-          imageURL={
-            IMAGE_BASEURL + `${accountDetails?.avatar?.tmdb?.avatar_path}` ?? ''
-          }
+          imageURL={imageURL}
           imageStyles={styles.profileImage}
           imageViewStyles={styles.profileImageView}
           fallbackCharacter={imageFallbackCharacter}

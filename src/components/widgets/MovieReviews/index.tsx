@@ -15,6 +15,7 @@ import {QUERY_STATUS} from '@constants/Main';
 import ErrorStateWidget from '../ErrorState';
 import EmptyStateWidget from '../EmptyState';
 import RNText from '@components/common/RNText';
+import {useIsFocused} from '@react-navigation/native';
 
 export interface AuthorDetails {
   name: string;
@@ -35,6 +36,7 @@ interface MovieReview {
 
 const MoviesReviewsWidget = () => {
   const queryClient = useQueryClient();
+  const isFocussed = useIsFocused();
   const query = useInfiniteQuery({
     queryKey: [APP_QUERY_MAP.MOVIE_REVIEWS],
     queryFn: ({signal, pageParam}) => fetchMovieReviews(signal, pageParam),
@@ -45,6 +47,7 @@ const MoviesReviewsWidget = () => {
       }
       return lastPageParam + 1;
     },
+    enabled: isFocussed,
   });
   const {
     data,

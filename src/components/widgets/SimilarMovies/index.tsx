@@ -16,13 +16,16 @@ import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
 import useAppStore from '@store/useAppStore';
+import {useIsFocused} from '@react-navigation/native';
 
 const SimilarMoviesWidget = () => {
+  const isFocussed = useIsFocused();
   const page = 1;
-  const {lastWatchedMovieId} = useAppStore();
+  const [lastWatchedMovieId] = useAppStore(state => [state.lastWatchedMovieId]);
   const query = useQuery({
     queryKey: [APP_QUERY_MAP.SIMILAR_MOVIES, lastWatchedMovieId],
     queryFn: ({signal}) => fetchSimilarMovies(signal, page),
+    enabled: isFocussed,
   });
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
   const listRef = useRef(null);

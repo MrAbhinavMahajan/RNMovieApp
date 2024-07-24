@@ -31,7 +31,14 @@ export const TABS = {
       ),
     },
   },
-
+  [APP_TABS_MAP.EXPLORE_TAB]: {
+    name: APP_TABS_MAP.PROFILE_TAB,
+    options: {
+      tabBarIcon: (data: TabInfo) => (
+        <BottomTabIcon {...data} iconName={'smart-display'} label={'Me'} />
+      ),
+    },
+  },
   [APP_TABS_MAP.PROFILE_TAB]: {
     name: APP_TABS_MAP.PROFILE_TAB,
     options: {
