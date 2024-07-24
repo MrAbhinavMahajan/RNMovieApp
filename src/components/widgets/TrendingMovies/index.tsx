@@ -1,35 +1,29 @@
-import React, {useEffect, useMemo, useRef} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useEffect, useMemo} from 'react';
 import _ from 'lodash';
-import {useQuery} from '@tanstack/react-query';
-import * as NavigationService from '@service/Navigation';
-import Animated, {FadeInRight} from 'react-native-reanimated';
-import Carousel from 'react-native-snap-carousel';
 import {ActivityIndicator, NativeAppEventEmitter, View} from 'react-native';
+import {useQuery} from '@tanstack/react-query';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useIsFocused} from '@react-navigation/native';
 import {PAGE_REFRESH} from '@constants/Page';
 import {fetchTrendingMovies} from '@apis/Main';
-import {styles} from './styles';
-import {FALLBACK_DATA} from '../../../data/Main';
 import {QUERY_STATUS} from '@constants/Main';
-import {SCREEN_WIDTH} from '@utilities/App';
-import {COLORS} from '@constants/Colors';
-import {APP_PAGES_MAP} from '@constants/Navigation';
 import {APP_QUERY_MAP} from '@constants/Api';
-import {MoviePosterItem} from '@constants/AppInterfaces';
-import MoviePosterWidget from '../MoviePoster';
+import {STD_ACTIVITY_COLOR} from '@constants/Styles';
+import {FALLBACK_DATA} from '../../../data/Main';
+import {styles} from './styles';
 import ErrorStateWidget from '../ErrorState';
-import {useIsFocused} from '@react-navigation/native';
+import MovieCarousel from '../../common/MovieCarousel';
 
-const SLIDER_WIDTH = SCREEN_WIDTH;
-const ITEM_WIDTH = SCREEN_WIDTH * 0.6;
 const TrendingMoviesWidget = () => {
   const isFocussed = useIsFocused();
+  const insets = useSafeAreaInsets();
   const query = useQuery({
     queryKey: [APP_QUERY_MAP.TRENDING_MOVIES],
     queryFn: ({signal}) => fetchTrendingMovies(signal),
     enabled: isFocussed,
   });
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
-  const carouselRef = useRef(null);
   const movies = useMemo(() => {
     if (isError) {
       return [];
@@ -49,7 +43,7 @@ const TrendingMoviesWidget = () => {
   }, []);
 
   if (!isError && status !== QUERY_STATUS.PENDING && _.isEmpty(movies)) {
-    return <></>;
+    return <View style={[styles.noDataView, {paddingTop: insets.top}]} />;
   }
 
   return (
@@ -58,50 +52,18 @@ const TrendingMoviesWidget = () => {
       pointerEvents={isFetching ? 'none' : 'auto'}>
       {isLoading && (
         <View style={styles.loaderView}>
-          <ActivityIndicator size={'large'} color={COLORS.azureishWhite} />
+          <ActivityIndicator size={'large'} color={STD_ACTIVITY_COLOR} />
         </View>
       )}
       {isError && (
         <ErrorStateWidget
           error={error}
-          containerStyles={styles.errorContainer}
+          containerStyles={[styles.errorContainer, {marginTop: insets.top}]}
           retryCTA={refreshWidget}
         />
       )}
-      <Carousel
-        ref={carouselRef}
-        layoutCardOffset={9}
-        loop
-        autoplay
-        autoplayInterval={1500}
-        data={movies}
-        renderItem={({item, index}: {item: MoviePosterItem; index: number}) => (
-          <MovieCard item={item} index={index} />
-        )}
-        sliderWidth={SLIDER_WIDTH}
-        itemWidth={ITEM_WIDTH}
-        useScrollView={true}
-      />
+      <MovieCarousel movies={movies} />
     </View>
-  );
-};
-
-const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
-  const {title, id} = item || {};
-  const onCTA = () => {
-    NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
-      queryParams: {screenTitle: title, movieId: id},
-    });
-  };
-  return (
-    <Animated.View entering={FadeInRight}>
-      <MoviePosterWidget
-        item={item}
-        index={index}
-        containerStyles={styles.moviePoster}
-        action={onCTA}
-      />
-    </Animated.View>
   );
 };
 

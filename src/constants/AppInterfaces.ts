@@ -84,6 +84,7 @@ export interface MovieItem {
 
 export interface MoviePosterItem {
   poster_path: string;
+  backdrop_path: string;
   title: string;
   id: number;
 }

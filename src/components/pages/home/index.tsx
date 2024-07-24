@@ -23,8 +23,8 @@ import Animated, {
 } from 'react-native-reanimated';
 import {AppArrowUpIcon} from '@components/common/RNIcon';
 import AppCTA from '@components/common/AppCTA';
-import HomeScreenHeader from './header';
 import MovieGenres from '../../others/MovieGenres';
+import TrendingMoviesWidget from '../../widgets/TrendingMovies';
 
 const HomeScreen = () => {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
@@ -66,7 +66,7 @@ const HomeScreen = () => {
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={refreshPage} />
         }>
-        <HomeScreenHeader />
+        <TrendingMoviesWidget />
         <NowPlayingMoviesWidget />
         <TopRatedMoviesWidget />
         <UpcomingMoviesWidget />

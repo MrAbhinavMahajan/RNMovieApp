@@ -6,18 +6,15 @@ import {SCREEN_HEIGHT} from '@utilities/App';
 
 export const styles = StyleSheet.create({
   containerView: {
-    minHeight: SCREEN_HEIGHT / 2.5,
-  },
-  moviePoster: {
-    aspectRatio: 3.5 / 5,
-    borderRadius: vpx(24),
-    overflow: 'hidden',
+    minHeight: SCREEN_HEIGHT / 3,
   },
   errorContainer: {
-    backgroundColor: COLORS.antiFlashWhite,
+    flex: 1,
+    backgroundColor: COLORS.fullWhite,
+    borderRadius: vpx(8),
+    justifyContent: 'center',
     paddingVertical: vpx(24),
     marginHorizontal: STD_HORIZONTAL_SPACING,
-    borderRadius: 8,
   },
   loaderView: {
     height: '100%',
@@ -25,5 +22,8 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     position: 'absolute',
     zIndex: 1,
+  },
+  noDataView: {
+    backgroundColor: COLORS.fullWhite,
   },
 });
