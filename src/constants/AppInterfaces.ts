@@ -108,3 +108,8 @@ export interface DiscoverQueryParams extends QueryParams {
   with_genres: string;
   region?: string;
 }
+
+export interface Genres {
+  id: number;
+  name: string;
+}

@@ -24,6 +24,7 @@ import Animated, {
 import {AppArrowUpIcon} from '@components/common/RNIcon';
 import AppCTA from '@components/common/AppCTA';
 import HomeScreenHeader from './header';
+import MovieGenres from '../../others/MovieGenres';
 
 const HomeScreen = () => {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
@@ -82,6 +83,8 @@ const HomeScreen = () => {
           <AppArrowUpIcon />
         </AppCTA>
       </Animated.View>
+
+      <MovieGenres />
     </View>
   );
 };

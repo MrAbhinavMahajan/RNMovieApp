@@ -101,7 +101,7 @@ async function fetchJson(url: string, options: RequestOptions): Promise<any> {
     if (error?.title === 'AbortError') {
       return;
     }
-    logError(`FETCH FAILED: ${JSON.stringify(error)}`);
+    logError(`FETCH FAILED: ${error}`);
     throw new Error(error);
   }
 }
@@ -434,6 +434,12 @@ export const fetchDiscoverMovies = async (
     Object.assign({}, params, defaultParams),
   );
   const url = `${APP_BASE_URL}/3/discover/movie${queryParams}`;
+  const method = RequestMethod.GET;
+  return fetchJsonWithAuth(url, method, null, signal);
+};
+
+export const fetchMovieGenres = async (signal: AbortSignal): Promise<any> => {
+  const url = `${APP_BASE_URL}/3/genre/movie/list?language=en-US`;
   const method = RequestMethod.GET;
   return fetchJsonWithAuth(url, method, null, signal);
 };

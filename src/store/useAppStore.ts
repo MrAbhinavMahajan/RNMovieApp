@@ -26,11 +26,13 @@ const useAppStore = create<AppStoreProps>()(
   devtools(
     persist<AppStoreProps>(
       set => ({
+        // InitialValues
         isSignedIn: false,
         accountId: null,
         accountDetails: null,
         lastWatchedMovieId: null,
 
+        // Setters
         login: (accountId: string, accessToken: string) => {
           set({
             isSignedIn: true,
