@@ -147,7 +147,7 @@ const MovieCard = ({
         case APP_WIDGETS_MAP.WATCHLIST_MOVIES:
           removeWatchlistItem();
           break;
-        case APP_WIDGETS_MAP.RATED_MOVIES:
+        case APP_WIDGETS_MAP.SELF_RATED_MOVIES:
           removeRatedItem();
           break;
       }

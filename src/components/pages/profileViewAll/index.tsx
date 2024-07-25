@@ -60,7 +60,7 @@ const ProfileViewAllScreen = (props: ProfileViewAllScreenProps) => {
       case APP_WIDGETS_MAP.WATCHLIST_MOVIES:
         return fetchMovieWatchlist(signal, pageParam);
 
-      case APP_WIDGETS_MAP.RATED_MOVIES:
+      case APP_WIDGETS_MAP.SELF_RATED_MOVIES:
         return fetchMoviesRated(signal, pageParam);
     }
   };

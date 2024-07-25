@@ -61,7 +61,7 @@ const SelfRatedMoviesWidget = () => {
     NavigationService.navigate(APP_PAGES_MAP.PROFILE_VIEW_ALL_SCREEN, {
       queryParams: {
         screenTitle: 'Rated Movies',
-        widgetId: APP_WIDGETS_MAP.RATED_MOVIES,
+        widgetId: APP_WIDGETS_MAP.SELF_RATED_MOVIES,
       },
     });
   };
