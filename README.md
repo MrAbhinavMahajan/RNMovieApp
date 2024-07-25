@@ -39,7 +39,8 @@
 A Singleton class maintaining following instances:-
 
 1. App Storage
-2. User Storage ( Secured )
+2. User Storage
+3. Zustand Storage
 
 ## Miscellaneous
 
