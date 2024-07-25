@@ -1,6 +1,5 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {BlurView} from '@react-native-community/blur';
 import {styles} from './styles';
 import {APP_TABS_MAP} from '@constants/Navigation';
 import {tabOptions} from '@utilities/Tabs';
@@ -21,7 +20,6 @@ const MainTab = () => {
         tabBarStyle: styles.tabBar,
         tabBarActiveTintColor: COLORS.oceanBlue,
         tabBarInactiveTintColor: COLORS.oliveBlack,
-        tabBarBackground: () => <TabBarBlurEffect />,
         tabBarHideOnKeyboard: true,
         tabBarAllowFontScaling: false,
         headerShown: false,
@@ -52,12 +50,4 @@ const MainTab = () => {
   );
 };
 
-const TabBarBlurEffect = () => (
-  <BlurView
-    blurType="light"
-    blurAmount={15}
-    reducedTransparencyFallbackColor="white"
-    style={styles.tabBarBlurEffect}
-  />
-);
 export default MainTab;
