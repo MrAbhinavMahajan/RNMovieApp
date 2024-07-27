@@ -8,9 +8,10 @@ import {
   ScrollView,
   View,
 } from 'react-native';
-import {styles} from './styles';
-import QuotationWidget from '@components/widgets/Quotation';
-import {PAGE_REFRESH} from '@constants/Page';
+import {useMutation, useQuery} from '@tanstack/react-query';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useIsFocused} from '@react-navigation/native';
+import useAppStore from '@store/useAppStore';
 import Animated, {
   useAnimatedRef,
   useAnimatedStyle,
@@ -20,16 +21,16 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import {AppArrowUpIcon, AppLogoutIcon} from '@components/common/RNIcon';
-import {COLORS} from '@constants/Colors';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {STD_VERTICAL_SPACING} from '@constants/Styles';
 import {expireAccessTokenV4, fetchAccountDetails} from '@apis/Main';
-import {useMutation, useQuery} from '@tanstack/react-query';
 import {kGENERAL, kSIGN_OUT} from '@constants/Messages';
 import {SignOutRequestBody} from '@constants/AppInterfaces';
 import {APP_QUERY_MAP} from '@constants/Api';
+import {PAGE_REFRESH} from '@constants/Page';
+import {STD_VERTICAL_SPACING} from '@constants/Styles';
+import {COLORS} from '@constants/Colors';
+import {styles} from './styles';
+import {getImageURL} from '@utilities/App';
 import Storage from '@utilities/Storage';
-import useAppStore from '@store/useAppStore';
 import AppCTA from '@components/common/AppCTA';
 import RNImage from '@components/common/RNImage';
 import RNText from '@components/common/RNText';
@@ -37,17 +38,15 @@ import WatchlistMoviesWidget from '@components/widgets/WatchlistMovies';
 import FavoritesMoviesWidget from '@components/widgets/FavoriteMovies';
 import SelfRatedMoviesWidget from '@components/widgets/SelfRatedMovies';
 import HeaderTitleWidget from '@components/widgets/HeaderTitle';
-import {getImageURL} from '@utilities/App';
-import {useIsFocused} from '@react-navigation/native';
+import QuotationWidget from '@components/widgets/Quotation';
 
 const ProfileScreen = () => {
   const insets = useSafeAreaInsets();
   const isFocussed = useIsFocused();
-  const [accountDetails, setAccountDetails, logout] = useAppStore(state => [
-    state.accountDetails,
-    state.setAccountDetails,
-    state.logout,
-  ]);
+  const accountDetails = useAppStore(state => state.accountDetails);
+  const setAccountDetails = useAppStore(state => state.setAccountDetails);
+  const logout = useAppStore(state => state.logout);
+
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollHandler = useScrollViewOffset(scrollRef); // * Gives Current offset of ScrollView
   const {data, isSuccess} = useQuery({

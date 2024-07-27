@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {View} from 'react-native';
 import _ from 'lodash';
+import {View} from 'react-native';
 import useMovieStore from '@store/useMovieStore';
 import {MovieItem} from '@constants/AppInterfaces';
 import {AppStarIcon, IconSize} from '@components/common/RNIcon';
@@ -10,7 +10,7 @@ import Animated, {FadeIn, FadeInLeft, FadeOut} from 'react-native-reanimated';
 import RNText from '@components/common/RNText';
 
 const MovieDetails = ({item, index}: {item: MovieItem; index: number}) => {
-  const [genres] = useMovieStore(state => [state.genres]);
+  const genres = useMovieStore(state => state.genres);
   const {title, vote_average, genre_ids, overview, release_date} = item || {};
 
   const genresById = (genreId: number) => {

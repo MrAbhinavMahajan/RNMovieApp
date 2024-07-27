@@ -1,6 +1,6 @@
 import React from 'react';
-import {FlatList, View} from 'react-native';
 import _ from 'lodash';
+import {FlatList, View} from 'react-native';
 import useMovieStore from '@store/useMovieStore';
 import RNText from '../RNText';
 import {styles} from './styles';
@@ -13,7 +13,7 @@ type RNGenre = {
 };
 
 const RNGenre = ({genreIds, containerStyles, ...others}: RNGenre) => {
-  const [genres] = useMovieStore(state => [state.genres]);
+  const genres = useMovieStore(state => state.genres);
   const genresById = (genreId: number) => {
     return genres.find(el => el.id === genreId)?.name;
   };
