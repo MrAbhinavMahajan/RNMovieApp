@@ -87,4 +87,4 @@ const useSessionStore = create<AppStoreProps>()(
 );
 
 export default useSessionStore;
-export const getAppStoreState = () => useSessionStore.getState();
+export const getSessionStoreState = () => useSessionStore.getState();

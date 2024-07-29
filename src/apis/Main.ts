@@ -5,7 +5,7 @@ import {
   WatchlistRequestBody,
 } from '@constants/AppInterfaces';
 import Storage from '@utilities/Storage';
-import {getAppStoreState} from '@store/useSessionStore';
+import {getSessionStoreState} from '@store/useSessionStore';
 import {MMKV} from 'react-native-mmkv';
 import {logDebug, logError} from '../analytics';
 import {APP_BASE_URL} from '../constants/Api';
@@ -26,7 +26,7 @@ interface RequestOptions {
 }
 
 function expireSession(): void {
-  const {isSignedIn, logout} = getAppStoreState();
+  const {isSignedIn, logout} = getSessionStoreState();
   if (isSignedIn) {
     logout();
   }
