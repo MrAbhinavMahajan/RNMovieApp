@@ -21,7 +21,7 @@ interface AppStoreProps extends AppStateProps {
   reset: () => void;
 }
 
-const useAppStore = create<AppStoreProps>()(
+const useSessionStore = create<AppStoreProps>()(
   devtools(
     persist<AppStoreProps>(
       set => ({
@@ -86,5 +86,5 @@ const useAppStore = create<AppStoreProps>()(
   ),
 );
 
-export default useAppStore;
-export const getAppStoreState = () => useAppStore.getState();
+export default useSessionStore;
+export const getAppStoreState = () => useSessionStore.getState();

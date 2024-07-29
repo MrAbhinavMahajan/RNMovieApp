@@ -2,7 +2,7 @@
 import React, {useEffect, useState} from 'react';
 import {Alert, Linking, RefreshControl, ScrollView, View} from 'react-native';
 import {useQuery} from '@tanstack/react-query';
-import useAppStore from '@store/useAppStore';
+import useSessionStore from '@store/useSessionStore';
 import Animated, {
   useAnimatedRef,
   useAnimatedStyle,
@@ -27,7 +27,7 @@ import HeaderTitleWidget from '@components/widgets/HeaderTitle';
 
 const SignInScreen = () => {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
-  const login = useAppStore(state => state.login);
+  const login = useSessionStore(state => state.login);
   const scrollHandler = useScrollViewOffset(scrollRef); // * Gives Current offset of ScrollView
   const insets = useSafeAreaInsets();
   const [requestTokenQueryFilter, setRequestTokenQueryFilter] = useState<

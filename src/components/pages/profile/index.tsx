@@ -11,7 +11,7 @@ import {
 import {useMutation, useQuery} from '@tanstack/react-query';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useIsFocused} from '@react-navigation/native';
-import useAppStore from '@store/useAppStore';
+import useSessionStore from '@store/useSessionStore';
 import Animated, {
   useAnimatedRef,
   useAnimatedStyle,
@@ -43,9 +43,9 @@ import QuotationWidget from '@components/widgets/Quotation';
 const ProfileScreen = () => {
   const insets = useSafeAreaInsets();
   const isFocussed = useIsFocused();
-  const accountDetails = useAppStore(state => state.accountDetails);
-  const setAccountDetails = useAppStore(state => state.setAccountDetails);
-  const logout = useAppStore(state => state.logout);
+  const accountDetails = useSessionStore(state => state.accountDetails);
+  const setAccountDetails = useSessionStore(state => state.setAccountDetails);
+  const logout = useSessionStore(state => state.logout);
 
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollHandler = useScrollViewOffset(scrollRef); // * Gives Current offset of ScrollView

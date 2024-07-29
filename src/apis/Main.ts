@@ -5,7 +5,7 @@ import {
   WatchlistRequestBody,
 } from '@constants/AppInterfaces';
 import Storage from '@utilities/Storage';
-import {getAppStoreState} from '@store/useAppStore';
+import {getAppStoreState} from '@store/useSessionStore';
 import {MMKV} from 'react-native-mmkv';
 import {logDebug, logError} from '../analytics';
 import {APP_BASE_URL} from '../constants/Api';
