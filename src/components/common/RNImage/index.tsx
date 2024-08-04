@@ -19,7 +19,7 @@ const RNImage = (props: RNImageProps) => {
     imageURL,
     imageViewStyles = {},
     imageStyles = {},
-    fallbackCharacter = 'T',
+    fallbackCharacter = '',
     ...imageData
   } = props;
   const [loading, setLoading] = useState(false);
