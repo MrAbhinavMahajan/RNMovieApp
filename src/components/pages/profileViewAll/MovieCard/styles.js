@@ -7,9 +7,8 @@ export const styles = StyleSheet.create({
   moviePosterContainer: {
     width: SCREEN_WIDTH / 3 - STD_HORIZONTAL_SPACING,
     aspectRatio: 3 / 5,
-    borderRadius: vpx(8),
+    borderRadius: vpx(4),
     overflow: 'hidden',
-    borderWidth: StyleSheet.hairlineWidth,
   },
   moviePoster: {
     height: '100%',

@@ -1,5 +1,7 @@
 import {StyleSheet} from 'react-native';
 import {
+  MOVIE_GRID_ITEM_HORIZONTAL_GAP,
+  MOVIE_GRID_ITEM_VERTICAL_GAP,
   STD_HORIZONTAL_SPACING,
   STD_SCREEN_COLOR,
   STYLES,
@@ -21,12 +23,12 @@ export const styles = StyleSheet.create({
   },
   scrollableContentView: {
     paddingHorizontal: STD_HORIZONTAL_SPACING,
-    gap: hpx(8),
+    gap: MOVIE_GRID_ITEM_VERTICAL_GAP,
     paddingBottom: vpx(200),
     flexGrow: 1,
   },
   columnWrapperView: {
-    gap: hpx(8),
+    gap: MOVIE_GRID_ITEM_HORIZONTAL_GAP,
   },
   loaderView: {
     height: '100%',

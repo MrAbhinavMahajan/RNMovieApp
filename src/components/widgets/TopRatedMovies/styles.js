@@ -1,5 +1,11 @@
 import {StyleSheet} from 'react-native';
-import {STD_HORIZONTAL_SPACING, STD_VERTICAL_SPACING} from '@constants/Styles';
+import {
+  MOVIE_GRID_ITEM_ASPECT_RATIO,
+  MOVIE_GRID_ITEM_HORIZONTAL_GAP,
+  MOVIE_GRID_ITEM_WIDTH,
+  STD_HORIZONTAL_SPACING,
+  STD_VERTICAL_SPACING,
+} from '@constants/Styles';
 import {hpx, vpx} from '@libraries/responsive-pixels';
 import {COLORS} from '@constants/Colors';
 
@@ -15,15 +21,14 @@ export const styles = StyleSheet.create({
   },
   scrollableContentView: {
     paddingHorizontal: STD_HORIZONTAL_SPACING,
-    gap: hpx(8),
+    gap: MOVIE_GRID_ITEM_HORIZONTAL_GAP,
     flexGrow: 1,
     marginTop: vpx(10),
   },
   moviePoster: {
-    width: hpx(80),
-    aspectRatio: 3 / 5,
-    borderRadius: vpx(8),
-    borderWidth: StyleSheet.hairlineWidth,
+    width: MOVIE_GRID_ITEM_WIDTH,
+    aspectRatio: MOVIE_GRID_ITEM_ASPECT_RATIO,
+    borderRadius: vpx(4),
     overflow: 'hidden',
   },
   errorContainer: {

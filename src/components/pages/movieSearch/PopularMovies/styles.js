@@ -1,5 +1,11 @@
 import {StyleSheet} from 'react-native';
-import {STD_HORIZONTAL_SPACING, STD_VERTICAL_SPACING} from '@constants/Styles';
+import {
+  MOVIE_GRID_ITEM_ASPECT_RATIO,
+  MOVIE_GRID_ITEM_HORIZONTAL_GAP,
+  MOVIE_GRID_ITEM_VERTICAL_GAP,
+  STD_HORIZONTAL_SPACING,
+  STD_VERTICAL_SPACING,
+} from '@constants/Styles';
 import {hpx, vpx} from '@libraries/responsive-pixels';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '@utilities/App';
 import {COLORS} from '@constants/Colors';
@@ -16,18 +22,17 @@ export const styles = StyleSheet.create({
   },
   scrollableContentView: {
     paddingHorizontal: STD_HORIZONTAL_SPACING,
-    gap: hpx(8),
+    gap: MOVIE_GRID_ITEM_VERTICAL_GAP,
     paddingBottom: vpx(120),
     flexGrow: 1,
   },
   columnWrapperView: {
-    gap: hpx(8),
+    gap: MOVIE_GRID_ITEM_HORIZONTAL_GAP,
   },
   moviePoster: {
     width: SCREEN_WIDTH / 3 - STD_HORIZONTAL_SPACING,
-    aspectRatio: 3 / 5,
-    borderRadius: vpx(8),
-    borderWidth: StyleSheet.hairlineWidth,
+    aspectRatio: MOVIE_GRID_ITEM_ASPECT_RATIO,
+    borderRadius: vpx(4),
     overflow: 'hidden',
   },
   scrollToTopBtn: {

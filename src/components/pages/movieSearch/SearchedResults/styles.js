@@ -1,5 +1,9 @@
 import {StyleSheet} from 'react-native';
-import {STD_HORIZONTAL_SPACING, STD_VERTICAL_SPACING} from '@constants/Styles';
+import {
+  MOVIE_GRID_ITEM_ASPECT_RATIO,
+  STD_HORIZONTAL_SPACING,
+  STD_VERTICAL_SPACING,
+} from '@constants/Styles';
 import {fpx, vpx} from '@libraries/responsive-pixels';
 import {COLORS} from '@constants/Colors';
 import {FONTS} from '@constants/Fonts';
@@ -18,9 +22,8 @@ export const styles = StyleSheet.create({
   },
   moviePoster: {
     height: '100%',
-    aspectRatio: 3 / 5,
-    borderRadius: vpx(8),
-    borderWidth: StyleSheet.hairlineWidth,
+    aspectRatio: MOVIE_GRID_ITEM_ASPECT_RATIO,
+    borderRadius: vpx(4),
     overflow: 'hidden',
   },
   itemSeparator: {

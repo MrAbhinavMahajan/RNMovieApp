@@ -63,7 +63,11 @@ export const STYLES = StyleSheet.create({
   },
 });
 
-export const STD_HORIZONTAL_SPACING = hpx(16);
+export const STD_HORIZONTAL_SPACING = hpx(8);
 export const STD_VERTICAL_SPACING = vpx(16);
 export const STD_SCREEN_COLOR = COLORS.antiFlashWhite;
 export const STD_ACTIVITY_COLOR = COLORS.fullBlack;
+export const MOVIE_GRID_ITEM_VERTICAL_GAP = vpx(4);
+export const MOVIE_GRID_ITEM_HORIZONTAL_GAP = vpx(4);
+export const MOVIE_GRID_ITEM_WIDTH = hpx(116);
+export const MOVIE_GRID_ITEM_ASPECT_RATIO = 3.2 / 5;
