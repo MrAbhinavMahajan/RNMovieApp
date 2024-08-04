@@ -1,15 +1,11 @@
 import React from 'react';
 import {FlatList, View} from 'react-native';
 import {useAnimatedRef} from 'react-native-reanimated';
-import {MovieItem} from '~/src/constants/AppInterfaces';
-import CarouselItem from './CarouselItem';
+import {MovieCarouselParams, MovieItem} from '@constants/AppInterfaces';
 import {styles} from './styles';
+import CarouselItem from './CarouselItem';
 
-interface PosterCarouselParams {
-  data: MovieItem[];
-  itemAction: () => void;
-}
-const PosterCarousel = ({data, itemAction}: PosterCarouselParams) => {
+const PosterCarousel = ({data, itemAction}: MovieCarouselParams) => {
   const listRef = useAnimatedRef<any>();
   const keyExtractor = (item: MovieItem, index: number) =>
     `${item?.id}${index}`;

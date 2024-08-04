@@ -119,3 +119,10 @@ export enum MovieCarouselTypes {
   'BANNER' = 'BANNER',
   'POSTER' = 'POSTER',
 }
+
+export type MovieCarouselParams = {
+  data: MovieItem[];
+  itemAction: () => void;
+  autoPlay?: boolean;
+  autoPlayTimer?: number;
+};

@@ -1,13 +1,14 @@
 import React from 'react';
-import {MovieItem, MovieCarouselTypes} from '@constants/AppInterfaces';
+import {
+  MovieCarouselTypes,
+  MovieCarouselParams,
+} from '@constants/AppInterfaces';
 import BannerCarousel from './BannerCarousel';
 import PosterCarousel from './PosterCarousel';
 
 type MovieCarousel = {
   carouselType: MovieCarouselTypes;
-  data: MovieItem[];
-  itemAction: () => void;
-};
+} & MovieCarouselParams;
 
 const MovieCarousel = ({carouselType, ...restProps}: MovieCarousel) => {
   switch (carouselType) {

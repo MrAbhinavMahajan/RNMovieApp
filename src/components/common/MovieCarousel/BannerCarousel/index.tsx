@@ -1,22 +1,54 @@
-import React, {useState} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, View} from 'react-native';
 import {useAnimatedRef} from 'react-native-reanimated';
-import {MovieItem} from '@constants/AppInterfaces';
+import {MovieCarouselParams, MovieItem} from '@constants/AppInterfaces';
 import {styles} from './styles';
 import CarouselItem from './CarouselItem';
 import LinearGradient from 'react-native-linear-gradient';
 import RNMaskedView from '../../RNMaskedView';
 
-interface BannerCarouselParams {
-  data: MovieItem[];
-  itemAction: () => void;
-}
-
-const BannerCarousel = ({data, itemAction}: BannerCarouselParams) => {
+const BannerCarousel = ({
+  data,
+  itemAction,
+  autoPlay = false,
+  autoPlayTimer = 3000,
+}: MovieCarouselParams) => {
   const [activeMovieIndex, setActiveMovieIndex] = useState(0);
   const listRef = useAnimatedRef<any>();
+  const autoPlayInterval = useRef<any>();
   const keyExtractor = (item: MovieItem, index: number) =>
     `${item?.id}${index}`;
+
+  const scrollToIdx = () => {
+    listRef.current?.scrollToIndex({animated: true, index: activeMovieIndex});
+  };
+
+  const moveToNext = () => {
+    setActiveMovieIndex(prevIdx => {
+      if (prevIdx === data?.length - 1) {
+        return 0;
+      }
+      return prevIdx + 1;
+    });
+  };
+
+  useEffect(() => {
+    if (activeMovieIndex >= 0) {
+      scrollToIdx();
+    }
+  }, [activeMovieIndex]);
+
+  useEffect(() => {
+    if (autoPlay) {
+      autoPlayInterval.current = setInterval(() => {
+        moveToNext();
+      }, autoPlayTimer);
+    }
+    return () => {
+      clearInterval(autoPlayInterval.current);
+    };
+  }, [autoPlay]);
 
   return (
     <View style={styles.container}>

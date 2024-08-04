@@ -69,6 +69,7 @@ const TrendingMoviesWidget = () => {
         carouselType={MovieCarouselTypes.BANNER}
         data={movies}
         itemAction={onMovieCarouselItemCTA}
+        autoPlay
       />
     </View>
   );
