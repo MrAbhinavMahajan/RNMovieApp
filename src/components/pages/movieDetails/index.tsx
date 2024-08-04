@@ -12,27 +12,23 @@ import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {useIsFocused} from '@react-navigation/native';
 import useMovieStore from '~/src/store/useMovieStore';
 import MovieDetailsTab from '@components/tabs/movieDetails';
-import AppCTA from '@components/common/AppCTA';
 import {
   fetchMovieFavorites,
   fetchMovieWatchlist,
   updateMovieFavorites,
   updateMovieWatchlist,
 } from '@apis/Main';
-import {AppBackIcon, IconSize, MaterialIcon} from '@components/common/RNIcon';
-import {goBack} from '@service/Navigation';
 import {styles} from './styles';
 import {PAGE_REFRESH} from '@constants/Page';
 import {kGENERAL} from '@constants/Messages';
 import {APP_QUERY_MAP} from '@constants/Api';
-import {COLORS} from '@constants/Colors';
-import {STYLES} from '@constants/Styles';
 import {
   FavoriteRequestBody,
   MovieItem,
   WatchlistRequestBody,
 } from '@constants/AppInterfaces';
 import AppHeader from '@components/common/AppHeader';
+import SimilarMoviesWidget from '../../widgets/SimilarMovies';
 
 interface MovieDetailsScreenProps {
   route: {
@@ -152,41 +148,11 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
     });
   };
 
-  const renderLeftHeaderControls = () => (
-    <AppCTA onPress={goBack} style={styles.leftIcon}>
-      <AppBackIcon />
-    </AppCTA>
-  );
-
-  const renderRightHeaderControls = () => (
-    <View style={STYLES.flexRow}>
-      <AppCTA onPress={toggleFavorite} style={styles.rightIcon}>
-        <MaterialIcon
-          name={isFavorite ? 'favorite' : 'favorite-outline'}
-          size={IconSize.large}
-          color={isFavorite ? COLORS.red : COLORS.fullWhite}
-        />
-      </AppCTA>
-      <AppCTA onPress={toggleWatchlist} style={styles.rightIcon}>
-        <MaterialIcon
-          name={isWatchlist ? 'bookmark' : 'bookmark-outline'}
-          size={IconSize.large}
-          color={COLORS.fullWhite}
-        />
-      </AppCTA>
-    </View>
-  );
-
   const renderPageHeader = () => (
     <AppHeader
-      LeftComponent={renderLeftHeaderControls()}
-      RightComponent={renderRightHeaderControls()}
-      containerStyles={styles.headerView}
-      transparentBackgroundEnabled={true}
-      safePaddingEnabled={false}
-      gradientEnabled={true}
-      gradientColors={[COLORS.transparent, COLORS.fullBlack]}
-      gradientStyles={styles.headerGradientView}
+      title={screenTitle}
+      safePaddingEnabled
+      transparentBackgroundEnabled={false}
     />
   );
 
@@ -198,6 +164,7 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
       refreshControl={
         <RefreshControl refreshing={false} onRefresh={refreshPage} />
       }>
+      <SimilarMoviesWidget />
       {/* <MovieDetailsTab /> */}
     </ScrollView>
   );

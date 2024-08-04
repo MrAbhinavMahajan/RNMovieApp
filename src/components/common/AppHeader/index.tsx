@@ -30,11 +30,11 @@ const AppHeader = (props: AppHeaderProps) => {
     LeftComponent,
     RightComponent,
     title,
-    safePaddingEnabled = false,
-    transparentBackgroundEnabled = false,
-    floatingEnabled = false,
-    multipleCTAModeEnabled = false,
-    gradientEnabled = false,
+    safePaddingEnabled = false, // For Extra Paddings Around Header - Horizontally
+    transparentBackgroundEnabled = false, // For Making Header Color Transparent
+    floatingEnabled = false, // For Making Header -> Absolute
+    multipleCTAModeEnabled = false, // For Adjusting Info to Left on Multiple CTAs
+    gradientEnabled = false, // For Adding Gradient Support
     containerStyles = {},
     titleStyles = {},
     gradientStyles = {},
