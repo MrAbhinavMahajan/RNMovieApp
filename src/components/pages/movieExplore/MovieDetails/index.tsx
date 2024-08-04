@@ -8,6 +8,7 @@ import {COLORS} from '@constants/Colors';
 import {styles} from './styles';
 import Animated, {FadeIn, FadeInLeft, FadeOut} from 'react-native-reanimated';
 import RNText from '@components/common/RNText';
+import dayjs from 'dayjs';
 
 const MovieDetails = ({item, index}: {item: MovieItem; index: number}) => {
   const genres = useMovieStore(state => state.genres);
@@ -36,7 +37,9 @@ const MovieDetails = ({item, index}: {item: MovieItem; index: number}) => {
       </Animated.Text>
       <View style={styles.metaContainer}>
         {!!release_date && (
-          <RNText style={styles.metaText}>{release_date}</RNText>
+          <RNText style={styles.metaText}>
+            {dayjs(release_date).format('DD MMM YYYY')}
+          </RNText>
         )}
         {!!vote_average && (
           <View style={styles.starContainer}>
