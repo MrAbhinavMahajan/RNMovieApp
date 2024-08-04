@@ -144,16 +144,16 @@ const MovieExploreScreen = () => {
         ListHeaderComponent={renderListHeader}
         ListFooterComponent={renderListFooter}
         ListEmptyComponent={renderListEmptyCard}
-        horizontal
         pagingEnabled
         extraData={movies}
         onMomentumScrollEnd={e => {
           const idx = Math.floor(
-            e.nativeEvent.contentOffset.x /
-              e.nativeEvent.layoutMeasurement.width,
+            e.nativeEvent.contentOffset.y /
+              e.nativeEvent.layoutMeasurement.height,
           );
           setActiveMovieIndex(idx);
         }}
+        showsVerticalScrollIndicator={false}
       />
       <LinearGradient
         colors={[COLORS.transparent, COLORS.fullBlack]}
