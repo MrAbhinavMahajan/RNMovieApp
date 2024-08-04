@@ -1,22 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useRef, useState} from 'react';
+import _ from 'lodash';
 import {FlatList, View} from 'react-native';
-import {useAnimatedRef} from 'react-native-reanimated';
 import {MovieCarouselParams, MovieItem} from '@constants/AppInterfaces';
 import {styles} from './styles';
 import CarouselItem from './CarouselItem';
 import LinearGradient from 'react-native-linear-gradient';
 import RNMaskedView from '../../RNMaskedView';
-import _ from 'lodash';
+import MovieDetails from './MovieDetails';
 
 const BannerCarousel = ({
   data,
   itemAction,
   autoPlay = false,
-  autoPlayTimer = 2000,
+  autoPlayTimer = 3000,
 }: MovieCarouselParams) => {
   const [activeMovieIndex, setActiveMovieIndex] = useState(0);
-  const listRef = useAnimatedRef<any>();
+  const listRef = useRef<any>();
   const autoPlayInterval = useRef<any>();
   const keyExtractor = (item: MovieItem, index: number) =>
     `${item?.id}${index}`;
@@ -76,6 +76,9 @@ const BannerCarousel = ({
           initialScrollIndex={0}
         />
       </RNMaskedView>
+      {!_.isEmpty(data) && (
+        <MovieDetails item={data[activeMovieIndex]} index={activeMovieIndex} />
+      )}
     </View>
   );
 };
