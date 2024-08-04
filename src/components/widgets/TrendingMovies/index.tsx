@@ -10,6 +10,7 @@ import {fetchTrendingMovies} from '@apis/Main';
 import {QUERY_STATUS} from '@constants/Main';
 import {APP_QUERY_MAP} from '@constants/Api';
 import {STD_ACTIVITY_COLOR} from '@constants/Styles';
+import {MovieCarouselTypes} from '@constants/AppInterfaces';
 import {FALLBACK_DATA} from '../../../data/Main';
 import {styles} from './styles';
 import ErrorStateWidget from '../ErrorState';
@@ -38,6 +39,8 @@ const TrendingMoviesWidget = () => {
     refetch();
   };
 
+  const onMovieCarouselItemCTA = () => {};
+
   useEffect(() => {
     NativeAppEventEmitter.addListener(PAGE_REFRESH.HOME_SCREEN, refreshWidget);
   }, []);
@@ -62,7 +65,11 @@ const TrendingMoviesWidget = () => {
           retryCTA={refreshWidget}
         />
       )}
-      <MovieCarousel movies={movies} />
+      <MovieCarousel
+        carouselType={MovieCarouselTypes.BANNER}
+        data={movies}
+        itemAction={onMovieCarouselItemCTA}
+      />
     </View>
   );
 };

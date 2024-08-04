@@ -1,5 +1,5 @@
 import React, {PropsWithChildren} from 'react';
-import {TouchableOpacity} from 'react-native';
+import {Pressable} from 'react-native';
 
 interface HitSlopProps {
   top: number;
@@ -16,7 +16,7 @@ interface AppCTAProps {
 
 const AppCTA = (props: PropsWithChildren<AppCTAProps>) => {
   const {children, ...remainingProps} = props;
-  return <TouchableOpacity {...remainingProps}>{children}</TouchableOpacity>;
+  return <Pressable {...remainingProps}>{children}</Pressable>;
 };
 
 export default AppCTA;

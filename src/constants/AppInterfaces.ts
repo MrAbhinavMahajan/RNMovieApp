@@ -114,3 +114,8 @@ export interface Genres {
   id: number;
   name: string;
 }
+
+export enum MovieCarouselTypes {
+  'BANNER' = 'BANNER',
+  'POSTER' = 'POSTER',
+}
