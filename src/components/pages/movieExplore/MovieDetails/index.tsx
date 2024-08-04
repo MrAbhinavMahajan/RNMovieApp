@@ -6,7 +6,12 @@ import {MovieItem} from '@constants/AppInterfaces';
 import {AppStarIcon, IconSize} from '@components/common/RNIcon';
 import {COLORS} from '@constants/Colors';
 import {styles} from './styles';
-import Animated, {FadeIn, FadeInLeft, FadeOut} from 'react-native-reanimated';
+import Animated, {
+  FadeIn,
+  FadeInLeft,
+  FadeOut,
+  FadeOutDown,
+} from 'react-native-reanimated';
 import RNText from '@components/common/RNText';
 import dayjs from 'dayjs';
 
@@ -20,9 +25,9 @@ const MovieDetails = ({item, index}: {item: MovieItem; index: number}) => {
 
   return (
     <Animated.View
-      key={`${title}${index}`}
+      key={`${title}${index}`} // * Important for Animation
       entering={FadeIn}
-      exiting={FadeOut}
+      exiting={FadeOutDown}
       style={styles.container}>
       {!_.isEmpty(genre_ids) && (
         <RNText style={styles.metaText}>

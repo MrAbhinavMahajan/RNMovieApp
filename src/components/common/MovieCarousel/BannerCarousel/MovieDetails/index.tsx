@@ -21,7 +21,7 @@ const MovieDetails = ({item, index}: {item: MovieItem; index: number}) => {
     <Animated.View
       entering={FadeInRight}
       exiting={FadeOutLeft}
-      key={`${title}${index}`}
+      key={`${title}${index}`} // * Important for Animation
       style={styles.movieDetailsView}>
       <RNText style={styles.titleText}>{title}</RNText>
       {!_.isEmpty(genre_ids) && (
