@@ -7,6 +7,7 @@ import {styles} from './styles';
 import CarouselItem from './CarouselItem';
 import LinearGradient from 'react-native-linear-gradient';
 import RNMaskedView from '../../RNMaskedView';
+import _ from 'lodash';
 
 const BannerCarousel = ({
   data,
@@ -34,7 +35,7 @@ const BannerCarousel = ({
   };
 
   useEffect(() => {
-    if (activeMovieIndex >= 0) {
+    if (!_.isEmpty(data) && activeMovieIndex > 0) {
       scrollToIdx();
     }
   }, [activeMovieIndex]);
@@ -70,6 +71,7 @@ const BannerCarousel = ({
             );
             setActiveMovieIndex(idx);
           }}
+          initialScrollIndex={0}
         />
       </RNMaskedView>
     </View>
