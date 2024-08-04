@@ -52,7 +52,7 @@ const BannerCarousel = ({
     return () => {
       clearInterval(autoPlayInterval.current);
     };
-  }, [autoPlay]);
+  }, [autoPlay, data]);
 
   return (
     <View style={styles.container}>
