@@ -57,11 +57,4 @@ export const styles = StyleSheet.create({
     paddingVertical: STD_VERTICAL_SPACING,
     width: SCREEN_WIDTH,
   },
-  paginationContainer: {
-    alignSelf: 'flex-end',
-    marginBottom: vpx(24),
-  },
-  paginationCountSize: {
-    fontSize: fpx(16),
-  },
 });
