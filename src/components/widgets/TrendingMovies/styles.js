@@ -2,11 +2,11 @@ import {StyleSheet} from 'react-native';
 import {STD_HORIZONTAL_SPACING} from '@constants/Styles';
 import {vpx} from '@libraries/responsive-pixels';
 import {COLORS} from '@constants/Colors';
-import {SCREEN_HEIGHT} from '@utilities/App';
+import {SCREEN_WIDTH} from '@utilities/App';
 
 export const styles = StyleSheet.create({
   containerView: {
-    minHeight: SCREEN_HEIGHT / 3,
+    minHeight: SCREEN_WIDTH,
   },
   errorContainer: {
     flex: 1,
