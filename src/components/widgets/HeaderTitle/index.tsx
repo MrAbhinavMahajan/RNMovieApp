@@ -6,6 +6,7 @@ import {AppNextIcon} from '@components/common/RNIcon';
 import {COLORS} from '@constants/Colors';
 import {STD_ACTIVITY_COLOR} from '@constants/Styles';
 import RNImage from '../../common/RNImage';
+import Animated, {FadeIn, FadeOut} from 'react-native-reanimated';
 
 type Meta = {
   title: string;
@@ -15,7 +16,7 @@ type Meta = {
 interface HeaderTitleWidgetProps {
   title: string;
   titleTextStyles?: any;
-  meta: Meta;
+  meta?: Meta;
   containerStyles?: any;
   rightCTAIcon?: any;
   rightCTAAction?: () => void;
@@ -41,7 +42,10 @@ const HeaderTitleWidget = (props: HeaderTitleWidgetProps) => {
     const {imageURL, subtitle, title} = meta || {};
     if (hasMetaData) {
       return (
-        <View style={styles.leftJSXView}>
+        <Animated.View
+          style={styles.leftJSXView}
+          entering={FadeIn}
+          exiting={FadeOut}>
           {!!imageURL && (
             <RNImage
               imageURL={imageURL}
@@ -56,7 +60,7 @@ const HeaderTitleWidget = (props: HeaderTitleWidgetProps) => {
             )}
             <RNText style={[styles.titleText, titleTextStyles]}>{title}</RNText>
           </View>
-        </View>
+        </Animated.View>
       );
     }
 
