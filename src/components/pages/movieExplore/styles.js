@@ -5,7 +5,7 @@ import {
   STD_VERTICAL_SPACING,
   STYLES,
 } from '@constants/Styles';
-import {hpx, vpx} from '@libraries/responsive-pixels';
+import {fpx, hpx, vpx} from '@libraries/responsive-pixels';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '@utilities/App';
 import {COLORS} from '@constants/Colors';
 
@@ -56,5 +56,12 @@ export const styles = StyleSheet.create({
     paddingHorizontal: STD_HORIZONTAL_SPACING,
     paddingVertical: STD_VERTICAL_SPACING,
     width: SCREEN_WIDTH,
+  },
+  paginationContainer: {
+    alignSelf: 'flex-end',
+    marginBottom: vpx(24),
+  },
+  paginationCountSize: {
+    fontSize: fpx(16),
   },
 });

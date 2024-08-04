@@ -1,14 +1,10 @@
 import {StyleSheet} from 'react-native';
 import {COLORS} from '@constants/Colors';
 import {FONTS} from '@constants/Fonts';
-import {STD_VERTICAL_SPACING} from '@constants/Styles';
 import {fpx, hpx, vpx} from '@libraries/responsive-pixels';
 
 export const styles = StyleSheet.create({
   movieDetailsView: {
-    position: 'absolute',
-    zIndex: 1,
-    bottom: STD_VERTICAL_SPACING,
     alignItems: 'center',
     alignSelf: 'center',
   },

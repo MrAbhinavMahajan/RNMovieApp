@@ -8,6 +8,7 @@ import CarouselItem from './CarouselItem';
 import LinearGradient from 'react-native-linear-gradient';
 import RNMaskedView from '../../RNMaskedView';
 import MovieDetails from './MovieDetails';
+import Pagination from '../../Pagination';
 
 const BannerCarousel = ({
   data,
@@ -76,9 +77,19 @@ const BannerCarousel = ({
           initialScrollIndex={0}
         />
       </RNMaskedView>
-      {!_.isEmpty(data) && (
-        <MovieDetails item={data[activeMovieIndex]} index={activeMovieIndex} />
-      )}
+      <View style={styles.floatingContentView}>
+        {!_.isEmpty(data) && (
+          <MovieDetails
+            item={data[activeMovieIndex]}
+            index={activeMovieIndex}
+          />
+        )}
+        <Pagination
+          totalCount={data?.length}
+          currentCount={activeMovieIndex + 1}
+          containerStyles={styles.paginationContainer}
+        />
+      </View>
     </View>
   );
 };

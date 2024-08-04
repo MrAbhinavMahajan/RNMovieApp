@@ -1,17 +1,15 @@
 import {StyleSheet} from 'react-native';
-import {COLORS} from '~/src/constants/Colors';
-import {FONTS} from '~/src/constants/Fonts';
-import {fpx, vpx} from '~/src/libraries/responsive-pixels';
+import {COLORS} from '@constants/Colors';
+import {FONTS} from '@constants/Fonts';
+import {fpx, vpx} from '@libraries/responsive-pixels';
 
 export const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    alignSelf: 'flex-end',
-    marginBottom: vpx(24),
   },
   currentPageText: {
-    fontSize: fpx(16),
+    fontSize: fpx(12),
     fontFamily: FONTS.Bold,
     color: COLORS.fullWhite,
     textShadowColor: COLORS.fullBlack,
@@ -19,7 +17,7 @@ export const styles = StyleSheet.create({
     textShadowRadius: vpx(3),
   },
   totalPageText: {
-    fontSize: fpx(16),
+    fontSize: fpx(12),
     fontFamily: FONTS.Regular,
     color: COLORS.fullWhite,
     textShadowColor: COLORS.fullBlack,

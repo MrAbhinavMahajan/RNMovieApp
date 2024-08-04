@@ -16,7 +16,7 @@ import MovieCard from './MovieCard';
 import EmptyStateCreativeCard from '../../common/EmptyStateCard';
 import ErrorStateWidget from '../../widgets/ErrorState';
 import MovieDetails from './MovieDetails';
-import Pagination from './Pagination';
+import Pagination from '@components/common/Pagination';
 
 const MovieExploreScreen = () => {
   const queryClient = useQueryClient();
@@ -160,8 +160,11 @@ const MovieExploreScreen = () => {
         colors={[COLORS.transparent, COLORS.fullBlack]}
         style={[styles.floatingContentView, {bottom: tabBarHeight}]}>
         <Pagination
-          totalPages={movies?.length}
-          currentPage={activeMovieIndex + 1}
+          totalCount={movies?.length}
+          currentCount={activeMovieIndex + 1}
+          containerStyles={styles.paginationContainer}
+          totalCountTextStyles={styles.paginationCountSize}
+          currentCountTextStyles={styles.paginationCountSize}
         />
         {!_.isEmpty(movies) && (
           <MovieDetails
