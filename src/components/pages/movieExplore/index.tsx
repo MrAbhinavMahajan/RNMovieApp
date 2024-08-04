@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useMemo, useState} from 'react';
 import {ActivityIndicator, FlatList, View} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import _ from 'lodash';
-import {styles} from './styles';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import {useAnimatedRef} from 'react-native-reanimated';
 import {useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
@@ -10,6 +10,8 @@ import {APP_QUERY_MAP} from '@constants/Api';
 import {fetchDiscoverMovies} from '@apis/Main';
 import {DiscoverQueryParams, MovieItem} from '@constants/AppInterfaces';
 import {STD_ACTIVITY_COLOR} from '@constants/Styles';
+import {COLORS} from '~/src/constants/Colors';
+import {styles} from './styles';
 import MovieCard from './MovieCard';
 import EmptyStateCreativeCard from '../../common/EmptyStateCard';
 import ErrorStateWidget from '../../widgets/ErrorState';
@@ -146,7 +148,6 @@ const MovieExploreScreen = () => {
         horizontal
         pagingEnabled
         extraData={movies}
-        windowSize={1}
         onMomentumScrollEnd={e => {
           const idx = Math.floor(
             e.nativeEvent.contentOffset.x /
@@ -155,7 +156,9 @@ const MovieExploreScreen = () => {
           setActiveMovieIndex(idx);
         }}
       />
-      <View style={[styles.floatingContentView, {bottom: tabBarHeight}]}>
+      <LinearGradient
+        colors={[COLORS.transparent, COLORS.fullBlack]}
+        style={[styles.floatingContentView, {bottom: tabBarHeight}]}>
         <Pagination
           totalPages={movies?.length}
           currentPage={activeMovieIndex + 1}
@@ -166,7 +169,7 @@ const MovieExploreScreen = () => {
             index={activeMovieIndex}
           />
         )}
-      </View>
+      </LinearGradient>
     </View>
   );
 };

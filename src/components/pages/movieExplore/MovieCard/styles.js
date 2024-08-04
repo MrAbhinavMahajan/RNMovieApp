@@ -10,6 +10,5 @@ export const styles = StyleSheet.create({
   },
   moviePoster: {
     width: SCREEN_WIDTH,
-    opacity: 0.5,
   },
 });

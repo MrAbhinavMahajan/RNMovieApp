@@ -14,10 +14,16 @@ export const styles = StyleSheet.create({
     fontSize: fpx(16),
     fontFamily: FONTS.Bold,
     color: COLORS.fullWhite,
+    textShadowColor: COLORS.fullBlack,
+    textShadowOffset: {width: 2, height: 1},
+    textShadowRadius: vpx(3),
   },
   totalPageText: {
     fontSize: fpx(16),
     fontFamily: FONTS.Regular,
     color: COLORS.fullWhite,
+    textShadowColor: COLORS.fullBlack,
+    textShadowOffset: {width: 2, height: 1},
+    textShadowRadius: vpx(3),
   },
 });
