@@ -13,7 +13,7 @@ const BannerCarousel = ({
   data,
   itemAction,
   autoPlay = false,
-  autoPlayTimer = 3000,
+  autoPlayTimer = 2000,
 }: MovieCarouselParams) => {
   const [activeMovieIndex, setActiveMovieIndex] = useState(0);
   const listRef = useAnimatedRef<any>();
@@ -27,7 +27,7 @@ const BannerCarousel = ({
 
   const moveToNext = () => {
     setActiveMovieIndex(prevIdx => {
-      if (prevIdx === data?.length - 1) {
+      if (prevIdx >= data?.length - 1) {
         return 0;
       }
       return prevIdx + 1;
@@ -35,7 +35,7 @@ const BannerCarousel = ({
   };
 
   useEffect(() => {
-    if (!_.isEmpty(data) && activeMovieIndex > 0) {
+    if (!_.isEmpty(data) && activeMovieIndex >= 0) {
       scrollToIdx();
     }
   }, [activeMovieIndex]);
@@ -43,7 +43,9 @@ const BannerCarousel = ({
   useEffect(() => {
     if (autoPlay) {
       autoPlayInterval.current = setInterval(() => {
-        moveToNext();
+        if (!_.isEmpty(data)) {
+          moveToNext();
+        }
       }, autoPlayTimer);
     }
     return () => {
