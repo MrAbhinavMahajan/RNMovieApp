@@ -122,7 +122,7 @@ export enum MovieCarouselTypes {
 
 export type MovieCarouselParams = {
   data: MovieItem[];
-  itemAction: () => void;
+  itemAction: (item: MovieItem) => void;
   autoPlay?: boolean;
   autoPlayTimer?: number;
 };

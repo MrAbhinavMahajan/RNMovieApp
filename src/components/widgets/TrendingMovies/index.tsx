@@ -10,11 +10,13 @@ import {fetchTrendingMovies} from '@apis/Main';
 import {QUERY_STATUS} from '@constants/Main';
 import {APP_QUERY_MAP} from '@constants/Api';
 import {STD_ACTIVITY_COLOR} from '@constants/Styles';
-import {MovieCarouselTypes} from '@constants/AppInterfaces';
+import {MovieCarouselTypes, MovieItem} from '@constants/AppInterfaces';
 import {FALLBACK_DATA} from '../../../data/Main';
 import {styles} from './styles';
 import ErrorStateWidget from '../ErrorState';
 import MovieCarousel from '../../common/MovieCarousel';
+import {APP_PAGES_MAP} from '~/src/constants/Navigation';
+import * as NavigationService from '@service/Navigation';
 
 const TrendingMoviesWidget = () => {
   const isFocussed = useIsFocused();
@@ -39,7 +41,12 @@ const TrendingMoviesWidget = () => {
     refetch();
   };
 
-  const onMovieCarouselItemCTA = () => {};
+  const onMovieCarouselItemCTA = (item: MovieItem) => {
+    const {title, id} = item;
+    NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
+      queryParams: {screenTitle: title, movieId: id},
+    });
+  };
 
   useEffect(() => {
     NativeAppEventEmitter.addListener(PAGE_REFRESH.HOME_SCREEN, refreshWidget);

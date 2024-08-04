@@ -61,7 +61,10 @@ const BannerCarousel = ({
           ref={listRef}
           data={data}
           renderItem={({item}: {item: MovieItem}) => (
-            <CarouselItem item={item} action={itemAction} />
+            <CarouselItem
+              item={item}
+              action={() => itemAction(data[activeMovieIndex])}
+            />
           )}
           keyExtractor={keyExtractor}
           horizontal
