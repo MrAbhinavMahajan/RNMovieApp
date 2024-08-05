@@ -4,7 +4,7 @@ import RNText from '@components/common/RNText';
 import {styles} from './styles';
 import {AppNextIcon} from '@components/common/RNIcon';
 import {COLORS} from '@constants/Colors';
-import {STD_ACTIVITY_COLOR} from '@constants/Styles';
+import {STD_ACTIVITY_COLOR, STYLES} from '@constants/Styles';
 import RNImage from '../../common/RNImage';
 import Animated, {FadeIn, FadeOut} from 'react-native-reanimated';
 
@@ -54,11 +54,15 @@ const HeaderTitleWidget = (props: HeaderTitleWidgetProps) => {
               fallbackCharacter="R"
             />
           )}
-          <View>
+          <View style={STYLES.flex01}>
             {!!subtitle && (
               <RNText style={styles.subtitleText}>{subtitle}</RNText>
             )}
-            <RNText style={[styles.titleText, titleTextStyles]}>{title}</RNText>
+            <RNText
+              style={[styles.titleText, titleTextStyles]}
+              numberOfLines={1}>
+              {title}
+            </RNText>
           </View>
         </Animated.View>
       );
