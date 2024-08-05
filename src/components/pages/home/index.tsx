@@ -23,8 +23,8 @@ import Animated, {
 } from 'react-native-reanimated';
 import {AppArrowUpIcon} from '@components/common/RNIcon';
 import AppCTA from '@components/common/AppCTA';
-import MovieGenres from '../../others/MovieGenres';
-import TrendingMoviesWidget from '../../widgets/TrendingMovies';
+import MovieGenresSetter from '@components/others/MovieGenresSetter';
+import TrendingMoviesWidget from '@components/widgets/TrendingMovies';
 
 const HomeScreen = () => {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
@@ -84,7 +84,7 @@ const HomeScreen = () => {
         </AppCTA>
       </Animated.View>
 
-      <MovieGenres />
+      <MovieGenresSetter />
     </View>
   );
 };

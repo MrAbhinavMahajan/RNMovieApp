@@ -1,8 +1,8 @@
 import {StyleSheet} from 'react-native';
 import {COLORS} from '@constants/Colors';
 import {FONTS} from '@constants/Fonts';
-import {STD_VERTICAL_SPACING} from '@constants/Styles';
 import {fpx, hpx, vpx} from '@libraries/responsive-pixels';
+import {STD_VERTICAL_SPACING} from '@constants/Styles';
 
 export const styles = StyleSheet.create({
   container: {
@@ -35,19 +35,18 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  infoContainer: {
+  overViewTextContainer: {
     marginTop: vpx(8),
   },
-  infoText: {
+  overViewText: {
     fontSize: fpx(14),
     fontFamily: FONTS.Regular,
     color: COLORS.lightGray08,
   },
-  infoCTAText: {
+  overViewCTAText: {
     fontSize: fpx(12),
     color: COLORS.fullWhite,
     fontFamily: FONTS.SemiBold,
     marginTop: STD_VERTICAL_SPACING,
-    alignSelf: 'flex-end',
   },
 });

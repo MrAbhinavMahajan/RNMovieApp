@@ -6,7 +6,7 @@ import {fetchMovieGenres} from '~/src/apis/Main';
 import {APP_QUERY_MAP} from '~/src/constants/Api';
 import {logError} from '~/src/analytics';
 
-const MovieGenres = () => {
+const MovieGenresSetter = () => {
   const setGenres = useMovieStore(state => state.setGenres);
   const {data, isFetched, error, isError} = useQuery({
     queryKey: [APP_QUERY_MAP.MOVIE_GENRES],
@@ -25,4 +25,4 @@ const MovieGenres = () => {
   return <></>;
 };
 
-export default MovieGenres;
+export default MovieGenresSetter;

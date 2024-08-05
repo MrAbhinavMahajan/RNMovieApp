@@ -29,6 +29,9 @@ import {
 } from '@constants/AppInterfaces';
 import AppHeader from '@components/common/AppHeader';
 import SimilarMoviesWidget from '../../widgets/SimilarMovies';
+import DetailsBox from './DetailsBox';
+import PlayerBox from './PlayerBox';
+import CTAsPanelBox from './CTAsPanelBox';
 
 interface MovieDetailsScreenProps {
   route: {
@@ -164,6 +167,13 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
       refreshControl={
         <RefreshControl refreshing={false} onRefresh={refreshPage} />
       }>
+      <View>
+        <PlayerBox movieId={movieId} />
+        <DetailsBox movieId={movieId} />
+        <CTAsPanelBox movieId={movieId} />
+      </View>
+
+      {/* Widgets */}
       <SimilarMoviesWidget />
       {/* <MovieDetailsTab /> */}
     </ScrollView>

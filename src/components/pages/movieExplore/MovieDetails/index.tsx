@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import _ from 'lodash';
 import {View} from 'react-native';
-import useMovieStore from '@store/useMovieStore';
 import {MovieItem} from '@constants/AppInterfaces';
 import {AppStarIcon, IconSize} from '@components/common/RNIcon';
 import {COLORS} from '@constants/Colors';
@@ -14,14 +13,11 @@ import Animated, {
 } from 'react-native-reanimated';
 import RNText from '@components/common/RNText';
 import dayjs from 'dayjs';
+import MovieOverview from '@components/common/MovieOverview';
+import MovieGenres from '@components/common/MovieGenres';
 
 const MovieDetails = ({item, index}: {item: MovieItem; index: number}) => {
-  const genres = useMovieStore(state => state.genres);
   const {title, vote_average, genre_ids, overview, release_date} = item || {};
-
-  const genresById = (genreId: number) => {
-    return genres.find(el => el.id === genreId)?.name;
-  };
 
   return (
     <Animated.View
@@ -30,9 +26,7 @@ const MovieDetails = ({item, index}: {item: MovieItem; index: number}) => {
       exiting={FadeOutDown}
       style={styles.container}>
       {!_.isEmpty(genre_ids) && (
-        <RNText style={styles.metaText}>
-          {genre_ids.map(genreId => genresById(genreId)).join(', ')}
-        </RNText>
+        <MovieGenres genreIds={genre_ids} genreTextStyles={styles.metaText} />
       )}
       <Animated.Text
         entering={FadeInLeft}
@@ -53,34 +47,12 @@ const MovieDetails = ({item, index}: {item: MovieItem; index: number}) => {
           </View>
         )}
       </View>
-      <MovieOverview overview={overview} />
-    </Animated.View>
-  );
-};
-
-const MovieOverview = ({overview}: {overview: string}) => {
-  const [isExpanded, setExpanded] = useState(false);
-
-  const toggleViewMore = () => {
-    setExpanded(f => !f);
-  };
-
-  if (!overview) {
-    return <></>;
-  }
-  return (
-    <Animated.View
-      entering={FadeIn}
-      exiting={FadeOut}
-      style={styles.infoContainer}>
-      <View>
-        <RNText style={styles.infoText} numberOfLines={isExpanded ? 0 : 2}>
-          {overview}
-        </RNText>
-        <RNText style={styles.infoCTAText} onPress={toggleViewMore}>
-          {isExpanded ? 'hide' : 'see more'}
-        </RNText>
-      </View>
+      <MovieOverview
+        text={overview}
+        textStyles={styles.overViewText}
+        ctaTextStyles={styles.overViewCTAText}
+        containerStyles={styles.overViewTextContainer}
+      />
     </Animated.View>
   );
 };
