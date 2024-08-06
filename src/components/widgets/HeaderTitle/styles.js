@@ -27,6 +27,7 @@ export const styles = StyleSheet.create({
   leftJSXView: {
     flexDirection: 'row',
     alignItems: 'center',
+    flex: 1,
   },
   leftJSXImageView: {
     width: hpx(30),
