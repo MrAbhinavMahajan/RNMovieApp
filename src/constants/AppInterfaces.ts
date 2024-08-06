@@ -82,6 +82,25 @@ export interface MovieItem {
   vote_count: number;
 }
 
+export enum MovieVideoItemTypes {
+  TRAILER = 'Trailer',
+  CLIP = 'Clip',
+  FEATURETTE = 'Featurette',
+}
+
+export interface MovieVideoItem {
+  iso_639_1: string;
+  iso_3166_1: string;
+  name: string;
+  key: string;
+  site: string;
+  size: number;
+  type: MovieVideoItemTypes;
+  official: boolean;
+  published_at: Date;
+  id: string;
+}
+
 export interface MoviePosterItem {
   poster_path: string;
   backdrop_path: string;

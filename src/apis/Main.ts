@@ -443,3 +443,12 @@ export const fetchMovieGenres = async (signal: AbortSignal): Promise<any> => {
   const method = RequestMethod.GET;
   return fetchJsonWithAuth(url, method, null, signal);
 };
+
+export const fetchMovieVideos = async (
+  signal: AbortSignal,
+  movieId: number,
+): Promise<any> => {
+  const url = `${APP_BASE_URL}/3/movie/${movieId}/videos?language=en-US}`;
+  const method = RequestMethod.GET;
+  return fetchJsonWithAuth(url, method, null, signal);
+};

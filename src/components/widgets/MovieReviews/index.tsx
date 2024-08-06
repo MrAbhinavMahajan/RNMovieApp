@@ -3,7 +3,12 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 import _ from 'lodash';
 import {useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
 import {useIsFocused} from '@react-navigation/native';
-import {ActivityIndicator, FlatList, RefreshControl, View} from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  NativeAppEventEmitter,
+  View,
+} from 'react-native';
 import Animated, {FadeIn, FadeOut} from 'react-native-reanimated';
 import {fetchMovieReviews} from '@apis/Main';
 import {IconSize, MaterialIcon} from '@components/common/RNIcon';
@@ -13,6 +18,7 @@ import {APP_QUERY_MAP} from '@constants/Api';
 import {QUERY_STATUS} from '@constants/Main';
 import {kREVIEWS} from '@constants/Messages';
 import {COLORS} from '@constants/Colors';
+import {PAGE_REFRESH} from '@constants/Page';
 import {styles} from './styles';
 import ErrorStateWidget from '../ErrorState';
 import EmptyStateWidget from '../EmptyState';
@@ -90,6 +96,10 @@ const MoviesReviewsWidget = ({movieId}: MoviesReviewsWidget) => {
   const keyExtractor = (item: MovieReview) => `${item?.id}`;
 
   useEffect(() => {
+    NativeAppEventEmitter.addListener(
+      PAGE_REFRESH.MOVIE_DETAILS_SCREEN,
+      refreshWidget,
+    );
     return () => {
       // ! Cancelling Query in Progress on unmount
       queryClient.cancelQueries({queryKey: [APP_QUERY_MAP.MOVIE_REVIEWS]});
@@ -162,9 +172,6 @@ const MoviesReviewsWidget = ({movieId}: MoviesReviewsWidget) => {
         initialNumToRender={5}
         maxToRenderPerBatch={5}
         extraData={reviewItems}
-        refreshControl={
-          <RefreshControl refreshing={false} onRefresh={refreshWidget} />
-        }
       />
     </View>
   );
