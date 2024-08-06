@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
 import _ from 'lodash';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
@@ -58,7 +59,7 @@ const WatchlistCTA = ({
       }
       return isMovieFound;
     });
-  }, []);
+  }, [movieId]);
 
   const toggleWatchlist = () => {
     setIsWatchlist(val => {

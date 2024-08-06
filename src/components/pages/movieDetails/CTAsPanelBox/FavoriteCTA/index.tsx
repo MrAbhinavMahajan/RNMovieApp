@@ -61,7 +61,7 @@ const FavoriteCTA = ({
       }
       return isMovieFound;
     });
-  }, []);
+  }, [movieId]);
 
   const toggleFavorite = () => {
     setIsFavorite(val => {
