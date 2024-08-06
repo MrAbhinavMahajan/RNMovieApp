@@ -2,7 +2,7 @@
 import React from 'react';
 import {ActivityIndicator, Alert} from 'react-native';
 import * as NavigationService from '@service/Navigation';
-import Animated, {FadeInUp, FadeOut} from 'react-native-reanimated';
+import Animated, {FadeIn, LightSpeedOutRight} from 'react-native-reanimated';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import LinearGradient from 'react-native-linear-gradient';
 import {
@@ -159,7 +159,7 @@ const MovieCard = ({
   };
 
   return (
-    <Animated.View entering={FadeInUp} exiting={FadeOut}>
+    <Animated.View entering={FadeIn} exiting={LightSpeedOutRight}>
       <AppCTA style={styles.moviePosterContainer} onPress={onCTA}>
         <MoviePosterWidget
           item={item}
