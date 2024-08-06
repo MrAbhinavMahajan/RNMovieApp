@@ -60,7 +60,7 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
       refreshControl={
         <RefreshControl refreshing={false} onRefresh={refreshPage} />
       }>
-      <View>
+      <View style={styles.detailsView}>
         <PlayerBox movieId={movieId} />
         <DetailsBox movieId={movieId} />
         <CTAsPanelBox movieId={movieId} />

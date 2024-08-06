@@ -2,6 +2,7 @@ import {StyleSheet} from 'react-native';
 import {
   STD_HORIZONTAL_SPACING,
   STD_SCREEN_COLOR,
+  STD_VERTICAL_SPACING,
   STYLES,
 } from '@constants/Styles';
 import {vpx} from '@libraries/responsive-pixels';
@@ -51,5 +52,9 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: STD_HORIZONTAL_SPACING,
+  },
+  detailsView: {
+    backgroundColor: COLORS.fullWhite,
+    paddingTop: STD_VERTICAL_SPACING,
   },
 });
