@@ -1,21 +1,22 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import _ from 'lodash';
 import {useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
+import {useIsFocused} from '@react-navigation/native';
 import {ActivityIndicator, FlatList, RefreshControl, View} from 'react-native';
 import Animated, {FadeIn, FadeOut} from 'react-native-reanimated';
 import {fetchMovieReviews} from '@apis/Main';
 import {IconSize, MaterialIcon} from '@components/common/RNIcon';
 import {FALLBACK_DATA} from '../../../data/Main';
 import {STD_ACTIVITY_COLOR} from '@constants/Styles';
-import {styles} from './styles';
-import {kREVIEWS} from '@constants/Messages';
-import {COLORS} from '@constants/Colors';
 import {APP_QUERY_MAP} from '@constants/Api';
 import {QUERY_STATUS} from '@constants/Main';
+import {kREVIEWS} from '@constants/Messages';
+import {COLORS} from '@constants/Colors';
+import {styles} from './styles';
 import ErrorStateWidget from '../ErrorState';
 import EmptyStateWidget from '../EmptyState';
 import RNText from '@components/common/RNText';
-import {useIsFocused} from '@react-navigation/native';
 
 export interface AuthorDetails {
   name: string;
@@ -34,12 +35,18 @@ interface MovieReview {
   author_details: AuthorDetails;
 }
 
-const MoviesReviewsWidget = () => {
+type MoviesReviewsWidget = {
+  movieId: number;
+};
+
+const MoviesReviewsWidget = ({movieId}: MoviesReviewsWidget) => {
+  console.log('MoviesReviewsWidget movieId:::', movieId);
   const queryClient = useQueryClient();
   const isFocussed = useIsFocused();
   const query = useInfiniteQuery({
     queryKey: [APP_QUERY_MAP.MOVIE_REVIEWS],
-    queryFn: ({signal, pageParam}) => fetchMovieReviews(signal, pageParam),
+    queryFn: ({signal, pageParam}) =>
+      fetchMovieReviews(signal, movieId, pageParam),
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
       if (lastPage.page > lastPage.total_pages) {
@@ -87,6 +94,14 @@ const MoviesReviewsWidget = () => {
       queryClient.cancelQueries({queryKey: [APP_QUERY_MAP.MOVIE_REVIEWS]});
     };
   }, []);
+
+  useEffect(() => {
+    // ! Invalidate Query Data for latest movieId
+    queryClient.invalidateQueries({
+      queryKey: [APP_QUERY_MAP.MOVIE_REVIEWS],
+      refetchType: 'active',
+    });
+  }, [movieId]);
 
   const onEndReached = () => {
     if (isFetching) {

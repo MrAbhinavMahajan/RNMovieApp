@@ -4,7 +4,6 @@ import _ from 'lodash';
 import * as NavigationService from '@service/Navigation';
 import {useQuery} from '@tanstack/react-query';
 import {useIsFocused} from '@react-navigation/native';
-import useMovieStore from '@store/useMovieStore';
 import {fetchSimilarMovies} from '@apis/Main';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
 import Animated, {FadeInRight} from 'react-native-reanimated';
@@ -19,13 +18,16 @@ import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
 
-const SimilarMoviesWidget = () => {
+type SimilarMoviesWidget = {
+  movieId: number;
+};
+
+const SimilarMoviesWidget = ({movieId}: SimilarMoviesWidget) => {
   const isFocussed = useIsFocused();
   const page = 1;
-  const lastWatchedMovieId = useMovieStore(state => state.lastWatchedMovieId);
   const query = useQuery({
-    queryKey: [APP_QUERY_MAP.SIMILAR_MOVIES, lastWatchedMovieId],
-    queryFn: ({signal}) => fetchSimilarMovies(signal, page),
+    queryKey: [APP_QUERY_MAP.SIMILAR_MOVIES, movieId],
+    queryFn: ({signal}) => fetchSimilarMovies(signal, movieId, page),
     enabled: isFocussed,
   });
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;

@@ -9,7 +9,6 @@ import {getSessionStoreState} from '@store/useSessionStore';
 import {MMKV} from 'react-native-mmkv';
 import {logDebug, logError} from '../analytics';
 import {APP_BASE_URL} from '../constants/Api';
-import {getMovieStoreState} from '../store/useMovieStore';
 const ReadAccessToken = process.env.TMDB_READ_ACCESS_TOKEN;
 
 enum RequestMethod {
@@ -384,20 +383,20 @@ export const fetchMoviesRated = async (
 
 export const fetchSimilarMovies = async (
   signal: AbortSignal,
+  movieId: number,
   pageParam: number,
 ): Promise<any> => {
-  const {lastWatchedMovieId} = getMovieStoreState();
-  const url = `${APP_BASE_URL}/3/movie/${lastWatchedMovieId}/similar?language=en-US&page=${pageParam}`;
+  const url = `${APP_BASE_URL}/3/movie/${movieId}/similar?language=en-US&page=${pageParam}`;
   const method = RequestMethod.GET;
   return fetchJsonWithAuth(url, method, null, signal);
 };
 
 export const fetchMovieReviews = async (
   signal: AbortSignal,
+  movieId: number,
   pageParam: number,
 ): Promise<any> => {
-  const {lastWatchedMovieId} = getMovieStoreState();
-  const url = `${APP_BASE_URL}/3/movie/${lastWatchedMovieId}/reviews?language=en-US&page=${pageParam}`;
+  const url = `${APP_BASE_URL}/3/movie/${movieId}/reviews?language=en-US&page=${pageParam}`;
   const method = RequestMethod.GET;
   return fetchJsonWithAuth(url, method, null, signal);
 };
