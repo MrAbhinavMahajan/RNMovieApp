@@ -35,4 +35,11 @@ export const styles = StyleSheet.create({
     color: COLORS.basic700,
     fontFamily: FONTS.SemiBold,
   },
+  errorContainer: {
+    backgroundColor: COLORS.antiFlashWhite,
+    paddingVertical: vpx(24),
+    marginHorizontal: STD_HORIZONTAL_SPACING,
+    borderRadius: 8,
+    marginTop: vpx(10),
+  },
 });
