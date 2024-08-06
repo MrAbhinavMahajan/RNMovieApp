@@ -11,5 +11,14 @@ export const styles = StyleSheet.create({
     aspectRatio: 1.6,
     alignSelf: 'center',
     borderRadius: vpx(16),
+    overflow: 'hidden',
+    borderWidth: StyleSheet.hairlineWidth,
+  },
+  loaderView: {
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    position: 'absolute',
+    zIndex: 1,
   },
 });
