@@ -6,13 +6,14 @@ import {FONTS} from '@constants/Fonts';
 
 export const styles = StyleSheet.create({
   containerView: {
-    width: '100%',
+    backgroundColor: COLORS.fullWhite,
     paddingTop: STD_VERTICAL_SPACING,
+    paddingBottom: vpx(24),
   },
   scrollableContentView: {
     paddingHorizontal: STD_HORIZONTAL_SPACING,
     gap: hpx(8),
-    // paddingBottom: STD_VERTICAL_SPACING,
+    paddingTop: STD_VERTICAL_SPACING,
   },
   loaderView: {
     height: '100%',
@@ -20,6 +21,10 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     position: 'absolute',
     zIndex: 1,
+  },
+  headerView: {
+    paddingLeft: STD_HORIZONTAL_SPACING,
+    paddingRight: hpx(8),
   },
   utilsContainer: {
     backgroundColor: COLORS.fullWhite,
@@ -35,6 +40,15 @@ export const styles = StyleSheet.create({
     paddingVertical: STD_VERTICAL_SPACING,
     paddingHorizontal: STD_HORIZONTAL_SPACING,
     borderColor: COLORS.azureishWhite,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+
+    elevation: 2,
   },
   reviewTitleText: {
     fontSize: fpx(16),

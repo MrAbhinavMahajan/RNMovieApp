@@ -6,15 +6,15 @@ import {
   ScrollView,
   View,
 } from 'react-native';
-import useMovieStore from '~/src/store/useMovieStore';
-import {styles} from './styles';
+import useMovieStore from '@store/useMovieStore';
 import {PAGE_REFRESH} from '@constants/Page';
+import {styles} from './styles';
 import AppHeader from '@components/common/AppHeader';
 import DetailsBox from './DetailsBox';
 import PlayerBox from './PlayerBox';
 import CTAsPanelBox from './CTAsPanelBox';
-import SimilarMoviesWidget from '../../widgets/SimilarMovies';
-import MoviesReviewsWidget from '../../widgets/MovieReviews';
+import SimilarMoviesWidget from '@components/widgets/SimilarMovies';
+import MoviesReviewsWidget from '@components/widgets/MovieReviews';
 
 interface MovieDetailsScreenProps {
   route: {

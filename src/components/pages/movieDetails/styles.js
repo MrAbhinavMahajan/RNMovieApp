@@ -41,6 +41,7 @@ export const styles = StyleSheet.create({
   },
   screenScrollableView: {
     flexGrow: 1,
+    gap: vpx(8),
   },
   movieCTAView: {
     marginTop: vpx(12),

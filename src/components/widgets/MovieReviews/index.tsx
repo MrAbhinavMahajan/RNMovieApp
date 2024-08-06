@@ -17,6 +17,7 @@ import {styles} from './styles';
 import ErrorStateWidget from '../ErrorState';
 import EmptyStateWidget from '../EmptyState';
 import RNText from '@components/common/RNText';
+import HeaderTitleWidget from '../HeaderTitle';
 
 export interface AuthorDetails {
   name: string;
@@ -120,39 +121,35 @@ const MoviesReviewsWidget = ({movieId}: MoviesReviewsWidget) => {
     return <></>;
   };
 
-  if (isError) {
-    return (
-      <ErrorStateWidget
-        error={error}
-        containerStyles={styles.utilsContainer}
-        retryCTA={refreshWidget}
-      />
-    );
-  }
-
-  if (isEmpty) {
-    return (
-      <EmptyStateWidget
-        title={kREVIEWS.noReviews?.title}
-        message={kREVIEWS.noReviews?.subtitle}
-        containerStyles={styles.utilsContainer}
-        icon={
-          <MaterialIcon
-            name={'reviews'}
-            size={IconSize.large}
-            color={COLORS.fullBlack}
-          />
-        }
-      />
-    );
-  }
-
   return (
-    <View style={styles.containerView}>
-      {isLoading && (
-        <View style={styles.loaderView}>
-          <ActivityIndicator size={'large'} color={STD_ACTIVITY_COLOR} />
-        </View>
+    <View
+      style={styles.containerView}
+      pointerEvents={isLoading ? 'none' : 'auto'}>
+      <HeaderTitleWidget
+        title={'Reviews'}
+        containerStyles={styles.headerView}
+        loaderEnabled={isFetching}
+      />
+      {isError && (
+        <ErrorStateWidget
+          error={error}
+          containerStyles={styles.utilsContainer}
+          retryCTA={refreshWidget}
+        />
+      )}
+      {isEmpty && (
+        <EmptyStateWidget
+          title={kREVIEWS.noReviews?.title}
+          message={kREVIEWS.noReviews?.subtitle}
+          containerStyles={styles.utilsContainer}
+          icon={
+            <MaterialIcon
+              name={'reviews'}
+              size={IconSize.large}
+              color={COLORS.fullBlack}
+            />
+          }
+        />
       )}
       <FlatList
         ref={listRef}
