@@ -7,6 +7,8 @@ import {useQuery, useQueryClient} from '@tanstack/react-query';
 import {fetchMovieVideos} from '@apis/Main';
 import {APP_QUERY_MAP} from '@constants/Api';
 import {MovieVideoItem, MovieVideoItemTypes} from '@constants/AppInterfaces';
+import YoutubePlayer from 'react-native-youtube-iframe';
+import {vpx} from '~/src/libraries/responsive-pixels';
 
 type PlayerBox = {
   movieId: number;
@@ -30,6 +32,12 @@ const PlayerBox = ({movieId}: PlayerBox) => {
     refetch();
   };
 
+  const onReady = () => {
+    console.log('Ready');
+  };
+
+  const onError = (message: string) => {};
+
   useEffect(() => {
     NativeAppEventEmitter.addListener(
       PAGE_REFRESH.MOVIE_DETAILS_SCREEN,
@@ -45,7 +53,18 @@ const PlayerBox = ({movieId}: PlayerBox) => {
     });
   }, [movieId]);
 
-  return <View style={styles.container}></View>;
+  return (
+    <View style={styles.container}>
+      <YoutubePlayer
+        height={vpx(210)}
+        play={true} // play on launch
+        mute={true} // launch muted
+        videoId={trailerVideoItem?.key}
+        onReady={onReady}
+        onError={onError}
+      />
+    </View>
+  );
 };
 
 export default PlayerBox;
