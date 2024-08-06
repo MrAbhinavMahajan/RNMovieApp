@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
     marginTop: vpx(4),
   },
   overViewTextContainer: {
-    marginTop: vpx(4),
+    marginTop: vpx(8),
   },
   overViewText: {
     fontSize: fpx(14),
