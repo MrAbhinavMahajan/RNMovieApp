@@ -68,8 +68,8 @@ const HomeScreen = () => {
         }>
         <TrendingMoviesWidget />
         <NowPlayingMoviesWidget />
-        <RecommendedMoviesWidget />
         <UpcomingMoviesWidget />
+        <RecommendedMoviesWidget />
         <TopRatedMoviesWidget />
         <QuotationWidget
           title={`Live${'\n'}it up!`}
