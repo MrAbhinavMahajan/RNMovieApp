@@ -6,25 +6,25 @@ import InfoLoggerFactory from './info/Factory';
 export const logDebug = (message: string) => {
   const loggerFactory = new DebugLoggerFactory();
   const logger = loggerFactory.createLogger();
-  // logger.log(message);
+  logger.log(message);
 };
 
 export const logInfo = (message: string) => {
   const loggerFactory = new InfoLoggerFactory();
   const logger = loggerFactory.createLogger();
-  // logger.log(message);
+  logger.log(message);
 };
 
 export const logError = (message: string) => {
   const loggerFactory = new ErrorLoggerFactory();
   const logger = loggerFactory.createLogger();
-  // logger.log(message);
+  logger.log(message);
 };
 
 export const logEvent = (message: string) => {
   const loggerFactory = new EventLoggerFactory();
   const logger = loggerFactory.createLogger();
-  // logger.log(message);
+  logger.log(message);
 };
 
 export const onPageViewEvent = () => {};

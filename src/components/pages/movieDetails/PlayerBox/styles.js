@@ -8,8 +8,17 @@ export const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.fullBlack,
     width: SCREEN_WIDTH - 2 * STD_HORIZONTAL_SPACING,
+    aspectRatio: 1.6,
     alignSelf: 'center',
     borderRadius: vpx(16),
     overflow: 'hidden',
+    borderWidth: StyleSheet.hairlineWidth,
+  },
+  loaderView: {
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    position: 'absolute',
+    zIndex: 1,
   },
 });

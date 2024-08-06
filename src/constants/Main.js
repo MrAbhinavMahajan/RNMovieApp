@@ -18,4 +18,5 @@ export const QUERY_CLIENT = new QueryClient({
 });
 
 export const IMAGE_BASEURL = 'https://image.tmdb.org/t/p/original';
+export const YOUTUBE_BASEURL = 'https://www.youtube.com/embed';
 // * Config File
