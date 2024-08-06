@@ -19,6 +19,7 @@ import {useIsFocused} from '@react-navigation/native';
 
 const TopRatedMoviesWidget = () => {
   const isFocussed = useIsFocused();
+  const widgetTitle = 'Top Rated Movies';
   const page = 1;
   const query = useQuery({
     queryKey: [APP_QUERY_MAP.TOP_RATED_MOVIES],
@@ -45,7 +46,7 @@ const TopRatedMoviesWidget = () => {
   const onViewAllAction = () => {
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_VIEW_ALL_SCREEN, {
       queryParams: {
-        screenTitle: 'Top Rated Movies',
+        screenTitle: widgetTitle,
         widgetId: APP_WIDGETS_MAP.TOP_RATED_MOVIES,
       },
     });
@@ -71,7 +72,7 @@ const TopRatedMoviesWidget = () => {
       style={styles.containerView}
       pointerEvents={isLoading ? 'none' : 'auto'}>
       <HeaderTitleWidget
-        title={'Top Rated'}
+        title={widgetTitle}
         containerStyles={styles.headerView}
         rightCTAAction={onViewAllAction}
         rightCTAEnabled={isRightCTAEnabled}

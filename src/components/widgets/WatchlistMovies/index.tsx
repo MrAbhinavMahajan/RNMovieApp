@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useMemo, useRef} from 'react';
 import _ from 'lodash';
 import {useQuery} from '@tanstack/react-query';
@@ -23,6 +24,7 @@ import {useIsFocused} from '@react-navigation/native';
 
 const WatchlistMoviesWidget = () => {
   const isFocussed = useIsFocused();
+  const widgetTitle = 'Watchlist';
   const page = 1;
   const query = useQuery({
     queryKey: [APP_QUERY_MAP.WATCHLIST_MOVIES],
@@ -58,7 +60,7 @@ const WatchlistMoviesWidget = () => {
   const onViewAllAction = () => {
     NavigationService.navigate(APP_PAGES_MAP.PROFILE_VIEW_ALL_SCREEN, {
       queryParams: {
-        screenTitle: 'Watchlist Movies',
+        screenTitle: widgetTitle,
         widgetId: APP_WIDGETS_MAP.WATCHLIST_MOVIES,
       },
     });
@@ -78,7 +80,7 @@ const WatchlistMoviesWidget = () => {
       style={styles.containerView}
       pointerEvents={isLoading ? 'none' : 'auto'}>
       <HeaderTitleWidget
-        title={'Watchlist'}
+        title={widgetTitle}
         containerStyles={styles.headerView}
         rightCTAAction={onViewAllAction}
         rightCTAEnabled={movies?.length > 0}

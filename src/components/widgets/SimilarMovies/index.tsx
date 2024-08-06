@@ -25,6 +25,7 @@ type SimilarMoviesWidget = {
 const SimilarMoviesWidget = ({movieId}: SimilarMoviesWidget) => {
   const isFocussed = useIsFocused();
   const page = 1;
+  const widgetTitle = 'Similar Movies';
   const query = useQuery({
     queryKey: [APP_QUERY_MAP.SIMILAR_MOVIES, movieId],
     queryFn: ({signal}) => fetchSimilarMovies(signal, movieId, page),
@@ -50,7 +51,7 @@ const SimilarMoviesWidget = ({movieId}: SimilarMoviesWidget) => {
   const onViewAllAction = () => {
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_VIEW_ALL_SCREEN, {
       queryParams: {
-        screenTitle: 'Cinematic Echoes',
+        screenTitle: widgetTitle,
         widgetId: APP_WIDGETS_MAP.SIMILAR_MOVIES,
       },
     });
@@ -76,7 +77,7 @@ const SimilarMoviesWidget = ({movieId}: SimilarMoviesWidget) => {
       style={styles.containerView}
       pointerEvents={isLoading ? 'none' : 'auto'}>
       <HeaderTitleWidget
-        title={'Cinematic Echoes'}
+        title={widgetTitle}
         containerStyles={styles.headerView}
         rightCTAAction={onViewAllAction}
         rightCTAEnabled={isRightCTAEnabled}

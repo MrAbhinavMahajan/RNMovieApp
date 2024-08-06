@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import _ from 'lodash';
 import {useQuery} from '@tanstack/react-query';
@@ -19,6 +20,7 @@ import {useIsFocused} from '@react-navigation/native';
 
 const UpcomingMoviesWidget = () => {
   const isFocussed = useIsFocused();
+  const widgetTitle = 'Upcoming Movies';
   const page = 1;
   const query = useQuery({
     queryKey: [APP_QUERY_MAP.UPCOMING_MOVIES],
@@ -45,7 +47,7 @@ const UpcomingMoviesWidget = () => {
   const onViewAllAction = () => {
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_VIEW_ALL_SCREEN, {
       queryParams: {
-        screenTitle: 'Coming Soon Movies',
+        screenTitle: widgetTitle,
         widgetId: APP_WIDGETS_MAP.UPCOMING_MOVIES,
       },
     });
@@ -71,7 +73,7 @@ const UpcomingMoviesWidget = () => {
       style={styles.containerView}
       pointerEvents={isLoading ? 'none' : 'auto'}>
       <HeaderTitleWidget
-        title={'Coming Soon'}
+        title={widgetTitle}
         containerStyles={styles.headerView}
         rightCTAAction={onViewAllAction}
         rightCTAEnabled={isRightCTAEnabled}

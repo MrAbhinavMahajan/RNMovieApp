@@ -22,6 +22,7 @@ import ErrorStateWidget from '../ErrorState';
 
 const RecommendedMoviesWidget = () => {
   const isFocussed = useIsFocused();
+  const widgetTitle = 'Recommended Movies';
   const lastWatchedMovieId = useMovieStore(state => state.lastWatchedMovieId);
   const page = 1;
   const recommendedMoviesQuery = useQuery({
@@ -58,7 +59,7 @@ const RecommendedMoviesWidget = () => {
   const onViewAllAction = () => {
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_VIEW_ALL_SCREEN, {
       queryParams: {
-        screenTitle: 'Recommended Movies',
+        screenTitle: widgetTitle,
         widgetId: APP_WIDGETS_MAP.RECOMMENDED_MOVIES,
       },
     });
@@ -84,7 +85,7 @@ const RecommendedMoviesWidget = () => {
       style={styles.containerView}
       pointerEvents={isLoading ? 'none' : 'auto'}>
       <HeaderTitleWidget
-        title={'Recommended'}
+        title={widgetTitle}
         meta={{
           title: lastWatchedMovieDetails?.title,
           subtitle: 'Because You Watched',

@@ -21,6 +21,7 @@ import {useIsFocused} from '@react-navigation/native';
 const NowPlayingMoviesWidget = () => {
   const isFocussed = useIsFocused();
   const page = 1;
+  const widgetTitle = 'Latest Movies';
   const query = useQuery({
     queryKey: [APP_QUERY_MAP.NOW_PLAYING_MOVIES],
     queryFn: ({signal}) => fetchNowPlayingMovies(signal, page),
@@ -46,7 +47,7 @@ const NowPlayingMoviesWidget = () => {
   const onViewAllAction = () => {
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_VIEW_ALL_SCREEN, {
       queryParams: {
-        screenTitle: 'Now Playing Movies',
+        screenTitle: widgetTitle,
         widgetId: APP_WIDGETS_MAP.NOW_PLAYING,
       },
     });
@@ -72,7 +73,7 @@ const NowPlayingMoviesWidget = () => {
       style={styles.containerView}
       pointerEvents={isLoading ? 'none' : 'auto'}>
       <HeaderTitleWidget
-        title={'Now Playing'}
+        title={widgetTitle}
         containerStyles={styles.headerView}
         rightCTAAction={onViewAllAction}
         rightCTAEnabled={isRightCTAEnabled}

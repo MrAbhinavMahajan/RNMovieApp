@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useMemo, useRef} from 'react';
 import _ from 'lodash';
 import {useQuery} from '@tanstack/react-query';
@@ -23,6 +24,7 @@ import {useIsFocused} from '@react-navigation/native';
 
 const FavoritesMoviesWidget = () => {
   const isFocussed = useIsFocused();
+  const widgetTitle = 'Favorites';
   const page = 1;
   const query = useQuery({
     queryKey: [APP_QUERY_MAP.FAVORITE_MOVIES],
@@ -59,7 +61,7 @@ const FavoritesMoviesWidget = () => {
   const onViewAllAction = () => {
     NavigationService.navigate(APP_PAGES_MAP.PROFILE_VIEW_ALL_SCREEN, {
       queryParams: {
-        screenTitle: 'Favorite Movies',
+        screenTitle: widgetTitle,
         widgetId: APP_WIDGETS_MAP.FAVORITE_MOVIES,
       },
     });
@@ -79,7 +81,7 @@ const FavoritesMoviesWidget = () => {
       style={styles.containerView}
       pointerEvents={isLoading ? 'none' : 'auto'}>
       <HeaderTitleWidget
-        title={'Favorites'}
+        title={widgetTitle}
         containerStyles={styles.headerView}
         rightCTAAction={onViewAllAction}
         rightCTAEnabled={movies?.length > 0}

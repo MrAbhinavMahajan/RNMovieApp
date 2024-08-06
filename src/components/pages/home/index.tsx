@@ -68,9 +68,9 @@ const HomeScreen = () => {
         }>
         <TrendingMoviesWidget />
         <NowPlayingMoviesWidget />
-        <TopRatedMoviesWidget />
-        <UpcomingMoviesWidget />
         <RecommendedMoviesWidget />
+        <UpcomingMoviesWidget />
+        <TopRatedMoviesWidget />
         <QuotationWidget
           title={`Live${'\n'}it up!`}
           subtitle={'Crafted with ❤️ in Chamba, India'}
