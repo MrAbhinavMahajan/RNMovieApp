@@ -74,7 +74,7 @@ const PlayerBox = ({movieId}: PlayerBoxProps) => {
           allowsInlineMediaPlayback
           mediaPlaybackRequiresUserAction
           source={{
-            uri: `${YOUTUBE_BASEURL}/${trailerVideoItem.key}`,
+            uri: `${YOUTUBE_BASEURL}/${trailerVideoItem?.key}`,
           }}
           onLoadStart={onLoadStart}
           onLoad={onLoadFinished}
