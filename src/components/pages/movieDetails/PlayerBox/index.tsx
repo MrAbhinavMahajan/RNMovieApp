@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {ActivityIndicator, NativeAppEventEmitter, View} from 'react-native';
 import WebView from 'react-native-webview';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
@@ -27,21 +27,11 @@ const PlayerBox = ({movieId}: PlayerBoxProps) => {
     el => el.type === MovieVideoItemTypes.TRAILER,
   );
 
-  const [webviewLoading, setWebViewLoading] = useState(false);
-
   const refreshData = () => {
     if (isFetching) {
       return;
     }
     refetch();
-  };
-
-  const onLoadStart = () => {
-    setWebViewLoading(true);
-  };
-
-  const onLoadFinished = () => {
-    setWebViewLoading(false);
   };
 
   const renderLoader = () => (
@@ -66,7 +56,6 @@ const PlayerBox = ({movieId}: PlayerBoxProps) => {
 
   return (
     <View style={styles.container}>
-      {webviewLoading && renderLoader()}
       {trailerVideoItem && (
         <WebView
           useWebKit
@@ -76,9 +65,9 @@ const PlayerBox = ({movieId}: PlayerBoxProps) => {
           source={{
             uri: `${YOUTUBE_BASEURL}/${trailerVideoItem?.key}`,
           }}
-          onLoadStart={onLoadStart}
-          onLoad={onLoadFinished}
           scrollEnabled={false}
+          startInLoadingState={true}
+          renderLoading={renderLoader}
         />
       )}
     </View>
