@@ -47,7 +47,6 @@ type MoviesReviewsWidget = {
 };
 
 const MoviesReviewsWidget = ({movieId}: MoviesReviewsWidget) => {
-  console.log('MoviesReviewsWidget movieId:::', movieId);
   const queryClient = useQueryClient();
   const isFocussed = useIsFocused();
   const query = useInfiniteQuery({

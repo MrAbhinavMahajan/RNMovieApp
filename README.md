@@ -22,8 +22,8 @@
 
 ## User Engagement
 
-1. Favorites & Watchlist
-2. Add or Remove Rating
+1. Watch Movies Trailer
+2. Favorites & Watchlist
 3. Recommended Movies
 4. Similar Movies
 
