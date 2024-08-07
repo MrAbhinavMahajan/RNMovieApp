@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import _ from 'lodash';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import Animated, {
@@ -11,11 +11,12 @@ import {fetchMovieFavorites, updateMovieFavorites} from '@apis/Main';
 import {APP_QUERY_MAP} from '@constants/Api';
 import {IconSize, MaterialIcon} from '@components/common/RNIcon';
 import {COLORS} from '@constants/Colors';
-import {Alert} from 'react-native';
+import {ActivityIndicator, Alert} from 'react-native';
 import {kGENERAL} from '@constants/Messages';
 import {FavoriteRequestBody, MovieItem} from '@constants/AppInterfaces';
 import AppCTA from '@components/common/AppCTA';
 import RNText from '@components/common/RNText';
+import {STD_ACTIVITY_COLOR} from '@constants/Styles';
 
 type FavoriteCTA = {
   movieId: number;
@@ -28,19 +29,16 @@ const FavoriteCTA = ({
   ctaTextStyles,
   ctaContainerStyles,
 }: FavoriteCTA) => {
-  const page = 1;
+  const [page, setPage] = useState(1);
   const queryClient = useQueryClient();
-  const favoriteMoviesQuery = useQuery({
-    queryKey: [APP_QUERY_MAP.FAVORITE_MOVIES],
+  const {data, isFetching} = useQuery({
+    queryKey: [APP_QUERY_MAP.FAVORITE_MOVIES, page],
     queryFn: ({signal}) => fetchMovieFavorites(signal, page),
   });
   const favoritesMutation = useMutation({
     mutationFn: updateMovieFavorites,
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [APP_QUERY_MAP.FAVORITE_MOVIES],
-        refetchType: 'active',
-      }); // ! Invalidates the favoriteMovies query data and fetch on successful mutation
+      hasModified.current = true;
     },
     onError: () => {
       Alert.alert(kGENERAL.title, kGENERAL.subtitle);
@@ -48,20 +46,41 @@ const FavoriteCTA = ({
   });
 
   const [isFavorite, setIsFavorite] = useState(false);
+  const hasModified = useRef(false);
   const scaleAnimation = useSharedValue(1);
 
   useEffect(() => {
-    setIsFavorite(() => {
-      let isMovieFound = false;
-      if (!_.isEmpty(favoriteMoviesQuery?.data?.results)) {
-        isMovieFound =
-          favoriteMoviesQuery?.data?.results.filter(
-            (el: MovieItem) => el.id === movieId,
-          )?.length > 0;
+    return () => {
+      if (hasModified.current) {
+        queryClient.invalidateQueries({
+          queryKey: [APP_QUERY_MAP.FAVORITE_MOVIES],
+          refetchType: 'active',
+        }); // ! Invalidates the favoriteMovies query data and fetch on successful mutation
       }
-      return isMovieFound;
-    });
+    };
+  }, []);
+
+  useEffect(() => {
+    // Cleanup for New MovieId
+    return () => {
+      setIsFavorite(false);
+      setPage(1);
+    };
   }, [movieId]);
+
+  useEffect(() => {
+    // Updates on New Page
+    const {results, total_pages} = data || {};
+    if (!_.isEmpty(results) && page <= total_pages) {
+      const isMovieFound =
+        results.filter((el: MovieItem) => el.id === movieId)?.length > 0;
+      if (isMovieFound) {
+        setIsFavorite(isMovieFound);
+      } else {
+        setPage(p => p + 1);
+      }
+    }
+  }, [movieId, page]);
 
   const toggleFavorite = () => {
     setIsFavorite(val => {
@@ -90,16 +109,21 @@ const FavoriteCTA = ({
   return (
     <AppCTA
       style={ctaContainerStyles}
+      disabled={isFetching}
       onPress={toggleFavorite}
       onPressIn={onPressIn}
       onPressOut={onPressOut}>
-      <Animated.View style={scaleAnimatedStyles}>
-        <MaterialIcon
-          name={isFavorite ? 'favorite' : 'favorite-outline'}
-          size={IconSize.medium}
-          color={COLORS.red}
-        />
-      </Animated.View>
+      {isFetching ? (
+        <ActivityIndicator color={STD_ACTIVITY_COLOR} size={'small'} />
+      ) : (
+        <Animated.View style={scaleAnimatedStyles}>
+          <MaterialIcon
+            name={isFavorite ? 'favorite' : 'favorite-outline'}
+            size={IconSize.medium}
+            color={COLORS.red}
+          />
+        </Animated.View>
+      )}
       <RNText style={ctaTextStyles}>Favorite</RNText>
     </AppCTA>
   );

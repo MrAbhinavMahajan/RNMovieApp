@@ -13,6 +13,8 @@ import Animated, {
   withSequence,
 } from 'react-native-reanimated';
 import * as NavigationService from '@service/Navigation';
+import {useIsFocused} from '@react-navigation/native';
+import useMovieStore from '@store/useMovieStore';
 import {
   fetchNowPlayingMovies,
   fetchRecommendedMoviesV4,
@@ -20,7 +22,6 @@ import {
   fetchTopRatedMovies,
   fetchUpcomingMovies,
 } from '@apis/Main';
-import {styles} from './styles';
 import {
   APP_PAGES_MAP,
   APP_TABS_MAP,
@@ -29,13 +30,13 @@ import {
 import {STD_ACTIVITY_COLOR} from '@constants/Styles';
 import {AppArrowUpIcon, AppSearchIcon} from '@components/common/RNIcon';
 import {APP_QUERY_MAP} from '@constants/Api';
+import {styles} from './styles';
 import {MoviePosterItem} from '@constants/AppInterfaces';
 import AppHeader from '@components/common/AppHeader';
 import AppCTA from '@components/common/AppCTA';
 import MoviePosterWidget from '@components/widgets/MoviePoster';
 import ErrorStateWidget from '@components/widgets/ErrorState';
 import EmptyStateCreativeCard from '@components/common/EmptyStateCard';
-import {useIsFocused} from '@react-navigation/native';
 
 interface MovieViewAllScreenProps {
   route: {
@@ -49,6 +50,7 @@ interface MovieViewAllScreenProps {
 }
 
 const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
+  const lastWatchedMovieId = useMovieStore(state => state.lastWatchedMovieId);
   const queryClient = useQueryClient();
   const isFocussed = useIsFocused();
   const {queryParams} = props?.route?.params || {};
@@ -68,7 +70,7 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
         return fetchRecommendedMoviesV4(signal, pageParam);
 
       case APP_WIDGETS_MAP.SIMILAR_MOVIES:
-        return fetchSimilarMovies(signal, pageParam);
+        return fetchSimilarMovies(signal, lastWatchedMovieId || 0, pageParam);
     }
   };
 
