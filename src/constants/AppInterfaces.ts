@@ -145,3 +145,8 @@ export type MovieCarouselParams = {
   autoPlay?: boolean;
   autoPlayTimer?: number;
 };
+
+export enum ActivityStatus {
+  ADDED = 'ADDED',
+  DELETED = 'DELETED',
+}

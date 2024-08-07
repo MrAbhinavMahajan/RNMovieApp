@@ -1,4 +1,5 @@
 import {
+  ActivityStatus,
   DiscoverQueryParams,
   FavoriteRequestBody,
   SignOutRequestBody,
@@ -332,7 +333,10 @@ export const updateMovieFavorites = async (
   }
   const url = `${APP_BASE_URL}/3/account/${accountId}/favorite`;
   const method = RequestMethod.POST;
-  return fetchJsonWithAuth(url, method, body);
+  return {
+    status: body.favorite ? ActivityStatus.ADDED : ActivityStatus.DELETED,
+    json: fetchJsonWithAuth(url, method, body),
+  };
 };
 
 // ? deprecated
@@ -347,7 +351,10 @@ export const updateMovieWatchlist = async (
   }
   const url = `${APP_BASE_URL}/3/account/${accountId}/watchlist`;
   const method = RequestMethod.POST;
-  return fetchJsonWithAuth(url, method, body);
+  return {
+    status: body.watchlist ? ActivityStatus.ADDED : ActivityStatus.DELETED,
+    json: fetchJsonWithAuth(url, method, body),
+  };
 };
 
 // ? deprecated

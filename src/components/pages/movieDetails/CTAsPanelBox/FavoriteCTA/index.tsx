@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import _ from 'lodash';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import Animated, {
@@ -12,8 +12,12 @@ import {APP_QUERY_MAP} from '@constants/Api';
 import {IconSize, MaterialIcon} from '@components/common/RNIcon';
 import {COLORS} from '@constants/Colors';
 import {ActivityIndicator, Alert} from 'react-native';
-import {kGENERAL} from '@constants/Messages';
-import {FavoriteRequestBody, MovieItem} from '@constants/AppInterfaces';
+import {kFAVORITES, kGENERAL} from '@constants/Messages';
+import {
+  ActivityStatus,
+  FavoriteRequestBody,
+  MovieItem,
+} from '@constants/AppInterfaces';
 import AppCTA from '@components/common/AppCTA';
 import RNText from '@components/common/RNText';
 import {STD_ACTIVITY_COLOR} from '@constants/Styles';
@@ -37,8 +41,16 @@ const FavoriteCTA = ({
   });
   const favoritesMutation = useMutation({
     mutationFn: updateMovieFavorites,
-    onSuccess: () => {
-      hasModified.current = true;
+    onSuccess: d => {
+      if (d.status === ActivityStatus.ADDED) {
+        Alert.alert(kFAVORITES.added.title, kFAVORITES.added.subtitle);
+      } else {
+        Alert.alert(kFAVORITES.deleted.title, kFAVORITES.deleted.subtitle);
+      }
+      queryClient.invalidateQueries({
+        queryKey: [APP_QUERY_MAP.FAVORITE_MOVIES],
+        refetchType: 'active',
+      }); // ! Invalidates the favoriteMovies query data and fetch on successful mutation
     },
     onError: () => {
       Alert.alert(kGENERAL.title, kGENERAL.subtitle);
@@ -46,26 +58,12 @@ const FavoriteCTA = ({
   });
 
   const [isFavorite, setIsFavorite] = useState(false);
-  const hasModified = useRef(false);
   const scaleAnimation = useSharedValue(1);
 
   useEffect(() => {
-    return () => {
-      if (hasModified.current) {
-        queryClient.invalidateQueries({
-          queryKey: [APP_QUERY_MAP.FAVORITE_MOVIES],
-          refetchType: 'active',
-        }); // ! Invalidates the favoriteMovies query data and fetch on successful mutation
-      }
-    };
-  }, []);
-
-  useEffect(() => {
     // Cleanup for New MovieId
-    return () => {
-      setIsFavorite(false);
-      setPage(1);
-    };
+    setIsFavorite(false);
+    setPage(1);
   }, [movieId]);
 
   useEffect(() => {

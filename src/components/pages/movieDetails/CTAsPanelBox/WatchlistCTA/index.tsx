@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import _ from 'lodash';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import Animated, {
@@ -12,8 +12,12 @@ import {APP_QUERY_MAP} from '@constants/Api';
 import {IconSize, MaterialIcon} from '@components/common/RNIcon';
 import {COLORS} from '@constants/Colors';
 import {ActivityIndicator, Alert} from 'react-native';
-import {kGENERAL} from '@constants/Messages';
-import {MovieItem, WatchlistRequestBody} from '@constants/AppInterfaces';
+import {kGENERAL, kWATCHLIST} from '@constants/Messages';
+import {
+  ActivityStatus,
+  MovieItem,
+  WatchlistRequestBody,
+} from '@constants/AppInterfaces';
 import AppCTA from '@components/common/AppCTA';
 import RNText from '@components/common/RNText';
 import {STD_ACTIVITY_COLOR} from '@constants/Styles';
@@ -36,34 +40,28 @@ const WatchlistCTA = ({
   });
   const watchlistMutation = useMutation({
     mutationFn: updateMovieWatchlist,
-    onSuccess: () => {
-      hasModified.current = true;
+    onSuccess: d => {
+      if (d.status === ActivityStatus.ADDED) {
+        Alert.alert(kWATCHLIST.added.title, kWATCHLIST.added.subtitle);
+      } else {
+        Alert.alert(kWATCHLIST.deleted.title, kWATCHLIST.deleted.subtitle);
+      }
+      queryClient.invalidateQueries({
+        queryKey: [APP_QUERY_MAP.WATCHLIST_MOVIES],
+        refetchType: 'active',
+      }); // ! Invalidates the watchlistMovies query data and fetch on successful mutation
     },
     onError: () => {
       Alert.alert(kGENERAL.title, kGENERAL.subtitle);
     },
   });
   const [isWatchlist, setIsWatchlist] = useState(false);
-  const hasModified = useRef(false);
   const scaleAnimation = useSharedValue(1);
 
   useEffect(() => {
-    return () => {
-      if (hasModified.current) {
-        queryClient.invalidateQueries({
-          queryKey: [APP_QUERY_MAP.WATCHLIST_MOVIES],
-          refetchType: 'active',
-        }); // ! Invalidates the watchlistMovies query data and fetch on successful mutation
-      }
-    };
-  }, []);
-
-  useEffect(() => {
     // Cleanup for New MovieId
-    return () => {
-      setIsWatchlist(false);
-      setPage(1);
-    };
+    setIsWatchlist(false);
+    setPage(1);
   }, [movieId]);
 
   useEffect(() => {
