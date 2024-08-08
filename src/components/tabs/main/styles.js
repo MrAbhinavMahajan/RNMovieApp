@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {vpx} from '@libraries/responsive-pixels';
 import {COLORS} from '~/src/constants/Colors';
 
@@ -10,6 +10,17 @@ export const styles = StyleSheet.create({
     paddingBottom: 0, // ! Safe padding removal
     height: vpx(72), // ! Setting for safety in smaller devices
     backgroundColor: COLORS.transparent,
+    ...Platform.select({
+      ios: {
+        shadowColor: COLORS.fullBlack,
+        shadowOffset: {width: 1, height: 4},
+        shadowOpacity: 0.1,
+        shadowRadius: 10,
+      },
+      android: {
+        elevation: 8,
+      },
+    }),
   },
   tabBarItemStyle: {
     backgroundColor: COLORS.fullWhite,
