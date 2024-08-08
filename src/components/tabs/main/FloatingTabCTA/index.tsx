@@ -42,7 +42,7 @@ const FloatingTabCTA = (props: any) => (
         },
       ]}>
       <AppCTA onPress={props.onPress} style={styles.floatingCTA}>
-        <RNText style={styles.floatingCTAText}>Buy</RNText>
+        <RNText style={styles.floatingCTAText}>Book</RNText>
       </AppCTA>
     </View>
   </View>

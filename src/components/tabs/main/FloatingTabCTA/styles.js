@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
     borderColor: COLORS.fullWhite,
   },
   floatingCTA: {
-    backgroundColor: COLORS.antiFlashWhite,
+    backgroundColor: COLORS.fullWhite,
     flex: 1,
     borderRadius: 1000,
     justifyContent: 'center',
@@ -28,9 +28,9 @@ export const styles = StyleSheet.create({
     margin: vpx(2),
   },
   floatingCTAText: {
-    fontFamily: FONTS.SemiBold,
+    fontFamily: FONTS.BebasNeueRegular,
     fontSize: fpx(14),
-    lineHeight: fpx(24),
+    lineHeight: fpx(20),
     textAlign: 'center',
     color: COLORS.fullBlack,
     textTransform: 'uppercase',
