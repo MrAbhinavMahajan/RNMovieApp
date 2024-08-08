@@ -18,9 +18,11 @@ import {
   FavoriteRequestBody,
   MovieItem,
 } from '@constants/AppInterfaces';
+import {STD_ACTIVITY_COLOR} from '@constants/Styles';
+import {onPageClickEvent} from '~/src/analytics';
+import {APP_PAGES_MAP} from '@constants/Navigation';
 import AppCTA from '@components/common/AppCTA';
 import RNText from '@components/common/RNText';
-import {STD_ACTIVITY_COLOR} from '@constants/Styles';
 
 type FavoriteCTA = {
   movieId: number;
@@ -88,6 +90,10 @@ const FavoriteCTA = ({
   }, [movieId, page]);
 
   const toggleFavorite = () => {
+    onPageClickEvent({
+      pageID: APP_PAGES_MAP.MOVIE_DETAILS_SCREEN,
+      name: 'FAVORITE CTA',
+    });
     setIsFavorite(val => {
       const body: FavoriteRequestBody = {
         media_type: 'movie',
