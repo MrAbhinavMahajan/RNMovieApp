@@ -8,7 +8,8 @@ import AppCTA from '@components/common/AppCTA';
 import RNText from '@components/common/RNText';
 
 const FLOATING_BUTTON_SIZE = vpx(60);
-export const FloatingTabBG = ({color = COLORS.fullWhite, ...props}) => {
+export const FloatingTabBG = (props: any) => {
+  const {color} = props;
   return (
     <Svg
       width={'100%'}
