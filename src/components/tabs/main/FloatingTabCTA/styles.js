@@ -9,7 +9,8 @@ export const styles = StyleSheet.create({
   },
   tabBgSvg: {
     position: 'absolute',
-    top: 0,
+    bottom: 0,
+    zIndex: -1,
   },
   floatingCTAView: {
     top: -vpx(24),

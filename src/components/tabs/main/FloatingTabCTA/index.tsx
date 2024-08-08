@@ -3,9 +3,9 @@ import {View} from 'react-native';
 import Svg, {Path} from 'react-native-svg';
 import {COLORS} from '@constants/Colors';
 import {vpx} from '@libraries/responsive-pixels';
+import {styles} from './styles';
 import AppCTA from '@components/common/AppCTA';
 import RNText from '@components/common/RNText';
-import {styles} from './styles';
 
 const FLOATING_BUTTON_SIZE = vpx(60);
 export const FloatingTabBG = ({color = COLORS.fullWhite, ...props}) => {

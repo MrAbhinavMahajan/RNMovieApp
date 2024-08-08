@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
         shadowRadius: 10,
       },
       android: {
-        elevation: 8,
+        elevation: 0, // Shadow fix in Android
       },
     }),
   },
