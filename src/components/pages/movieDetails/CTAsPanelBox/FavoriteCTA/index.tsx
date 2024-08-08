@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import _ from 'lodash';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import Animated, {
@@ -39,6 +39,7 @@ const FavoriteCTA = ({
     queryKey: [APP_QUERY_MAP.FAVORITE_MOVIES, page],
     queryFn: ({signal}) => fetchMovieFavorites(signal, page),
   });
+  const modified = useRef(false);
   const favoritesMutation = useMutation({
     mutationFn: updateMovieFavorites,
     onSuccess: d => {
@@ -47,10 +48,7 @@ const FavoriteCTA = ({
       } else {
         Alert.alert(kFAVORITES.deleted.title, kFAVORITES.deleted.subtitle);
       }
-      queryClient.invalidateQueries({
-        queryKey: [APP_QUERY_MAP.FAVORITE_MOVIES],
-        refetchType: 'active',
-      }); // ! Invalidates the favoriteMovies query data and fetch on successful mutation
+      modified.current = true;
     },
     onError: () => {
       Alert.alert(kGENERAL.title, kGENERAL.subtitle);
@@ -64,6 +62,15 @@ const FavoriteCTA = ({
     // Cleanup for New MovieId
     setIsFavorite(false);
     setPage(1);
+
+    return () => {
+      if (modified.current) {
+        queryClient.invalidateQueries({
+          queryKey: [APP_QUERY_MAP.FAVORITE_MOVIES],
+          refetchType: 'active',
+        }); // ! Invalidates the favoriteMovies query data and fetch on successful mutation
+      }
+    };
   }, [movieId]);
 
   useEffect(() => {

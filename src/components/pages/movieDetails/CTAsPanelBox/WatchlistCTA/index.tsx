@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import _ from 'lodash';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import Animated, {
@@ -38,6 +38,7 @@ const WatchlistCTA = ({
     queryKey: [APP_QUERY_MAP.WATCHLIST_MOVIES, page],
     queryFn: ({signal}) => fetchMovieWatchlist(signal, page),
   });
+  const modified = useRef(false);
   const watchlistMutation = useMutation({
     mutationFn: updateMovieWatchlist,
     onSuccess: d => {
@@ -46,10 +47,7 @@ const WatchlistCTA = ({
       } else {
         Alert.alert(kWATCHLIST.deleted.title, kWATCHLIST.deleted.subtitle);
       }
-      queryClient.invalidateQueries({
-        queryKey: [APP_QUERY_MAP.WATCHLIST_MOVIES],
-        refetchType: 'active',
-      }); // ! Invalidates the watchlistMovies query data and fetch on successful mutation
+      modified.current = true;
     },
     onError: () => {
       Alert.alert(kGENERAL.title, kGENERAL.subtitle);
@@ -62,6 +60,15 @@ const WatchlistCTA = ({
     // Cleanup for New MovieId
     setIsWatchlist(false);
     setPage(1);
+
+    return () => {
+      if (modified.current) {
+        queryClient.invalidateQueries({
+          queryKey: [APP_QUERY_MAP.WATCHLIST_MOVIES],
+          refetchType: 'active',
+        }); // ! Invalidates the watchlistMovies query data and fetch on successful mutation
+      }
+    };
   }, [movieId]);
 
   useEffect(() => {
