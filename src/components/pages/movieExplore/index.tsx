@@ -1,16 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {ActivityIndicator, FlatList, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import _ from 'lodash';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import {useAnimatedRef} from 'react-native-reanimated';
 import {useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
+import {useFocusEffect} from '@react-navigation/native';
+import {APP_PAGES_MAP} from '@constants/Navigation';
+import {
+  onPageLeaveEvent,
+  onPageRefreshEvent,
+  onPageViewEvent,
+} from '~/src/analytics';
 import {APP_QUERY_MAP} from '@constants/Api';
 import {fetchDiscoverMovies} from '@apis/Main';
 import {DiscoverQueryParams, MovieItem} from '@constants/AppInterfaces';
 import {STD_ACTIVITY_COLOR} from '@constants/Styles';
-import {COLORS} from '~/src/constants/Colors';
+import {COLORS} from '@constants/Colors';
 import {styles} from './styles';
 import MovieCard from './MovieCard';
 import EmptyStateCreativeCard from '../../common/EmptyStateCard';
@@ -61,11 +68,27 @@ const MovieExploreScreen = () => {
       return;
     }
     // ! Refetch All the Query Data
+    onPageRefreshEvent({
+      pageID: APP_PAGES_MAP.EXPLORE_SCREEN,
+    });
     refetch();
   };
 
   const keyExtractor = (item: MovieItem, index: number) =>
     `${item?.id}${index}`;
+
+  useFocusEffect(
+    useCallback(() => {
+      onPageViewEvent({
+        pageID: APP_PAGES_MAP.EXPLORE_SCREEN,
+      });
+      return () => {
+        onPageLeaveEvent({
+          pageID: APP_PAGES_MAP.EXPLORE_SCREEN,
+        });
+      };
+    }, []),
+  );
 
   useEffect(() => {
     return () => {

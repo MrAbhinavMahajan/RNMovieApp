@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
 import {ActivityIndicator, FlatList, RefreshControl, View} from 'react-native';
 import Animated, {
@@ -17,7 +17,11 @@ import {
   fetchMoviesRated,
 } from '@apis/Main';
 import {styles} from './styles';
-import {APP_TABS_MAP, APP_WIDGETS_MAP} from '@constants/Navigation';
+import {
+  APP_PAGES_MAP,
+  APP_TABS_MAP,
+  APP_WIDGETS_MAP,
+} from '@constants/Navigation';
 import {STD_ACTIVITY_COLOR, STYLES} from '@constants/Styles';
 import {
   AppArrowUpIcon,
@@ -25,14 +29,20 @@ import {
   AppEditIcon,
   AppSearchIcon,
 } from '@components/common/RNIcon';
-import {MoviePosterItem} from '@constants/AppInterfaces';
+import {MoviePosterItem, PageEvent} from '@constants/AppInterfaces';
 import {APP_QUERY_MAP} from '@constants/Api';
 import AppHeader from '@components/common/AppHeader';
 import AppCTA from '@components/common/AppCTA';
 import ErrorStateWidget from '@components/widgets/ErrorState';
 import MovieCard from './MovieCard';
 import EmptyStateCreativeCard from '@components/common/EmptyStateCard';
-import {useIsFocused} from '@react-navigation/native';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
+import {
+  onPageClickEvent,
+  onPageLeaveEvent,
+  onPageRefreshEvent,
+  onPageViewEvent,
+} from '~/src/analytics';
 
 interface ProfileViewAllScreenProps {
   route: {
@@ -97,6 +107,13 @@ const ProfileViewAllScreen = (props: ProfileViewAllScreenProps) => {
     }
     return data?.pages.flatMap(page => page.results) || [];
   }, [data?.pages, isError]);
+  const analyticsEvent: PageEvent = {
+    pageID: APP_PAGES_MAP.PROFILE_VIEW_ALL_SCREEN,
+    extraData: {
+      ...queryParams,
+      editableModeEnabled,
+    },
+  };
 
   const scrollToTopCTAAnimationStyles = useAnimatedStyle(() => ({
     opacity: withTiming(scrollHandler.value > 600 ? 1 : 0),
@@ -112,6 +129,10 @@ const ProfileViewAllScreen = (props: ProfileViewAllScreenProps) => {
   }));
 
   const scrollToTop = () => {
+    onPageClickEvent({
+      pageID: APP_PAGES_MAP.PROFILE_VIEW_ALL_SCREEN,
+      name: 'SCROLL TO TOP CTA',
+    });
     listRef.current?.scrollToOffset({animated: true, offset: 0});
   };
 
@@ -120,18 +141,38 @@ const ProfileViewAllScreen = (props: ProfileViewAllScreenProps) => {
       return;
     }
     // ! Refetch All the Query Data
+    onPageRefreshEvent({
+      pageID: APP_PAGES_MAP.PROFILE_VIEW_ALL_SCREEN,
+    });
     refetch();
   };
 
   const onSearchCTA = () => {
+    onPageClickEvent({
+      pageID: APP_PAGES_MAP.PROFILE_VIEW_ALL_SCREEN,
+      name: 'SEARCH CTA',
+    });
     NavigationService.navigate(APP_TABS_MAP.SEARCH_TAB);
   };
 
   const onEditableModeTogglerCTA = () => {
+    onPageClickEvent({
+      pageID: APP_PAGES_MAP.PROFILE_VIEW_ALL_SCREEN,
+      name: 'EDIT CTA',
+    });
     setEditableModeEnabled(m => !m);
   };
 
   const keyExtractor = (item: MoviePosterItem) => `${item?.id}`;
+
+  useFocusEffect(
+    useCallback(() => {
+      onPageViewEvent(analyticsEvent);
+      return () => {
+        onPageLeaveEvent(analyticsEvent);
+      };
+    }, []),
+  );
 
   useEffect(() => {
     return () => {

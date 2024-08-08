@@ -1,9 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React from 'react';
+import React, {useCallback} from 'react';
 import {View} from 'react-native';
+import {useHeaderHeight} from '@react-navigation/elements';
+import {useFocusEffect} from '@react-navigation/native';
+import {onPageLeaveEvent, onPageViewEvent} from '~/src/analytics';
+import {APP_PAGES_MAP} from '@constants/Navigation';
+import {PageEvent} from '@constants/AppInterfaces';
 import {styles} from './styles';
 import PopularMoviesWidget from './PopularMovies';
-import {useHeaderHeight} from '@react-navigation/elements';
 import SearchedResultsWidget from './SearchedResults';
 
 interface MovieSearchScreenProps {
@@ -17,8 +21,24 @@ interface MovieSearchScreenProps {
 }
 
 const MovieSearchScreen = (props: MovieSearchScreenProps) => {
-  const {searchedText} = props?.route?.params?.queryParams || {};
+  const {queryParams} = props.route?.params || {};
+  const {searchedText} = queryParams || {};
   const headerHeight = useHeaderHeight();
+  const analyticsEvent: PageEvent = {
+    pageID: APP_PAGES_MAP.SEARCH_SCREEN,
+    extraData: {
+      ...queryParams,
+    },
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      onPageViewEvent(analyticsEvent);
+      return () => {
+        onPageLeaveEvent(analyticsEvent);
+      };
+    }, []),
+  );
 
   return (
     <View style={[styles.screenView, {paddingTop: headerHeight}]}>

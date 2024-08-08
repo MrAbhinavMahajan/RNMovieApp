@@ -1,21 +1,23 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import _ from 'lodash';
 import {useQuery} from '@tanstack/react-query';
 import * as NavigationService from '@service/Navigation';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
 import Animated, {FadeInRight} from 'react-native-reanimated';
+import {useIsFocused} from '@react-navigation/native';
+import {onWidgetClickEvent, onWidgetRefreshEvent} from '~/src/analytics';
 import {PAGE_REFRESH} from '@constants/Page';
 import {fetchTopRatedMovies} from '@apis/Main';
 import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '@constants/Navigation';
-import {styles} from './styles';
 import {FALLBACK_DATA} from '../../../data/Main';
 import {QUERY_STATUS} from '@constants/Main';
 import {APP_QUERY_MAP} from '@constants/Api';
 import {MoviePosterItem} from '@constants/AppInterfaces';
+import {styles} from './styles';
 import MoviePosterWidget from '../MoviePoster';
 import HeaderTitleWidget from '../HeaderTitle';
 import ErrorStateWidget from '../ErrorState';
-import {useIsFocused} from '@react-navigation/native';
 
 const TopRatedMoviesWidget = () => {
   const isFocussed = useIsFocused();
@@ -40,10 +42,17 @@ const TopRatedMoviesWidget = () => {
     if (isFetching) {
       return;
     }
+    onWidgetRefreshEvent({
+      widgetID: APP_WIDGETS_MAP.TOP_RATED_MOVIES,
+    });
     refetch();
   };
 
   const onViewAllAction = () => {
+    onWidgetClickEvent({
+      widgetID: APP_WIDGETS_MAP.TOP_RATED_MOVIES,
+      name: 'VIEW ALL MOVIES CTA',
+    });
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_VIEW_ALL_SCREEN, {
       queryParams: {
         screenTitle: widgetTitle,
@@ -108,6 +117,13 @@ const TopRatedMoviesWidget = () => {
 const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
   const {title, id} = item || {};
   const onCTA = () => {
+    onWidgetClickEvent({
+      widgetID: APP_WIDGETS_MAP.TOP_RATED_MOVIES,
+      name: 'MOVIE POSTER CTA',
+      extraData: {
+        ...item,
+      },
+    });
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
       queryParams: {screenTitle: title, movieId: id},
     });

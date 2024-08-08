@@ -5,9 +5,9 @@ import {useQuery} from '@tanstack/react-query';
 import * as NavigationService from '@service/Navigation';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
 import Animated, {FadeInRight} from 'react-native-reanimated';
+import {useIsFocused} from '@react-navigation/native';
 import {fetchMovieWatchlist} from '@apis/Main';
 import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '@constants/Navigation';
-import {styles} from './styles';
 import {PAGE_REFRESH} from '@constants/Page';
 import {FALLBACK_DATA} from '../../../data/Main';
 import {QUERY_STATUS} from '@constants/Main';
@@ -16,11 +16,12 @@ import {IconSize, MaterialIcon} from '@components/common/RNIcon';
 import {COLORS} from '@constants/Colors';
 import {APP_QUERY_MAP} from '@constants/Api';
 import {MoviePosterItem} from '@constants/AppInterfaces';
+import {onWidgetClickEvent, onWidgetRefreshEvent} from '~/src/analytics';
+import {styles} from './styles';
 import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget from '../MoviePoster';
 import ErrorStateWidget from '../ErrorState';
 import EmptyStateWidget from '../EmptyState';
-import {useIsFocused} from '@react-navigation/native';
 
 const WatchlistMoviesWidget = () => {
   const isFocussed = useIsFocused();
@@ -45,10 +46,17 @@ const WatchlistMoviesWidget = () => {
     if (isFetching) {
       return;
     }
+    onWidgetRefreshEvent({
+      widgetID: APP_WIDGETS_MAP.WATCHLIST_MOVIES,
+    });
     refetch();
   };
 
   const exploreMovies = () => {
+    onWidgetClickEvent({
+      widgetID: APP_WIDGETS_MAP.WATCHLIST_MOVIES,
+      name: 'EXPLORE MOVIES CTA',
+    });
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_VIEW_ALL_SCREEN, {
       queryParams: {
         screenTitle: 'Now Playing Movies',
@@ -58,6 +66,10 @@ const WatchlistMoviesWidget = () => {
   };
 
   const onViewAllAction = () => {
+    onWidgetClickEvent({
+      widgetID: APP_WIDGETS_MAP.WATCHLIST_MOVIES,
+      name: 'VIEW ALL MOVIES CTA',
+    });
     NavigationService.navigate(APP_PAGES_MAP.PROFILE_VIEW_ALL_SCREEN, {
       queryParams: {
         screenTitle: widgetTitle,
@@ -129,6 +141,13 @@ const WatchlistMoviesWidget = () => {
 const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
   const {title, id} = item || {};
   const onCTA = () => {
+    onWidgetClickEvent({
+      widgetID: APP_WIDGETS_MAP.WATCHLIST_MOVIES,
+      name: 'MOVIE POSTER CTA',
+      extraData: {
+        ...item,
+      },
+    });
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
       queryParams: {screenTitle: title, movieId: id},
     });

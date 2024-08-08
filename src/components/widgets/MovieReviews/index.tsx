@@ -19,6 +19,8 @@ import {QUERY_STATUS} from '@constants/Main';
 import {kREVIEWS} from '@constants/Messages';
 import {COLORS} from '@constants/Colors';
 import {PAGE_REFRESH} from '@constants/Page';
+import {onWidgetRefreshEvent} from '~/src/analytics';
+import {APP_WIDGETS_MAP} from '@constants/Navigation';
 import {styles} from './styles';
 import ErrorStateWidget from '../ErrorState';
 import EmptyStateWidget from '../EmptyState';
@@ -89,6 +91,9 @@ const MoviesReviewsWidget = ({movieId}: MoviesReviewsWidget) => {
     if (isFetching) {
       return;
     }
+    onWidgetRefreshEvent({
+      widgetID: APP_WIDGETS_MAP.MOVIE_REVIEWS,
+    });
     refetch();
   };
 

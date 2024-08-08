@@ -7,11 +7,11 @@ import {useQuery} from '@tanstack/react-query';
 import {APP_QUERY_MAP} from '@constants/Api';
 import {fetchMovieDetails} from '@apis/Main';
 import {PAGE_REFRESH} from '@constants/Page';
+import {QUERY_STATUS} from '@constants/Main';
 import {styles} from './styles';
 import RNText from '@components/common/RNText';
 import MovieGenres from '@components/common/MovieGenres';
 import MovieOverview from '@components/common/MovieOverview';
-import {QUERY_STATUS} from '@constants/Main';
 import ErrorStateWidget from '~/src/components/widgets/ErrorState';
 
 type DetailsBox = {
