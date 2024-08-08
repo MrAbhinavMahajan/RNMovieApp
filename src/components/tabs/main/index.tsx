@@ -25,6 +25,7 @@ const MainTab = () => {
         headerShown: false,
         tabBarShowLabel: false,
         lazy: false, // * To Lazy Load The Tabs (Preloading)
+        tabBarItemStyle: styles.tabBarItemStyle,
       }}>
       <Screen
         name={APP_TABS_MAP.HOME_TAB}
@@ -35,6 +36,11 @@ const MainTab = () => {
         name={APP_TABS_MAP.SEARCH_TAB}
         component={SearchStack}
         options={tabOptions(APP_TABS_MAP.SEARCH_TAB)}
+      />
+      <Screen
+        name={APP_TABS_MAP.BOOK_TAB}
+        component={EmptyComponent}
+        options={tabOptions(APP_TABS_MAP.BOOK_TAB)}
       />
       <Screen
         name={APP_TABS_MAP.EXPLORE_TAB}
@@ -50,4 +56,5 @@ const MainTab = () => {
   );
 };
 
+const EmptyComponent = () => null;
 export default MainTab;

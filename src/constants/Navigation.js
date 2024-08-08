@@ -4,6 +4,7 @@ export const APP_TABS_MAP = {
   SEARCH_TAB: 'SEARCH_TAB',
   EXPLORE_TAB: 'EXPLORE_TAB',
   PROFILE_TAB: 'PROFILE_TAB',
+  BOOK_TAB: 'BOOK_TAB',
 };
 
 export const APP_STACKS_MAP = {

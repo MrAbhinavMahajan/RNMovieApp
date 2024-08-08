@@ -1,6 +1,7 @@
 import React from 'react';
 import {APP_TABS_MAP} from '@constants/Navigation';
-import BottomTabIcon from '../components/common/BottomTabIcon';
+import BottomTabIcon from '@components/common/BottomTabIcon';
+import FloatingTabCTA from '@components/tabs/main/FloatingTabCTA';
 
 export interface TabInfo {
   focused: boolean;
@@ -45,6 +46,12 @@ export const TABS = {
       tabBarIcon: (data: TabInfo) => (
         <BottomTabIcon {...data} iconName={'person'} label={'Me'} />
       ),
+    },
+  },
+  [APP_TABS_MAP.BOOK_TAB]: {
+    name: APP_TABS_MAP.BOOK_TAB,
+    options: {
+      tabBarButton: (data: any) => <FloatingTabCTA {...data} />,
     },
   },
 };

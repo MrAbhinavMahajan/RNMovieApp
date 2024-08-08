@@ -1,14 +1,17 @@
 import {StyleSheet} from 'react-native';
 import {vpx} from '@libraries/responsive-pixels';
-import {STD_SCREEN_COLOR} from '~/src/constants/Styles';
+import {COLORS} from '~/src/constants/Colors';
 
 export const styles = StyleSheet.create({
   tabBar: {
-    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopWidth: 0,
     position: 'absolute', // ! Enables the Screen to acquire full height
     zIndex: 1,
     paddingBottom: 0, // ! Safe padding removal
     height: vpx(72), // ! Setting for safety in smaller devices
-    backgroundColor: STD_SCREEN_COLOR,
+    backgroundColor: COLORS.transparent,
+  },
+  tabBarItemStyle: {
+    backgroundColor: COLORS.fullWhite,
   },
 });
