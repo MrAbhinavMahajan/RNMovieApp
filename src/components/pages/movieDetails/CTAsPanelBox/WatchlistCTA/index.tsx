@@ -18,9 +18,11 @@ import {
   MovieItem,
   WatchlistRequestBody,
 } from '@constants/AppInterfaces';
+import {STD_ACTIVITY_COLOR} from '@constants/Styles';
+import {onPageClickEvent} from '~/src/analytics';
+import {APP_PAGES_MAP} from '~/src/constants/Navigation';
 import AppCTA from '@components/common/AppCTA';
 import RNText from '@components/common/RNText';
-import {STD_ACTIVITY_COLOR} from '@constants/Styles';
 type WatchlistCTA = {
   movieId: number;
   ctaTextStyles: any;
@@ -89,6 +91,10 @@ const WatchlistCTA = ({
   }, [movieId, page]);
 
   const toggleWatchlist = () => {
+    onPageClickEvent({
+      pageID: APP_PAGES_MAP.MOVIE_DETAILS_SCREEN,
+      name: 'WATCHLIST CTA',
+    });
     setIsWatchlist(val => {
       const body: WatchlistRequestBody = {
         media_type: 'movie',

@@ -14,18 +14,19 @@ import Animated, {
 } from 'react-native-reanimated';
 import {fetchPopularMovies} from '@apis/Main';
 import {AppArrowUpIcon} from '@components/common/RNIcon';
-import {styles} from './styles';
-import {STD_ACTIVITY_COLOR} from '@constants/Styles';
 import {APP_PAGES_MAP} from '@constants/Navigation';
 import {APP_QUERY_MAP} from '@constants/Api';
 import {MoviePosterItem} from '@constants/AppInterfaces';
+import {FALLBACK_DATA} from '~/src/data/Main';
+import {STD_ACTIVITY_COLOR} from '@constants/Styles';
+import {onPageClickEvent, onPageRefreshEvent} from '~/src/analytics';
+import {styles} from './styles';
 import AppCTA from '@components/common/AppCTA';
 import MoviePosterWidget from '@components/widgets/MoviePoster';
-import ErrorStateWidget from '@components/widgets/ErrorState';
+import ErrorStateCard from '@components/common/ErrorState';
 import EmptyStateCreativeCard from '@components/common/EmptyStateCard';
-import {FALLBACK_DATA} from '~/src/data/Main';
 
-const PopularMoviesWidget = () => {
+const PopularMovies = () => {
   const queryClient = useQueryClient();
   const query = useInfiniteQuery({
     queryKey: [APP_QUERY_MAP.POPULAR_MOVIES],
@@ -59,10 +60,16 @@ const PopularMoviesWidget = () => {
     return data?.pages.flatMap(page => page.results) || FALLBACK_DATA;
   }, [data, isError]);
 
-  const refreshWidget = () => {
+  const refreshData = () => {
     if (isFetching) {
       return;
     }
+    onPageRefreshEvent({
+      pageID: APP_PAGES_MAP.SEARCH_SCREEN,
+      extraData: {
+        pageID: 'POPULAR_MOVIES',
+      },
+    });
     refetch();
   };
 
@@ -80,6 +87,13 @@ const PopularMoviesWidget = () => {
   }));
 
   const scrollToTop = () => {
+    onPageClickEvent({
+      pageID: APP_PAGES_MAP.SEARCH_SCREEN,
+      name: 'SCROLL TO TOP CTA',
+      extraData: {
+        pageID: 'POPULAR_MOVIES',
+      },
+    });
     listRef.current?.scrollToOffset({animated: true, offset: 0});
   };
 
@@ -105,10 +119,14 @@ const PopularMoviesWidget = () => {
   const renderListHeader = () => {
     if (isError) {
       return (
-        <ErrorStateWidget
+        <ErrorStateCard
           error={error}
           containerStyles={styles.errorContainer}
-          retryCTA={refreshWidget}
+          retryCTA={refreshData}
+          id={APP_PAGES_MAP.SEARCH_SCREEN}
+          extraData={{
+            id: 'POPULAR_MOVIES',
+          }}
         />
       );
     }
@@ -130,7 +148,7 @@ const PopularMoviesWidget = () => {
       <EmptyStateCreativeCard
         title={'Oops!'}
         message={'No Data Found'}
-        retryCTA={refreshWidget}
+        retryCTA={refreshData}
       />
     );
   };
@@ -165,7 +183,7 @@ const PopularMoviesWidget = () => {
         extraData={movies}
         windowSize={1}
         refreshControl={
-          <RefreshControl refreshing={false} onRefresh={refreshWidget} />
+          <RefreshControl refreshing={false} onRefresh={refreshData} />
         }
       />
       <Animated.View
@@ -181,6 +199,14 @@ const PopularMoviesWidget = () => {
 const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
   const {title, id} = item || {};
   const onCTA = () => {
+    onPageClickEvent({
+      pageID: APP_PAGES_MAP.SEARCH_SCREEN,
+      name: 'MOVIE POSTER CTA',
+      extraData: {
+        ...item,
+        pageID: 'POPULAR_MOVIES',
+      },
+    });
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
       queryParams: {screenTitle: title, movieId: id},
     });
@@ -196,4 +222,4 @@ const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
     </Animated.View>
   );
 };
-export default PopularMoviesWidget;
+export default PopularMovies;

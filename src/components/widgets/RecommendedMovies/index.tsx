@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import _ from 'lodash';
 import * as NavigationService from '@service/Navigation';
 import {useQuery} from '@tanstack/react-query';
-import {useIsFocused} from '@react-navigation/native';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import useMovieStore from '@store/useMovieStore';
 import {fetchMovieDetails, fetchRecommendedMoviesV4} from '@apis/Main';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
@@ -13,12 +13,18 @@ import {PAGE_REFRESH} from '@constants/Page';
 import {FALLBACK_DATA} from '../../../data/Main';
 import {QUERY_STATUS} from '@constants/Main';
 import {APP_QUERY_MAP} from '@constants/Api';
-import {MoviePosterItem} from '@constants/AppInterfaces';
+import {MoviePosterItem, WidgetEvent} from '@constants/AppInterfaces';
 import {getImageURL} from '@utilities/App';
+import {
+  onWidgetClickEvent,
+  onWidgetLeaveEvent,
+  onWidgetRefreshEvent,
+  onWidgetViewEvent,
+} from '~/src/analytics';
 import {styles} from './styles';
 import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget from '../MoviePoster';
-import ErrorStateWidget from '../ErrorState';
+import ErrorStateCard from '@components/common/ErrorState';
 
 const RecommendedMoviesWidget = () => {
   const isFocussed = useIsFocused();
@@ -39,7 +45,9 @@ const RecommendedMoviesWidget = () => {
   const {data, refetch, isLoading, isFetching, isError, error, status} =
     recommendedMoviesQuery;
   const {data: lastWatchedMovieDetails} = lastWatchedMovieDetailsQuery;
-
+  const analyticsEvent: WidgetEvent = {
+    widgetID: APP_WIDGETS_MAP.RECOMMENDED_MOVIES,
+  };
   const listRef = useRef(null);
   const movies = useMemo(() => {
     if (isError) {
@@ -53,10 +61,17 @@ const RecommendedMoviesWidget = () => {
     if (isFetching) {
       return;
     }
+    onWidgetRefreshEvent({
+      widgetID: APP_WIDGETS_MAP.RECOMMENDED_MOVIES,
+    });
     refetch();
   };
 
   const onViewAllAction = () => {
+    onWidgetClickEvent({
+      widgetID: APP_WIDGETS_MAP.RECOMMENDED_MOVIES,
+      name: 'VIEW ALL MOVIES CTA',
+    });
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_VIEW_ALL_SCREEN, {
       queryParams: {
         screenTitle: widgetTitle,
@@ -71,6 +86,15 @@ const RecommendedMoviesWidget = () => {
   };
 
   const keyExtractor = (item: MoviePosterItem) => `${item?.id}`;
+
+  useFocusEffect(
+    useCallback(() => {
+      onWidgetViewEvent(analyticsEvent);
+      return () => {
+        onWidgetLeaveEvent(analyticsEvent);
+      };
+    }, []),
+  );
 
   useEffect(() => {
     NativeAppEventEmitter.addListener(PAGE_REFRESH.HOME_SCREEN, refreshWidget);
@@ -98,10 +122,14 @@ const RecommendedMoviesWidget = () => {
         loaderEnabled={isFetching}
       />
       {isError && (
-        <ErrorStateWidget
+        <ErrorStateCard
           error={error}
           containerStyles={styles.errorContainer}
           retryCTA={refreshWidget}
+          id={APP_WIDGETS_MAP.RECOMMENDED_MOVIES}
+          extraData={{
+            cardType: 'WIDGET',
+          }}
         />
       )}
       <FlatList
@@ -126,6 +154,13 @@ const RecommendedMoviesWidget = () => {
 const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
   const {title, id} = item || {};
   const onCTA = () => {
+    onWidgetClickEvent({
+      widgetID: APP_WIDGETS_MAP.RECOMMENDED_MOVIES,
+      name: 'MOVIE POSTER CTA',
+      extraData: {
+        ...item,
+      },
+    });
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
       queryParams: {screenTitle: title, movieId: id},
     });

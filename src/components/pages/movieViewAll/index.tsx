@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
 import {ActivityIndicator, FlatList, RefreshControl, View} from 'react-native';
 import Animated, {
@@ -13,7 +13,7 @@ import Animated, {
   withSequence,
 } from 'react-native-reanimated';
 import * as NavigationService from '@service/Navigation';
-import {useIsFocused} from '@react-navigation/native';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import useMovieStore from '@store/useMovieStore';
 import {
   fetchNowPlayingMovies,
@@ -27,15 +27,21 @@ import {
   APP_TABS_MAP,
   APP_WIDGETS_MAP,
 } from '@constants/Navigation';
+import {
+  onPageClickEvent,
+  onPageLeaveEvent,
+  onPageRefreshEvent,
+  onPageViewEvent,
+} from '~/src/analytics';
 import {STD_ACTIVITY_COLOR} from '@constants/Styles';
 import {AppArrowUpIcon, AppSearchIcon} from '@components/common/RNIcon';
 import {APP_QUERY_MAP} from '@constants/Api';
 import {styles} from './styles';
-import {MoviePosterItem} from '@constants/AppInterfaces';
+import {MoviePosterItem, PageEvent} from '@constants/AppInterfaces';
 import AppHeader from '@components/common/AppHeader';
 import AppCTA from '@components/common/AppCTA';
 import MoviePosterWidget from '@components/widgets/MoviePoster';
-import ErrorStateWidget from '@components/widgets/ErrorState';
+import ErrorStateCard from '@components/common/ErrorState';
 import EmptyStateCreativeCard from '@components/common/EmptyStateCard';
 
 interface MovieViewAllScreenProps {
@@ -55,6 +61,12 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
   const isFocussed = useIsFocused();
   const {queryParams} = props?.route?.params || {};
   const {screenTitle, widgetId} = queryParams;
+  const analyticsEvent: PageEvent = {
+    pageID: APP_PAGES_MAP.MOVIE_VIEW_ALL_SCREEN,
+    extraData: {
+      ...queryParams,
+    },
+  };
   const makeAPICall = async (signal: AbortSignal, pageParam = 1) => {
     switch (widgetId) {
       case APP_WIDGETS_MAP.NOW_PLAYING:
@@ -129,14 +141,30 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
       return;
     }
     // ! Refetch All the Query Data
+    onPageRefreshEvent({
+      pageID: APP_PAGES_MAP.MOVIE_VIEW_ALL_SCREEN,
+    });
     refetch();
   };
 
   const onSearchCTA = () => {
+    onPageClickEvent({
+      pageID: APP_PAGES_MAP.MOVIE_VIEW_ALL_SCREEN,
+      name: 'SEARCH CTA',
+    });
     NavigationService.navigate(APP_TABS_MAP.SEARCH_TAB);
   };
 
   const keyExtractor = (item: MoviePosterItem) => `${item?.id}`;
+
+  useFocusEffect(
+    useCallback(() => {
+      onPageViewEvent(analyticsEvent);
+      return () => {
+        onPageLeaveEvent(analyticsEvent);
+      };
+    }, []),
+  );
 
   useEffect(() => {
     return () => {
@@ -165,10 +193,11 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
   const renderListHeader = () => {
     if (isError) {
       return (
-        <ErrorStateWidget
+        <ErrorStateCard
           error={error}
           containerStyles={styles.errorContainer}
           retryCTA={refreshPage}
+          id={APP_PAGES_MAP.MOVIE_VIEW_ALL_SCREEN}
         />
       );
     }
@@ -250,6 +279,13 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
 const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
   const {title, id} = item || {};
   const onCTA = () => {
+    onPageClickEvent({
+      pageID: APP_PAGES_MAP.MOVIE_VIEW_ALL_SCREEN,
+      name: 'MOVIE POSTER CTA',
+      extraData: {
+        ...item,
+      },
+    });
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
       queryParams: {screenTitle: title, movieId: id},
     });

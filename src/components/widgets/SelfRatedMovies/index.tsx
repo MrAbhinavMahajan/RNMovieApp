@@ -1,7 +1,9 @@
-import React, {useEffect, useMemo, useRef} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useCallback, useEffect, useMemo, useRef} from 'react';
 import _ from 'lodash';
-import {useQuery} from '@tanstack/react-query';
 import * as NavigationService from '@service/Navigation';
+import {useQuery} from '@tanstack/react-query';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
 import Animated, {FadeInLeft} from 'react-native-reanimated';
 import {fetchMoviesRated} from '@apis/Main';
@@ -14,12 +16,17 @@ import {kRATINGS} from '@constants/Messages';
 import {IconSize, MaterialIcon} from '@components/common/RNIcon';
 import {COLORS} from '@constants/Colors';
 import {APP_QUERY_MAP} from '@constants/Api';
-import {MoviePosterItem} from '@constants/AppInterfaces';
+import {MoviePosterItem, WidgetEvent} from '@constants/AppInterfaces';
+import {
+  onWidgetClickEvent,
+  onWidgetLeaveEvent,
+  onWidgetRefreshEvent,
+  onWidgetViewEvent,
+} from '~/src/analytics';
 import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget from '../MoviePoster';
-import ErrorStateWidget from '../ErrorState';
 import EmptyStateWidget from '../EmptyState';
-import {useIsFocused} from '@react-navigation/native';
+import ErrorStateCard from '@components/common/ErrorState';
 
 const SelfRatedMoviesWidget = () => {
   const isFocussed = useIsFocused();
@@ -31,6 +38,9 @@ const SelfRatedMoviesWidget = () => {
     enabled: isFocussed,
   });
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
+  const analyticsEvent: WidgetEvent = {
+    widgetID: APP_WIDGETS_MAP.SELF_RATED_MOVIES,
+  };
   const listRef = useRef(null);
   const movies = useMemo(() => {
     if (isError) {
@@ -45,10 +55,17 @@ const SelfRatedMoviesWidget = () => {
     if (isFetching) {
       return;
     }
+    onWidgetRefreshEvent({
+      widgetID: APP_WIDGETS_MAP.SELF_RATED_MOVIES,
+    });
     refetch();
   };
 
   const exploreMovies = () => {
+    onWidgetClickEvent({
+      widgetID: APP_WIDGETS_MAP.SELF_RATED_MOVIES,
+      name: 'EXPLORE MOVIES CTA',
+    });
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_VIEW_ALL_SCREEN, {
       queryParams: {
         screenTitle: 'Now Playing Movies',
@@ -58,6 +75,10 @@ const SelfRatedMoviesWidget = () => {
   };
 
   const onViewAllAction = () => {
+    onWidgetClickEvent({
+      widgetID: APP_WIDGETS_MAP.SELF_RATED_MOVIES,
+      name: 'VIEW ALL MOVIES CTA',
+    });
     NavigationService.navigate(APP_PAGES_MAP.PROFILE_VIEW_ALL_SCREEN, {
       queryParams: {
         screenTitle: 'Rated Movies',
@@ -67,6 +88,15 @@ const SelfRatedMoviesWidget = () => {
   };
 
   const keyExtractor = (item: MoviePosterItem) => `${item?.id}`;
+
+  useFocusEffect(
+    useCallback(() => {
+      onWidgetViewEvent(analyticsEvent);
+      return () => {
+        onWidgetLeaveEvent(analyticsEvent);
+      };
+    }, []),
+  );
 
   useEffect(() => {
     NativeAppEventEmitter.addListener(
@@ -87,10 +117,14 @@ const SelfRatedMoviesWidget = () => {
         loaderEnabled={isLoading}
       />
       {isError && (
-        <ErrorStateWidget
+        <ErrorStateCard
           error={error}
           containerStyles={styles.errorContainer}
           retryCTA={refreshWidget}
+          id={APP_WIDGETS_MAP.SELF_RATED_MOVIES}
+          extraData={{
+            cardType: 'WIDGET',
+          }}
         />
       )}
       {isEmpty && (
@@ -129,6 +163,13 @@ const SelfRatedMoviesWidget = () => {
 const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
   const {title, id} = item || {};
   const onCTA = () => {
+    onWidgetClickEvent({
+      widgetID: APP_WIDGETS_MAP.SELF_RATED_MOVIES,
+      name: 'MOVIE POSTER CTA',
+      extraData: {
+        ...item,
+      },
+    });
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
       queryParams: {screenTitle: title, movieId: id},
     });

@@ -18,6 +18,7 @@ import {
   FavoriteRequestBody,
   WatchlistRequestBody,
 } from '@constants/AppInterfaces';
+import {onPageClickEvent} from '~/src/analytics';
 import {kFAVORITES, kGENERAL, kRATINGS, kWATCHLIST} from '@constants/Messages';
 import {APP_QUERY_MAP} from '@constants/Api';
 import {MoviePosterItem} from '@constants/AppInterfaces';
@@ -139,6 +140,15 @@ const MovieCard = ({
   };
 
   const onCTA = () => {
+    onPageClickEvent({
+      pageID: APP_PAGES_MAP.PROFILE_VIEW_ALL_SCREEN,
+      name: 'SCROLL TO TOP CTA',
+      extraData: {
+        editableModeEnabled,
+        id: widgetId,
+      },
+    });
+
     if (editableModeEnabled) {
       switch (widgetId) {
         case APP_WIDGETS_MAP.FAVORITE_MOVIES:

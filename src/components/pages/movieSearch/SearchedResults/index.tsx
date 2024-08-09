@@ -26,16 +26,17 @@ import {AppArrowUpIcon} from '@components/common/RNIcon';
 import {STD_ACTIVITY_COLOR} from '@constants/Styles';
 import {MovieItem} from '@constants/AppInterfaces';
 import {APP_QUERY_MAP} from '@constants/Api';
+import {onPageClickEvent, onPageRefreshEvent} from '~/src/analytics';
+import {vpx} from '~/src/libraries/responsive-pixels';
 import {styles} from './styles';
 import AppCTA from '@components/common/AppCTA';
 import RNText from '@components/common/RNText';
 import MoviePosterWidget from '@components/widgets/MoviePoster';
-import ErrorStateWidget from '@components/widgets/ErrorState';
+import ErrorStateCard from '@components/common/ErrorState';
 import EmptyStateCreativeCard from '@components/common/EmptyStateCard';
-import {vpx} from '~/src/libraries/responsive-pixels';
 const AnimatedCTA = Animated.createAnimatedComponent(TouchableOpacity);
 
-interface SearchedResultsWidgetProps {
+interface SearchedResultsProps {
   searchedText: string;
 }
 
@@ -46,7 +47,7 @@ interface MovieCardProps {
 
 const ITEM_SIZE = vpx(140);
 
-const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
+const SearchedResults = (props: SearchedResultsProps) => {
   const {searchedText} = props;
   const isFocussed = useIsFocused();
   const query = useInfiniteQuery({
@@ -88,10 +89,16 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
     }
   }, [searchedText]);
 
-  const refreshWidget = () => {
+  const refreshData = () => {
     if (isFetching) {
       return;
     }
+    onPageRefreshEvent({
+      pageID: APP_PAGES_MAP.SEARCH_SCREEN,
+      extraData: {
+        pageID: 'SEARCHED_RESULTS',
+      },
+    });
     refetch();
   };
 
@@ -109,6 +116,14 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
   }));
 
   const scrollToTop = () => {
+    onPageClickEvent({
+      pageID: APP_PAGES_MAP.SEARCH_SCREEN,
+      name: 'SCROLL TO TOP CTA',
+      extraData: {
+        pageID: 'SEARCHED_RESULTS',
+      },
+    });
+
     scrollRef.current?.scrollToOffset({animated: true, offset: 0});
   };
 
@@ -126,10 +141,14 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
   const renderListHeader = () => {
     if (isError) {
       return (
-        <ErrorStateWidget
+        <ErrorStateCard
           error={error}
           containerStyles={styles.errorContainer}
-          retryCTA={refreshWidget}
+          retryCTA={refreshData}
+          id={APP_PAGES_MAP.SEARCH_SCREEN}
+          extraData={{
+            id: 'SEARCHED_RESULTS',
+          }}
         />
       );
     }
@@ -151,7 +170,7 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
       <EmptyStateCreativeCard
         title={'Oops!'}
         message={'No Data Found'}
-        retryCTA={refreshWidget}
+        retryCTA={refreshData}
       />
     );
   };
@@ -188,7 +207,7 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
         extraData={movies}
         windowSize={1}
         refreshControl={
-          <RefreshControl refreshing={false} onRefresh={refreshWidget} />
+          <RefreshControl refreshing={false} onRefresh={refreshData} />
         }
       />
       <Animated.View
@@ -207,6 +226,14 @@ const MovieCard = ({item, index}: MovieCardProps) => {
   const {title, vote_average, overview, id} = item || {};
 
   const onCTA = () => {
+    onPageClickEvent({
+      pageID: APP_PAGES_MAP.SEARCH_SCREEN,
+      name: 'MOVIE POSTER CTA',
+      extraData: {
+        ...item,
+        pageID: 'SEARCHED_RESULTS',
+      },
+    });
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
       queryParams: {screenTitle: title, movieId: id},
     });
@@ -242,4 +269,4 @@ const MovieCard = ({item, index}: MovieCardProps) => {
   );
 };
 
-export default SearchedResultsWidget;
+export default SearchedResults;

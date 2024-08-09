@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import _ from 'lodash';
 import {
   Alert,
@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {useMutation, useQuery} from '@tanstack/react-query';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useIsFocused} from '@react-navigation/native';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import useSessionStore from '@store/useSessionStore';
 import Animated, {
   useAnimatedRef,
@@ -23,11 +23,18 @@ import Animated, {
 import {AppArrowUpIcon, AppLogoutIcon} from '@components/common/RNIcon';
 import {expireAccessTokenV4, fetchAccountDetails} from '@apis/Main';
 import {kGENERAL, kSIGN_OUT} from '@constants/Messages';
-import {SignOutRequestBody} from '@constants/AppInterfaces';
+import {PageEvent, SignOutRequestBody} from '@constants/AppInterfaces';
 import {APP_QUERY_MAP} from '@constants/Api';
 import {PAGE_REFRESH} from '@constants/Page';
 import {STD_VERTICAL_SPACING} from '@constants/Styles';
 import {COLORS} from '@constants/Colors';
+import {
+  onPageClickEvent,
+  onPageLeaveEvent,
+  onPageRefreshEvent,
+  onPageViewEvent,
+} from '~/src/analytics';
+import {APP_PAGES_MAP} from '~/src/constants/Navigation';
 import {styles} from './styles';
 import {getImageURL} from '@utilities/App';
 import Storage from '@utilities/Storage';
@@ -46,9 +53,14 @@ const ProfileScreen = () => {
   const accountDetails = useSessionStore(state => state.accountDetails);
   const setAccountDetails = useSessionStore(state => state.setAccountDetails);
   const logout = useSessionStore(state => state.logout);
-
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollHandler = useScrollViewOffset(scrollRef); // * Gives Current offset of ScrollView
+  const analyticsEvent: PageEvent = {
+    pageID: APP_PAGES_MAP.PROFILE_SCREEN,
+    extraData: {
+      ...accountDetails,
+    },
+  };
   const {data, isSuccess} = useQuery({
     queryKey: [APP_QUERY_MAP.PROFILE],
     queryFn: ({signal}) => fetchAccountDetails(signal),
@@ -76,6 +88,15 @@ const ProfileScreen = () => {
     },
   });
 
+  useFocusEffect(
+    useCallback(() => {
+      onPageViewEvent(analyticsEvent);
+      return () => {
+        onPageLeaveEvent(analyticsEvent);
+      };
+    }, []),
+  );
+
   useEffect(() => {
     if (!_.isEmpty(data)) {
       setAccountDetails(data);
@@ -89,6 +110,9 @@ const ProfileScreen = () => {
   }, []);
 
   const refreshPage = () => {
+    onPageRefreshEvent({
+      pageID: APP_PAGES_MAP.PROFILE_SCREEN,
+    });
     NativeAppEventEmitter.emit(PAGE_REFRESH.PROFILE_SCREEN);
   };
 
@@ -121,6 +145,10 @@ const ProfileScreen = () => {
   };
 
   const scrollToTop = () => {
+    onPageClickEvent({
+      pageID: APP_PAGES_MAP.PROFILE_SCREEN,
+      name: 'SCROLL TO TOP CTA',
+    });
     scrollRef.current?.scrollTo({x: 0, y: 0, animated: true});
   };
 

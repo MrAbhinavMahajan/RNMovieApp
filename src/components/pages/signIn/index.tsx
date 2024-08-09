@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useState} from 'react';
-import {Alert, Linking, RefreshControl, ScrollView, View} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Alert, Linking, ScrollView, View} from 'react-native';
 import {useQuery} from '@tanstack/react-query';
 import useSessionStore from '@store/useSessionStore';
 import Animated, {
@@ -12,12 +12,20 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import LinearGradient from 'react-native-linear-gradient';
+import {useFocusEffect} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {STD_VERTICAL_SPACING} from '@constants/Styles';
 import {AppArrowUpIcon} from '@components/common/RNIcon';
 import {AUTH_STEPS} from '../../../data/Main';
 import {createAccessTokenV4, createRequestTokenV4} from '@apis/Main';
 import {COLORS} from '@constants/Colors';
+import {
+  onPageClickEvent,
+  onPageLeaveEvent,
+  onPageViewEvent,
+} from '~/src/analytics';
+import {APP_PAGES_MAP} from '~/src/constants/Navigation';
+import {PageEvent} from '@constants/AppInterfaces';
 import {styles} from './styles';
 import {APP_QUERY_MAP} from '@constants/Api';
 import RNText from '@components/common/RNText';
@@ -47,6 +55,18 @@ const SignInScreen = () => {
     queryFn: ({signal}) => createAccessTokenV4(signal, requestToken),
     enabled: !!accessTokenQueryFilter,
   });
+  const analyticsEvent: PageEvent = {
+    pageID: APP_PAGES_MAP.SIGN_IN_SCREEN,
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      onPageViewEvent(analyticsEvent);
+      return () => {
+        onPageLeaveEvent(analyticsEvent);
+      };
+    }, []),
+  );
 
   useEffect(() => {
     const {data, isError, error} = requestTokenQuery;
@@ -90,9 +110,11 @@ const SignInScreen = () => {
     setAccessTokenQueryFilter(Date.now());
   };
 
-  const refreshPage = () => {};
-
   const scrollToTop = () => {
+    onPageClickEvent({
+      pageID: APP_PAGES_MAP.SIGN_IN_SCREEN,
+      name: 'SCROLL TO TOP CTA',
+    });
     scrollRef.current?.scrollTo({x: 0, y: 0, animated: true});
   };
 
@@ -121,8 +143,15 @@ const SignInScreen = () => {
     action: () => void,
     disabled: boolean = false,
   ) => {
+    const onCTA = () => {
+      onPageClickEvent({
+        pageID: APP_PAGES_MAP.SIGN_IN_SCREEN,
+        name: title,
+      });
+      action();
+    };
     return (
-      <AppCTA onPress={action} style={styles.ctaView} disabled={disabled}>
+      <AppCTA onPress={onCTA} style={styles.ctaView} disabled={disabled}>
         <RNText style={styles.ctaTitleText}>{title}</RNText>
       </AppCTA>
     );
@@ -180,10 +209,7 @@ const SignInScreen = () => {
       <ScrollView
         ref={scrollRef}
         contentContainerStyle={styles.screenScrollableView}
-        showsVerticalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl refreshing={false} onRefresh={refreshPage} />
-        }>
+        showsVerticalScrollIndicator={false}>
         {renderSignInWidget()}
         <QuotationWidget
           title={`Embrace ${'\n'}Movie Magic!`}

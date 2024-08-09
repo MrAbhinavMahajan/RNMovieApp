@@ -150,3 +150,35 @@ export enum ActivityStatus {
   ADDED = 'ADDED',
   DELETED = 'DELETED',
 }
+
+export type PageEvent = {
+  pageID: string;
+  extraData?: object;
+};
+export type WidgetEvent = {
+  widgetID: string;
+  extraData?: object;
+};
+export type PageClickEvent = {
+  pageID: string;
+  name: string;
+  extraData?: object;
+};
+export type WidgetClickEvent = {
+  widgetID: string;
+  name: string;
+  extraData?: object;
+};
+export type PageRefreshEvent = {
+  pageID: string;
+  extraData?: object;
+};
+export type WidgetRefreshEvent = {
+  widgetID: string;
+  extraData?: object;
+};
+export type ErrorEvent = {
+  id: string;
+  errorMessage: string;
+  extraData?: object;
+};
