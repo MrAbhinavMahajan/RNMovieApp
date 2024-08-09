@@ -3,6 +3,7 @@ import {createJSONStorage, devtools, persist} from 'zustand/middleware';
 import {getZustandStateStorage} from '../utilities/Storage';
 import {Genres} from '../constants/AppInterfaces';
 import {logDebug} from '../analytics';
+import {produce} from 'immer';
 
 interface MovieStateProps {
   genres: Genres[];
@@ -25,22 +26,26 @@ const useMovieStore = create<MovieStoreProps>()(
 
         // Setters
         setLastWatchedMovieId: (movieId: number) => {
-          set(state => ({
-            ...state,
-            lastWatchedMovieId: movieId,
-          }));
+          set(
+            produce(draft => {
+              draft.lastWatchedMovieId = movieId;
+            }),
+          );
         },
         setGenres: (movieGenres: Genres[]) => {
-          set(state => ({
-            ...state,
-            genres: movieGenres,
-          }));
+          set(
+            produce(draft => {
+              draft.genres = movieGenres;
+            }),
+          );
         },
         reset: () => {
-          set({
-            genres: [],
-            lastWatchedMovieId: null,
-          });
+          set(
+            produce(draft => {
+              draft.genres = [];
+              draft.lastWatchedMovieId = null;
+            }),
+          );
           logDebug('Movie Store Reset');
         },
       }),
