@@ -7,10 +7,10 @@ import {
   WidgetEvent,
   WidgetRefreshEvent,
 } from '@constants/AppInterfaces';
-import DebugLoggerFactory from './debug/Factory';
-import ErrorLoggerFactory from './error/Factory';
-import EventLoggerFactory from './event/Factory';
-import InfoLoggerFactory from './info/Factory';
+import DebugLoggerFactory from './loggers/debug/Factory';
+import ErrorLoggerFactory from './loggers/error/Factory';
+import InfoLoggerFactory from './loggers/info/Factory';
+import AppEventsTracker from './trackers/event/Tracker';
 
 export const onPageViewEvent = (data: PageEvent) => {
   const {extraData = {}, ...others} = data;
@@ -121,7 +121,6 @@ export const logError = (message: string) => {
 };
 
 export const logEvent = (data: any = {}) => {
-  const loggerFactory = new EventLoggerFactory();
-  const logger = loggerFactory.createLogger();
-  logger.log(JSON.stringify(data));
+  const logger = new AppEventsTracker();
+  logger.log(data);
 };
