@@ -177,3 +177,8 @@ export type WidgetRefreshEvent = {
   widgetID: string;
   extraData?: object;
 };
+export type ErrorEvent = {
+  id: string;
+  errorMessage: string;
+  extraData?: object;
+};

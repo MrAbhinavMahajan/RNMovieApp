@@ -33,7 +33,7 @@ import {MoviePosterItem, PageEvent} from '@constants/AppInterfaces';
 import {APP_QUERY_MAP} from '@constants/Api';
 import AppHeader from '@components/common/AppHeader';
 import AppCTA from '@components/common/AppCTA';
-import ErrorStateWidget from '@components/widgets/ErrorState';
+import ErrorStateCard from '@components/common/ErrorState';
 import MovieCard from './MovieCard';
 import EmptyStateCreativeCard from '@components/common/EmptyStateCard';
 import {useFocusEffect, useIsFocused} from '@react-navigation/native';
@@ -197,10 +197,14 @@ const ProfileViewAllScreen = (props: ProfileViewAllScreenProps) => {
   const renderListHeader = () => {
     if (isError) {
       return (
-        <ErrorStateWidget
+        <ErrorStateCard
           error={error}
           containerStyles={styles.errorContainer}
           retryCTA={refreshPage}
+          id={APP_PAGES_MAP.PROFILE_VIEW_ALL_SCREEN}
+          extraData={{
+            id: widgetId,
+          }}
         />
       );
     }

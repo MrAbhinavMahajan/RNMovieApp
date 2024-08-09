@@ -1,4 +1,5 @@
 import {
+  ErrorEvent,
   PageClickEvent,
   PageEvent,
   PageRefreshEvent,
@@ -15,7 +16,7 @@ export const onPageViewEvent = (data: PageEvent) => {
   const {extraData = {}, ...others} = data;
   logEvent({
     ...others,
-    extraData,
+    ...extraData,
     eventType: 'VIEWED',
   });
 };
@@ -24,7 +25,7 @@ export const onPageLeaveEvent = (data: PageEvent) => {
   const {extraData = {}, ...others} = data;
   logEvent({
     ...others,
-    extraData,
+    ...extraData,
     eventType: 'LEAVE',
   });
 };
@@ -33,7 +34,7 @@ export const onWidgetViewEvent = (data: WidgetEvent) => {
   const {extraData = {}, ...others} = data;
   logEvent({
     ...others,
-    extraData,
+    ...extraData,
     eventType: 'VIEWED',
   });
 };
@@ -42,7 +43,7 @@ export const onWidgetLeaveEvent = (data: WidgetEvent) => {
   const {extraData = {}, ...others} = data;
   logEvent({
     ...others,
-    extraData,
+    ...extraData,
     eventType: 'LEAVE',
   });
 };
@@ -51,7 +52,7 @@ export const onPageClickEvent = (data: PageClickEvent) => {
   const {extraData = {}, ...others} = data;
   logEvent({
     ...others,
-    extraData,
+    ...extraData,
     eventType: 'CLICK',
   });
 };
@@ -60,7 +61,7 @@ export const onWidgetClickEvent = (data: WidgetClickEvent) => {
   const {extraData = {}, ...others} = data;
   logEvent({
     ...others,
-    extraData,
+    ...extraData,
     eventType: 'CLICK',
   });
 };
@@ -69,7 +70,7 @@ export const onPageRefreshEvent = (data: PageRefreshEvent) => {
   const {extraData = {}, ...others} = data;
   logEvent({
     ...others,
-    extraData,
+    ...extraData,
     eventType: 'REFRESH',
   });
 };
@@ -78,8 +79,26 @@ export const onWidgetRefreshEvent = (data: WidgetRefreshEvent) => {
   const {extraData = {}, ...others} = data;
   logEvent({
     ...others,
-    extraData,
+    ...extraData,
     eventType: 'REFRESH',
+  });
+};
+
+export const onPageActivityEvent = (data: PageEvent) => {
+  const {extraData = {}, ...others} = data;
+  logEvent({
+    ...others,
+    ...extraData,
+    eventType: 'ACTIVITY',
+  });
+};
+
+export const onErrorEvent = (data: ErrorEvent) => {
+  const {extraData = {}, ...others} = data;
+  logEvent({
+    ...others,
+    ...extraData,
+    eventType: 'ERROR',
   });
 };
 
@@ -101,7 +120,7 @@ export const logError = (message: string) => {
   logger.log(message);
 };
 
-export const logEvent = (data: object = {}) => {
+export const logEvent = (data: any = {}) => {
   const loggerFactory = new EventLoggerFactory();
   const logger = loggerFactory.createLogger();
   logger.log(JSON.stringify(data));

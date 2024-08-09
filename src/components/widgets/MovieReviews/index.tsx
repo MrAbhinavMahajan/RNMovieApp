@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import _ from 'lodash';
 import {useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
-import {useIsFocused} from '@react-navigation/native';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import {
   ActivityIndicator,
   FlatList,
@@ -19,13 +19,18 @@ import {QUERY_STATUS} from '@constants/Main';
 import {kREVIEWS} from '@constants/Messages';
 import {COLORS} from '@constants/Colors';
 import {PAGE_REFRESH} from '@constants/Page';
-import {onWidgetRefreshEvent} from '~/src/analytics';
+import {
+  onWidgetLeaveEvent,
+  onWidgetRefreshEvent,
+  onWidgetViewEvent,
+} from '~/src/analytics';
 import {APP_WIDGETS_MAP} from '@constants/Navigation';
 import {styles} from './styles';
-import ErrorStateWidget from '../ErrorState';
+import ErrorStateCard from '@components/common/ErrorState';
 import EmptyStateWidget from '../EmptyState';
 import RNText from '@components/common/RNText';
 import HeaderTitleWidget from '../HeaderTitle';
+import {WidgetEvent} from '~/src/constants/AppInterfaces';
 
 export interface AuthorDetails {
   name: string;
@@ -76,6 +81,9 @@ const MoviesReviewsWidget = ({movieId}: MoviesReviewsWidget) => {
     error,
     status,
   } = query;
+  const analyticsEvent: WidgetEvent = {
+    widgetID: APP_WIDGETS_MAP.MOVIE_REVIEWS,
+  };
   const listRef = useRef(null);
   const reviewItems = useMemo(() => {
     if (isError) {
@@ -98,6 +106,15 @@ const MoviesReviewsWidget = ({movieId}: MoviesReviewsWidget) => {
   };
 
   const keyExtractor = (item: MovieReview) => `${item?.id}`;
+
+  useFocusEffect(
+    useCallback(() => {
+      onWidgetViewEvent(analyticsEvent);
+      return () => {
+        onWidgetLeaveEvent(analyticsEvent);
+      };
+    }, []),
+  );
 
   useEffect(() => {
     NativeAppEventEmitter.addListener(
@@ -145,10 +162,14 @@ const MoviesReviewsWidget = ({movieId}: MoviesReviewsWidget) => {
         loaderEnabled={isFetching}
       />
       {isError && (
-        <ErrorStateWidget
+        <ErrorStateCard
           error={error}
           containerStyles={styles.utilsContainer}
           retryCTA={refreshWidget}
+          id={APP_WIDGETS_MAP.MOVIE_REVIEWS}
+          extraData={{
+            cardType: 'WIDGET',
+          }}
         />
       )}
       {isEmpty && (

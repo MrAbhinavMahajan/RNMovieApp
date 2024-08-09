@@ -21,7 +21,7 @@ import {COLORS} from '@constants/Colors';
 import {styles} from './styles';
 import MovieCard from './MovieCard';
 import EmptyStateCreativeCard from '../../common/EmptyStateCard';
-import ErrorStateWidget from '../../widgets/ErrorState';
+import ErrorStateCard from '@components/common/ErrorState';
 import MovieDetails from './MovieDetails';
 
 const MovieExploreScreen = () => {
@@ -117,10 +117,11 @@ const MovieExploreScreen = () => {
   const renderListHeader = () => {
     if (isError) {
       return (
-        <ErrorStateWidget
+        <ErrorStateCard
           error={error}
           containerStyles={styles.errorContainer}
           retryCTA={refreshPage}
+          id={APP_PAGES_MAP.EXPLORE_SCREEN}
         />
       );
     }

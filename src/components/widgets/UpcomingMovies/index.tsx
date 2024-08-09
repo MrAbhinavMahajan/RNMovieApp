@@ -1,23 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import _ from 'lodash';
 import {useQuery} from '@tanstack/react-query';
 import * as NavigationService from '@service/Navigation';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
 import Animated, {FadeInRight} from 'react-native-reanimated';
-import {useIsFocused} from '@react-navigation/native';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import {PAGE_REFRESH} from '@constants/Page';
 import {fetchUpcomingMovies} from '@apis/Main';
 import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '@constants/Navigation';
 import {FALLBACK_DATA} from '../../../data/Main';
 import {QUERY_STATUS} from '@constants/Main';
 import {APP_QUERY_MAP} from '@constants/Api';
-import {MoviePosterItem} from '@constants/AppInterfaces';
-import {onWidgetClickEvent, onWidgetRefreshEvent} from '~/src/analytics';
+import {MoviePosterItem, WidgetEvent} from '@constants/AppInterfaces';
+import {
+  onWidgetClickEvent,
+  onWidgetLeaveEvent,
+  onWidgetRefreshEvent,
+  onWidgetViewEvent,
+} from '~/src/analytics';
 import {styles} from './styles';
 import MoviePosterWidget from '../MoviePoster';
 import HeaderTitleWidget from '../HeaderTitle';
-import ErrorStateWidget from '../ErrorState';
+import ErrorStateCard from '@components/common/ErrorState';
 
 const UpcomingMoviesWidget = () => {
   const isFocussed = useIsFocused();
@@ -29,6 +34,9 @@ const UpcomingMoviesWidget = () => {
     enabled: isFocussed,
   });
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
+  const analyticsEvent: WidgetEvent = {
+    widgetID: APP_WIDGETS_MAP.UPCOMING_MOVIES,
+  };
   const listRef = useRef(null);
   const movies = useMemo(() => {
     if (isError) {
@@ -68,6 +76,15 @@ const UpcomingMoviesWidget = () => {
 
   const keyExtractor = (item: MoviePosterItem) => `${item?.id}`;
 
+  useFocusEffect(
+    useCallback(() => {
+      onWidgetViewEvent(analyticsEvent);
+      return () => {
+        onWidgetLeaveEvent(analyticsEvent);
+      };
+    }, []),
+  );
+
   useEffect(() => {
     NativeAppEventEmitter.addListener(PAGE_REFRESH.HOME_SCREEN, refreshWidget);
   }, []);
@@ -88,10 +105,14 @@ const UpcomingMoviesWidget = () => {
         loaderEnabled={isFetching}
       />
       {isError && (
-        <ErrorStateWidget
+        <ErrorStateCard
           error={error}
           containerStyles={styles.errorContainer}
           retryCTA={refreshWidget}
+          id={APP_WIDGETS_MAP.UPCOMING_MOVIES}
+          extraData={{
+            cardType: 'WIDGET',
+          }}
         />
       )}
       <FlatList

@@ -41,7 +41,7 @@ import {MoviePosterItem, PageEvent} from '@constants/AppInterfaces';
 import AppHeader from '@components/common/AppHeader';
 import AppCTA from '@components/common/AppCTA';
 import MoviePosterWidget from '@components/widgets/MoviePoster';
-import ErrorStateWidget from '@components/widgets/ErrorState';
+import ErrorStateCard from '@components/common/ErrorState';
 import EmptyStateCreativeCard from '@components/common/EmptyStateCard';
 
 interface MovieViewAllScreenProps {
@@ -193,10 +193,11 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
   const renderListHeader = () => {
     if (isError) {
       return (
-        <ErrorStateWidget
+        <ErrorStateCard
           error={error}
           containerStyles={styles.errorContainer}
           retryCTA={refreshPage}
+          id={APP_PAGES_MAP.MOVIE_VIEW_ALL_SCREEN}
         />
       );
     }

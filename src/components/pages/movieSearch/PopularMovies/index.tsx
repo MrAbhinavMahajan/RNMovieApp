@@ -23,10 +23,10 @@ import {onPageClickEvent, onPageRefreshEvent} from '~/src/analytics';
 import {styles} from './styles';
 import AppCTA from '@components/common/AppCTA';
 import MoviePosterWidget from '@components/widgets/MoviePoster';
-import ErrorStateWidget from '@components/widgets/ErrorState';
+import ErrorStateCard from '@components/common/ErrorState';
 import EmptyStateCreativeCard from '@components/common/EmptyStateCard';
 
-const PopularMoviesWidget = () => {
+const PopularMovies = () => {
   const queryClient = useQueryClient();
   const query = useInfiniteQuery({
     queryKey: [APP_QUERY_MAP.POPULAR_MOVIES],
@@ -119,10 +119,14 @@ const PopularMoviesWidget = () => {
   const renderListHeader = () => {
     if (isError) {
       return (
-        <ErrorStateWidget
+        <ErrorStateCard
           error={error}
           containerStyles={styles.errorContainer}
           retryCTA={refreshData}
+          id={APP_PAGES_MAP.SEARCH_SCREEN}
+          extraData={{
+            id: 'POPULAR_MOVIES',
+          }}
         />
       );
     }
@@ -218,4 +222,4 @@ const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
     </Animated.View>
   );
 };
-export default PopularMoviesWidget;
+export default PopularMovies;

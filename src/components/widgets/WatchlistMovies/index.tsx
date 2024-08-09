@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useMemo, useRef} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef} from 'react';
 import _ from 'lodash';
 import {useQuery} from '@tanstack/react-query';
 import * as NavigationService from '@service/Navigation';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
 import Animated, {FadeInRight} from 'react-native-reanimated';
-import {useIsFocused} from '@react-navigation/native';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import {fetchMovieWatchlist} from '@apis/Main';
 import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '@constants/Navigation';
 import {PAGE_REFRESH} from '@constants/Page';
@@ -15,13 +15,18 @@ import {kWATCHLIST} from '@constants/Messages';
 import {IconSize, MaterialIcon} from '@components/common/RNIcon';
 import {COLORS} from '@constants/Colors';
 import {APP_QUERY_MAP} from '@constants/Api';
-import {MoviePosterItem} from '@constants/AppInterfaces';
-import {onWidgetClickEvent, onWidgetRefreshEvent} from '~/src/analytics';
+import {MoviePosterItem, WidgetEvent} from '@constants/AppInterfaces';
+import {
+  onWidgetClickEvent,
+  onWidgetLeaveEvent,
+  onWidgetRefreshEvent,
+  onWidgetViewEvent,
+} from '~/src/analytics';
 import {styles} from './styles';
 import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget from '../MoviePoster';
-import ErrorStateWidget from '../ErrorState';
 import EmptyStateWidget from '../EmptyState';
+import ErrorStateCard from '@components/common/ErrorState';
 
 const WatchlistMoviesWidget = () => {
   const isFocussed = useIsFocused();
@@ -34,6 +39,9 @@ const WatchlistMoviesWidget = () => {
   });
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
   const listRef = useRef(null);
+  const analyticsEvent: WidgetEvent = {
+    widgetID: APP_WIDGETS_MAP.WATCHLIST_MOVIES,
+  };
   const movies = useMemo(() => {
     if (isError) {
       return [];
@@ -80,6 +88,15 @@ const WatchlistMoviesWidget = () => {
 
   const keyExtractor = (item: MoviePosterItem) => `${item?.id}`;
 
+  useFocusEffect(
+    useCallback(() => {
+      onWidgetViewEvent(analyticsEvent);
+      return () => {
+        onWidgetLeaveEvent(analyticsEvent);
+      };
+    }, []),
+  );
+
   useEffect(() => {
     NativeAppEventEmitter.addListener(
       PAGE_REFRESH.PROFILE_SCREEN,
@@ -99,10 +116,14 @@ const WatchlistMoviesWidget = () => {
         loaderEnabled={isFetching}
       />
       {isError && (
-        <ErrorStateWidget
+        <ErrorStateCard
           error={error}
           containerStyles={styles.errorContainer}
           retryCTA={refreshWidget}
+          id={APP_WIDGETS_MAP.WATCHLIST_MOVIES}
+          extraData={{
+            cardType: 'WIDGET',
+          }}
         />
       )}
       {isEmpty && (

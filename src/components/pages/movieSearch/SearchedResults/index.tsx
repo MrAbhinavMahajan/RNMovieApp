@@ -32,11 +32,11 @@ import {styles} from './styles';
 import AppCTA from '@components/common/AppCTA';
 import RNText from '@components/common/RNText';
 import MoviePosterWidget from '@components/widgets/MoviePoster';
-import ErrorStateWidget from '@components/widgets/ErrorState';
+import ErrorStateCard from '@components/common/ErrorState';
 import EmptyStateCreativeCard from '@components/common/EmptyStateCard';
 const AnimatedCTA = Animated.createAnimatedComponent(TouchableOpacity);
 
-interface SearchedResultsWidgetProps {
+interface SearchedResultsProps {
   searchedText: string;
 }
 
@@ -47,7 +47,7 @@ interface MovieCardProps {
 
 const ITEM_SIZE = vpx(140);
 
-const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
+const SearchedResults = (props: SearchedResultsProps) => {
   const {searchedText} = props;
   const isFocussed = useIsFocused();
   const query = useInfiniteQuery({
@@ -141,10 +141,14 @@ const SearchedResultsWidget = (props: SearchedResultsWidgetProps) => {
   const renderListHeader = () => {
     if (isError) {
       return (
-        <ErrorStateWidget
+        <ErrorStateCard
           error={error}
           containerStyles={styles.errorContainer}
           retryCTA={refreshData}
+          id={APP_PAGES_MAP.SEARCH_SCREEN}
+          extraData={{
+            id: 'SEARCHED_RESULTS',
+          }}
         />
       );
     }
@@ -265,4 +269,4 @@ const MovieCard = ({item, index}: MovieCardProps) => {
   );
 };
 
-export default SearchedResultsWidget;
+export default SearchedResults;

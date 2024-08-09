@@ -12,7 +12,8 @@ import {styles} from './styles';
 import RNText from '@components/common/RNText';
 import MovieGenres from '@components/common/MovieGenres';
 import MovieOverview from '@components/common/MovieOverview';
-import ErrorStateWidget from '~/src/components/widgets/ErrorState';
+import ErrorStateCard from '@components/common/ErrorState';
+import {APP_PAGES_MAP} from '@constants/Navigation';
 
 type DetailsBox = {
   movieId: number;
@@ -52,10 +53,14 @@ const DetailsBox = ({movieId}: DetailsBox) => {
 
   if (isError) {
     return (
-      <ErrorStateWidget
+      <ErrorStateCard
         error={error}
         containerStyles={styles.errorContainer}
         retryCTA={refreshData}
+        id={APP_PAGES_MAP.MOVIE_DETAILS_SCREEN}
+        extraData={{
+          id: 'DETAILS_CARD',
+        }}
       />
     );
   }

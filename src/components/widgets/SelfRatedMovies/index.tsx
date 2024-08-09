@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useMemo, useRef} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef} from 'react';
 import _ from 'lodash';
 import * as NavigationService from '@service/Navigation';
 import {useQuery} from '@tanstack/react-query';
-import {useIsFocused} from '@react-navigation/native';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
 import Animated, {FadeInLeft} from 'react-native-reanimated';
 import {fetchMoviesRated} from '@apis/Main';
@@ -16,12 +16,17 @@ import {kRATINGS} from '@constants/Messages';
 import {IconSize, MaterialIcon} from '@components/common/RNIcon';
 import {COLORS} from '@constants/Colors';
 import {APP_QUERY_MAP} from '@constants/Api';
-import {MoviePosterItem} from '@constants/AppInterfaces';
-import {onWidgetClickEvent, onWidgetRefreshEvent} from '~/src/analytics';
+import {MoviePosterItem, WidgetEvent} from '@constants/AppInterfaces';
+import {
+  onWidgetClickEvent,
+  onWidgetLeaveEvent,
+  onWidgetRefreshEvent,
+  onWidgetViewEvent,
+} from '~/src/analytics';
 import HeaderTitleWidget from '../HeaderTitle';
 import MoviePosterWidget from '../MoviePoster';
-import ErrorStateWidget from '../ErrorState';
 import EmptyStateWidget from '../EmptyState';
+import ErrorStateCard from '@components/common/ErrorState';
 
 const SelfRatedMoviesWidget = () => {
   const isFocussed = useIsFocused();
@@ -33,6 +38,9 @@ const SelfRatedMoviesWidget = () => {
     enabled: isFocussed,
   });
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
+  const analyticsEvent: WidgetEvent = {
+    widgetID: APP_WIDGETS_MAP.SELF_RATED_MOVIES,
+  };
   const listRef = useRef(null);
   const movies = useMemo(() => {
     if (isError) {
@@ -81,6 +89,15 @@ const SelfRatedMoviesWidget = () => {
 
   const keyExtractor = (item: MoviePosterItem) => `${item?.id}`;
 
+  useFocusEffect(
+    useCallback(() => {
+      onWidgetViewEvent(analyticsEvent);
+      return () => {
+        onWidgetLeaveEvent(analyticsEvent);
+      };
+    }, []),
+  );
+
   useEffect(() => {
     NativeAppEventEmitter.addListener(
       PAGE_REFRESH.PROFILE_SCREEN,
@@ -100,10 +117,14 @@ const SelfRatedMoviesWidget = () => {
         loaderEnabled={isLoading}
       />
       {isError && (
-        <ErrorStateWidget
+        <ErrorStateCard
           error={error}
           containerStyles={styles.errorContainer}
           retryCTA={refreshWidget}
+          id={APP_WIDGETS_MAP.SELF_RATED_MOVIES}
+          extraData={{
+            cardType: 'WIDGET',
+          }}
         />
       )}
       {isEmpty && (
