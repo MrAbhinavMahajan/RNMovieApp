@@ -57,7 +57,7 @@ const MoviesReviewsWidget = ({movieId}: MoviesReviewsWidget) => {
   const queryClient = useQueryClient();
   const isFocussed = useIsFocused();
   const query = useInfiniteQuery({
-    queryKey: [APP_QUERY_MAP.MOVIE_REVIEWS],
+    queryKey: [APP_QUERY_MAP.MOVIE_REVIEWS, movieId],
     queryFn: ({signal, pageParam}) =>
       fetchMovieReviews(signal, movieId, pageParam),
     initialPageParam: 1,
