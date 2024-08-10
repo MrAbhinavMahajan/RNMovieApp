@@ -27,11 +27,11 @@ export const styles = StyleSheet.create({
     paddingRight: hpx(8),
   },
   utilsContainer: {
-    backgroundColor: COLORS.fullWhite,
+    backgroundColor: COLORS.antiFlashWhite,
     paddingVertical: vpx(24),
+    marginHorizontal: STD_HORIZONTAL_SPACING,
     borderRadius: 8,
-    height: vpx(200),
-    justifyContent: 'center',
+    marginTop: vpx(10),
   },
   reviewCardView: {
     borderWidth: StyleSheet.hairlineWidth,
