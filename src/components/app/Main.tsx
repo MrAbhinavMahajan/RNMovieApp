@@ -1,13 +1,24 @@
-import React from 'react';
-import {QueryClientProvider} from '@tanstack/react-query';
+import React, {useEffect} from 'react';
+import {QueryClientProvider, onlineManager} from '@tanstack/react-query';
+import NetInfo from '@react-native-community/netinfo';
 import {ErrorBoundary} from '@components/common/ErrorBoundary';
 import {QUERY_CLIENT} from '@constants/Main';
-import MainStack from '@components/stacks/Main';
-import AppFallback from '@components/common/AppFallback';
 import {StatusBar} from 'react-native';
 import {STD_SCREEN_COLOR} from '~/src/constants/Styles';
+import MainStack from '@components/stacks/Main';
+import AppFallback from '@components/common/AppFallback';
+import Toast from 'react-native-toast-message';
+
 const Main = () => {
   const fallback = (data: any) => <AppFallback {...data} />;
+
+  useEffect(() => {
+    onlineManager.setEventListener(setOnline => {
+      return NetInfo.addEventListener(state => {
+        setOnline(!!state.isConnected);
+      });
+    });
+  }, []);
 
   return (
     <QueryClientProvider client={QUERY_CLIENT}>
@@ -18,6 +29,7 @@ const Main = () => {
           translucent
         />
         <MainStack />
+        <Toast />
       </ErrorBoundary>
     </QueryClientProvider>
   );

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useEffect, useRef, useState} from 'react';
 import _ from 'lodash';
-import {Alert} from 'react-native';
+import Toast from 'react-native-toast-message';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {fetchMovieFavorites, updateMovieFavorites} from '@apis/Main';
 import {APP_QUERY_MAP} from '@constants/Api';
@@ -26,14 +26,29 @@ const useFavorites = (movieId: number) => {
     mutationFn: updateMovieFavorites,
     onSuccess: d => {
       if (d.status === ActivityStatus.ADDED) {
-        Alert.alert(kFAVORITES.added.title, kFAVORITES.added.subtitle);
+        Toast.show({
+          type: 'success',
+          text1: kFAVORITES.added.title,
+          text2: kFAVORITES.added.subtitle,
+          position: 'bottom',
+        });
       } else {
-        Alert.alert(kFAVORITES.deleted.title, kFAVORITES.deleted.subtitle);
+        Toast.show({
+          type: 'error',
+          text1: kFAVORITES.deleted.title,
+          text2: kFAVORITES.added.subtitle,
+          position: 'bottom',
+        });
       }
       modified.current = true;
     },
     onError: (error: any) => {
-      Alert.alert(kGENERAL.title, kGENERAL.subtitle);
+      Toast.show({
+        type: 'error',
+        text1: kGENERAL.title,
+        text2: kGENERAL.subtitle,
+        position: 'bottom',
+      });
       onErrorEvent({
         id: APP_PAGES_MAP.MOVIE_DETAILS_SCREEN,
         errorMessage: error?.message,
