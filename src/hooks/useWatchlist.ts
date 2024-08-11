@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useEffect, useRef, useState} from 'react';
 import _ from 'lodash';
+import Toast from 'react-native-toast-message';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {fetchMovieWatchlist, updateMovieWatchlist} from '@apis/Main';
 import {APP_QUERY_MAP} from '@constants/Api';
@@ -12,7 +13,6 @@ import {
 } from '@constants/AppInterfaces';
 import {onErrorEvent, onPageClickEvent} from '~/src/analytics';
 import {APP_PAGES_MAP} from '~/src/constants/Navigation';
-import {Alert} from 'react-native';
 
 const useWatchlist = (movieId: number) => {
   const [page, setPage] = useState(1);
@@ -26,14 +26,29 @@ const useWatchlist = (movieId: number) => {
     mutationFn: updateMovieWatchlist,
     onSuccess: d => {
       if (d.status === ActivityStatus.ADDED) {
-        Alert.alert(kWATCHLIST.added.title, kWATCHLIST.added.subtitle);
+        Toast.show({
+          type: 'success',
+          text1: kWATCHLIST.added.title,
+          text2: kWATCHLIST.added.subtitle,
+          position: 'bottom',
+        });
       } else {
-        Alert.alert(kWATCHLIST.deleted.title, kWATCHLIST.deleted.subtitle);
+        Toast.show({
+          type: 'error',
+          text1: kWATCHLIST.deleted.title,
+          text2: kWATCHLIST.deleted.subtitle,
+          position: 'bottom',
+        });
       }
       modified.current = true;
     },
     onError: (error: any) => {
-      Alert.alert(kGENERAL.title, kGENERAL.subtitle);
+      Toast.show({
+        type: 'error',
+        text1: kGENERAL.title,
+        text2: kGENERAL.subtitle,
+        position: 'bottom',
+      });
       onErrorEvent({
         id: APP_PAGES_MAP.MOVIE_DETAILS_SCREEN,
         errorMessage: error?.message,
