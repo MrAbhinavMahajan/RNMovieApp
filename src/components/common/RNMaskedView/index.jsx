@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import MaskedView from '@react-native-community/masked-view';
+import MaskedView from '@react-native-masked-view/masked-view';
 
 export const RNMaskedView = ({element, children}) => (
   <MaskedView style={styles.container} maskElement={element}>
