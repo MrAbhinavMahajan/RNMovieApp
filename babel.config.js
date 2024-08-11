@@ -27,6 +27,7 @@ module.exports = {
           '@constants': './src/constants',
           '@libraries': './src/libraries',
           '@components': './src/components',
+          '@hooks': './src/hooks',
           '@utilities': './src/utilities',
         },
       },

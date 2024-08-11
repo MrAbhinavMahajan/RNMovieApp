@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {hpx, vpx} from '@libraries/responsive-pixels';
+import {fpx, hpx, vpx} from '@libraries/responsive-pixels';
 import {SCREEN_WIDTH} from '@utilities/App';
 import {
   STD_HORIZONTAL_SPACING,
@@ -16,16 +16,22 @@ export const styles = StyleSheet.create({
   },
   scrollableContainer: {
     gap: hpx(8),
+    paddingLeft: hpx(8),
+    paddingVertical: STD_VERTICAL_SPACING,
   },
   ctaText: {
-    marginTop: vpx(4),
-    color: COLORS.fullBlack,
-    fontFamily: FONTS.Regular,
+    color: COLORS.oliveBlack,
+    fontFamily: FONTS.SemiBold,
+    fontSize: fpx(12),
+    marginLeft: hpx(2),
   },
   ctaView: {
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: STD_VERTICAL_SPACING,
+    paddingVertical: vpx(4),
     paddingHorizontal: STD_HORIZONTAL_SPACING,
+    borderWidth: 1,
+    borderRadius: vpx(24),
+    borderColor: COLORS.lightGray,
   },
 });
