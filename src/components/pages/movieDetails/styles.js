@@ -57,4 +57,21 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.fullWhite,
     paddingTop: STD_VERTICAL_SPACING,
   },
+  footerView: {
+    paddingHorizontal: STD_HORIZONTAL_SPACING,
+    paddingBottom: vpx(24),
+    paddingTop: vpx(12),
+    backgroundColor: COLORS.fullWhite,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+  },
+  secondaryCTA: {
+    marginTop: vpx(8),
+  },
 });

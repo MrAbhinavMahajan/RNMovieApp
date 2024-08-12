@@ -16,6 +16,7 @@ import {
 } from '~/src/analytics';
 import {APP_PAGES_MAP} from '~/src/constants/Navigation';
 import {PageEvent} from '@constants/AppInterfaces';
+import {PrimaryCTA} from '@components/common/AppCTA';
 import {styles} from './styles';
 import AppHeader from '@components/common/AppHeader';
 import DetailsBox from './DetailsBox';
@@ -77,6 +78,12 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
     />
   );
 
+  const renderPageFooter = () => (
+    <View style={styles.footerView}>
+      <PrimaryCTA title={'Book Ticket'} />
+    </View>
+  );
+
   const renderPageLayout = () => (
     <ScrollView
       ref={scrollRef}
@@ -101,6 +108,7 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
     <View style={styles.screenView}>
       {renderPageHeader()}
       {renderPageLayout()}
+      {renderPageFooter()}
     </View>
   );
 };
