@@ -14,6 +14,7 @@ import {
   onPageRefreshEvent,
   onPageViewEvent,
 } from '~/src/analytics';
+import * as NavigationService from '@service/Navigation';
 import {APP_PAGES_MAP} from '~/src/constants/Navigation';
 import {PageEvent} from '@constants/AppInterfaces';
 import {PrimaryCTA} from '@components/common/AppCTA';
@@ -56,6 +57,12 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
     NativeAppEventEmitter.emit(PAGE_REFRESH.MOVIE_DETAILS_SCREEN);
   };
 
+  const onBookCTA = () => {
+    NavigationService.navigate(APP_PAGES_MAP.TICKET_BOOKING_SCREEN, {
+      queryParams,
+    });
+  };
+
   useFocusEffect(
     useCallback(() => {
       onPageViewEvent(analyticsEvent);
@@ -80,7 +87,7 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
 
   const renderPageFooter = () => (
     <View style={styles.footerView}>
-      <PrimaryCTA title={'Book Ticket'} />
+      <PrimaryCTA title={'Book Ticket'} onPress={onBookCTA} />
     </View>
   );
 

@@ -65,6 +65,7 @@ export const STYLES = StyleSheet.create({
 
 export const STD_HORIZONTAL_SPACING = hpx(8);
 export const STD_VERTICAL_SPACING = vpx(16);
+export const STD_THEME_COLOR = COLORS.danger500;
 export const STD_SCREEN_COLOR = COLORS.antiFlashWhite;
 export const STD_ACTIVITY_COLOR = COLORS.fullBlack;
 export const MOVIE_GRID_ITEM_VERTICAL_GAP = vpx(4);

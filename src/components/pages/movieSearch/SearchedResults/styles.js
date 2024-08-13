@@ -2,6 +2,7 @@ import {StyleSheet} from 'react-native';
 import {
   MOVIE_GRID_ITEM_ASPECT_RATIO,
   STD_HORIZONTAL_SPACING,
+  STD_THEME_COLOR,
   STD_VERTICAL_SPACING,
 } from '@constants/Styles';
 import {fpx, vpx} from '@libraries/responsive-pixels';
@@ -45,7 +46,7 @@ export const styles = StyleSheet.create({
   itemTitleText: {
     fontFamily: FONTS.BebasNeueRegular,
     fontSize: fpx(24),
-    color: COLORS.oceanBlue,
+    color: STD_THEME_COLOR,
     paddingRight: 2 * STD_HORIZONTAL_SPACING,
   },
   itemInfoText: {
@@ -62,7 +63,7 @@ export const styles = StyleSheet.create({
     marginTop: vpx(8),
   },
   scrollToTopBtn: {
-    backgroundColor: COLORS.oceanBlue,
+    backgroundColor: STD_THEME_COLOR,
     alignSelf: 'center',
     position: 'absolute',
     zIndex: 1,

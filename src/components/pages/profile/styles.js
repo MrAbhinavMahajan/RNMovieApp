@@ -4,6 +4,7 @@ import {COLORS} from '@constants/Colors';
 import {
   STD_HORIZONTAL_SPACING,
   STD_SCREEN_COLOR,
+  STD_THEME_COLOR,
   STD_VERTICAL_SPACING,
   STYLES,
 } from '@constants/Styles';
@@ -43,7 +44,7 @@ export const styles = StyleSheet.create({
     paddingBottom: vpx(200),
   },
   scrollToTopBtn: {
-    backgroundColor: COLORS.oceanBlue,
+    backgroundColor: STD_THEME_COLOR,
     alignSelf: 'center',
     position: 'absolute',
     zIndex: 1,

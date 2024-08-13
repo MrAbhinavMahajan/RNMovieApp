@@ -4,6 +4,7 @@ import {
   MOVIE_GRID_ITEM_HORIZONTAL_GAP,
   MOVIE_GRID_ITEM_VERTICAL_GAP,
   STD_HORIZONTAL_SPACING,
+  STD_THEME_COLOR,
   STD_VERTICAL_SPACING,
 } from '@constants/Styles';
 import {hpx, vpx} from '@libraries/responsive-pixels';
@@ -36,7 +37,7 @@ export const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   scrollToTopBtn: {
-    backgroundColor: COLORS.oceanBlue,
+    backgroundColor: STD_THEME_COLOR,
     alignSelf: 'center',
     position: 'absolute',
     zIndex: 1,

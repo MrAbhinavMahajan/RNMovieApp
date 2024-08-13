@@ -9,6 +9,7 @@ import MainTab from '../tabs/main';
 import MovieDetailsScreen from '@components/pages/movieDetails';
 import MovieViewAllScreen from '@components/pages/movieViewAll';
 import ProfileViewAllScreen from '@components/pages/profileViewAll';
+import TicketBookingScreen from '../pages/ticketBooking';
 const {Navigator, Screen} = createNativeStackNavigator();
 
 // * NavigationContainer is a component which manages our navigation tree and contains the navigation state
@@ -50,6 +51,10 @@ const MainStack = () => {
         <Screen
           name={APP_PAGES_MAP.PROFILE_VIEW_ALL_SCREEN}
           component={ProfileViewAllScreen}
+        />
+        <Screen
+          name={APP_PAGES_MAP.TICKET_BOOKING_SCREEN}
+          component={TicketBookingScreen}
         />
       </Navigator>
     </NavigationContainer>

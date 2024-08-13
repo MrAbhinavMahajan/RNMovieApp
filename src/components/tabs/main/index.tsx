@@ -3,6 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {styles} from './styles';
 import {APP_TABS_MAP} from '@constants/Navigation';
 import {tabOptions} from '@utilities/Tabs';
+import {STD_THEME_COLOR} from '@constants/Styles';
 import {COLORS} from '@constants/Colors';
 import HomeStack from '@components/stacks/Home';
 import SearchStack from '@components/stacks/Search';
@@ -18,7 +19,7 @@ const MainTab = () => {
       backBehavior={'initialRoute'}
       screenOptions={{
         tabBarStyle: styles.tabBar,
-        tabBarActiveTintColor: COLORS.oceanBlue,
+        tabBarActiveTintColor: STD_THEME_COLOR,
         tabBarInactiveTintColor: COLORS.oliveBlack,
         tabBarHideOnKeyboard: true,
         tabBarAllowFontScaling: false,

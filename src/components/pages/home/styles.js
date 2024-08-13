@@ -1,7 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {vpx} from '@libraries/responsive-pixels';
-import {COLORS} from '@constants/Colors';
-import {STD_SCREEN_COLOR, STYLES} from '@constants/Styles';
+import {STD_SCREEN_COLOR, STD_THEME_COLOR, STYLES} from '@constants/Styles';
 
 export const styles = StyleSheet.create({
   screenView: {
@@ -13,7 +12,7 @@ export const styles = StyleSheet.create({
     paddingBottom: vpx(200),
   },
   scrollToTopBtn: {
-    backgroundColor: COLORS.oceanBlue,
+    backgroundColor: STD_THEME_COLOR,
     alignSelf: 'center',
     position: 'absolute',
     zIndex: 1,
