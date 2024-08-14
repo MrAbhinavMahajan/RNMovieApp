@@ -10,95 +10,19 @@
   <img height="400em" src="https://github.com/MrAbhinavMahajan/RNMovieApp/assets/98639822/377801ed-4d2d-431a-b23a-074469afb50f">
 </div>
 
-## Screens
+Developed a feature-rich Movie App leveraging TMDB APIs, adhering to modular and extensible coding principles.
 
-1. SignIn Page
-2. Home Page
-3. Search Page
-4. Profile Page
-5. Movie's Detail Page
-6. ViewAll Movies Page
-7. Movie Reviews Page
+## Key features include:
 
-## User Engagement
-
-1. Watch Movies Trailer
-2. Favorites & Watchlist
-3. Recommended Movies
-4. Similar Movies
-
-## Authentication & Authorization (JWT Tokens)
-
-- JWT tokens are signed so TMDB services are protected from token alteration
-- End users are protected with token validation
-- End users approve the application request token
-- Encryption can be AES with a 256 bits key (token is HS256 signed with a 256 bit key).
-
-## Storage (MMKV Storage)
-
-A Singleton class maintaining following instances:-
-
-1. App Storage
-2. User Storage
-3. Zustand Storage
-
-## Miscellaneous
-
-### TMDB
-
-- A movie database (TMDB) API
-
-### JSX
-
-JSX is the syntax extension for JavaScript that lets you write HTML-like markup inside a JavaScript file.
-The root element returned by a component, should be a single element.
-Using curly brackets { } we can create a portal from JSX to Javascript Expression.
-
-### Fragment
-
-If we don’t want to add an extra View in our hierarchy we can use an empty tag <> </> , which is also called a Fragment.
-
-### TanStack Query
-
-TanStack Query provides a high advantage in data fetching, caching, background updates and more.
-
-- It manages loading, error, and data states.
-- It manages refetchOnWindowFocus, retry when the network request fails and staleTime.
-
-### JWT Token ( Javascript Web Token )
-
-JWT represents claim mechanism between two parties.
-
-- JWT is built with three components:
-  `<Component1>.<Component2>.<Component3>`
-
-* Component1 signifies the encryption being used.
-* Component2 determines the information.
-* Component3 determines the signature.
-
-- Follows security mechanism - Public/ Private cryptography.
-  (means 2 keys are generated 1 is public and 1 is private.)
-- It's a Stateless Mechanism ( It's state is not stored in Database ).
-- It's valid for short time durations only.
-
-### Zustand (State Management + MMKV Storage)
-
-Zustand is a small, fast and scaleable state-management solution for React applications with minimal boilerplate.
-
-### MMKV Storage
-
-MMKV is a Memory Map Key Value Storage.
-(30% faster than AsyncStorage, and is developed by WeChat)
-
-- Encryption
-  - Keychain on iOS
-  - Keystore on android (API 23 and above)
-- Synchronous
-- Faster performance
-- Lesser Memory size
-
-### WebPage
-
-### Masking
-
-### Animations
+- Responsive Layouts: Implemented using Pixel Ratio for adaptive design.
+- Authentication: Integrated TMDB APIs & JWT for secure sign-in and sign-out.
+- Global State Management: Utilized Zustand for efficient state handling.
+- Gradient Effects: Applied MaskedViews for dynamic carousel visuals.
+- Web Integration: Enabled movie playback via WebViews (YouTube trailers).
+- Secure Storage: Employed MMKV for encrypted user and app data storage.
+- Data Caching & Management: Incorporated Tanstack Query for API data caching and server-side state management.
+- User Engagement: Developed features such as search, favorites, watchlist, recommendations, and similar movies.
+- Real-Time Interactions: Implemented real-time likes using Firestore streams.
+- Enhanced UI/UX: Added animations using Reanimated for a polished user experience.
+- Analytics: Integrated analytics tools for detailed insights into user behavior and app performance.
+- Crashlytics: Implemented Crashlytics for real-time crash reporting and debugging.
