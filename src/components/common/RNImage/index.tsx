@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
-import {ActivityIndicator, View} from 'react-native';
+import {ActivityIndicator, View, Image, ImageProps} from 'react-native';
 import {styles} from './styles';
 import {STD_ACTIVITY_COLOR} from '@constants/Styles';
 import RNText from '../RNText';
-import Image, {FastImageProps} from 'react-native-fast-image';
 import {logError} from '~/src/analytics';
 
 type RNImageProps = {
@@ -12,7 +11,7 @@ type RNImageProps = {
   imageStyles?: any;
   blurRadius?: number;
   fallbackCharacter: string;
-} & FastImageProps;
+} & ImageProps;
 
 const RNImage = (props: RNImageProps) => {
   const {
