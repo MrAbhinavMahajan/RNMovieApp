@@ -1,10 +1,9 @@
 import React from 'react';
-import {Pressable} from 'react-native';
+import {Pressable, ImageProps} from 'react-native';
 import {styles} from './styles';
 import RNImage from '@components/common/RNImage';
 import {MoviePosterItem} from '@constants/AppInterfaces';
 import {getImageURL} from '@utilities/App';
-import {FastImageProps} from 'react-native-fast-image';
 
 type MoviePosterWidgetProps = {
   item: MoviePosterItem;
@@ -13,7 +12,7 @@ type MoviePosterWidgetProps = {
   containerStyles: any;
   imageStyles?: any;
   action?: () => void;
-} & FastImageProps;
+} & ImageProps;
 
 const MoviePosterWidget = ({
   item,
