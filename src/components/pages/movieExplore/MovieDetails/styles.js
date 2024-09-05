@@ -2,11 +2,13 @@ import {StyleSheet} from 'react-native';
 import {COLORS} from '@constants/Colors';
 import {FONTS} from '@constants/Fonts';
 import {fpx, hpx, vpx} from '@libraries/responsive-pixels';
-import {STD_VERTICAL_SPACING} from '@constants/Styles';
+import {STD_HORIZONTAL_SPACING, STD_VERTICAL_SPACING} from '@constants/Styles';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: STD_HORIZONTAL_SPACING,
+    paddingVertical: STD_VERTICAL_SPACING,
   },
   titleText: {
     fontSize: fpx(18),

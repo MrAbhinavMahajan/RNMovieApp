@@ -25,7 +25,6 @@ export const styles = StyleSheet.create({
   headerView: {
     backgroundColor: COLORS.success800,
     borderRadius: vpx(8),
-    paddingBottom: vpx(24),
   },
   containerView: {
     flex: 1,
