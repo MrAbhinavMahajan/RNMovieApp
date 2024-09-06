@@ -11,7 +11,9 @@ import {
   onPageRefreshEvent,
   onPageViewEvent,
 } from '~/src/analytics';
-import AppHeader from '../../common/AppHeader';
+import AppHeader from '@components/common/AppHeader';
+import {PrimaryCTA} from '@components/common/AppCTA';
+import SelectorBox from './SelectorBox';
 
 interface TicketBookingProps {
   route: {
@@ -50,21 +52,37 @@ const TicketBookingScreen = (props: TicketBookingProps) => {
     // process payment & confirm booking with movieId
   };
 
+  const renderPageLayout = () => (
+    <ScrollView
+      ref={scrollRef}
+      contentContainerStyle={styles.screenScrollableView}
+      showsVerticalScrollIndicator={false}
+      refreshControl={
+        <RefreshControl refreshing={false} onRefresh={refreshPage} />
+      }>
+      <SelectorBox />
+    </ScrollView>
+  );
+
+  const renderPageHeader = () => (
+    <AppHeader
+      title={screenTitle}
+      safePaddingEnabled
+      transparentBackgroundEnabled={false}
+    />
+  );
+
+  const renderPageFooter = () => (
+    <View style={styles.footerView}>
+      <PrimaryCTA title={'Proceed'} onPress={onProceedCTA} />
+    </View>
+  );
+
   return (
-    <View>
-      <ScrollView
-        ref={scrollRef}
-        contentContainerStyle={styles.screenScrollableView}
-        showsVerticalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl refreshing={false} onRefresh={refreshPage} />
-        }>
-        <AppHeader
-          title={screenTitle}
-          safePaddingEnabled
-          transparentBackgroundEnabled={false}
-        />
-      </ScrollView>
+    <View style={styles.screenView}>
+      {renderPageHeader()}
+      {renderPageLayout()}
+      {renderPageFooter()}
     </View>
   );
 };
