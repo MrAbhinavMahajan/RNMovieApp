@@ -30,4 +30,8 @@ export const styles = StyleSheet.create({
     shadowRadius: 2.22,
     elevation: 3,
   },
+  dateTimePicker: {
+    backgroundColor: COLORS.fullWhite,
+    paddingHorizontal: STD_HORIZONTAL_SPACING,
+  },
 });
