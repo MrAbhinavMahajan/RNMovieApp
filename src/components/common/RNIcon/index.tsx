@@ -68,7 +68,7 @@ export const AppSearchIcon = ({
 export const AppCalendarIcon = ({
   color = COLORS.fullBlack,
   size = IconSize.large,
-}) => <IoniIcon name={'calendar-outline'} size={size} color={color} />;
+}) => <MaterialIcon name={'calendar-month'} size={size} color={color} />;
 
 export const AppDownIcon = ({
   color = COLORS.fullBlack,

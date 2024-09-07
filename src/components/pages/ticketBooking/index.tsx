@@ -13,8 +13,8 @@ import {
 } from '~/src/analytics';
 import AppHeader from '@components/common/AppHeader';
 import {PrimaryCTA} from '@components/common/AppCTA';
+import AppDatePicker from '@components/common/AppDatePicker';
 import SelectorBox from './SelectorBox';
-import AppDatePicker from '../../common/AppDatePicker';
 
 interface TicketBookingProps {
   route: {
@@ -79,7 +79,6 @@ const TicketBookingScreen = (props: TicketBookingProps) => {
       refreshControl={
         <RefreshControl refreshing={false} onRefresh={refreshPage} />
       }>
-      <SelectorBox />
       <AppDatePicker
         selectedDateTime={selectedDateTime}
         isOpen={isDateTimeModalOpened}
@@ -88,6 +87,7 @@ const TicketBookingScreen = (props: TicketBookingProps) => {
         onDateTimeChange={onDateTimeChange}
         containerStyles={styles.dateTimePicker}
       />
+      <SelectorBox />
     </ScrollView>
   );
 

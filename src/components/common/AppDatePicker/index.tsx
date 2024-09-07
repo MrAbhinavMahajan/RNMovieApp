@@ -56,13 +56,15 @@ const AppDatePicker = (props: AppDatePickerProps) => {
   return (
     <View style={containerStyles}>
       <AppCTA onPress={openDateTimeModal} style={styles.containerView}>
-        <AppCalendarIcon size={IconSize.small} color={'rgba(0, 0, 0, 1)'} />
-        <RNText style={styles.dateTimePickerTitleText}>
-          {dateTimePrefix}
-          <RNText style={styles.dateTimePickerSubtitleText}>
-            {formattedDateTime}
+        <View style={styles.dateTimeContainerView}>
+          <AppCalendarIcon size={IconSize.small} color={'rgba(0, 0, 0, 1)'} />
+          <RNText style={styles.dateTimePickerTitleText}>
+            {dateTimePrefix}
+            <RNText style={styles.dateTimePickerSubtitleText}>
+              {formattedDateTime}
+            </RNText>
           </RNText>
-        </RNText>
+        </View>
         <AppDownIcon size={IconSize.small} color={'rgba(0, 0, 0, 1)'} />
       </AppCTA>
 

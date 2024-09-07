@@ -1,10 +1,14 @@
 import {StyleSheet} from 'react-native';
-import {fpx, hpx, vpx} from '@libraries/responsive-pixels';
+import {fpx, hpx} from '@libraries/responsive-pixels';
 import {FONTS} from '@constants/Fonts';
 
 export const styles = StyleSheet.create({
   containerView: {
-    marginVertical: vpx(24),
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  dateTimeContainerView: {
     flexDirection: 'row',
     alignItems: 'center',
   },
