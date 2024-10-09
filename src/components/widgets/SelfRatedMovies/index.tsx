@@ -155,6 +155,7 @@ const SelfRatedMoviesWidget = () => {
         initialNumToRender={6}
         maxToRenderPerBatch={6}
         extraData={movies}
+        removeClippedSubviews={false}
       />
     </View>
   );

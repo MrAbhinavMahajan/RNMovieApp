@@ -35,6 +35,7 @@ const RNGenre = ({genreIds, containerStyles, ...others}: RNGenre) => {
         />
       )}
       contentContainerStyle={containerStyles}
+      removeClippedSubviews={false}
     />
   );
 };

@@ -265,6 +265,7 @@ const MovieViewAllScreen = (props: MovieViewAllScreenProps) => {
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={refreshPage} />
         }
+        removeClippedSubviews={false}
       />
       <Animated.View
         style={[styles.scrollToTopBtn, scrollToTopCTAAnimationStyles]}>

@@ -22,6 +22,7 @@ const PosterCarousel = ({data, itemAction}: MovieCarouselParams) => {
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
+        removeClippedSubviews={false}
       />
     </View>
   );

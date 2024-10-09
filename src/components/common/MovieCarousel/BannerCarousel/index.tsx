@@ -78,6 +78,7 @@ const BannerCarousel = ({
             setActiveMovieIndex(idx);
           }}
           initialScrollIndex={0}
+          removeClippedSubviews={false}
         />
       </RNMaskedView>
       <View style={styles.floatingContentView}>

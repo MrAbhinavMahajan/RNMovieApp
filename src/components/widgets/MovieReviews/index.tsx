@@ -197,6 +197,7 @@ const MoviesReviewsWidget = ({movieId}: MoviesReviewsWidget) => {
         initialNumToRender={5}
         maxToRenderPerBatch={5}
         extraData={reviewItems}
+        removeClippedSubviews={false}
       />
     </View>
   );

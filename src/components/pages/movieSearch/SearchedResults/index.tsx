@@ -209,6 +209,7 @@ const SearchedResults = (props: SearchedResultsProps) => {
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={refreshData} />
         }
+        removeClippedSubviews={false}
       />
       <Animated.View
         style={[styles.scrollToTopBtn, scrollToTopCTAAnimationStyles]}>

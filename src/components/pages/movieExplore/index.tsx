@@ -178,6 +178,7 @@ const MovieExploreScreen = () => {
           setActiveMovieIndex(idx);
         }}
         showsVerticalScrollIndicator={false}
+        removeClippedSubviews={false}
       />
       <LinearGradient
         colors={[COLORS.transparent, COLORS.fullBlack]}
