@@ -50,11 +50,13 @@ export const styles = StyleSheet.create({
     height: SCREEN_HEIGHT / 2,
     justifyContent: 'center',
   },
-  floatingContentView: {
+  floatingContentGradientView: {
     position: 'absolute',
     zIndex: 1,
+    width: SCREEN_WIDTH,
+  },
+  floatingContentView: {
     paddingHorizontal: STD_HORIZONTAL_SPACING,
     paddingVertical: STD_VERTICAL_SPACING,
-    width: SCREEN_WIDTH,
   },
 });

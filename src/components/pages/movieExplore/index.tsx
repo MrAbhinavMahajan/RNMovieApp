@@ -181,13 +181,15 @@ const MovieExploreScreen = () => {
       />
       <LinearGradient
         colors={[COLORS.transparent, COLORS.fullBlack]}
-        style={[styles.floatingContentView, {bottom: tabBarHeight}]}>
-        {!_.isEmpty(movies) && (
-          <MovieDetails
-            item={movies[activeMovieIndex]}
-            index={activeMovieIndex}
-          />
-        )}
+        style={[styles.floatingContentGradientView, {bottom: tabBarHeight}]}>
+        <View style={styles.floatingContentView}>
+          {!_.isEmpty(movies) && (
+            <MovieDetails
+              item={movies[activeMovieIndex]}
+              index={activeMovieIndex}
+            />
+          )}
+        </View>
       </LinearGradient>
     </View>
   );
