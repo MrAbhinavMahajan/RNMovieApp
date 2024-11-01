@@ -23,14 +23,16 @@ import PlayerBox from './PlayerBox';
 import CTAsPanelBox from './CTAsPanelBox';
 import SimilarMoviesWidget from '@components/widgets/SimilarMovies';
 import MoviesReviewsWidget from '@components/widgets/MovieReviews';
+import {parseQueryParams} from '~/src/utilities/App';
 
 interface MovieDetailsScreenProps {
   route: {
     params: {
       queryParams: {
-        screenTitle: string;
+        movieName: string;
         movieId: number;
       };
+      payload?: string; // for deep link params
     };
   };
 }
@@ -40,8 +42,18 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
     state => state.setLastWatchedMovieId,
   );
   const scrollRef = useRef(null);
-  const {queryParams} = props.route?.params || {};
-  const {screenTitle, movieId} = queryParams;
+  const {queryParams, payload} = props.route?.params || {};
+  const getInitialPageConfig = () => {
+    if (!!payload) {
+      const params = parseQueryParams(payload);
+      return {
+        movieId: params?.movieId,
+        movieName: params?.movieName,
+      };
+    }
+    return queryParams;
+  };
+  const {movieName, movieId} = getInitialPageConfig() || {};
   const analyticsEvent: PageEvent = {
     pageID: APP_PAGES_MAP.MOVIE_DETAILS_SCREEN,
     extraData: {
@@ -71,7 +83,7 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
 
   const renderPageHeader = () => (
     <AppHeader
-      title={screenTitle}
+      title={movieName}
       safePaddingEnabled
       transparentBackgroundEnabled={false}
     />
@@ -88,7 +100,7 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
       <View style={styles.detailsView}>
         <PlayerBox movieId={movieId} />
         <DetailsBox movieId={movieId} />
-        <CTAsPanelBox movieId={movieId} />
+        <CTAsPanelBox movieId={movieId} movieName={movieName} />
       </View>
 
       {/* Widgets */}

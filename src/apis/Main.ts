@@ -10,6 +10,7 @@ import {getSessionStoreState} from '@store/useSessionStore';
 import {MMKV} from 'react-native-mmkv';
 import {logDebug, logError} from '../analytics';
 import {APP_BASE_URL} from '../constants/Api';
+import {generateQueryParams} from '../utilities/App';
 const ReadAccessToken = process.env.TMDB_READ_ACCESS_TOKEN;
 enum RequestMethod {
   'GET' = 'GET',
@@ -29,24 +30,6 @@ function expireSession(): void {
   if (isSignedIn) {
     logout();
   }
-}
-
-function generateQueryParams(params: any): string {
-  const queryString = Object.keys(params)
-    .map(key => {
-      const value = params[key];
-      if (Array.isArray(value)) {
-        return value
-          .map(val => `${encodeURIComponent(key)}=${encodeURIComponent(val)}`)
-          .join('&');
-      } else if (typeof value === 'object' && value !== null) {
-        return generateQueryParams(value);
-      } else {
-        return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
-      }
-    })
-    .join('&');
-  return '?' + queryString;
 }
 
 function createRequestOptions(
