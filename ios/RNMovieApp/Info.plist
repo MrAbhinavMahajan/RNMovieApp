@@ -32,19 +32,7 @@
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Inter-Bold.otf</string>
-		<string>Inter-Medium.otf</string>
-		<string>Inter-Regular.otf</string>
-		<string>Inter-SemiBold.otf</string>
-		<string>Anton-Regular.ttf</string>
-		<string>BebasNeue-Regular.ttf</string>
-		<string>AntDesign.ttf</string>
-		<string>Ionicons.ttf</string>
-		<string>MaterialIcons.ttf</string>
-	</array>
+	<string/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -59,5 +47,14 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Inter-Bold.otf</string>
+		<string>Inter-Medium.otf</string>
+		<string>Inter-Regular.otf</string>
+		<string>Inter-SemiBold.otf</string>
+		<string>Anton-Regular.ttf</string>
+		<string>BebasNeue-Regular.ttf</string>
+	</array>
 </dict>
 </plist>
