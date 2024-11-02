@@ -47,7 +47,7 @@ const MovieDetailsScreen = (props: MovieDetailsScreenProps) => {
     if (!!payload) {
       const params = parseQueryParams(payload);
       return {
-        movieId: params?.movieId,
+        movieId: +params?.movieId,
         movieName: params?.movieName,
       };
     }

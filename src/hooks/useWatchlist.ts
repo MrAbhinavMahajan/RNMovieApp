@@ -78,10 +78,10 @@ const useWatchlist = (movieId: number) => {
   useEffect(() => {
     // Updates on New Page
     const {results, total_pages} = data || {};
+
     if (!_.isEmpty(results) && page <= total_pages) {
-      const isMovieFound =
-        results.filter((el: MovieItem) => el.id === movieId)?.length > 0;
-      if (isMovieFound) {
+      const isMovieFound = results.find((el: MovieItem) => el.id === movieId);
+      if (!!isMovieFound) {
         setIsWatchlist(isMovieFound);
       } else {
         setPage(p => p + 1);
@@ -90,7 +90,7 @@ const useWatchlist = (movieId: number) => {
     return () => {
       setIsWatchlist(false);
     };
-  }, [movieId, page]);
+  }, [data]);
 
   const toggleWatchlist = () => {
     onPageClickEvent({
