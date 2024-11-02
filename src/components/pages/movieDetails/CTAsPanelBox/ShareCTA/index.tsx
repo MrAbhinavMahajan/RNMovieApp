@@ -9,6 +9,10 @@ import {IconSize, MaterialIcon} from '@components/common/RNIcon';
 import {COLORS} from '@constants/Colors';
 import AppCTA from '@components/common/AppCTA';
 import RNText from '@components/common/RNText';
+import Share from 'react-native-share';
+import Toast from 'react-native-toast-message';
+import {kSHARE} from '~/src/constants/Messages';
+
 type ShareCTA = {
   movieId: number;
   ctaTextStyles: any;
@@ -26,7 +30,30 @@ const ShareCTA = ({
 }: ShareCTA) => {
   const scaleAnimation = useSharedValue(1);
 
-  const onShare = () => {};
+  const onShare = async () => {
+    const options = {
+      title: movieName,
+      url: `rn-movie-app://MOVIE_DETAILS_SCREEN/movieId=${movieId}&movieName=${movieName}`,
+      message: `Check ${movieName} Trailer, available in our application`,
+    };
+    Share.open(options)
+      .then(() => {
+        Toast.show({
+          type: 'success',
+          text1: kSHARE.success.title,
+          text2: kSHARE.success.subtitle,
+          position: 'bottom',
+        });
+      })
+      .catch(() => {
+        Toast.show({
+          type: 'error',
+          text1: kSHARE.error.title,
+          text2: kSHARE.error.subtitle,
+          position: 'bottom',
+        });
+      });
+  };
 
   const onPressIn = () => {
     scaleAnimation.value = withSpring(0.8);

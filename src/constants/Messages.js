@@ -56,10 +56,19 @@ export const kRATINGS = {
       'Rate movies to enhance your recommendations and discover hidden gems!',
   },
 };
-
 export const kREVIEWS = {
   noReviews: {
     title: 'No Reviews Yet',
     subtitle: 'We have no reviews to present at this time.!',
+  },
+};
+export const kSHARE = {
+  success: {
+    title: 'Shared',
+    subtitle: 'Shared successfully.',
+  },
+  error: {
+    title: 'Oops',
+    subtitle: 'Share unsuccessful.',
   },
 };
