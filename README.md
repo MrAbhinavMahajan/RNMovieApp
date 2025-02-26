@@ -26,3 +26,4 @@ Developed a feature-rich Movie App leveraging TMDB APIs, adhering to modular and
 - Enhanced UI/UX: Added animations using Reanimated for a polished user experience.
 - Analytics: Integrated analytics tools for detailed insights into user behavior and app performance.
 - Crashlytics: Implemented Crashlytics for real-time crash reporting and debugging.
+- Error Handling and Empty States incorporating retry support for seamless recovery.
