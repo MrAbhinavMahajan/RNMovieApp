@@ -9,6 +9,7 @@
   <img height="400em" src="https://github.com/user-attachments/assets/2a65e216-0e5e-4582-99b0-03cc3f63078c">
   <img height="400em" src="https://github.com/user-attachments/assets/9111c960-d3b6-4411-a9eb-ff6ea370a3df">
   <img height="400em" src="https://github.com/user-attachments/assets/732a383a-580c-4c15-a4ca-3f757bb53047">
+  <img height="400em" src="https://github.com/user-attachments/assets/6c63931f-c178-4a2a-8ca6-e3a3ef78969c">
 </div>
 
 Developed a feature-rich Movie App leveraging TMDB APIs, adhering to modular and extensible coding principles.
