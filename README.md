@@ -1,13 +1,15 @@
 # Movie App
 
 <div align="center" style="display: inline_block">
-  <img height="400em" src="https://github.com/MrAbhinavMahajan/RNMovieApp/assets/98639822/82a63a5b-11a0-4d02-9d4b-aee7d233778d">
-  <img height="400em" src="https://github.com/MrAbhinavMahajan/RNMovieApp/assets/98639822/a0e27851-6b64-4031-9280-596b1be60f50">
-  <img height="400em" src="https://github.com/MrAbhinavMahajan/RNMovieApp/assets/98639822/9e7e968c-eb44-4926-b20c-2def3723314c">
-  <img height="400em" src="https://github.com/MrAbhinavMahajan/RNMovieApp/assets/98639822/364f9ccb-98ec-40fc-bc8b-687b05f0aa7a">
-  <img height="400em" src="https://github.com/MrAbhinavMahajan/RNMovieApp/assets/98639822/928e8efa-fdfa-4264-aee3-4ef8625c1001">
-  <img height="400em" src="https://github.com/MrAbhinavMahajan/RNMovieApp/assets/98639822/c16e5c38-f766-4281-b4a6-0c37e8ae11ca">
-  <img height="400em" src="https://github.com/MrAbhinavMahajan/RNMovieApp/assets/98639822/377801ed-4d2d-431a-b23a-074469afb50f">
+  <img height="400em" src="https://github.com/user-attachments/assets/cb34c61b-9b89-493d-bc0b-a502182b33b4">
+  <img height="400em" src="https://github.com/user-attachments/assets/efb4fc54-cfbd-4367-8e00-0a64c184ad10">
+  <img height="400em" src="https://github.com/user-attachments/assets/8aa0d27c-59e3-4f11-a435-538d74f25297">
+  <img height="400em" src="https://github.com/user-attachments/assets/ed84e189-c010-4158-bd8d-67a4191ab92c">
+  <img height="400em" src="https://github.com/user-attachments/assets/a8ad67c6-32a7-4240-881c-cbdb73a932b9">
+  <img height="400em" src="https://github.com/user-attachments/assets/2a65e216-0e5e-4582-99b0-03cc3f63078c">
+  <img height="400em" src="https://github.com/user-attachments/assets/9111c960-d3b6-4411-a9eb-ff6ea370a3df">
+  <img height="400em" src="https://github.com/user-attachments/assets/732a383a-580c-4c15-a4ca-3f757bb53047">
+  <img height="400em" src="https://github.com/user-attachments/assets/6c63931f-c178-4a2a-8ca6-e3a3ef78969c">
 </div>
 
 Developed a feature-rich Movie App leveraging TMDB APIs, adhering to modular and extensible coding principles.
