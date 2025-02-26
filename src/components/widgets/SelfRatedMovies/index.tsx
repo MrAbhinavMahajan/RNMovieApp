@@ -34,7 +34,6 @@ const SelfRatedMoviesWidget = () => {
   const query = useQuery({
     queryKey: [APP_QUERY_MAP.SELF_RATED_MOVIES],
     queryFn: ({signal}) => fetchMoviesRated(signal, page),
-    refetchInterval: 5000,
     enabled: isFocussed,
   });
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
