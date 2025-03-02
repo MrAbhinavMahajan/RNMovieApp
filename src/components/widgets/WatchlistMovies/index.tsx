@@ -4,7 +4,7 @@ import _ from 'lodash';
 import {useQuery} from '@tanstack/react-query';
 import * as NavigationService from '@service/Navigation';
 import {FlatList, NativeAppEventEmitter, View} from 'react-native';
-import Animated, {FadeInRight} from 'react-native-reanimated';
+import Animated, {FadeInLeft} from 'react-native-reanimated';
 import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import {fetchMovieWatchlist} from '@apis/Main';
 import {APP_PAGES_MAP, APP_WIDGETS_MAP} from '@constants/Navigation';
@@ -170,11 +170,11 @@ const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
       },
     });
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
-      queryParams: {screenTitle: title, movieId: id},
+      queryParams: {movieName: title, movieId: id},
     });
   };
   return (
-    <Animated.View entering={FadeInRight}>
+    <Animated.View entering={FadeInLeft}>
       <MoviePosterWidget
         item={item}
         index={index}

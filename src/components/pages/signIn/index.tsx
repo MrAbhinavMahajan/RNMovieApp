@@ -32,6 +32,7 @@ import RNText from '@components/common/RNText';
 import AppCTA from '@components/common/AppCTA';
 import QuotationWidget from '@components/widgets/Quotation';
 import HeaderTitleWidget from '@components/widgets/HeaderTitle';
+import {vpx} from '~/src/libraries/responsive-pixels';
 
 const SignInScreen = () => {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
@@ -169,14 +170,16 @@ const SignInScreen = () => {
             {paddingTop: insets.top + STD_VERTICAL_SPACING},
           ]}>
           <RNText style={styles.pageTitle}>SignIn</RNText>
-          {AUTH_STEPS.map((el, idx) => (
-            <View style={styles.guideView} key={idx}>
-              <RNText style={styles.guideViewTitleText}>STEP-{el?.id}</RNText>
-              <RNText style={styles.guideViewSubtitleText}>
-                {el?.message}
-              </RNText>
-            </View>
-          ))}
+          <View style={{marginBottom: vpx(48)}}>
+            {AUTH_STEPS.map((el, idx) => (
+              <View style={styles.guideView} key={idx}>
+                <RNText style={styles.guideViewTitleText}>STEP-{el?.id}</RNText>
+                <RNText style={styles.guideViewSubtitleText}>
+                  {el?.message}
+                </RNText>
+              </View>
+            ))}
+          </View>
         </LinearGradient>
         <View style={styles.containerView}>
           <HeaderTitleWidget

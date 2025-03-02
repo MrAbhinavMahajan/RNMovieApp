@@ -235,7 +235,7 @@ const MovieCard = ({item, index}: MovieCardProps) => {
       },
     });
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
-      queryParams: {screenTitle: title, movieId: id},
+      queryParams: {movieName: title, movieId: id},
     });
   };
 

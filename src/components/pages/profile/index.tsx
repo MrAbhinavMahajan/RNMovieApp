@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {useMutation, useQuery} from '@tanstack/react-query';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useFocusEffect, useIsFocused} from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 import useSessionStore from '@store/useSessionStore';
 import Animated, {
   useAnimatedRef,
@@ -49,7 +49,6 @@ import QuotationWidget from '@components/widgets/Quotation';
 
 const ProfileScreen = () => {
   const insets = useSafeAreaInsets();
-  const isFocussed = useIsFocused();
   const accountDetails = useSessionStore(state => state.accountDetails);
   const setAccountDetails = useSessionStore(state => state.setAccountDetails);
   const logout = useSessionStore(state => state.logout);
@@ -65,7 +64,6 @@ const ProfileScreen = () => {
     queryKey: [APP_QUERY_MAP.PROFILE],
     queryFn: ({signal}) => fetchAccountDetails(signal),
     refetchInterval: 10000,
-    enabled: isFocussed,
   });
   const logoutMutation = useMutation({
     mutationFn: expireAccessTokenV4,

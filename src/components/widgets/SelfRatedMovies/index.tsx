@@ -34,7 +34,6 @@ const SelfRatedMoviesWidget = () => {
   const query = useQuery({
     queryKey: [APP_QUERY_MAP.SELF_RATED_MOVIES],
     queryFn: ({signal}) => fetchMoviesRated(signal, page),
-    refetchInterval: 5000,
     enabled: isFocussed,
   });
   const {data, refetch, isLoading, isFetching, isError, error, status} = query;
@@ -171,7 +170,7 @@ const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
       },
     });
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
-      queryParams: {screenTitle: title, movieId: id},
+      queryParams: {movieName: title, movieId: id},
     });
   };
   return (

@@ -145,7 +145,7 @@ const MovieCard = ({item, index}: {item: MoviePosterItem; index: number}) => {
       },
     });
     NavigationService.navigate(APP_PAGES_MAP.MOVIE_DETAILS_SCREEN, {
-      queryParams: {screenTitle: title, movieId: id},
+      queryParams: {movieName: title, movieId: id},
     });
   };
   return (
