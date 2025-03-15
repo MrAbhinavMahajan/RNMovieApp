@@ -47,6 +47,7 @@ In order to load the .env variables into your build.gradle files, we will need t
 ## Environment Variables?
 
 - Environment variables are used to inject configuration values or secrets into your build scripts. They can be accessed in Gradle scripts or your app during runtime.
+- Environment variables are loaded during the build configuration and packaging phases.
 
 ### Common Uses:
 
@@ -78,3 +79,7 @@ In order to load the .env variables into your build.gradle files, we will need t
 ### Manual creation of js bundle (index.android.bundle)
 
 npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
+
+### Must Know?
+<img width="784" alt="Screenshot 2025-03-15 at 11 56 43 PM" src="https://github.com/user-attachments/assets/d2d1ba19-167b-4d68-88ed-3b924572a5ac" />
+
