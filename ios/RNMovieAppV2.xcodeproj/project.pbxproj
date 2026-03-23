@@ -7,37 +7,36 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0C059C6B81EA44479B48FB32 /* Anton-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D6D04A30FF04B868B010FBB /* Anton-Regular.ttf */; };
+		0C80B921A6F3F58F76C31292 /* libPods-RNMovieAppV2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-RNMovieAppV2.a */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		501DF6F40FD2400290F5982B /* Inter-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 16BED8667223442DBD30474F /* Inter-Medium.otf */; };
-		65FC2EECC5544EA6B15B31A9 /* Inter-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 692FB0A7C58344BBAB415AFA /* Inter-Bold.otf */; };
-		72BBF09780DDFCA48FC56F3C /* libPods-RNMovieApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F4A4937D05F4CB8217DE43A /* libPods-RNMovieApp.a */; };
+		284B4A1ACC664EC1AEC99571 /* Inter-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5A2088F3A1FC4F25B3F2EC55 /* Inter-SemiBold.otf */; };
+		2E5A1FFE9B6F32BF998E95DC /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
+		4036C708CADC41958924CC56 /* Anton-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EFC613CA7CB24309B57E6D29 /* Anton-Regular.ttf */; };
+		6F40E26BDBD346A69E592586 /* BebasNeue-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F1A1C7F18DA74D66961A8040 /* BebasNeue-Regular.ttf */; };
+		7129A9959FA54BFF8BD7B3F9 /* Inter-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 675C6E2808124DA4A94CE3E4 /* Inter-Bold.otf */; };
+		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		81F03528DE294738F6021911 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
-		84FE587AE8DD4293BF8248D7 /* BebasNeue-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8FFE64F7CDCE4E099202C041 /* BebasNeue-Regular.ttf */; };
-		B36B864A2AE04DFCA1888107 /* Inter-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7A9FDF3F6CAF48088643796B /* Inter-SemiBold.otf */; };
-		B3BBB72F2D6F12B800E164F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BBB72E2D6F12B800E164F8 /* AppDelegate.swift */; };
-		F952D5DE5211450584A0451F /* Inter-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6B3E66EF7FDA4545AE4B6C49 /* Inter-Regular.otf */; };
+		A48A9F8F7BED40B9A8FEAA8D /* Inter-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8078956C7B494F019BCB24FF /* Inter-Regular.otf */; };
+		E5C5F22EB31C4B9885D5A3DD /* Inter-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7B0AA811923A4F3B83F37C39 /* Inter-Medium.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		13B07F961A680F5B00A75B9A /* RNMovieApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RNMovieApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = RNMovieApp/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = RNMovieApp/Info.plist; sourceTree = "<group>"; };
-		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = RNMovieApp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		16BED8667223442DBD30474F /* Inter-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Medium.otf"; path = "../src/assets/fonts/Inter-Medium.otf"; sourceTree = "<group>"; };
-		2F4A4937D05F4CB8217DE43A /* libPods-RNMovieApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RNMovieApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3948197695EAE08CBCDCF114 /* Pods-RNMovieApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNMovieApp.release.xcconfig"; path = "Target Support Files/Pods-RNMovieApp/Pods-RNMovieApp.release.xcconfig"; sourceTree = "<group>"; };
-		3D6D04A30FF04B868B010FBB /* Anton-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Anton-Regular.ttf"; path = "../src/assets/fonts/Anton-Regular.ttf"; sourceTree = "<group>"; };
-		692FB0A7C58344BBAB415AFA /* Inter-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Bold.otf"; path = "../src/assets/fonts/Inter-Bold.otf"; sourceTree = "<group>"; };
-		6B3E66EF7FDA4545AE4B6C49 /* Inter-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Regular.otf"; path = "../src/assets/fonts/Inter-Regular.otf"; sourceTree = "<group>"; };
-		7A9FDF3F6CAF48088643796B /* Inter-SemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-SemiBold.otf"; path = "../src/assets/fonts/Inter-SemiBold.otf"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = RNMovieApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8FFE64F7CDCE4E099202C041 /* BebasNeue-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "BebasNeue-Regular.ttf"; path = "../src/assets/fonts/BebasNeue-Regular.ttf"; sourceTree = "<group>"; };
-		B3BBB72D2D6F12B700E164F8 /* RNMovieApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNMovieApp-Bridging-Header.h"; sourceTree = "<group>"; };
-		B3BBB72E2D6F12B800E164F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DF64D05EF3F36B8B8FE7D53C /* Pods-RNMovieApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNMovieApp.debug.xcconfig"; path = "Target Support Files/Pods-RNMovieApp/Pods-RNMovieApp.debug.xcconfig"; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* RNMovieAppV2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RNMovieAppV2.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = RNMovieAppV2/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = RNMovieAppV2/Info.plist; sourceTree = "<group>"; };
+		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = RNMovieAppV2/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		3B4392A12AC88292D35C810B /* Pods-RNMovieAppV2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNMovieAppV2.debug.xcconfig"; path = "Target Support Files/Pods-RNMovieAppV2/Pods-RNMovieAppV2.debug.xcconfig"; sourceTree = "<group>"; };
+		5709B34CF0A7D63546082F79 /* Pods-RNMovieAppV2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNMovieAppV2.release.xcconfig"; path = "Target Support Files/Pods-RNMovieAppV2/Pods-RNMovieAppV2.release.xcconfig"; sourceTree = "<group>"; };
+		5A2088F3A1FC4F25B3F2EC55 /* Inter-SemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-SemiBold.otf"; path = "../src/assets/fonts/Inter-SemiBold.otf"; sourceTree = "<group>"; };
+		5DCACB8F33CDC322A6C60F78 /* libPods-RNMovieAppV2.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RNMovieAppV2.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		675C6E2808124DA4A94CE3E4 /* Inter-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Bold.otf"; path = "../src/assets/fonts/Inter-Bold.otf"; sourceTree = "<group>"; };
+		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = RNMovieAppV2/AppDelegate.swift; sourceTree = "<group>"; };
+		7B0AA811923A4F3B83F37C39 /* Inter-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Medium.otf"; path = "../src/assets/fonts/Inter-Medium.otf"; sourceTree = "<group>"; };
+		8078956C7B494F019BCB24FF /* Inter-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Regular.otf"; path = "../src/assets/fonts/Inter-Regular.otf"; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = RNMovieAppV2/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		EFC613CA7CB24309B57E6D29 /* Anton-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Anton-Regular.ttf"; path = "../src/assets/fonts/Anton-Regular.ttf"; sourceTree = "<group>"; };
+		F1A1C7F18DA74D66961A8040 /* BebasNeue-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "BebasNeue-Regular.ttf"; path = "../src/assets/fonts/BebasNeue-Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,46 +44,46 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				72BBF09780DDFCA48FC56F3C /* libPods-RNMovieApp.a in Frameworks */,
+				0C80B921A6F3F58F76C31292 /* libPods-RNMovieAppV2.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		13B07FAE1A68108700A75B9A /* RNMovieApp */ = {
+		13B07FAE1A68108700A75B9A /* RNMovieAppV2 */ = {
 			isa = PBXGroup;
 			children = (
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				761780EC2CA45674006654EE /* AppDelegate.swift */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
-				B3BBB72E2D6F12B800E164F8 /* AppDelegate.swift */,
-				B3BBB72D2D6F12B700E164F8 /* RNMovieApp-Bridging-Header.h */,
 			);
-			name = RNMovieApp;
+			name = RNMovieAppV2;
+			sourceTree = "<group>";
+		};
+		17F39791887340859AFAEB9E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				675C6E2808124DA4A94CE3E4 /* Inter-Bold.otf */,
+				8078956C7B494F019BCB24FF /* Inter-Regular.otf */,
+				7B0AA811923A4F3B83F37C39 /* Inter-Medium.otf */,
+				5A2088F3A1FC4F25B3F2EC55 /* Inter-SemiBold.otf */,
+				EFC613CA7CB24309B57E6D29 /* Anton-Regular.ttf */,
+				F1A1C7F18DA74D66961A8040 /* BebasNeue-Regular.ttf */,
+			);
+			name = Resources;
+			path = "";
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				2F4A4937D05F4CB8217DE43A /* libPods-RNMovieApp.a */,
+				5DCACB8F33CDC322A6C60F78 /* libPods-RNMovieAppV2.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		7B813C11BD4043EE9035B15E /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				692FB0A7C58344BBAB415AFA /* Inter-Bold.otf */,
-				16BED8667223442DBD30474F /* Inter-Medium.otf */,
-				6B3E66EF7FDA4545AE4B6C49 /* Inter-Regular.otf */,
-				7A9FDF3F6CAF48088643796B /* Inter-SemiBold.otf */,
-				3D6D04A30FF04B868B010FBB /* Anton-Regular.ttf */,
-				8FFE64F7CDCE4E099202C041 /* BebasNeue-Regular.ttf */,
-			);
-			name = Resources;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -97,12 +96,12 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* RNMovieApp */,
+				13B07FAE1A68108700A75B9A /* RNMovieAppV2 */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
-				7B813C11BD4043EE9035B15E /* Resources */,
+				17F39791887340859AFAEB9E /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -112,7 +111,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* RNMovieApp.app */,
+				13B07F961A680F5B00A75B9A /* RNMovieAppV2.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -120,8 +119,8 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				DF64D05EF3F36B8B8FE7D53C /* Pods-RNMovieApp.debug.xcconfig */,
-				3948197695EAE08CBCDCF114 /* Pods-RNMovieApp.release.xcconfig */,
+				3B4392A12AC88292D35C810B /* Pods-RNMovieAppV2.debug.xcconfig */,
+				5709B34CF0A7D63546082F79 /* Pods-RNMovieAppV2.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -129,25 +128,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		13B07F861A680F5B00A75B9A /* RNMovieApp */ = {
+		13B07F861A680F5B00A75B9A /* RNMovieAppV2 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "RNMovieApp" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "RNMovieAppV2" */;
 			buildPhases = (
-				14C4034BF596462CE7DD4D57 /* [CP] Check Pods Manifest.lock */,
+				C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				D074D7CFFD0A1A9F3CCEF5DD /* [CP] Embed Pods Frameworks */,
-				9C6F80EED63ADE6711C052AB /* [CP] Copy Pods Resources */,
+				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
+				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = RNMovieApp;
-			productName = RNMovieApp;
-			productReference = 13B07F961A680F5B00A75B9A /* RNMovieApp.app */;
+			name = RNMovieAppV2;
+			productName = RNMovieAppV2;
+			productReference = 13B07F961A680F5B00A75B9A /* RNMovieAppV2.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -159,11 +158,11 @@
 				LastUpgradeCheck = 1210;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1600;
+						LastSwiftMigration = 1120;
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "RNMovieApp" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "RNMovieAppV2" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -176,7 +175,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* RNMovieApp */,
+				13B07F861A680F5B00A75B9A /* RNMovieAppV2 */,
 			);
 		};
 /* End PBXProject section */
@@ -188,13 +187,13 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				81F03528DE294738F6021911 /* PrivacyInfo.xcprivacy in Resources */,
-				65FC2EECC5544EA6B15B31A9 /* Inter-Bold.otf in Resources */,
-				501DF6F40FD2400290F5982B /* Inter-Medium.otf in Resources */,
-				F952D5DE5211450584A0451F /* Inter-Regular.otf in Resources */,
-				B36B864A2AE04DFCA1888107 /* Inter-SemiBold.otf in Resources */,
-				0C059C6B81EA44479B48FB32 /* Anton-Regular.ttf in Resources */,
-				84FE587AE8DD4293BF8248D7 /* BebasNeue-Regular.ttf in Resources */,
+				2E5A1FFE9B6F32BF998E95DC /* PrivacyInfo.xcprivacy in Resources */,
+				7129A9959FA54BFF8BD7B3F9 /* Inter-Bold.otf in Resources */,
+				A48A9F8F7BED40B9A8FEAA8D /* Inter-Regular.otf in Resources */,
+				E5C5F22EB31C4B9885D5A3DD /* Inter-Medium.otf in Resources */,
+				284B4A1ACC664EC1AEC99571 /* Inter-SemiBold.otf in Resources */,
+				4036C708CADC41958924CC56 /* Anton-Regular.ttf in Resources */,
+				6F40E26BDBD346A69E592586 /* BebasNeue-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,9 +214,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
+			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"\\\"$WITH_ENVIRONMENT\\\" \\\"$REACT_NATIVE_XCODE\\\"\"\n";
 		};
-		14C4034BF596462CE7DD4D57 /* [CP] Check Pods Manifest.lock */ = {
+		00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RNMovieAppV2/Pods-RNMovieAppV2-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RNMovieAppV2/Pods-RNMovieAppV2-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RNMovieAppV2/Pods-RNMovieAppV2-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -232,45 +248,28 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-RNMovieApp-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-RNMovieAppV2-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9C6F80EED63ADE6711C052AB /* [CP] Copy Pods Resources */ = {
+		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RNMovieApp/Pods-RNMovieApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-RNMovieAppV2/Pods-RNMovieAppV2-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RNMovieApp/Pods-RNMovieApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-RNMovieAppV2/Pods-RNMovieAppV2-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RNMovieApp/Pods-RNMovieApp-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D074D7CFFD0A1A9F3CCEF5DD /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RNMovieApp/Pods-RNMovieApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RNMovieApp/Pods-RNMovieApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RNMovieApp/Pods-RNMovieApp-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RNMovieAppV2/Pods-RNMovieAppV2-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -280,7 +279,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3BBB72F2D6F12B800E164F8 /* AppDelegate.swift in Sources */,
+				761780ED2CA45674006654EE /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,14 +288,13 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DF64D05EF3F36B8B8FE7D53C /* Pods-RNMovieApp.debug.xcconfig */;
+			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-RNMovieAppV2.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = RNMovieApp/Info.plist;
+				INFOPLIST_FILE = RNMovieAppV2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -309,23 +307,23 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = RNMovieApp;
-				SWIFT_OBJC_BRIDGING_HEADER = "RNMovieApp-Bridging-Header.h";
+				PRODUCT_NAME = RNMovieAppV2;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3948197695EAE08CBCDCF114 /* Pods-RNMovieApp.release.xcconfig */;
+			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-RNMovieAppV2.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = RNMovieApp/Info.plist;
+				INFOPLIST_FILE = RNMovieAppV2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -338,9 +336,10 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = RNMovieApp;
-				SWIFT_OBJC_BRIDGING_HEADER = "RNMovieApp-Bridging-Header.h";
+				PRODUCT_NAME = RNMovieAppV2;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -406,6 +405,10 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DRCT_REMOVE_LEGACY_ARCH=1",
+				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-DFOLLY_NO_CONFIG",
@@ -413,14 +416,12 @@
 					"-DFOLLY_USE_LIBCPP=1",
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
-				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
+					"-DRCT_REMOVE_LEGACY_ARCH=1",
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
+				SWIFT_ENABLE_EXPLICIT_MODULES = NO;
 				USE_HERMES = true;
 			};
 			name = Debug;
@@ -478,6 +479,10 @@
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DRCT_REMOVE_LEGACY_ARCH=1",
+				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-DFOLLY_NO_CONFIG",
@@ -485,13 +490,11 @@
 					"-DFOLLY_USE_LIBCPP=1",
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
-				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
+					"-DRCT_REMOVE_LEGACY_ARCH=1",
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				SWIFT_ENABLE_EXPLICIT_MODULES = NO;
 				USE_HERMES = true;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -500,7 +503,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "RNMovieApp" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "RNMovieAppV2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -509,7 +512,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "RNMovieApp" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "RNMovieAppV2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

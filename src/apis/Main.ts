@@ -12,6 +12,7 @@ import {logDebug, logError} from '../analytics';
 import {APP_BASE_URL} from '../constants/Api';
 import {generateQueryParams} from '../utilities/App';
 const ReadAccessToken = process.env.TMDB_READ_ACCESS_TOKEN;
+
 enum RequestMethod {
   'GET' = 'GET',
   'POST' = 'POST',

@@ -1,6 +1,7 @@
 {
-  "extends": "@react-native/typescript-config/tsconfig.json",
+  "extends": "@react-native/typescript-config",
   "compilerOptions": {
+    "types": ["jest"],
     "baseUrl": ".",
     "paths": {
       "~/*": ["*"],
@@ -14,5 +15,7 @@
       "@hooks/*": ["./src/hooks/*"],
       "@utilities/*": ["./src/utilities/*"]
     }
-  }
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["**/node_modules", "**/Pods"]
 }

@@ -1,11 +1,8 @@
 import React from 'react';
-import IIcon from 'react-native-vector-icons/Ionicons';
-import MIcon from 'react-native-vector-icons/MaterialIcons';
+import IIcon from '@react-native-vector-icons/ionicons';
+import MIcon from '@react-native-vector-icons/material-icons';
 import {vpx} from '@libraries/responsive-pixels';
 import {COLORS} from '@constants/Colors';
-
-IIcon.loadFont();
-MIcon.loadFont();
 
 type IconSizeProps = {
   iconSizes: keyof typeof IconSizes;
